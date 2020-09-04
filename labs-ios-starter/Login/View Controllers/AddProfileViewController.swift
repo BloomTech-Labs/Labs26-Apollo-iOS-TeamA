@@ -12,7 +12,7 @@ protocol AddProfileDelegate: class {
     func profileWasAdded()
 }
 
-class AddProfileViewController: UIViewController {
+class AddProfileViewController: DefaultViewController {
 
     // MARK: - Properties and Outlets
     

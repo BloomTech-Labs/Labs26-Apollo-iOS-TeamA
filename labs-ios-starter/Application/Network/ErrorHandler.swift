@@ -91,8 +91,11 @@ extension UIViewController {
             print("couldn't retrieve value from ErrorHandler.userAuthErrors Dictionary")
             return
         }
-        
-        //presentAlert(title: errorToDisplay.title, message: errorToDisplay.message)
+        presentSimpleAlert(with: errorToDisplay.title,
+                           message: errorToDisplay.message,
+                           preferredStyle: .alert,
+                           dismissText: "Ok")
+
     }
 
     func presentNetworkError(error: Int) {
@@ -105,7 +108,10 @@ extension UIViewController {
 
             return
         }
-        //presentAlert(title: errorToDisplay.title, message: errorToDisplay.message)
+        presentSimpleAlert(with: errorToDisplay.title,
+                           message: errorToDisplay.message,
+                           preferredStyle: .alert,
+                           dismissText: "Ok")
     }
 
 }

@@ -9,7 +9,7 @@
 import UIKit
 import OktaAuth
 
-class LoginViewController: UIViewController {
+class LoginViewController: DefaultViewController {
     
     let profileController = ProfileController.shared
     
