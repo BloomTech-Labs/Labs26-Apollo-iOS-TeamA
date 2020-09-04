@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,15 +14,19 @@
 		466C427B249A8748007D033E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 466C4279249A8748007D033E /* Main.storyboard */; };
 		466C427D249A8749007D033E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 466C427C249A8749007D033E /* Assets.xcassets */; };
 		466C4280249A8749007D033E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 466C427E249A8749007D033E /* LaunchScreen.storyboard */; };
-		46BEB4DF24C8F88C00FE0CD1 /* OktaAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 46BEB4DE24C8F88C00FE0CD1 /* OktaAuth */; };
 		46BEB4E124C9828800FE0CD1 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BEB4E024C9828800FE0CD1 /* Profile.swift */; };
 		46BEB4E524C98CDC00FE0CD1 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BEB4E424C98CDC00FE0CD1 /* LoginViewController.swift */; };
 		46BEB4E724C98D8900FE0CD1 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BEB4E624C98D8900FE0CD1 /* Notifications.swift */; };
 		46BEB4E924C98DAF00FE0CD1 /* ProfileListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BEB4E824C98DAF00FE0CD1 /* ProfileListViewController.swift */; };
 		46BEB4EE24C98ECC00FE0CD1 /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BEB4ED24C98ECC00FE0CD1 /* ProfileController.swift */; };
 		46BEB4F124C98F0D00FE0CD1 /* Profiles.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46BEB4F024C98F0D00FE0CD1 /* Profiles.storyboard */; };
-		46BF10BE24D388FF001C6753 /* UIViewController+SimpleAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BF10BD24D388FF001C6753 /* UIViewController+SimpleAlert.swift */; };
 		46C2BC9224D432F90077E49D /* ProfileTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46C2BC9124D432F90077E49D /* ProfileTabBarViewController.swift */; };
+		B94042102501D0740048BCED /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940420D2501D0740048BCED /* NetworkService.swift */; };
+		B94042112501D0740048BCED /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940420E2501D0740048BCED /* ErrorHandler.swift */; };
+		B94042152501D08D0048BCED /* StyleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94042132501D08C0048BCED /* StyleSheet.swift */; };
+		B94042162501D08D0048BCED /* Engine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94042142501D08D0048BCED /* Engine.swift */; };
+		B94042192501D1BD0048BCED /* URLRequest + JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940420F2501D0740048BCED /* URLRequest + JSON.swift */; };
+		B940421A2501D1CE0048BCED /* UIViewController+SimpleAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BF10BD24D388FF001C6753 /* UIViewController+SimpleAlert.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +48,11 @@
 		46BEB4F024C98F0D00FE0CD1 /* Profiles.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profiles.storyboard; sourceTree = "<group>"; };
 		46BF10BD24D388FF001C6753 /* UIViewController+SimpleAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+SimpleAlert.swift"; sourceTree = "<group>"; };
 		46C2BC9124D432F90077E49D /* ProfileTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTabBarViewController.swift; sourceTree = "<group>"; };
+		B940420D2501D0740048BCED /* NetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		B940420E2501D0740048BCED /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
+		B940420F2501D0740048BCED /* URLRequest + JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URLRequest + JSON.swift"; sourceTree = "<group>"; };
+		B94042132501D08C0048BCED /* StyleSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleSheet.swift; sourceTree = "<group>"; };
+		B94042142501D08D0048BCED /* Engine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Engine.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +60,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46BEB4DF24C8F88C00FE0CD1 /* OktaAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +69,8 @@
 		465DAA2724BD0BC100D94C24 /* App Lifecycle */ = {
 			isa = PBXGroup;
 			children = (
+				466C4281249A8749007D033E /* Info.plist */,
+				466C427C249A8749007D033E /* Assets.xcassets */,
 				466C4273249A8748007D033E /* AppDelegate.swift */,
 				466C4275249A8748007D033E /* SceneDelegate.swift */,
 				466C427E249A8749007D033E /* LaunchScreen.storyboard */,
@@ -87,14 +97,12 @@
 		466C4272249A8748007D033E /* labs-ios-starter */ = {
 			isa = PBXGroup;
 			children = (
+				B940420B2501D0090048BCED /* Application */,
 				46BEB4EB24C98EB400FE0CD1 /* Model */,
-				46BEB4EC24C98EBB00FE0CD1 /* Model Controller */,
 				46BEB4EF24C98ED900FE0CD1 /* Login */,
 				46BEB4F224C98F1100FE0CD1 /* Profiles */,
 				46BEB4EA24C98EA300FE0CD1 /* Helpers */,
 				465DAA2724BD0BC100D94C24 /* App Lifecycle */,
-				466C427C249A8749007D033E /* Assets.xcassets */,
-				466C4281249A8749007D033E /* Info.plist */,
 				466C4287249A889F007D033E /* File Organization.md */,
 			);
 			path = "labs-ios-starter";
@@ -117,21 +125,19 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		46BEB4EC24C98EBB00FE0CD1 /* Model Controller */ = {
+		46BEB4EC24C98EBB00FE0CD1 /* Model Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				46BEB4ED24C98ECC00FE0CD1 /* ProfileController.swift */,
 			);
-			path = "Model Controller";
+			path = "Model Controllers";
 			sourceTree = "<group>";
 		};
 		46BEB4EF24C98ED900FE0CD1 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				46BEB4E424C98CDC00FE0CD1 /* LoginViewController.swift */,
-				463AD24424CF2CDB00447BB8 /* AddProfileViewController.swift */,
-				466C4279249A8748007D033E /* Main.storyboard */,
-				46C2BC9124D432F90077E49D /* ProfileTabBarViewController.swift */,
+				B94042072501CE670048BCED /* View Controllers */,
+				B94042082501CE7E0048BCED /* View */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -139,11 +145,82 @@
 		46BEB4F224C98F1100FE0CD1 /* Profiles */ = {
 			isa = PBXGroup;
 			children = (
-				46BEB4E824C98DAF00FE0CD1 /* ProfileListViewController.swift */,
-				463AD24224CF275900447BB8 /* ProfileDetailViewController.swift */,
-				46BEB4F024C98F0D00FE0CD1 /* Profiles.storyboard */,
+				46BEB4EC24C98EBB00FE0CD1 /* Model Controllers */,
+				B940420A2501CE8A0048BCED /* View Controllers */,
+				B94042092501CE840048BCED /* View */,
 			);
 			path = Profiles;
+			sourceTree = "<group>";
+		};
+		B94042072501CE670048BCED /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				46BEB4E424C98CDC00FE0CD1 /* LoginViewController.swift */,
+				463AD24424CF2CDB00447BB8 /* AddProfileViewController.swift */,
+				46C2BC9124D432F90077E49D /* ProfileTabBarViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		B94042082501CE7E0048BCED /* View */ = {
+			isa = PBXGroup;
+			children = (
+				466C4279249A8748007D033E /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		B94042092501CE840048BCED /* View */ = {
+			isa = PBXGroup;
+			children = (
+				46BEB4F024C98F0D00FE0CD1 /* Profiles.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		B940420A2501CE8A0048BCED /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				46BEB4E824C98DAF00FE0CD1 /* ProfileListViewController.swift */,
+				463AD24224CF275900447BB8 /* ProfileDetailViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		B940420B2501D0090048BCED /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				B94042182501D09C0048BCED /* View */,
+				B940420C2501D03A0048BCED /* Network */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		B940420C2501D03A0048BCED /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				B940420E2501D0740048BCED /* ErrorHandler.swift */,
+				B940420D2501D0740048BCED /* NetworkService.swift */,
+				B940420F2501D0740048BCED /* URLRequest + JSON.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		B94042172501D0920048BCED /* Autolayout */ = {
+			isa = PBXGroup;
+			children = (
+				B94042142501D08D0048BCED /* Engine.swift */,
+			);
+			path = Autolayout;
+			sourceTree = "<group>";
+		};
+		B94042182501D09C0048BCED /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B94042132501D08C0048BCED /* StyleSheet.swift */,
+				B94042172501D0920048BCED /* Autolayout */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,7 +240,6 @@
 			);
 			name = "labs-ios-starter";
 			packageProductDependencies = (
-				46BEB4DE24C8F88C00FE0CD1 /* OktaAuth */,
 			);
 			productName = LabsScaffolding;
 			productReference = 466C4270249A8748007D033E /* labs-ios-starter.app */;
@@ -194,7 +270,6 @@
 			);
 			mainGroup = 466C4267249A8748007D033E;
 			packageReferences = (
-				46BEB4DD24C8F88C00FE0CD1 /* XCRemoteSwiftPackageReference "OktaAuth" */,
 			);
 			productRefGroup = 466C4271249A8748007D033E /* Products */;
 			projectDirPath = "";
@@ -225,15 +300,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				46BEB4EE24C98ECC00FE0CD1 /* ProfileController.swift in Sources */,
-				46BF10BE24D388FF001C6753 /* UIViewController+SimpleAlert.swift in Sources */,
 				46BEB4E724C98D8900FE0CD1 /* Notifications.swift in Sources */,
+				B94042192501D1BD0048BCED /* URLRequest + JSON.swift in Sources */,
+				B940421A2501D1CE0048BCED /* UIViewController+SimpleAlert.swift in Sources */,
 				46BEB4E124C9828800FE0CD1 /* Profile.swift in Sources */,
 				46BEB4E924C98DAF00FE0CD1 /* ProfileListViewController.swift in Sources */,
+				B94042112501D0740048BCED /* ErrorHandler.swift in Sources */,
 				463AD24524CF2CDB00447BB8 /* AddProfileViewController.swift in Sources */,
 				466C4274249A8748007D033E /* AppDelegate.swift in Sources */,
 				46C2BC9224D432F90077E49D /* ProfileTabBarViewController.swift in Sources */,
 				463AD24324CF275900447BB8 /* ProfileDetailViewController.swift in Sources */,
+				B94042152501D08D0048BCED /* StyleSheet.swift in Sources */,
 				46BEB4E524C98CDC00FE0CD1 /* LoginViewController.swift in Sources */,
+				B94042162501D08D0048BCED /* Engine.swift in Sources */,
+				B94042102501D0740048BCED /* NetworkService.swift in Sources */,
 				466C4276249A8748007D033E /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -379,7 +459,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "labs-ios-starter/Info.plist";
+				DEVELOPMENT_TEAM = 34P4RF23ET;
+				INFOPLIST_FILE = "labs-ios-starter/App Lifecycle/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -397,7 +478,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "labs-ios-starter/Info.plist";
+				DEVELOPMENT_TEAM = 34P4RF23ET;
+				INFOPLIST_FILE = "labs-ios-starter/App Lifecycle/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -432,25 +514,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		46BEB4DD24C8F88C00FE0CD1 /* XCRemoteSwiftPackageReference "OktaAuth" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "git@github.com:SpencerCurtis/OktaAuth.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.1;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		46BEB4DE24C8F88C00FE0CD1 /* OktaAuth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 46BEB4DD24C8F88C00FE0CD1 /* XCRemoteSwiftPackageReference "OktaAuth" */;
-			productName = OktaAuth;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 466C4268249A8748007D033E /* Project object */;
 }
