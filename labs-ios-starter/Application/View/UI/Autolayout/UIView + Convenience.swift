@@ -105,23 +105,27 @@ extension UIView {
         }
     }
 
-    /// Center a view in the designated view
+    /// Center a view horizontally and vertically in the designated view
     /// - Parameters:
     ///   - view: The view to be centered on
-    func center(in view: UIView) {
-        centerX(in: view)
-        centerY(in: view)
+    func center(in view: UIView,
+                paddingX: CGFloat = 0,
+                paddingY: CGFloat = 0) {
+
+        centerX(in: view, paddingX: paddingX)
+        centerY(in: view, paddingY: paddingY)
+
     }
 
     /// Center a view horizontally in the designated view
     /// - Parameters:
     ///   - view: The view to be centered on
-    func centerX(in view: UIView) {
-        centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    func centerX(in view: UIView, paddingX: CGFloat = 0) {
+        centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: paddingX).isActive = true
     }
 
-    func centerY(in view: UIView) {
-        centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    func centerY(in view: UIView, paddingY: CGFloat = 0) {
+        centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: paddingY).isActive = true
     }
 
     private func setWidth(_ width: CGFloat) {

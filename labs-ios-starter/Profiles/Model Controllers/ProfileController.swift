@@ -13,8 +13,8 @@ class ProfileController {
     
     static let shared = ProfileController()
     
-    let oktaAuth = OktaAuth(baseURL: URL(string: "https://auth.lambdalabs.dev/")!,
-                            clientID: "0oalwkxvqtKeHBmLI4x6",
+    let oktaAuth = OktaAuth(baseURL: URL(string: "https://dev-625244.okta.com")!,
+                            clientID: "0oavsbe2kAVi9pJPx4x6",
                             redirectURI: "labs://scaffolding/implicit/callback")
     
     private(set) var authenticatedUserProfile: Profile?
