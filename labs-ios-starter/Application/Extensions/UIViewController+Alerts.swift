@@ -38,8 +38,14 @@ extension UIViewController {
     ///   - message: The Alert's Message
     ///   - vc: The View Controller Presenting the Alert
     ///   - complete: Returns a bool (false if no was pressed, true if yes)
-    func presentAlertWithYesNoPrompt(title: String, message: String, complete: @escaping (Bool) -> Void) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    func presentAlertWithYesNoPrompt(with title: String,
+                                     message: String,
+                                     preferredStyle: UIAlertController.Style,
+                                     complete: @escaping (Bool) -> Void) {
+
+        let alert = UIAlertController(title: title,
+                                      message: message,
+                                      preferredStyle: preferredStyle)
         // Yes button completes true
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
             complete(true)
