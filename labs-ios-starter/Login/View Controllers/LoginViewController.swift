@@ -82,3 +82,20 @@ extension LoginViewController: AddProfileDelegate {
         checkForExistingProfile()
     }
 }
+
+// MARK: - Live Previews
+
+#if DEBUG
+
+import SwiftUI
+
+struct LoginViewControllerPreviews: PreviewProvider {
+    static var previews: some View {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateInitialViewController()
+        
+        return viewController?.view.livePreview.edgesIgnoringSafeArea(.all)
+    }
+}
+
+#endif

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1D46C2142501D292007DEDAF /* OktaAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 1D46C2132501D292007DEDAF /* OktaAuth */; };
+		1D46C21D2501DDB4007DEDAF /* UIView+LivePreviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D46C21C2501DDB4007DEDAF /* UIView+LivePreviews.swift */; };
 		463AD24324CF275900447BB8 /* ProfileDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463AD24224CF275900447BB8 /* ProfileDetailViewController.swift */; };
 		463AD24524CF2CDB00447BB8 /* AddProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463AD24424CF2CDB00447BB8 /* AddProfileViewController.swift */; };
 		466C4274249A8748007D033E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466C4273249A8748007D033E /* AppDelegate.swift */; };
@@ -33,6 +34,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1D46C21C2501DDB4007DEDAF /* UIView+LivePreviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+LivePreviews.swift"; sourceTree = "<group>"; };
 		463AD24224CF275900447BB8 /* ProfileDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailViewController.swift; sourceTree = "<group>"; };
 		463AD24424CF2CDB00447BB8 /* AddProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileViewController.swift; sourceTree = "<group>"; };
 		466C4270249A8748007D033E /* labs-ios-starter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "labs-ios-starter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -118,6 +120,7 @@
 			children = (
 				46BEB4E624C98D8900FE0CD1 /* Notifications + customNames.swift */,
 				46BF10BD24D388FF001C6753 /* UIViewController+Alerts.swift */,
+				1D46C21C2501DDB4007DEDAF /* UIView+LivePreviews.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				463AD24324CF275900447BB8 /* ProfileDetailViewController.swift in Sources */,
 				B94042152501D08D0048BCED /* StyleSheet.swift in Sources */,
 				46BEB4E524C98CDC00FE0CD1 /* LoginViewController.swift in Sources */,
+				1D46C21D2501DDB4007DEDAF /* UIView+LivePreviews.swift in Sources */,
 				B94042162501D08D0048BCED /* Engine.swift in Sources */,
 				B940421D2501D9120048BCED /* AuthService.swift in Sources */,
 				B94042102501D0740048BCED /* NetworkService.swift in Sources */,
