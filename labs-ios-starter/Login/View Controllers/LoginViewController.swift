@@ -15,7 +15,6 @@ class LoginViewController: DefaultViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         NotificationCenter.default.addObserver(forName: .oktaAuthenticationSuccessful,
                                                object: nil,
                                                queue: .main,
@@ -39,9 +38,9 @@ class LoginViewController: DefaultViewController {
     private func alertUserOfExpiredCredentials(_ notification: Notification) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.presentSimpleAlert(with: "Your Okta credentials have expired",
-                           message: "Please sign in again",
-                           preferredStyle: .alert,
-                           dismissText: "Dimiss")
+                                    message: "Please sign in again",
+                                    preferredStyle: .alert,
+                                    dismissText: "Dimiss")
         }
     }
     
