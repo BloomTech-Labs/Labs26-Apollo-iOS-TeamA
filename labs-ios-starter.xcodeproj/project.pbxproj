@@ -24,6 +24,9 @@
 		46BEB4F124C98F0D00FE0CD1 /* Profiles.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46BEB4F024C98F0D00FE0CD1 /* Profiles.storyboard */; };
 		46C2BC9224D432F90077E49D /* ProfileTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46C2BC9124D432F90077E49D /* ProfileTabBarViewController.swift */; };
 		B91637212507FA4B00B49A75 /* readme.md in Resources */ = {isa = PBXBuildFile; fileRef = B91637202507FA4B00B49A75 /* readme.md */; };
+		B916372525083B7600B49A75 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = B916372425083B7600B49A75 /* Member.swift */; };
+		B916372B250840B700B49A75 /* Bearer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B916372A250840B700B49A75 /* Bearer.swift */; };
+		B916372D250841B200B49A75 /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B916372C250841B200B49A75 /* Topic.swift */; };
 		B94042102501D0740048BCED /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940420D2501D0740048BCED /* NetworkService.swift */; };
 		B94042112501D0740048BCED /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940420E2501D0740048BCED /* ErrorHandler.swift */; };
 		B94042152501D08D0048BCED /* StyleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94042132501D08C0048BCED /* StyleSheet.swift */; };
@@ -70,6 +73,9 @@
 		46BF10BD24D388FF001C6753 /* UIViewController+Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerts.swift"; sourceTree = "<group>"; };
 		46C2BC9124D432F90077E49D /* ProfileTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTabBarViewController.swift; sourceTree = "<group>"; };
 		B91637202507FA4B00B49A75 /* readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = readme.md; path = "labs-ios-starter/Profiles/Model Controllers/readme.md"; sourceTree = SOURCE_ROOT; };
+		B916372425083B7600B49A75 /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
+		B916372A250840B700B49A75 /* Bearer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bearer.swift; sourceTree = "<group>"; };
+		B916372C250841B200B49A75 /* Topic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
 		B940420D2501D0740048BCED /* NetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		B940420E2501D0740048BCED /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		B940420F2501D0740048BCED /* URLRequest + JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URLRequest + JSON.swift"; sourceTree = "<group>"; };
@@ -161,7 +167,8 @@
 		46BEB4EB24C98EB400FE0CD1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				46BEB4E024C9828800FE0CD1 /* Profile.swift */,
+				B916372325083B4100B49A75 /* Apollo */,
+				B916372225083B3A00B49A75 /* Okta Auth */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -192,6 +199,24 @@
 				B94042092501CE840048BCED /* View */,
 			);
 			path = Profiles;
+			sourceTree = "<group>";
+		};
+		B916372225083B3A00B49A75 /* Okta Auth */ = {
+			isa = PBXGroup;
+			children = (
+				46BEB4E024C9828800FE0CD1 /* Profile.swift */,
+			);
+			path = "Okta Auth";
+			sourceTree = "<group>";
+		};
+		B916372325083B4100B49A75 /* Apollo */ = {
+			isa = PBXGroup;
+			children = (
+				B916372425083B7600B49A75 /* Member.swift */,
+				B916372A250840B700B49A75 /* Bearer.swift */,
+				B916372C250841B200B49A75 /* Topic.swift */,
+			);
+			path = Apollo;
 			sourceTree = "<group>";
 		};
 		B94042072501CE670048BCED /* View Controllers */ = {
@@ -429,14 +454,17 @@
 				B940421F2501D9250048BCED /* String+Validate.swift in Sources */,
 				B94042192501D1BD0048BCED /* URLRequest + JSON.swift in Sources */,
 				B940421A2501D1CE0048BCED /* UIViewController+Alerts.swift in Sources */,
+				B916372D250841B200B49A75 /* Topic.swift in Sources */,
 				46BEB4E124C9828800FE0CD1 /* Profile.swift in Sources */,
 				46BEB4E924C98DAF00FE0CD1 /* ProfileListViewController.swift in Sources */,
+				B916372B250840B700B49A75 /* Bearer.swift in Sources */,
 				B94042112501D0740048BCED /* ErrorHandler.swift in Sources */,
 				B94042272502E1390048BCED /* UIStackView + Convenience.swift in Sources */,
 				463AD24524CF2CDB00447BB8 /* AddProfileViewController.swift in Sources */,
 				466C4274249A8748007D033E /* AppDelegate.swift in Sources */,
 				46C2BC9224D432F90077E49D /* ProfileTabBarViewController.swift in Sources */,
 				463AD24324CF275900447BB8 /* ProfileDetailViewController.swift in Sources */,
+				B916372525083B7600B49A75 /* Member.swift in Sources */,
 				B94042152501D08D0048BCED /* StyleSheet.swift in Sources */,
 				B940422A2502E5070048BCED /* UIButton + Convenience.swift in Sources */,
 				46BEB4E524C98CDC00FE0CD1 /* LoginViewController.swift in Sources */,
