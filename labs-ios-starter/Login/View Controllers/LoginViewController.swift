@@ -11,6 +11,8 @@ import OktaAuth
 
 class LoginViewController: DefaultViewController {
     
+    @IBOutlet weak var signInButton: UIButton!
+    
     let profileController = ProfileController.shared
     
     override func viewDidLoad() {
