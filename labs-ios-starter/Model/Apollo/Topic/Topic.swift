@@ -9,9 +9,9 @@
 import Foundation
 
 struct Topic: Codable {
-    var id: UUID // needs to be same type as identifier/token/etc
+    var id: UUID // needs to be same type as identifier/token/etc - see above comment
     var joinCode: String // can this be the ID actually?
-    var leaderId: UUID // see above comment
+    var leaderId: UUID
 
     var topicName: String // is this changeable? if not, change to constant
     var contextQuestion: Context
