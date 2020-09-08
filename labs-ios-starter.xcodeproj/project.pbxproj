@@ -27,6 +27,8 @@
 		B916372525083B7600B49A75 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = B916372425083B7600B49A75 /* Member.swift */; };
 		B916372B250840B700B49A75 /* Bearer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B916372A250840B700B49A75 /* Bearer.swift */; };
 		B916372D250841B200B49A75 /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B916372C250841B200B49A75 /* Topic.swift */; };
+		B91637302508495F00B49A75 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = B916372F2508495F00B49A75 /* Question.swift */; };
+		B916373225084CD800B49A75 /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = B916373125084CD800B49A75 /* Context.swift */; };
 		B94042102501D0740048BCED /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940420D2501D0740048BCED /* NetworkService.swift */; };
 		B94042112501D0740048BCED /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940420E2501D0740048BCED /* ErrorHandler.swift */; };
 		B94042152501D08D0048BCED /* StyleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94042132501D08C0048BCED /* StyleSheet.swift */; };
@@ -76,6 +78,8 @@
 		B916372425083B7600B49A75 /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
 		B916372A250840B700B49A75 /* Bearer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bearer.swift; sourceTree = "<group>"; };
 		B916372C250841B200B49A75 /* Topic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
+		B916372F2508495F00B49A75 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
+		B916373125084CD800B49A75 /* Context.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
 		B940420D2501D0740048BCED /* NetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		B940420E2501D0740048BCED /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		B940420F2501D0740048BCED /* URLRequest + JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URLRequest + JSON.swift"; sourceTree = "<group>"; };
@@ -214,7 +218,7 @@
 			children = (
 				B916372E2508437400B49A75 /* Web Auth */,
 				B916372425083B7600B49A75 /* Member.swift */,
-				B916372C250841B200B49A75 /* Topic.swift */,
+				B916373325084CDF00B49A75 /* Topic */,
 			);
 			path = Apollo;
 			sourceTree = "<group>";
@@ -225,6 +229,16 @@
 				B916372A250840B700B49A75 /* Bearer.swift */,
 			);
 			path = "Web Auth";
+			sourceTree = "<group>";
+		};
+		B916373325084CDF00B49A75 /* Topic */ = {
+			isa = PBXGroup;
+			children = (
+				B916372C250841B200B49A75 /* Topic.swift */,
+				B916373125084CD800B49A75 /* Context.swift */,
+				B916372F2508495F00B49A75 /* Question.swift */,
+			);
+			path = Topic;
 			sourceTree = "<group>";
 		};
 		B94042072501CE670048BCED /* View Controllers */ = {
@@ -471,12 +485,14 @@
 				463AD24524CF2CDB00447BB8 /* AddProfileViewController.swift in Sources */,
 				466C4274249A8748007D033E /* AppDelegate.swift in Sources */,
 				46C2BC9224D432F90077E49D /* ProfileTabBarViewController.swift in Sources */,
+				B916373225084CD800B49A75 /* Context.swift in Sources */,
 				463AD24324CF275900447BB8 /* ProfileDetailViewController.swift in Sources */,
 				B916372525083B7600B49A75 /* Member.swift in Sources */,
 				B94042152501D08D0048BCED /* StyleSheet.swift in Sources */,
 				B940422A2502E5070048BCED /* UIButton + Convenience.swift in Sources */,
 				46BEB4E524C98CDC00FE0CD1 /* LoginViewController.swift in Sources */,
 				1D46C21D2501DDB4007DEDAF /* UIView+LivePreviews.swift in Sources */,
+				B91637302508495F00B49A75 /* Question.swift in Sources */,
 				B94042162501D08D0048BCED /* UIView + Convenience.swift in Sources */,
 				B940421D2501D9120048BCED /* AuthService.swift in Sources */,
 				B94042102501D0740048BCED /* NetworkService.swift in Sources */,
