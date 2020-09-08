@@ -33,6 +33,8 @@ class StandardButton: UIButton {
         if let height = fixedHeight {
             addConstraint(heightAnchor.constraint(equalToConstant: height))
         }
+        
+        translatesAutoresizingMaskIntoConstraints = false
     }
     
     /// Programmatic init
@@ -143,9 +145,11 @@ struct StandardButtonPreview: PreviewProvider {
         let button = StandardButton(withTitle: "Sample Text", width: 280, height: 50)
         
         previewView.addSubview(button)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.centerXAnchor.constraint(equalTo: previewView.centerXAnchor).isActive = true
-        button.bottomAnchor.constraint(equalTo: previewView.centerYAnchor).isActive = true
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        button.centerXAnchor.constraint(equalTo: previewView.centerXAnchor).isActive = true
+//        button.bottomAnchor.constraint(equalTo: previewView.centerYAnchor).isActive = true
+        
+        button.center(in: previewView)
         
         return previewView.livePreview.edgesIgnoringSafeArea(.all)
     }
