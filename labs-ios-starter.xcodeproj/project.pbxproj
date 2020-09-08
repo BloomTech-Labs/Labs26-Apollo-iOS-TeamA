@@ -37,7 +37,6 @@
 		B94042272502E1390048BCED /* UIStackView + Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94042262502E1390048BCED /* UIStackView + Convenience.swift */; };
 		B940422A2502E5070048BCED /* UIButton + Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94042292502E5070048BCED /* UIButton + Convenience.swift */; };
 		B9404232250321230048BCED /* labs_ios_starterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9404231250321230048BCED /* labs_ios_starterTests.swift */; };
-		B940423C250323D20048BCED /* Okta.plist in Resources */ = {isa = PBXBuildFile; fileRef = B940423B250323D20048BCED /* Okta.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,7 +84,6 @@
 		B940422F250321230048BCED /* labs-ios-starterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "labs-ios-starterTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9404231250321230048BCED /* labs_ios_starterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = labs_ios_starterTests.swift; sourceTree = "<group>"; };
 		B9404233250321230048BCED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B940423B250323D20048BCED /* Okta.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Okta.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -274,7 +272,6 @@
 			children = (
 				B940421C2501D9120048BCED /* AuthService.swift */,
 				B940421E2501D9250048BCED /* String+Validate.swift */,
-				B940423B250323D20048BCED /* Okta.plist */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -404,7 +401,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				466C4280249A8749007D033E /* LaunchScreen.storyboard in Resources */,
-				B940423C250323D20048BCED /* Okta.plist in Resources */,
 				B9404221250203B80048BCED /* Auth.md in Resources */,
 				466C427D249A8749007D033E /* Assets.xcassets in Resources */,
 				B91637212507FA4B00B49A75 /* readme.md in Resources */,
