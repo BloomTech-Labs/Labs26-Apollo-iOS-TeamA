@@ -212,11 +212,19 @@
 		B916372325083B4100B49A75 /* Apollo */ = {
 			isa = PBXGroup;
 			children = (
+				B916372E2508437400B49A75 /* Web Auth */,
 				B916372425083B7600B49A75 /* Member.swift */,
-				B916372A250840B700B49A75 /* Bearer.swift */,
 				B916372C250841B200B49A75 /* Topic.swift */,
 			);
 			path = Apollo;
+			sourceTree = "<group>";
+		};
+		B916372E2508437400B49A75 /* Web Auth */ = {
+			isa = PBXGroup;
+			children = (
+				B916372A250840B700B49A75 /* Bearer.swift */,
+			);
+			path = "Web Auth";
 			sourceTree = "<group>";
 		};
 		B94042072501CE670048BCED /* View Controllers */ = {
