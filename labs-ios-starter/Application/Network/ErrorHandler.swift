@@ -109,11 +109,10 @@ extension UIViewController {
     func presentNetworkError(error: Int) {
         guard let errorToDisplay = ErrorHandler.userNetworkErrors[error] else {
             if let error = ErrorHandler.internalNetworkErrors[error] {
-                print("\(#function): \(error)")
+                print("\(#function): Internal Error: \(error)")
             } else {
-                print("\(#function): Error \(error)")
+                print("\(#function): User Error \(error)")
             }
-
             return
         }
         presentSimpleAlert(with: errorToDisplay.title,

@@ -14,30 +14,20 @@ typealias URLHandler = (Data?, HTTPURLResponse?, Error?) -> Void
 typealias URLCompletion = ((Result<Data, ErrorHandler.NetworkError>) -> Void)
 
 protocol NetworkLoader {
-    func loadData(using request: URLRequest, with completion: URLCompletion)
+    func loadData(using request: URLRequest, with completion: @escaping URLCompletion)
 }
 
 // TODO: Improve error handling
 /// Provide default error and response handling for network tasks
 extension URLSession: NetworkLoader {
 
-    func loadData(using request: URLRequest, with completion: URLCompletion) {
+    func loadData(using request: URLRequest, with completion: @escaping URLCompletion) {
         self.dataTask(with: request) { (data, response, error) in
             //downcast response to HTTPURLResponse to work with the statusCode
             if let response = response as? HTTPURLResponse {
                 let statusCode = response.statusCode
-
-                var statusCopy = statusCode
-                
-                //break the statusCode into digits in order to get the first digit
-                var digits: [Int] = []
-                //statusCode %10 gets the last digit, insert it at the beginning of the digits array until there are no numbers left
-                while abs(statusCopy) < 10 {
-                    digits.insert(statusCopy % 10, at: 0)
-                    statusCopy /= 10
-                }
                 // first digit not a 2, it could be an error (need confirmation from BE team)
-                if digits[0] != 2 {
+                if statusCode != 200 {
                     //unwrap the handled exception, or log an unhandled exception
                     guard let error = ErrorHandler.NetworkError(rawValue: statusCode) else {
                         // Edge case - unhandled exception (if this is logged, the ErrorHandler likely needs to be extended)
@@ -54,7 +44,7 @@ extension URLSession: NetworkLoader {
             }
 
             if let error = error {
-                // Edge case - standard networking error not handled in response
+                // Edge case - standard networking error not handled in response, or no response
                 NSLog("Networking error in \(#file).\(#function) with \(String(describing: request.url?.absoluteString)) \n\(error)")
                 completion(.failure(.unknown))
             }
@@ -172,7 +162,7 @@ class NetworkService {
         }
     }
 
-    func loadData(using request: URLRequest, with completion: @escaping (Data?, HTTPURLResponse?, Error?) -> Void) {
+    func loadData(using request: URLRequest, with completion: @escaping URLCompletion) {
         self.dataLoader.loadData(using: request, with: completion)
     }
 
