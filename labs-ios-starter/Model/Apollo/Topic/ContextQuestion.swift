@@ -1,5 +1,5 @@
 //
-//  Context.swift
+//  ContextQuestion.swift
 //  labs-ios-starter
 //
 //  Created by Kenny on 9/8/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-//used to determine a Question's context
+/// Used to determine a Question's context. so named to avoid collision with Swift.Context
 struct ContextQuestion: Codable {
     var id: UUID
     var context: [String]
