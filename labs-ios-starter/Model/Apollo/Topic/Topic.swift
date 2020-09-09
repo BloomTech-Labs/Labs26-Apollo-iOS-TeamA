@@ -8,6 +8,7 @@
 
 import Foundation
 
+///Leaders can post topics
 struct Topic: Codable {
     var id: UUID // needs to be same type as identifier/token/etc - see above comment
     var joinCode: String // can this be the ID actually?
