@@ -18,7 +18,6 @@ struct Member: Equatable, Codable {
     var firstName: String?
     var lastName: String?
 
-
     /// - Parameters:
     ///   - identifier: defaults to new UUID, make sure to assign the correct one when decoding
     ///   rather than generating a new one
