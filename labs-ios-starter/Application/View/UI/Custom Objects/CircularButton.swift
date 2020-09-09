@@ -25,6 +25,8 @@ class CircularButton: UIButton {
             setDimensions(width: size, height: size)
             layer.cornerRadius = size / 2 // Circular shape            
         }
+        
+        translatesAutoresizingMaskIntoConstraints = false
     }
     
     /// Programmatic init
@@ -89,9 +91,7 @@ struct CircularButtonPreview: PreviewProvider {
         let button = CircularButton(withIcon: .plus, size: 60)
         
         previewView.addSubview(button)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.centerXAnchor.constraint(equalTo: previewView.centerXAnchor).isActive = true
-        button.centerYAnchor.constraint(equalTo: previewView.centerYAnchor).isActive = true
+        button.center(in: previewView)
                 
         return previewView.livePreview.edgesIgnoringSafeArea(.all)
     }
