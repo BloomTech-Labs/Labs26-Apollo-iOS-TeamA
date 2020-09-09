@@ -12,6 +12,8 @@
 		1D46C22125055E81007DEDAF /* StandardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D46C22025055E81007DEDAF /* StandardButton.swift */; };
 		1D4D9C0225068DEB00348246 /* CircularButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D9C0125068DEB00348246 /* CircularButton.swift */; };
 		1D4D9C0A25092B5400348246 /* labs_ios_starterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D9C0925092B5400348246 /* labs_ios_starterUITests.swift */; };
+		1D4D9C1325092F4A00348246 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D9C1225092F4A00348246 /* CoreDataManager.swift */; };
+		1D4D9C17250930AB00348246 /* labs-ios-starter.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D9C15250930AB00348246 /* labs-ios-starter.xcdatamodeld */; };
 		463AD24324CF275900447BB8 /* ProfileDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463AD24224CF275900447BB8 /* ProfileDetailViewController.swift */; };
 		463AD24524CF2CDB00447BB8 /* AddProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463AD24424CF2CDB00447BB8 /* AddProfileViewController.swift */; };
 		466C4274249A8748007D033E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466C4273249A8748007D033E /* AppDelegate.swift */; };
@@ -67,6 +69,8 @@
 		1D4D9C0725092B5400348246 /* labs-ios-starterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "labs-ios-starterUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D4D9C0925092B5400348246 /* labs_ios_starterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = labs_ios_starterUITests.swift; sourceTree = "<group>"; };
 		1D4D9C0B25092B5400348246 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1D4D9C1225092F4A00348246 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		1D4D9C16250930AB00348246 /* labs-ios-starter.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "labs-ios-starter.xcdatamodel"; sourceTree = "<group>"; };
 		463AD24224CF275900447BB8 /* ProfileDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailViewController.swift; sourceTree = "<group>"; };
 		463AD24424CF2CDB00447BB8 /* AddProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileViewController.swift; sourceTree = "<group>"; };
 		466C4270249A8748007D033E /* labs-ios-starter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "labs-ios-starter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -147,6 +151,14 @@
 			path = "labs-ios-starterUITests";
 			sourceTree = "<group>";
 		};
+		1D4D9C1125092F0100348246 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				1D4D9C1225092F4A00348246 /* CoreDataManager.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
 		465DAA2724BD0BC100D94C24 /* App Lifecycle */ = {
 			isa = PBXGroup;
 			children = (
@@ -206,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				46BEB4E024C9828800FE0CD1 /* Profile.swift */,
+				1D4D9C15250930AB00348246 /* labs-ios-starter.xcdatamodeld */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -280,6 +293,7 @@
 				46BEB4EA24C98EA300FE0CD1 /* Extensions */,
 				B94042182501D09C0048BCED /* View */,
 				B940420C2501D03A0048BCED /* Network */,
+				1D4D9C1125092F0100348246 /* Persistence */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -523,9 +537,11 @@
 				466C4274249A8748007D033E /* AppDelegate.swift in Sources */,
 				46C2BC9224D432F90077E49D /* ProfileTabBarViewController.swift in Sources */,
 				463AD24324CF275900447BB8 /* ProfileDetailViewController.swift in Sources */,
+				1D4D9C17250930AB00348246 /* labs-ios-starter.xcdatamodeld in Sources */,
 				B94042152501D08D0048BCED /* StyleSheet.swift in Sources */,
 				B940422A2502E5070048BCED /* UIButton + Convenience.swift in Sources */,
 				46BEB4E524C98CDC00FE0CD1 /* LoginViewController.swift in Sources */,
+				1D4D9C1325092F4A00348246 /* CoreDataManager.swift in Sources */,
 				1D4D9C0225068DEB00348246 /* CircularButton.swift in Sources */,
 				1D46C21D2501DDB4007DEDAF /* UIView+LivePreviews.swift in Sources */,
 				B94042162501D08D0048BCED /* UIView + Convenience.swift in Sources */,
@@ -869,6 +885,19 @@
 			productName = OktaAuth;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		1D4D9C15250930AB00348246 /* labs-ios-starter.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				1D4D9C16250930AB00348246 /* labs-ios-starter.xcdatamodel */,
+			);
+			currentVersion = 1D4D9C16250930AB00348246 /* labs-ios-starter.xcdatamodel */;
+			path = "labs-ios-starter.xcdatamodeld";
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 466C4268249A8748007D033E /* Project object */;
 }
