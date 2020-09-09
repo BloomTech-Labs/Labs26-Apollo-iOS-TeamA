@@ -10,6 +10,12 @@ import Foundation
 
 class ErrorHandler {
 
+    // MARK: - Singleton -
+    
+    ///singleton instance
+    static var shared = ErrorHandler()
+    private init() {}
+
     /// Success case can be used to pass any type
     /// Failure case can be used to pass anything conforming to Error
     /// define it in the completion handler as with `completionWithDataAndUserError`
@@ -33,6 +39,7 @@ class ErrorHandler {
         case timeout = 408
         case tooManyRequests = 429
         case headerFieldTooLarge = 431
+        case unknown = 999
     }
 
     static var userNetworkErrors: [Int: UserError] {
@@ -51,7 +58,8 @@ class ErrorHandler {
             NetworkError.badMethod.rawValue: "Method not accepted",
             NetworkError.resourceNotAcceptable.rawValue: "Resource not acceptable",
             NetworkError.tooManyRequests.rawValue: "Too many requests sent recently",
-            NetworkError.headerFieldTooLarge.rawValue: "header too large"
+            NetworkError.headerFieldTooLarge.rawValue: "header too large",
+            NetworkError.unknown.rawValue: "An unknown error occured"
         ]
     }
 
