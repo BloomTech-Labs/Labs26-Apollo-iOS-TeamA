@@ -5,44 +5,61 @@ import CoreData
 
 /// Used to interact with persisted managed objects and the application's xcdatamodeld
 class CoreDataManager {
-    static let shared = CoreDataManager() // singleton
     
-    // persistent container
+    // MARK: - Properties
+    
+    /// The singleton used to access the CoreData Stack
+    static let shared = CoreDataManager()
+    
+    /// The container that encapsulates the CoreData Manager/Stack
     lazy var persistentContainer: NSPersistentContainer = {
         let persistentContainer = NSPersistentContainer(name: "labs-ios-starter")
         persistentContainer.loadPersistentStores { (_, error) in
-            if let error = error {
-                fatalError("Failed to load persistent stores: \(error)")
+            if let error = error as NSError? {
+                fatalError("Failed to load persistent stores: \(error), \(error.userInfo)")
             }
         }
+        persistentContainer.viewContext.automaticallyMergesChangesFromParent = true
         return persistentContainer
     }()
     
-    // view context
+    /// The main object space for managed objects. Uses the main thread.
     var mainContext: NSManagedObjectContext {
         return persistentContainer.viewContext
     }
     
     // MARK: - Methods
     
-    /// Saves to the main context with error handling.
-    func save() {
-        do {
-            try mainContext.save()
-        } catch {
-            print("Error in CoreDataManager's save method : \(error)")
+    /// Performs a save on the passed-in context.
+    /// ```
+    /// // Create new background context
+    /// CoreDataManager.shared.persistentContainer.newBackgroundContext()
+    /// ```
+    /// - Warning: Large processes my hang the UI on the mainContext.
+    /// - context: the selected object space for managed objects. Defaults to mainContext.
+    func saveContext(_ context: NSManagedObjectContext = CoreDataManager.shared.mainContext) throws {
+        var error: Error?
+        context.performAndWait {
+            do {
+                try context.save()
+            } catch let saveError {
+                error = saveError
+            }
         }
+        if let error = error { throw error }
     }
     
-    /// Deletes from the main context with error handling.
-    func delete(_ object: NSManagedObject) {
-        do {
-            mainContext.delete(object)
-            try mainContext.save()
-        } catch {
-            print("Error in CoreDataManager's delete method : \(error)")
+    /// Performs a deletion of a passed-in object on the mainContext
+    func deleteObject(_ object: NSManagedObject) {
+        let mainContext = CoreDataManager.shared.mainContext
+        mainContext.performAndWait {
+            do {
+                mainContext.delete(object)
+                try mainContext.save()
+            } catch {
+                print("Error in CoreDataManager's delete method : \(error)")
+            }
         }
     }
     
 }
-
