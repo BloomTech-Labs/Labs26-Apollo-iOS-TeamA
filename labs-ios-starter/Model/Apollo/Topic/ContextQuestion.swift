@@ -8,6 +8,7 @@
 
 import Foundation
 
+//used to determine a Question's context
 struct ContextQuestion: Codable {
     var id: UUID
     var context: [String]

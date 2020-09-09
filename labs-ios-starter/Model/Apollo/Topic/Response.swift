@@ -8,11 +8,11 @@
 
 import Foundation
 
+/// AKA Threads - users can respond to Questions
 struct Response: Codable {
     var id: UUID
-    var question: Question
+    var questionId: UUID
     var response: String
     var respondedBy: Member
     var topic: Topic
-
 }
