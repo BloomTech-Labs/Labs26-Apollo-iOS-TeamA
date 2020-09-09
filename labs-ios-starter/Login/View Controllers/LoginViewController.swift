@@ -11,6 +11,9 @@ import OktaAuth
 
 class LoginViewController: DefaultViewController {
     
+    @IBOutlet weak var signInButton: UIButton!
+    
+    let userTextField = UITextField()
     let profileController = ProfileController.shared
     
     override func viewDidLoad() {
@@ -72,6 +75,31 @@ class LoginViewController: DefaultViewController {
             addProfileVC.delegate = self
         }
     }
+
+    func makeLoginView() {
+
+        userTextField.placeholder = "Enter Some Text"
+
+        let button = UIButton(backgroundColor: .action, addTo: self, action: #selector(reportTextFieldText), title: "Press Me, Alice")
+
+        let parentStack = UIStackView(axis: .vertical,
+                                      alignment: .fill,
+                                      distribution: .fillEqually,
+                                      viewsToStack: userTextField, button)
+
+        self.view.addSubview(parentStack)
+        parentStack.center(in: self.view)
+    }
+
+    @objc func reportTextFieldText() {
+        guard let text = self.userTextField.text,
+        text != "" else {
+            print("invalid or empty text")
+            return
+        }
+        self.presentSimpleAlert(with: "Textfield", message: text, preferredStyle: .alert, dismissText: "Go away")
+    }
+
 }
 
 // MARK: - Add Profile Delegate

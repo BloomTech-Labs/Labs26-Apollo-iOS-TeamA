@@ -1,11 +1,3 @@
-//
-//  UIStackView + Convenience.swift
-//  labs-ios-starter
-//
-//  Created by Kenny on 9/4/20.
-//  Copyright © 2020 Lambda, Inc. All rights reserved.
-//
-
 import UIKit
 
 extension UIStackView {
@@ -36,6 +28,3 @@ extension UIStackView {
         }
     }
 }
-
-
-
