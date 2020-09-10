@@ -12,15 +12,16 @@ import OktaAuth
 class ProfileController {
     
     static let shared = ProfileController()
-    
+
+    private let baseURL = URL(string: "https://dev-625244.okta.com/")!
     lazy var oktaAuth = OktaAuth(baseURL: baseURL,
                             clientID: "0oavsbe2kAVi9pJPx4x6",
-                            redirectURI: "com.okta.dev-625244:/callback")
-    
+                            redirectURI: "labs://apollo/implicit/callback")
+
+
     private(set) var authenticatedUserProfile: Profile?
     private(set) var profiles: [Profile] = []
-    
-    private let baseURL = URL(string: "https://dev-625244.okta.com/app/UserHome")!
+
     
     private init() {
         NotificationCenter.default.addObserver(self,
@@ -33,7 +34,7 @@ class ProfileController {
         getAllProfiles()
     }
     
-    func getAllProfiles(completion: @escaping () -> Void = {}) {
+    func getAllProfiles(completion: @escaping (ErrorHandler.UserAuthError?) -> Void = { error in }) {
         
         var oktaCredentials: OktaCredentials
         
@@ -43,12 +44,12 @@ class ProfileController {
             postAuthenticationExpiredNotification()
             NSLog("Credentials do not exist. Unable to get profiles from API")
             DispatchQueue.main.async {
-                completion()
+                completion(ErrorHandler.UserAuthError.noConnection)
             }
             return
         }
         
-        let requestURL = baseURL.appendingPathComponent("profiles")
+        let requestURL = baseURL.appendingPathComponent("profile")
         var request = URLRequest(url: requestURL)
         
         request.addValue("Bearer \(oktaCredentials.idToken)", forHTTPHeaderField: "Authorization")
@@ -57,21 +58,26 @@ class ProfileController {
             
             defer {
                 DispatchQueue.main.async {
-                    completion()
+                    completion(nil)
                 }
             }
             
             if let error = error {
                 NSLog("Error getting all profiles: \(error)")
+                completion(ErrorHandler.UserAuthError.noConnection)
+                return
             }
             
             if let response = response as? HTTPURLResponse,
                 response.statusCode != 200 {
                 NSLog("Returned status code is not the expected 200. Instead it is \(response.statusCode)")
+                completion(ErrorHandler.UserAuthError.noConnection)
+                return
             }
             
             guard let data = data else {
                 NSLog("No data returned from getting all profiles")
+                completion(ErrorHandler.UserAuthError.noConnection)
                 return
             }
             
@@ -84,7 +90,10 @@ class ProfileController {
                     self.profiles = profiles
                 }
             } catch {
+
                 NSLog("Unable to decode [Profile] from data: \(error)")
+                completion(ErrorHandler.UserAuthError.noConnection)
+
             }
         }
         
