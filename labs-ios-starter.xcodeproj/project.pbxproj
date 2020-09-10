@@ -137,6 +137,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D0E1049250AACB700A21C44 /* CoreData MO */ = {
+			isa = PBXGroup;
+			children = (
+				1D4D9C15250930AB00348246 /* labs-ios-starter.xcdatamodeld */,
+			);
+			path = "CoreData MO";
+			sourceTree = "<group>";
+		};
 		1D46C21F25055D7E007DEDAF /* Custom Objects */ = {
 			isa = PBXGroup;
 			children = (
@@ -223,8 +231,8 @@
 		46BEB4EB24C98EB400FE0CD1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1D0E1049250AACB700A21C44 /* CoreData MO */,
 				46BEB4E024C9828800FE0CD1 /* Profile.swift */,
-				1D4D9C15250930AB00348246 /* labs-ios-starter.xcdatamodeld */,
 			);
 			path = Model;
 			sourceTree = "<group>";
