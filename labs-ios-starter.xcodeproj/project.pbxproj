@@ -10,6 +10,7 @@
 		1D0E1046250A9B7D00A21C44 /* CodingUserInfoKey+MOC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E1045250A9B7D00A21C44 /* CodingUserInfoKey+MOC.swift */; };
 		1D0E1048250A9C7200A21C44 /* Data+PrettyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E1047250A9C7200A21C44 /* Data+PrettyJSON.swift */; };
 		1D0E104B250AAE3100A21C44 /* UIImageView+ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E104A250AAE3100A21C44 /* UIImageView+ImageDownloader.swift */; };
+		1D0E1058250AB3A400A21C44 /* Surveys.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D0E1057250AB3A300A21C44 /* Surveys.storyboard */; };
 		1D46C2142501D292007DEDAF /* OktaAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 1D46C2132501D292007DEDAF /* OktaAuth */; };
 		1D46C21D2501DDB4007DEDAF /* UIView+LivePreviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D46C21C2501DDB4007DEDAF /* UIView+LivePreviews.swift */; };
 		1D46C22125055E81007DEDAF /* StandardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D46C22025055E81007DEDAF /* StandardButton.swift */; };
@@ -69,6 +70,7 @@
 		1D0E1045250A9B7D00A21C44 /* CodingUserInfoKey+MOC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CodingUserInfoKey+MOC.swift"; sourceTree = "<group>"; };
 		1D0E1047250A9C7200A21C44 /* Data+PrettyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+PrettyJSON.swift"; sourceTree = "<group>"; };
 		1D0E104A250AAE3100A21C44 /* UIImageView+ImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+ImageDownloader.swift"; sourceTree = "<group>"; };
+		1D0E1057250AB3A300A21C44 /* Surveys.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Surveys.storyboard; sourceTree = "<group>"; };
 		1D46C21C2501DDB4007DEDAF /* UIView+LivePreviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+LivePreviews.swift"; sourceTree = "<group>"; };
 		1D46C22025055E81007DEDAF /* StandardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardButton.swift; sourceTree = "<group>"; };
 		1D4D9C0125068DEB00348246 /* CircularButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularButton.swift; sourceTree = "<group>"; };
@@ -147,6 +149,38 @@
 			path = "CoreData MO";
 			sourceTree = "<group>";
 		};
+		1D0E1053250AB34E00A21C44 /* Surveys */ = {
+			isa = PBXGroup;
+			children = (
+				1D0E1054250AB35E00A21C44 /* Model Controllers */,
+				1D0E1055250AB36300A21C44 /* View Controllers */,
+				1D0E1056250AB37600A21C44 /* View */,
+			);
+			path = Surveys;
+			sourceTree = "<group>";
+		};
+		1D0E1054250AB35E00A21C44 /* Model Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Model Controllers";
+			sourceTree = "<group>";
+		};
+		1D0E1055250AB36300A21C44 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		1D0E1056250AB37600A21C44 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1D0E1057250AB3A300A21C44 /* Surveys.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		1D46C21F25055D7E007DEDAF /* Custom Objects */ = {
 			isa = PBXGroup;
 			children = (
@@ -212,6 +246,7 @@
 				46BEB4EB24C98EB400FE0CD1 /* Model */,
 				46BEB4EF24C98ED900FE0CD1 /* Login */,
 				46BEB4F224C98F1100FE0CD1 /* Profiles */,
+				1D0E1053250AB34E00A21C44 /* Surveys */,
 				465DAA2724BD0BC100D94C24 /* App Lifecycle */,
 				466C4287249A889F007D033E /* File Organization.md */,
 			);
@@ -509,6 +544,7 @@
 			files = (
 				466C4280249A8749007D033E /* LaunchScreen.storyboard in Resources */,
 				B940423C250323D20048BCED /* Okta.plist in Resources */,
+				1D0E1058250AB3A400A21C44 /* Surveys.storyboard in Resources */,
 				B9404221250203B80048BCED /* Auth.md in Resources */,
 				466C427D249A8749007D033E /* Assets.xcassets in Resources */,
 				B91637212507FA4B00B49A75 /* readme.md in Resources */,
