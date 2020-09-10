@@ -28,7 +28,11 @@ class ProfileListViewController: UIViewController {
     // MARK: - Private Methods
     
     private func refresh() {
-        profileController.getAllProfiles {
+        profileController.getAllProfiles { error in
+            if let error = error {
+                self.presentAuthError(error: error)
+                return
+            }
             self.tableView.reloadData()
         }
     }
