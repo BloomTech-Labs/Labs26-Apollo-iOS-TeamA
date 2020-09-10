@@ -33,7 +33,9 @@ class LoginViewController: DefaultViewController {
     // MARK: - Actions
     
     @IBAction func signIn(_ sender: Any) {
-        UIApplication.shared.open(ProfileController.shared.oktaAuth.identityAuthURL()!)
+        UIApplication.shared.open(ProfileController.shared.oktaAuth.identityAuthURL()!) { result in
+
+        }
     }
     
     // MARK: - Private Methods
@@ -58,11 +60,12 @@ class LoginViewController: DefaultViewController {
             
             guard let self = self,
                 self.presentedViewController == nil else { return }
-            
+                
             if exists {
                 self.performSegue(withIdentifier: "ShowDetailProfileList", sender: nil)
             } else {
-                self.performSegue(withIdentifier: "ModalAddProfile", sender: nil)
+                self.presentSimpleAlert(with: "Error", message: "No Profile, need endpoint", preferredStyle: .alert, dismissText: "Ok")
+                //self.performSegue(withIdentifier: "ModalAddProfile", sender: nil)
             }
         }
     }
@@ -74,21 +77,6 @@ class LoginViewController: DefaultViewController {
             guard let addProfileVC = segue.destination as? AddProfileViewController else { return }
             addProfileVC.delegate = self
         }
-    }
-
-    func makeLoginView() {
-
-        userTextField.placeholder = "Enter Some Text"
-
-        let button = UIButton(backgroundColor: .action, addTo: self, action: #selector(reportTextFieldText), title: "Press Me, Alice")
-
-        let parentStack = UIStackView(axis: .vertical,
-                                      alignment: .fill,
-                                      distribution: .fillEqually,
-                                      viewsToStack: userTextField, button)
-
-        self.view.addSubview(parentStack)
-        parentStack.center(in: self.view)
     }
 
     @objc func reportTextFieldText() {
