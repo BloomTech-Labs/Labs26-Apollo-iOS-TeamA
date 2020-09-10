@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1D0E1046250A9B7D00A21C44 /* CodingUserInfoKey+MOC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E1045250A9B7D00A21C44 /* CodingUserInfoKey+MOC.swift */; };
 		1D0E1048250A9C7200A21C44 /* Data+PrettyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E1047250A9C7200A21C44 /* Data+PrettyJSON.swift */; };
+		1D0E104B250AAE3100A21C44 /* UIImageView+ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E104A250AAE3100A21C44 /* UIImageView+ImageDownloader.swift */; };
 		1D46C2142501D292007DEDAF /* OktaAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 1D46C2132501D292007DEDAF /* OktaAuth */; };
 		1D46C21D2501DDB4007DEDAF /* UIView+LivePreviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D46C21C2501DDB4007DEDAF /* UIView+LivePreviews.swift */; };
 		1D46C22125055E81007DEDAF /* StandardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D46C22025055E81007DEDAF /* StandardButton.swift */; };
@@ -67,6 +68,7 @@
 /* Begin PBXFileReference section */
 		1D0E1045250A9B7D00A21C44 /* CodingUserInfoKey+MOC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CodingUserInfoKey+MOC.swift"; sourceTree = "<group>"; };
 		1D0E1047250A9C7200A21C44 /* Data+PrettyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+PrettyJSON.swift"; sourceTree = "<group>"; };
+		1D0E104A250AAE3100A21C44 /* UIImageView+ImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+ImageDownloader.swift"; sourceTree = "<group>"; };
 		1D46C21C2501DDB4007DEDAF /* UIView+LivePreviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+LivePreviews.swift"; sourceTree = "<group>"; };
 		1D46C22025055E81007DEDAF /* StandardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardButton.swift; sourceTree = "<group>"; };
 		1D4D9C0125068DEB00348246 /* CircularButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularButton.swift; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 				1D46C21C2501DDB4007DEDAF /* UIView+LivePreviews.swift */,
 				1D0E1045250A9B7D00A21C44 /* CodingUserInfoKey+MOC.swift */,
 				1D0E1047250A9C7200A21C44 /* Data+PrettyJSON.swift */,
+				1D0E104A250AAE3100A21C44 /* UIImageView+ImageDownloader.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -536,6 +539,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D0E104B250AAE3100A21C44 /* UIImageView+ImageDownloader.swift in Sources */,
 				B94042242502DF6A0048BCED /* UILabel + Convenience.swift in Sources */,
 				46BEB4EE24C98ECC00FE0CD1 /* ProfileController.swift in Sources */,
 				46BEB4E724C98D8900FE0CD1 /* Notifications + customNames.swift in Sources */,
