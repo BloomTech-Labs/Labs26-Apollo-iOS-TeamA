@@ -13,12 +13,13 @@ class NetworkServiceTests: XCTestCase {
     let networkService = NetworkService()
 
     func testGetRequestNoError() {
-        let expectation = self.expectation(description: "Test GET Request Google No Error")
+        let expectation = self.expectation(description: "Test GET Request Valid URL No Error")
 
-        guard let request = networkService.createRequest(url: URL(string: "https://www.google.com")!, method: .get) else {
-            print("invalid request")
+        guard let request = networkService.createRequest(url: URL(string: "https://auth.lambdalabs.dev/")!, method: .get) else {
+            XCTFail("invalid request")
             return
         }
+
         networkService.loadData(using: request) { result in
             switch result {
             case .success(let data):
@@ -34,12 +35,13 @@ class NetworkServiceTests: XCTestCase {
     }
 
     func testGetRequestWith404Error() {
-        var expectation: XCTestExpectation? = self.expectation(description: "Test GET Request  https://www.google.com/myveryspecificlinkthatdoesntexist.html With 404 Error")
-
-        guard let request = networkService.createRequest(url: URL(string: "https://www.google.com/myveryspecificlinkthatdoesntexist.html")!, method: .get) else {
-            print("invalid request")
+        var expectation: XCTestExpectation? = self.expectation(description: "Test GET Request  with invalid URL")
+        // make GET request
+        guard let request = networkService.createRequest(url: URL(string: "https://auth.lambdalabs.dev/myveryspecificlinkthatdoesntexist.html")!, method: .get) else {
+            XCTFail("invalid request")
             return
         }
+        //make network call
         networkService.loadData(using: request) { result in
             switch result {
             case .success(let _):
@@ -58,5 +60,6 @@ class NetworkServiceTests: XCTestCase {
         }
         wait(for: [expectation!], timeout: 3.0)
     }
+    
 
 }
