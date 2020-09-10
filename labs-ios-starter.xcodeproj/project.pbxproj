@@ -7,11 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D0E1046250A9B7D00A21C44 /* CodingUserInfoKey+MOC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E1045250A9B7D00A21C44 /* CodingUserInfoKey+MOC.swift */; };
+		1D0E1048250A9C7200A21C44 /* Data+PrettyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E1047250A9C7200A21C44 /* Data+PrettyJSON.swift */; };
+		1D0E104B250AAE3100A21C44 /* UIImageView+ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E104A250AAE3100A21C44 /* UIImageView+ImageDownloader.swift */; };
 		1D46C2142501D292007DEDAF /* OktaAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 1D46C2132501D292007DEDAF /* OktaAuth */; };
 		1D46C21D2501DDB4007DEDAF /* UIView+LivePreviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D46C21C2501DDB4007DEDAF /* UIView+LivePreviews.swift */; };
 		1D46C22125055E81007DEDAF /* StandardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D46C22025055E81007DEDAF /* StandardButton.swift */; };
 		1D4D9C0225068DEB00348246 /* CircularButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D9C0125068DEB00348246 /* CircularButton.swift */; };
 		1D4D9C0A25092B5400348246 /* labs_ios_starterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D9C0925092B5400348246 /* labs_ios_starterUITests.swift */; };
+		1D4D9C1325092F4A00348246 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D9C1225092F4A00348246 /* CoreDataManager.swift */; };
+		1D4D9C17250930AB00348246 /* labs-ios-starter.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D9C15250930AB00348246 /* labs-ios-starter.xcdatamodeld */; };
 		463AD24324CF275900447BB8 /* ProfileDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463AD24224CF275900447BB8 /* ProfileDetailViewController.swift */; };
 		463AD24524CF2CDB00447BB8 /* AddProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463AD24424CF2CDB00447BB8 /* AddProfileViewController.swift */; };
 		466C4274249A8748007D033E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466C4273249A8748007D033E /* AppDelegate.swift */; };
@@ -67,12 +72,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D0E1045250A9B7D00A21C44 /* CodingUserInfoKey+MOC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CodingUserInfoKey+MOC.swift"; sourceTree = "<group>"; };
+		1D0E1047250A9C7200A21C44 /* Data+PrettyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+PrettyJSON.swift"; sourceTree = "<group>"; };
+		1D0E104A250AAE3100A21C44 /* UIImageView+ImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+ImageDownloader.swift"; sourceTree = "<group>"; };
 		1D46C21C2501DDB4007DEDAF /* UIView+LivePreviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+LivePreviews.swift"; sourceTree = "<group>"; };
 		1D46C22025055E81007DEDAF /* StandardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardButton.swift; sourceTree = "<group>"; };
 		1D4D9C0125068DEB00348246 /* CircularButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularButton.swift; sourceTree = "<group>"; };
 		1D4D9C0725092B5400348246 /* labs-ios-starterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "labs-ios-starterUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D4D9C0925092B5400348246 /* labs_ios_starterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = labs_ios_starterUITests.swift; sourceTree = "<group>"; };
 		1D4D9C0B25092B5400348246 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1D4D9C1225092F4A00348246 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		1D4D9C16250930AB00348246 /* labs-ios-starter.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "labs-ios-starter.xcdatamodel"; sourceTree = "<group>"; };
 		463AD24224CF275900447BB8 /* ProfileDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailViewController.swift; sourceTree = "<group>"; };
 		463AD24424CF2CDB00447BB8 /* AddProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileViewController.swift; sourceTree = "<group>"; };
 		466C4270249A8748007D033E /* labs-ios-starter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "labs-ios-starter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,6 +151,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D0E1049250AACB700A21C44 /* CoreData MO */ = {
+			isa = PBXGroup;
+			children = (
+				1D4D9C15250930AB00348246 /* labs-ios-starter.xcdatamodeld */,
+			);
+			path = "CoreData MO";
+			sourceTree = "<group>";
+		};
 		1D46C21F25055D7E007DEDAF /* Custom Objects */ = {
 			isa = PBXGroup;
 			children = (
@@ -157,6 +175,14 @@
 				1D4D9C0B25092B5400348246 /* Info.plist */,
 			);
 			path = "labs-ios-starterUITests";
+			sourceTree = "<group>";
+		};
+		1D4D9C1125092F0100348246 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				1D4D9C1225092F4A00348246 /* CoreDataManager.swift */,
+			);
+			path = Persistence;
 			sourceTree = "<group>";
 		};
 		465DAA2724BD0BC100D94C24 /* App Lifecycle */ = {
@@ -210,6 +236,9 @@
 				46BEB4E624C98D8900FE0CD1 /* Notifications + customNames.swift */,
 				46BF10BD24D388FF001C6753 /* UIViewController+Alerts.swift */,
 				1D46C21C2501DDB4007DEDAF /* UIView+LivePreviews.swift */,
+				1D0E1045250A9B7D00A21C44 /* CodingUserInfoKey+MOC.swift */,
+				1D0E1047250A9C7200A21C44 /* Data+PrettyJSON.swift */,
+				1D0E104A250AAE3100A21C44 /* UIImageView+ImageDownloader.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -217,6 +246,8 @@
 		46BEB4EB24C98EB400FE0CD1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1D0E1049250AACB700A21C44 /* CoreData MO */,
+				46BEB4E024C9828800FE0CD1 /* Profile.swift */,
 				B916372325083B4100B49A75 /* Apollo */,
 				B916372225083B3A00B49A75 /* Okta Auth */,
 			);
@@ -331,6 +362,7 @@
 				46BEB4EA24C98EA300FE0CD1 /* Extensions */,
 				B94042182501D09C0048BCED /* View */,
 				B940420C2501D03A0048BCED /* Network */,
+				1D4D9C1125092F0100348246 /* Persistence */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -557,9 +589,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D0E104B250AAE3100A21C44 /* UIImageView+ImageDownloader.swift in Sources */,
 				B94042242502DF6A0048BCED /* UILabel + Convenience.swift in Sources */,
 				46BEB4EE24C98ECC00FE0CD1 /* ProfileController.swift in Sources */,
 				46BEB4E724C98D8900FE0CD1 /* Notifications + customNames.swift in Sources */,
+				1D0E1048250A9C7200A21C44 /* Data+PrettyJSON.swift in Sources */,
+				1D0E1046250A9B7D00A21C44 /* CodingUserInfoKey+MOC.swift in Sources */,
 				B940421F2501D9250048BCED /* String+Validate.swift in Sources */,
 				B94042192501D1BD0048BCED /* URLRequest + JSON.swift in Sources */,
 				B940421A2501D1CE0048BCED /* UIViewController+Alerts.swift in Sources */,
@@ -575,12 +610,14 @@
 				46C2BC9224D432F90077E49D /* ProfileTabBarViewController.swift in Sources */,
 				B916373225084CD800B49A75 /* ContextQuestion.swift in Sources */,
 				463AD24324CF275900447BB8 /* ProfileDetailViewController.swift in Sources */,
+				1D4D9C17250930AB00348246 /* labs-ios-starter.xcdatamodeld in Sources */,
 				B916372525083B7600B49A75 /* Member.swift in Sources */,
 				B9163737250850B400B49A75 /* UserImage.swift in Sources */,
 				B94042152501D08D0048BCED /* StyleSheet.swift in Sources */,
 				B940422A2502E5070048BCED /* UIButton + Convenience.swift in Sources */,
 				B916373525084FDE00B49A75 /* Response.swift in Sources */,
 				46BEB4E524C98CDC00FE0CD1 /* LoginViewController.swift in Sources */,
+				1D4D9C1325092F4A00348246 /* CoreDataManager.swift in Sources */,
 				1D4D9C0225068DEB00348246 /* CircularButton.swift in Sources */,
 				1D46C21D2501DDB4007DEDAF /* UIView+LivePreviews.swift in Sources */,
 				B91637302508495F00B49A75 /* Question.swift in Sources */,
@@ -925,6 +962,19 @@
 			productName = OktaAuth;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		1D4D9C15250930AB00348246 /* labs-ios-starter.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				1D4D9C16250930AB00348246 /* labs-ios-starter.xcdatamodel */,
+			);
+			currentVersion = 1D4D9C16250930AB00348246 /* labs-ios-starter.xcdatamodel */;
+			path = "labs-ios-starter.xcdatamodeld";
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 466C4268249A8748007D033E /* Project object */;
 }

@@ -34,6 +34,11 @@ class ErrorHandler {
         case tooManyRequests = 429
         case headerFieldTooLarge = 431
     }
+    
+    /// The required init from decoder used for managed objects can throw this error when the managed object context is missing or has broken
+    enum DecoderConfigurationError: Error {
+        case missingManagedObjectContext
+    }
 
     static var userNetworkErrors: [Int: UserError] = {
         [

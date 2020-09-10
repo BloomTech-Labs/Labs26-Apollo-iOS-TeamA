@@ -1,4 +1,4 @@
-// Copyright © 2020 Lambda, Inc. All rights reserved.
+// Copyright © 2020 Shawn James. All rights reserved.
 // UIView+LivePreviews.swift
 
 #if DEBUG
