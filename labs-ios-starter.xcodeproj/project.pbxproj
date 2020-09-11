@@ -12,6 +12,10 @@
 		1D0E104B250AAE3100A21C44 /* UIImageView+ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E104A250AAE3100A21C44 /* UIImageView+ImageDownloader.swift */; };
 		1D0E105A250AD64100A21C44 /* Surveys.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D0E1059250AD64100A21C44 /* Surveys.storyboard */; };
 		1D0E105C250AD69200A21C44 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E105B250AD69200A21C44 /* NotificationsViewController.swift */; };
+		1D0E105E250B025B00A21C44 /* TopicDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E105D250B025B00A21C44 /* TopicDetailViewController.swift */; };
+		1D0E1060250B043400A21C44 /* TopicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E105F250B043400A21C44 /* TopicViewController.swift */; };
+		1D0E1062250B046300A21C44 /* TopicNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E1061250B046300A21C44 /* TopicNameViewController.swift */; };
+		1D0E1064250B047400A21C44 /* TopicQuestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E1063250B047400A21C44 /* TopicQuestionsViewController.swift */; };
 		1D46C2142501D292007DEDAF /* OktaAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 1D46C2132501D292007DEDAF /* OktaAuth */; };
 		1D46C21D2501DDB4007DEDAF /* UIView+LivePreviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D46C21C2501DDB4007DEDAF /* UIView+LivePreviews.swift */; };
 		1D46C22125055E81007DEDAF /* StandardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D46C22025055E81007DEDAF /* StandardButton.swift */; };
@@ -73,6 +77,10 @@
 		1D0E104A250AAE3100A21C44 /* UIImageView+ImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+ImageDownloader.swift"; sourceTree = "<group>"; };
 		1D0E1059250AD64100A21C44 /* Surveys.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Surveys.storyboard; sourceTree = "<group>"; };
 		1D0E105B250AD69200A21C44 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
+		1D0E105D250B025B00A21C44 /* TopicDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicDetailViewController.swift; sourceTree = "<group>"; };
+		1D0E105F250B043400A21C44 /* TopicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicViewController.swift; sourceTree = "<group>"; };
+		1D0E1061250B046300A21C44 /* TopicNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicNameViewController.swift; sourceTree = "<group>"; };
+		1D0E1063250B047400A21C44 /* TopicQuestionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicQuestionsViewController.swift; sourceTree = "<group>"; };
 		1D46C21C2501DDB4007DEDAF /* UIView+LivePreviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+LivePreviews.swift"; sourceTree = "<group>"; };
 		1D46C22025055E81007DEDAF /* StandardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardButton.swift; sourceTree = "<group>"; };
 		1D4D9C0125068DEB00348246 /* CircularButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularButton.swift; sourceTree = "<group>"; };
@@ -172,6 +180,10 @@
 			isa = PBXGroup;
 			children = (
 				1D0E105B250AD69200A21C44 /* NotificationsViewController.swift */,
+				1D0E105D250B025B00A21C44 /* TopicDetailViewController.swift */,
+				1D0E105F250B043400A21C44 /* TopicViewController.swift */,
+				1D0E1061250B046300A21C44 /* TopicNameViewController.swift */,
+				1D0E1063250B047400A21C44 /* TopicQuestionsViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -581,6 +593,8 @@
 				1D0E104B250AAE3100A21C44 /* UIImageView+ImageDownloader.swift in Sources */,
 				B94042242502DF6A0048BCED /* UILabel + Convenience.swift in Sources */,
 				46BEB4EE24C98ECC00FE0CD1 /* ProfileController.swift in Sources */,
+				1D0E105E250B025B00A21C44 /* TopicDetailViewController.swift in Sources */,
+				1D0E1062250B046300A21C44 /* TopicNameViewController.swift in Sources */,
 				46BEB4E724C98D8900FE0CD1 /* Notifications + customNames.swift in Sources */,
 				1D0E1048250A9C7200A21C44 /* Data+PrettyJSON.swift in Sources */,
 				1D0E1046250A9B7D00A21C44 /* CodingUserInfoKey+MOC.swift in Sources */,
@@ -594,7 +608,9 @@
 				1D46C22125055E81007DEDAF /* StandardButton.swift in Sources */,
 				463AD24524CF2CDB00447BB8 /* AddProfileViewController.swift in Sources */,
 				1D0E105C250AD69200A21C44 /* NotificationsViewController.swift in Sources */,
+				1D0E1064250B047400A21C44 /* TopicQuestionsViewController.swift in Sources */,
 				466C4274249A8748007D033E /* AppDelegate.swift in Sources */,
+				1D0E1060250B043400A21C44 /* TopicViewController.swift in Sources */,
 				46C2BC9224D432F90077E49D /* ProfileTabBarViewController.swift in Sources */,
 				463AD24324CF275900447BB8 /* ProfileDetailViewController.swift in Sources */,
 				1D4D9C17250930AB00348246 /* labs-ios-starter.xcdatamodeld in Sources */,

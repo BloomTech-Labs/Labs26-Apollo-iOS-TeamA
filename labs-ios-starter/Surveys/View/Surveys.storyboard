@@ -77,7 +77,7 @@
         <!--TopicName-->
         <scene sceneID="mvv-OV-5jG">
             <objects>
-                <viewController id="aZv-jt-onU" sceneMemberID="viewController">
+                <viewController id="aZv-jt-onU" customClass="TopicDetailViewController" customModule="labs_ios_starter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="R8Y-7V-T2F">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -110,7 +110,7 @@
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="55I-Py-9aA">
                                 <rect key="frame" x="0.0" y="162" width="414" height="680"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" name="background"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="wNJ-Oi-GoB">
                                     <size key="itemSize" width="374" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -118,7 +118,7 @@
                                     <inset key="sectionInset" minX="20" minY="20" maxX="20" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="BKf-7G-Kb4">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CRUDCollectionViewCell" id="BKf-7G-Kb4">
                                         <rect key="frame" x="20" y="20" width="374" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="EUB-ds-P9w">
@@ -158,9 +158,14 @@
                                                 <constraint firstAttribute="trailing" secondItem="24n-V1-BgS" secondAttribute="trailing" constant="8" id="jmK-X4-AQZ"/>
                                             </constraints>
                                         </collectionViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <size key="customSize" width="374" height="80"/>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="aZv-jt-onU" id="8Lh-BE-xPw"/>
+                                    <outlet property="delegate" destination="aZv-jt-onU" id="l0G-hY-eWf"/>
+                                </connections>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -180,6 +185,9 @@
                         <viewLayoutGuide key="safeArea" id="nvG-xm-u24"/>
                     </view>
                     <navigationItem key="navigationItem" title="TopicName" id="hx3-yl-eRk"/>
+                    <connections>
+                        <outlet property="CRUDCollectionView" destination="55I-Py-9aA" id="Vi9-gQ-not"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ntp-fg-Bhh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -188,14 +196,14 @@
         <!--Topics-->
         <scene sceneID="JzI-wf-fgA">
             <objects>
-                <viewController id="d5s-zH-Vqv" sceneMemberID="viewController">
+                <viewController id="d5s-zH-Vqv" customClass="TopicViewController" customModule="labs_ios_starter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vRS-Wn-50B">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="15c-Ri-lBV">
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" name="background"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="OVK-aE-KvM">
                                     <size key="itemSize" width="374" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -203,7 +211,7 @@
                                     <inset key="sectionInset" minX="20" minY="20" maxX="20" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="wkv-Kr-u2R">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TopicsCollectionViewCell" id="wkv-Kr-u2R">
                                         <rect key="frame" x="20" y="20" width="374" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="IUo-Ov-4Oj">
@@ -233,12 +241,17 @@
                                                 <constraint firstAttribute="bottom" secondItem="u42-Iz-bzt" secondAttribute="bottom" constant="30" id="sbH-p2-ssN"/>
                                             </constraints>
                                         </collectionViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <size key="customSize" width="374" height="80"/>
                                         <connections>
                                             <segue destination="aZv-jt-onU" kind="presentation" id="Opz-La-5xH"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="d5s-zH-Vqv" id="Eka-Tk-8Vm"/>
+                                    <outlet property="delegate" destination="d5s-zH-Vqv" id="Jgd-4y-RHs"/>
+                                </connections>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P4f-w5-Rxe" customClass="CircularButton" customModule="labs_ios_starter" customModuleProvider="target">
                                 <rect key="frame" x="314" y="713" width="70" height="70"/>
@@ -266,6 +279,9 @@
                     <navigationItem key="navigationItem" title="Topics" id="Nbf-zG-w68">
                         <barButtonItem key="rightBarButtonItem" image="person.circle.fill" catalog="system" id="Ojh-ir-s5z"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="topicsCollectionView" destination="15c-Ri-lBV" id="FuR-Hy-QB5"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y5w-8A-bVp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -274,7 +290,7 @@
         <!--New Topic Name-->
         <scene sceneID="Vnb-KF-a0F">
             <objects>
-                <viewController id="Qtl-Jb-c92" sceneMemberID="viewController">
+                <viewController id="Qtl-Jb-c92" customClass="TopicNameViewController" customModule="labs_ios_starter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gbi-qB-SWx">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -304,7 +320,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" name="background"/>
                         <constraints>
                             <constraint firstItem="GWP-JC-dNk" firstAttribute="top" secondItem="aAf-6C-nBt" secondAttribute="bottom" constant="20" id="DO7-6k-dMr"/>
                             <constraint firstItem="2KR-hX-KIj" firstAttribute="leading" secondItem="z2S-2r-2ct" secondAttribute="leading" constant="20" id="DYT-51-UOO"/>
@@ -327,14 +343,14 @@
         <!--Questions-->
         <scene sceneID="57k-He-LmP">
             <objects>
-                <viewController id="VRw-Ph-qHy" sceneMemberID="viewController">
+                <viewController id="VRw-Ph-qHy" customClass="TopicQuestionsViewController" customModule="labs_ios_starter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NYf-KN-tmm">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="XSM-yT-fWX">
                                 <rect key="frame" x="0.0" y="147" width="414" height="695"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" name="background"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Q8V-GK-RdV">
                                     <size key="itemSize" width="374" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -342,7 +358,7 @@
                                     <inset key="sectionInset" minX="20" minY="20" maxX="20" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Ba7-rb-6H6">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="QuestionsCollectionViewCell" id="Ba7-rb-6H6">
                                         <rect key="frame" x="20" y="20" width="374" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="s4z-AU-DuX">
@@ -372,9 +388,10 @@
                                                 <constraint firstAttribute="bottom" secondItem="VoP-Eq-9Y5" secondAttribute="bottom" constant="25" id="xZV-jh-bI7"/>
                                             </constraints>
                                         </collectionViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <size key="customSize" width="374" height="80"/>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="f3J-nY-qs3">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="AddNewQuestionCell" id="f3J-nY-qs3">
                                         <rect key="frame" x="20" y="110" width="374" height="35"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="KTS-st-nSs">
@@ -398,6 +415,10 @@
                                         <size key="customSize" width="374" height="35"/>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="VRw-Ph-qHy" id="VTR-LO-S12"/>
+                                    <outlet property="delegate" destination="VRw-Ph-qHy" id="KNv-1x-ZDC"/>
+                                </connections>
                             </collectionView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="adO-9K-PCb">
                                 <rect key="frame" x="10" y="108" width="394" height="32"/>
@@ -408,6 +429,7 @@
                                     <segment title="Preset3"/>
                                     <segment title="Preset4"/>
                                 </segments>
+                                <color key="selectedSegmentTintColor" name="action"/>
                             </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -515,6 +537,9 @@
         <image name="person.circle.fill" catalog="system" width="128" height="121"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="plus.circle.fill" catalog="system" width="128" height="121"/>
+        <namedColor name="action">
+            <color red="1" green="0.47099998593330383" blue="0.0080000003799796104" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="background">
             <color red="0.85900002717971802" green="0.91399997472763062" blue="0.93300002813339233" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

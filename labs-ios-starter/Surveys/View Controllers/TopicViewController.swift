@@ -1,15 +1,15 @@
 // Copyright © 2020 Shawn James. All rights reserved.
-// NotificationsViewController.swift
+// TopicViewController.swift
 
 import UIKit
 
-class NotificationsViewController: UIViewController {
+class TopicViewController: UIViewController {
     
     // MARK: - Outlets & Properties
-    @IBOutlet weak var notificationsCollectionView: UICollectionView!
+    @IBOutlet weak var topicsCollectionView: UICollectionView!
     
-    let reuseIdentifier = "NotificationsCollectionViewCell"
-        
+    let reuseIdentifier = "TopicsCollectionViewCell"
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -22,13 +22,13 @@ class NotificationsViewController: UIViewController {
     
 }
 
-extension NotificationsViewController: UICollectionViewDataSource {
+extension TopicViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = notificationsCollectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        let cell = topicsCollectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
         cell.setDimensions(width: view.frame.width - 40, height: 80)
         return cell
     }
@@ -41,11 +41,10 @@ extension NotificationsViewController: UICollectionViewDataSource {
 
 import SwiftUI
 
-struct NotificationsViewControllerPreview: PreviewProvider {
+struct TopicViewControllerPreview: PreviewProvider {
     static var previews: some View {
         let storyboard = UIStoryboard(name: "Surveys", bundle: .main)
         let tabBarController = storyboard.instantiateInitialViewController() as? UITabBarController
-        tabBarController?.selectedIndex = 1
         
         return tabBarController?.view.livePreview.edgesIgnoringSafeArea(.all)
     }
