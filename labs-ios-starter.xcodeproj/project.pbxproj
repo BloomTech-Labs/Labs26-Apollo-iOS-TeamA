@@ -10,7 +10,8 @@
 		1D0E1046250A9B7D00A21C44 /* CodingUserInfoKey+MOC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E1045250A9B7D00A21C44 /* CodingUserInfoKey+MOC.swift */; };
 		1D0E1048250A9C7200A21C44 /* Data+PrettyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E1047250A9C7200A21C44 /* Data+PrettyJSON.swift */; };
 		1D0E104B250AAE3100A21C44 /* UIImageView+ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E104A250AAE3100A21C44 /* UIImageView+ImageDownloader.swift */; };
-		1D0E1058250AB3A400A21C44 /* Surveys.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D0E1057250AB3A300A21C44 /* Surveys.storyboard */; };
+		1D0E105A250AD64100A21C44 /* Surveys.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D0E1059250AD64100A21C44 /* Surveys.storyboard */; };
+		1D0E105C250AD69200A21C44 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E105B250AD69200A21C44 /* NotificationsViewController.swift */; };
 		1D46C2142501D292007DEDAF /* OktaAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 1D46C2132501D292007DEDAF /* OktaAuth */; };
 		1D46C21D2501DDB4007DEDAF /* UIView+LivePreviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D46C21C2501DDB4007DEDAF /* UIView+LivePreviews.swift */; };
 		1D46C22125055E81007DEDAF /* StandardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D46C22025055E81007DEDAF /* StandardButton.swift */; };
@@ -70,7 +71,8 @@
 		1D0E1045250A9B7D00A21C44 /* CodingUserInfoKey+MOC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CodingUserInfoKey+MOC.swift"; sourceTree = "<group>"; };
 		1D0E1047250A9C7200A21C44 /* Data+PrettyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+PrettyJSON.swift"; sourceTree = "<group>"; };
 		1D0E104A250AAE3100A21C44 /* UIImageView+ImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+ImageDownloader.swift"; sourceTree = "<group>"; };
-		1D0E1057250AB3A300A21C44 /* Surveys.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Surveys.storyboard; sourceTree = "<group>"; };
+		1D0E1059250AD64100A21C44 /* Surveys.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Surveys.storyboard; sourceTree = "<group>"; };
+		1D0E105B250AD69200A21C44 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		1D46C21C2501DDB4007DEDAF /* UIView+LivePreviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+LivePreviews.swift"; sourceTree = "<group>"; };
 		1D46C22025055E81007DEDAF /* StandardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardButton.swift; sourceTree = "<group>"; };
 		1D4D9C0125068DEB00348246 /* CircularButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularButton.swift; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 		1D0E1055250AB36300A21C44 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				1D0E105B250AD69200A21C44 /* NotificationsViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -176,7 +179,7 @@
 		1D0E1056250AB37600A21C44 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				1D0E1057250AB3A300A21C44 /* Surveys.storyboard */,
+				1D0E1059250AD64100A21C44 /* Surveys.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -544,12 +547,12 @@
 			files = (
 				466C4280249A8749007D033E /* LaunchScreen.storyboard in Resources */,
 				B940423C250323D20048BCED /* Okta.plist in Resources */,
-				1D0E1058250AB3A400A21C44 /* Surveys.storyboard in Resources */,
 				B9404221250203B80048BCED /* Auth.md in Resources */,
 				466C427D249A8749007D033E /* Assets.xcassets in Resources */,
 				B91637212507FA4B00B49A75 /* readme.md in Resources */,
 				46BEB4F124C98F0D00FE0CD1 /* Profiles.storyboard in Resources */,
 				466C427B249A8748007D033E /* Main.storyboard in Resources */,
+				1D0E105A250AD64100A21C44 /* Surveys.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -590,6 +593,7 @@
 				B94042272502E1390048BCED /* UIStackView + Convenience.swift in Sources */,
 				1D46C22125055E81007DEDAF /* StandardButton.swift in Sources */,
 				463AD24524CF2CDB00447BB8 /* AddProfileViewController.swift in Sources */,
+				1D0E105C250AD69200A21C44 /* NotificationsViewController.swift in Sources */,
 				466C4274249A8748007D033E /* AppDelegate.swift in Sources */,
 				46C2BC9224D432F90077E49D /* ProfileTabBarViewController.swift in Sources */,
 				463AD24324CF275900447BB8 /* ProfileDetailViewController.swift in Sources */,

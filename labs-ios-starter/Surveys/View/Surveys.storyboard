@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,44 +12,48 @@
         <!--Notifications-->
         <scene sceneID="MV2-dS-wwX">
             <objects>
-                <viewController id="fSk-BY-EqL" sceneMemberID="viewController">
+                <viewController id="fSk-BY-EqL" customClass="NotificationsViewController" customModule="labs_ios_starter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eSe-cz-Zxq">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="X8O-Oy-TAe">
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="I3P-7z-AJX">
+                                <color key="backgroundColor" name="background"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="I3P-7z-AJX">
                                     <size key="itemSize" width="374" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="20" minY="20" maxX="20" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="20" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="qak-tn-7XQ">
-                                        <rect key="frame" x="20" y="20" width="374" height="80"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="NotificationsCollectionViewCell" id="qak-tn-7XQ">
+                                        <rect key="frame" x="20" y="20" width="374" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="f88-iH-Jdh">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="80"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="VmC-7l-cTA">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SurveyName JoinCode #12Aba2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Euh-wU-OmR">
-                                                    <rect key="frame" x="8" y="25" width="247" height="30"/>
+                                                    <rect key="frame" x="8" y="54" width="247" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="Euh-wU-OmR" secondAttribute="bottom" constant="25" id="6Jw-mE-NZ0"/>
-                                                <constraint firstItem="Euh-wU-OmR" firstAttribute="top" secondItem="f88-iH-Jdh" secondAttribute="top" constant="25" id="Qp6-3n-EVo"/>
-                                                <constraint firstItem="Euh-wU-OmR" firstAttribute="leading" secondItem="f88-iH-Jdh" secondAttribute="leading" constant="8" id="cXd-2k-Myb"/>
+                                                <constraint firstItem="Euh-wU-OmR" firstAttribute="centerY" secondItem="VmC-7l-cTA" secondAttribute="centerY" id="Gmr-mN-ztc"/>
+                                                <constraint firstItem="Euh-wU-OmR" firstAttribute="leading" secondItem="VmC-7l-cTA" secondAttribute="leading" constant="8" id="cXd-2k-Myb"/>
                                             </constraints>
                                         </collectionViewCellContentView>
-                                        <size key="customSize" width="374" height="80"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <size key="customSize" width="374" height="128"/>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="fSk-BY-EqL" id="vA1-If-Hns"/>
+                                    <outlet property="delegate" destination="fSk-BY-EqL" id="TK4-62-ODc"/>
+                                </connections>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -61,6 +66,9 @@
                         <viewLayoutGuide key="safeArea" id="Bip-gd-9K3"/>
                     </view>
                     <navigationItem key="navigationItem" title="Notifications" id="aKX-yu-ofX"/>
+                    <connections>
+                        <outlet property="notificationsCollectionView" destination="X8O-Oy-TAe" id="7rK-7y-Gzb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j4B-aS-T0U" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -180,7 +188,6 @@
         <!--Topics-->
         <scene sceneID="JzI-wf-fgA">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="y5w-8A-bVp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController id="d5s-zH-Vqv" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vRS-Wn-50B">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -260,6 +267,7 @@
                         <barButtonItem key="rightBarButtonItem" image="person.circle.fill" catalog="system" id="Ojh-ir-s5z"/>
                     </navigationItem>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="y5w-8A-bVp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="124.6376811594203" y="69.642857142857139"/>
         </scene>
@@ -441,7 +449,6 @@
         <!--Surveys-->
         <scene sceneID="Ior-y1-bQK">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bm9-J9-BUA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="JBl-el-86M" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Surveys" image="bubble.left.and.bubble.right.fill" catalog="system" id="Zrp-cK-DqN"/>
                     <toolbarItems/>
@@ -454,6 +461,7 @@
                         <segue destination="d5s-zH-Vqv" kind="relationship" relationship="rootViewController" id="JTl-ui-hky"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bm9-J9-BUA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-784" y="70"/>
         </scene>
@@ -483,7 +491,7 @@
         <!--Notifications-->
         <scene sceneID="k5K-Br-0pX">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="uuc-Af-yyJ" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NotificationsViewController" automaticallyAdjustsScrollViewInsets="NO" id="uuc-Af-yyJ" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Notifications" image="bell.fill" catalog="system" id="a4b-Lh-Zai"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="pmG-bp-LO4">
@@ -507,5 +515,8 @@
         <image name="person.circle.fill" catalog="system" width="128" height="121"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="plus.circle.fill" catalog="system" width="128" height="121"/>
+        <namedColor name="background">
+            <color red="0.85900002717971802" green="0.91399997472763062" blue="0.93300002813339233" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>
