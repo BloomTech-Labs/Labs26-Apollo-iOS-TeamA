@@ -11,6 +11,8 @@ class TopicQuestionsViewController: UIViewController {
     let reuseIdentifier = "QuestionsCollectionViewCell"
     let reuseIdentifier2 = "AddNewQuestionCell"
     
+    var questions = 1
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -23,15 +25,29 @@ class TopicQuestionsViewController: UIViewController {
     
 }
 
-extension TopicQuestionsViewController: UICollectionViewDataSource {
+extension TopicQuestionsViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return questions + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = questionsCollectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-        cell.setDimensions(width: view.frame.width - 40, height: 80)
-        return cell
+        switch indexPath.row {
+            case 0..<(questions):
+                let cell = questionsCollectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+                cell.setDimensions(width: view.frame.width - 40, height: 40)
+                return cell
+            default:
+                let cell = questionsCollectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier2, for: indexPath)
+                cell.setDimensions(width: view.frame.width - 40, height: 35)
+                return cell
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard indexPath.row == questions else { return }
+        
+        questions+=1
+        collectionView.reloadData()
     }
     
 }
