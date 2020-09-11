@@ -64,8 +64,7 @@ class LoginViewController: DefaultViewController {
             if exists {
                 self.performSegue(withIdentifier: "ShowDetailProfileList", sender: nil)
             } else {
-                self.presentSimpleAlert(with: "Error", message: "No Profile, need endpoint", preferredStyle: .alert, dismissText: "Ok")
-                //self.performSegue(withIdentifier: "ModalAddProfile", sender: nil)
+                self.performSegue(withIdentifier: "ModalAddProfile", sender: nil)
             }
         }
     }
