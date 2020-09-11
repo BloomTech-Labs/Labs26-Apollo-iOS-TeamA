@@ -22,7 +22,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.LambdaSchool.LabsScaffolding</string>
+			<string>labs://apollo/implicit/callback</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>labs</string>

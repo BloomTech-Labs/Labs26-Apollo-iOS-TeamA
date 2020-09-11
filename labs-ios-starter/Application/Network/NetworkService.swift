@@ -8,27 +8,66 @@
 
 import Foundation
 
-/// Standard URL Handler that can also be used in Unit Tests with mock data
+/// Standard URL Handler that can be used in Unit Tests with mock data
 typealias URLHandler = (Data?, HTTPURLResponse?, Error?) -> Void
+/// Completion Handler using ErrorHandler class to handle common errors
+typealias URLCompletion = ((Result<Data, ErrorHandler.NetworkError>) -> Void)
 
 protocol NetworkLoader {
-    func loadData(using request: URLRequest, with completion: @escaping URLHandler)
+    func loadData(using request: URLRequest, with completion: @escaping URLCompletion)
 }
 
 // TODO: Improve error handling
 /// Provide default error and response handling for network tasks
 extension URLSession: NetworkLoader {
-    func loadData(using request: URLRequest, with completion: @escaping URLHandler) {
+
+    func loadData(using request: URLRequest, with completion: @escaping URLCompletion) {
         self.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-                print("Networking error with \(String(describing: request.url?.absoluteString)) \n\(error)")
+            //downcast response to HTTPURLResponse to work with the statusCode
+            if let response = response as? HTTPURLResponse {
+                let statusCode = response.statusCode
+                // first digit not a 2, it could be an error (need confirmation from BE team)
+                if statusCode != 200 {
+                    //unwrap the handled exception, or log an unhandled exception
+                    guard let error = ErrorHandler.NetworkError(rawValue: statusCode) else {
+                        // Edge case - unhandled exception (if this is logged, the ErrorHandler likely needs to be extended)
+                        NSLog("unhandled exception in \(#file).\(#function): \(statusCode)")
+                        completion(.failure(.unknown))
+                        return
+                    }
+                    //log and complete with the error to be further handled by the caller
+                    NSLog("\(#file).\(#function) completed with error: \(error)")
+                    completion(.failure(error))
+                    return
+                }
+
             }
-            completion(data, response as? HTTPURLResponse, error)
+
+            if let error = error {
+                // Edge case - standard networking error not handled in response, or no response
+                NSLog("Networking error in \(#file).\(#function) with \(String(describing: request.url?.absoluteString)) \n\(error)")
+                completion(.failure(.unknown))
+            }
+
+            guard let data = data else {
+                // Edge case - if no error and valid response, why no data?
+                let response = response as? HTTPURLResponse
+                NSLog("unhandled exception in \(#file).\(#function) - NIL DATA WITH RESPONSE: \(String(describing: response?.statusCode))")
+                completion(.failure(.unknown))
+                return
+            }
+            completion(.success(data))
         }.resume()
     }
 }
 
 class NetworkService {
+
+    // MARK: - Pseudo Singleton -
+    // (init not private to allow for Mock Data Testing) -
+    /// Singleton for production use, use standard init in testing
+    static let shared = NetworkService()
+
     // MARK: - Types -
 
     ///Used to set a`URLRequest`'s HTTP Method
@@ -63,6 +102,8 @@ class NetworkService {
         let error: Error?
     }
 
+    // MARK: - Properties -
+    var errorHandler = ErrorHandler.shared
     ///used to switch between live and Mock Data
     var dataLoader: NetworkLoader
 
@@ -121,7 +162,7 @@ class NetworkService {
         }
     }
 
-    func loadData(using request: URLRequest, with completion: @escaping (Data?, HTTPURLResponse?, Error?) -> Void) {
+    func loadData(using request: URLRequest, with completion: @escaping URLCompletion) {
         self.dataLoader.loadData(using: request, with: completion)
     }
 
