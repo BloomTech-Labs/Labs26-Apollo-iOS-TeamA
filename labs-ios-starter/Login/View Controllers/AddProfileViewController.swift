@@ -45,12 +45,13 @@ class AddProfileViewController: DefaultViewController {
     }
     
     @IBAction func addProfile(_ sender: Any) {
-        
+        // TODO: last name
+        let lastName = "last name"
         guard let name = nameTextField.text,
             let email = emailTextField.text,
             let avatarURLString = avatarURLTextField.text,
             let avatarURL = URL(string: avatarURLString),
-            let profile = profileController.createProfile(with: email, name: name, avatarURL: avatarURL) else {
+            let profile = profileController.createProfile(with: email, firstName: name, lastName: lastName, avatarURL: avatarURL) else {
                 NSLog("Fields missing information. Present alert to notify user to enter all information.")
                 return
         }
