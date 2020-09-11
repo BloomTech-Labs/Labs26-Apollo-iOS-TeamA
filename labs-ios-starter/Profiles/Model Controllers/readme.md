@@ -12,7 +12,7 @@
 
 1. In ProfileController.swift, locate the following code (specific values will be different and the different variables may not be together)
 
-    ```Swift
+    ``` Swift
     private let baseURL = URL(string: "https://dev-625244.okta.com/")!
     lazy var oktaAuth = OktaAuth(baseURL: baseURL,
                             clientID: "0oavsbe2kAVi9pJPx4x6",
@@ -25,4 +25,4 @@
 
     - your redirectURI may not be provided initially. Somebody with access to the Okta app (on the Okta side!) needs to implement a redirect URI and provide you with it. Ryan Hamblin (labs manager) was our point of contact
     
-    2. A separate URL may be used for testing. We used  `private let testingULR = URL(string: "https://auth.lambdalabs.dev/")!`
+    2. A separate URL may be used for testing. We used  `private let testingURL = URL(string: "https://auth.lambdalabs.dev/")!`
