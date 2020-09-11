@@ -23,6 +23,6 @@
 
     - clientID will be provided
 
-    - your redirectURI may not be provided initially. Somebody with access to the Okta app (on the Okta side!) needs to implement a redirect URI and provide you with it. Ryan Hamblin (labs manager) was our point of contact
+    - your redirectURI may not be provided initially. Somebody with access to the Okta app (on the Okta side!) needs to implement a redirect URI and provide you with it. Ryan Hamblin (Experiential Learning Manager: Lambda Labs Engineering) was our point of contact
     
     2. A separate URL may be used for testing. We used  `private let testingURL = URL(string: "https://auth.lambdalabs.dev/")!`
