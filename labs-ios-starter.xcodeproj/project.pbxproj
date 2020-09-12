@@ -38,6 +38,13 @@
 		46BEB4F124C98F0D00FE0CD1 /* Profiles.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46BEB4F024C98F0D00FE0CD1 /* Profiles.storyboard */; };
 		46C2BC9224D432F90077E49D /* ProfileTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46C2BC9124D432F90077E49D /* ProfileTabBarViewController.swift */; };
 		B91637212507FA4B00B49A75 /* readme.md in Resources */ = {isa = PBXBuildFile; fileRef = B91637202507FA4B00B49A75 /* readme.md */; };
+		B916372525083B7600B49A75 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = B916372425083B7600B49A75 /* Member.swift */; };
+		B916372B250840B700B49A75 /* Bearer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B916372A250840B700B49A75 /* Bearer.swift */; };
+		B916372D250841B200B49A75 /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B916372C250841B200B49A75 /* Topic.swift */; };
+		B91637302508495F00B49A75 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = B916372F2508495F00B49A75 /* Question.swift */; };
+		B916373225084CD800B49A75 /* ContextQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B916373125084CD800B49A75 /* ContextQuestion.swift */; };
+		B916373525084FDE00B49A75 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = B916373425084FDE00B49A75 /* Response.swift */; };
+		B9163737250850B400B49A75 /* UserImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9163736250850B400B49A75 /* UserImage.swift */; };
 		B94042102501D0740048BCED /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940420D2501D0740048BCED /* NetworkService.swift */; };
 		B94042112501D0740048BCED /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940420E2501D0740048BCED /* ErrorHandler.swift */; };
 		B94042152501D08D0048BCED /* StyleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94042132501D08C0048BCED /* StyleSheet.swift */; };
@@ -51,7 +58,6 @@
 		B94042272502E1390048BCED /* UIStackView + Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94042262502E1390048BCED /* UIStackView + Convenience.swift */; };
 		B940422A2502E5070048BCED /* UIButton + Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94042292502E5070048BCED /* UIButton + Convenience.swift */; };
 		B9404232250321230048BCED /* labs_ios_starterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9404231250321230048BCED /* labs_ios_starterTests.swift */; };
-		B940423C250323D20048BCED /* Okta.plist in Resources */ = {isa = PBXBuildFile; fileRef = B940423B250323D20048BCED /* Okta.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +114,13 @@
 		46BF10BD24D388FF001C6753 /* UIViewController+Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerts.swift"; sourceTree = "<group>"; };
 		46C2BC9124D432F90077E49D /* ProfileTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTabBarViewController.swift; sourceTree = "<group>"; };
 		B91637202507FA4B00B49A75 /* readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = readme.md; path = "labs-ios-starter/Profiles/Model Controllers/readme.md"; sourceTree = SOURCE_ROOT; };
+		B916372425083B7600B49A75 /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
+		B916372A250840B700B49A75 /* Bearer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bearer.swift; sourceTree = "<group>"; };
+		B916372C250841B200B49A75 /* Topic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
+		B916372F2508495F00B49A75 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
+		B916373125084CD800B49A75 /* ContextQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextQuestion.swift; sourceTree = "<group>"; };
+		B916373425084FDE00B49A75 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		B9163736250850B400B49A75 /* UserImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImage.swift; sourceTree = "<group>"; };
 		B940420D2501D0740048BCED /* NetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		B940420E2501D0740048BCED /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		B940420F2501D0740048BCED /* URLRequest + JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URLRequest + JSON.swift"; sourceTree = "<group>"; };
@@ -122,7 +135,6 @@
 		B940422F250321230048BCED /* labs-ios-starterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "labs-ios-starterTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9404231250321230048BCED /* labs_ios_starterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = labs_ios_starterTests.swift; sourceTree = "<group>"; };
 		B9404233250321230048BCED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B940423B250323D20048BCED /* Okta.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Okta.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -286,6 +298,8 @@
 			children = (
 				1D0E1049250AACB700A21C44 /* CoreData MO */,
 				46BEB4E024C9828800FE0CD1 /* Profile.swift */,
+				B916372325083B4100B49A75 /* Apollo */,
+				B916372225083B3A00B49A75 /* Okta Auth */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -316,6 +330,44 @@
 				B94042092501CE840048BCED /* View */,
 			);
 			path = Profiles;
+			sourceTree = "<group>";
+		};
+		B916372225083B3A00B49A75 /* Okta Auth */ = {
+			isa = PBXGroup;
+			children = (
+				46BEB4E024C9828800FE0CD1 /* Profile.swift */,
+			);
+			path = "Okta Auth";
+			sourceTree = "<group>";
+		};
+		B916372325083B4100B49A75 /* Apollo */ = {
+			isa = PBXGroup;
+			children = (
+				B916372E2508437400B49A75 /* Web Auth */,
+				B916373325084CDF00B49A75 /* Topic */,
+			);
+			path = Apollo;
+			sourceTree = "<group>";
+		};
+		B916372E2508437400B49A75 /* Web Auth */ = {
+			isa = PBXGroup;
+			children = (
+				B916372425083B7600B49A75 /* Member.swift */,
+				B916372A250840B700B49A75 /* Bearer.swift */,
+				B9163736250850B400B49A75 /* UserImage.swift */,
+			);
+			path = "Web Auth";
+			sourceTree = "<group>";
+		};
+		B916373325084CDF00B49A75 /* Topic */ = {
+			isa = PBXGroup;
+			children = (
+				B916372C250841B200B49A75 /* Topic.swift */,
+				B916373125084CD800B49A75 /* ContextQuestion.swift */,
+				B916372F2508495F00B49A75 /* Question.swift */,
+				B916373425084FDE00B49A75 /* Response.swift */,
+			);
+			path = Topic;
 			sourceTree = "<group>";
 		};
 		B94042072501CE670048BCED /* View Controllers */ = {
@@ -397,7 +449,6 @@
 			children = (
 				B940421C2501D9120048BCED /* AuthService.swift */,
 				B940421E2501D9250048BCED /* String+Validate.swift */,
-				B940423B250323D20048BCED /* Okta.plist */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -558,7 +609,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				466C4280249A8749007D033E /* LaunchScreen.storyboard in Resources */,
-				B940423C250323D20048BCED /* Okta.plist in Resources */,
 				B9404221250203B80048BCED /* Auth.md in Resources */,
 				466C427D249A8749007D033E /* Assets.xcassets in Resources */,
 				B91637212507FA4B00B49A75 /* readme.md in Resources */,
@@ -601,8 +651,10 @@
 				B940421F2501D9250048BCED /* String+Validate.swift in Sources */,
 				B94042192501D1BD0048BCED /* URLRequest + JSON.swift in Sources */,
 				B940421A2501D1CE0048BCED /* UIViewController+Alerts.swift in Sources */,
+				B916372D250841B200B49A75 /* Topic.swift in Sources */,
 				46BEB4E124C9828800FE0CD1 /* Profile.swift in Sources */,
 				46BEB4E924C98DAF00FE0CD1 /* ProfileListViewController.swift in Sources */,
+				B916372B250840B700B49A75 /* Bearer.swift in Sources */,
 				B94042112501D0740048BCED /* ErrorHandler.swift in Sources */,
 				B94042272502E1390048BCED /* UIStackView + Convenience.swift in Sources */,
 				1D46C22125055E81007DEDAF /* StandardButton.swift in Sources */,
@@ -612,14 +664,19 @@
 				466C4274249A8748007D033E /* AppDelegate.swift in Sources */,
 				1D0E1060250B043400A21C44 /* TopicViewController.swift in Sources */,
 				46C2BC9224D432F90077E49D /* ProfileTabBarViewController.swift in Sources */,
+				B916373225084CD800B49A75 /* ContextQuestion.swift in Sources */,
 				463AD24324CF275900447BB8 /* ProfileDetailViewController.swift in Sources */,
 				1D4D9C17250930AB00348246 /* labs-ios-starter.xcdatamodeld in Sources */,
+				B916372525083B7600B49A75 /* Member.swift in Sources */,
+				B9163737250850B400B49A75 /* UserImage.swift in Sources */,
 				B94042152501D08D0048BCED /* StyleSheet.swift in Sources */,
 				B940422A2502E5070048BCED /* UIButton + Convenience.swift in Sources */,
+				B916373525084FDE00B49A75 /* Response.swift in Sources */,
 				46BEB4E524C98CDC00FE0CD1 /* LoginViewController.swift in Sources */,
 				1D4D9C1325092F4A00348246 /* CoreDataManager.swift in Sources */,
 				1D4D9C0225068DEB00348246 /* CircularButton.swift in Sources */,
 				1D46C21D2501DDB4007DEDAF /* UIView+LivePreviews.swift in Sources */,
+				B91637302508495F00B49A75 /* Question.swift in Sources */,
 				B94042162501D08D0048BCED /* UIView + Convenience.swift in Sources */,
 				B940421D2501D9120048BCED /* AuthService.swift in Sources */,
 				B94042102501D0740048BCED /* NetworkService.swift in Sources */,

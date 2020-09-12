@@ -40,7 +40,7 @@ class ErrorHandler {
         case missingManagedObjectContext
     }
 
-    static var userNetworkErrors: [Int: UserError] {
+    static var userNetworkErrors: [Int: UserError] = {
         [
             NetworkError.unauthorized.rawValue: UserError(title: "Unauthorized", message: "Please login again"),
             NetworkError.forbidden.rawValue: UserError(title: "Forbidden", message: "Access to that resource is restricted"),
@@ -48,9 +48,9 @@ class ErrorHandler {
             NetworkError.notFound.rawValue: UserError(title: "Not Found", message: "Sorry, we're having trouble finding that resource")
         ]
 
-    }
+    }()
 
-    static var internalNetworkErrors: [Int: String] {
+    static var internalNetworkErrors: [Int: String] = {
         [
             NetworkError.badRequest.rawValue: "The request was formatted incorrectly.",
             NetworkError.badMethod.rawValue: "Method not accepted",
@@ -58,7 +58,7 @@ class ErrorHandler {
             NetworkError.tooManyRequests.rawValue: "Too many requests sent recently",
             NetworkError.headerFieldTooLarge.rawValue: "header too large"
         ]
-    }
+    }()
 
     /// Conforms to Swift.Error protocol so it can be used with Result type
     /// RawValues are used to store titles for UserError struct

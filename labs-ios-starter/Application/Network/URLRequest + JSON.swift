@@ -36,6 +36,8 @@ extension URLRequest {
         dateFormatter: DateFormatter? = nil
     ) {
         let jsonEncoder = JSONEncoder()
+        //avoid using Coding Keys
+        jsonEncoder.keyEncodingStrategy = .convertToSnakeCase
         //for optional dateFormatter
         if let dateFormatter = dateFormatter {
             jsonEncoder.dateEncodingStrategy = .formatted(dateFormatter)
