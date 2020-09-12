@@ -13,8 +13,7 @@ import UIKit
 struct Member: Equatable, Codable {
 
     enum CodingKeys: String, CodingKey {
-        case id
-        case email
+        case id, email
         case firstName = "firstname"
         case lastName = "lastname"
         case avatarURL = "avatarUrl"

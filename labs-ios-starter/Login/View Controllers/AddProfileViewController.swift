@@ -52,7 +52,8 @@ class AddProfileViewController: DefaultViewController {
             let avatarURLString = avatarURLTextField.text,
             let avatarURL = URL(string: avatarURLString),
             let profile = profileController.createProfile(with: email, firstName: name, lastName: lastName, avatarURL: avatarURL) else {
-                NSLog("Fields missing information. Present alert to notify user to enter all information.")
+                NSLog("Fields missing information.")
+                self.presentSimpleAlert(with: "Oops!", message: "Please enter all fields", preferredStyle: .alert, dismissText: "Ok")
                 return
         }
         

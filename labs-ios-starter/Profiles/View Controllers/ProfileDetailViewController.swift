@@ -52,7 +52,6 @@ class ProfileDetailViewController: UIViewController {
                 return
         }
 
-
         profileController.updateAuthenticatedUserProfile(profile, with: name, email: email, avatarURL: avatarURL) { [weak self] (updatedProfile) in
 
             guard let self = self,
@@ -107,8 +106,6 @@ class ProfileDetailViewController: UIViewController {
             profileController.image(for: avatarURL, completion: { [weak self] (avatarImage) in
                 guard let self = self else { return }
 
-                //TODO: This is a URL
-                //self.profile?.avatarImage = avatarImage
                 self.avatarImageView.image = avatarImage
             })
         }

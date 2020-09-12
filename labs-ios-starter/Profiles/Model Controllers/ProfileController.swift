@@ -27,10 +27,8 @@ class ProfileController {
                                  clientID: "0oavsbe2kAVi9pJPx4x6",
                                  redirectURI: "labs://apollo/implicit/callback")
 
-
     private(set) var authenticatedUserProfile: Member?
     private(set) var profiles: [Member] = []
-
     
     private init() {
         NotificationCenter.default.addObserver(self,
