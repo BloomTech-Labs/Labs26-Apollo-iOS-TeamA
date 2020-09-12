@@ -9,6 +9,8 @@
 import UIKit
 import OktaAuth
 
+// TODO: Use as template to display members for topics
+
 class ProfileListViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
@@ -63,8 +65,7 @@ extension ProfileListViewController: UITableViewDelegate, UITableViewDataSource 
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCell", for: indexPath)
         
         let profile = profileController.profiles[indexPath.row]
-        cell.textLabel?.text = profile.firstName
-        //Todo: display lastName
+        cell.textLabel?.text = "\(profile.firstName ?? "") \(profile.lastName ?? "")"
         cell.detailTextLabel?.text = profile.email
         
         return cell
