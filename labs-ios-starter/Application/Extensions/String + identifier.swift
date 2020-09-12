@@ -9,19 +9,28 @@
 import Foundation
 
 enum StoryboardIdentifier: String {
-    case profileDetailViewController = "ProfileDetailViewController"
-    case surveyTabBarController = "SurveyTabBarController"
-    case profileNavigationController = "ProfileNavigationController"
-}
-///convenience method to retrieve storyboardIdentifiers
-func getStoryboardIdentifier(identifier: StoryboardIdentifier) -> String {
-    identifier.rawValue
+    case profileDetailViewController
+    case surveyTabBarController
+    case profileNavigationController
 }
 
 enum SegueIdentifier: String {
-    case sample
+    case showProfileDetail
+    case showDetailProfileList
+    case modalAddProfile
 }
-///convenience method to get Segue Identifiers
-func getSegueIdentifier(identifier: SegueIdentifier) -> String {
-    identifier.rawValue
+
+extension String {
+    ///convenience method to retrieve Storyboard Identifiers
+    static func getStoryboardIdentifier(identifier: StoryboardIdentifier) -> String {
+        //storyboard ids are capitalized
+        identifier.rawValue.capitalized
+    }
+
+    ///convenience method to get Segue Identifiers
+    static func getSegueIdentifier(identifier: SegueIdentifier) -> String {
+        //segue ids are capitalized
+        identifier.rawValue.capitalized
+    }
 }
+
