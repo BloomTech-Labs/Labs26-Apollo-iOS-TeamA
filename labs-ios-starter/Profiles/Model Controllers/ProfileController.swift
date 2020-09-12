@@ -198,8 +198,7 @@ class ProfileController {
                 completion(profile)
 
             case .failure(let error):
-
-                print("Error logging in: \(error)")
+                print("Error authenticating on \(requestURL.absoluteString): \(error)")
                 completion(nil)
             }
         }
