@@ -10,6 +10,8 @@ import Foundation
 
 enum StoryboardIdentifier: String {
     case profileDetailViewController = "ProfileDetailViewController"
+    case surveyTabBarController = "SurveyTabBarController"
+    case profileNavigationController = "ProfileNavigationController"
 }
 ///convenience method to retrieve storyboardIdentifiers
 func getStoryboardIdentifier(identifier: StoryboardIdentifier) -> String {
