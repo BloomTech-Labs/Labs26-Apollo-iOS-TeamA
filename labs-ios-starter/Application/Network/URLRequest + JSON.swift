@@ -45,9 +45,9 @@ extension URLRequest {
         do {
             let data = try jsonEncoder.encode(encodable)
             if self.httpBody != nil {
-                self.httpBody = data
-            } else {
                 self.httpBody!.append(data)
+            } else {
+                self.httpBody = data
             }
         } catch {
             print("Error encoding object into JSON \(error)")
