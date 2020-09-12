@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qoB-kH-nth">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Qtu-zv-a3B">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -10,7 +10,7 @@
         <!--Me-->
         <scene sceneID="vJW-fU-OnN">
             <objects>
-                <navigationController id="Qtu-zv-a3B" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ProfileNavigationController" id="Qtu-zv-a3B" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Me" image="person" catalog="system" id="g9L-uN-kCt"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="E4J-bA-0ha">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -157,24 +157,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jIr-97-2Ze" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1969.5652173913045" y="929.46428571428567"/>
-        </scene>
-        <!--Profile Tab Bar View Controller-->
-        <scene sceneID="IUW-ly-e69">
-            <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="qoB-kH-nth" customClass="ProfileTabBarViewController" customModule="labs_ios_starter" customModuleProvider="target" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="4CC-np-kAJ">
-                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </tabBar>
-                    <connections>
-                        <segue destination="Qtu-zv-a3B" kind="relationship" relationship="viewControllers" id="Brz-ec-7BM"/>
-                    </connections>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hHh-fq-ggi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="150.72463768115944" y="193.52678571428569"/>
         </scene>
     </scenes>
     <resources>
