@@ -20,17 +20,30 @@ enum SegueIdentifier: String {
     case modalAddProfile
 }
 
+enum TableViewIdentifier: String {
+    case profileCell
+}
+
 extension String {
     ///convenience method to retrieve Storyboard Identifiers
     static func getStoryboardIdentifier(identifier: StoryboardIdentifier) -> String {
         //storyboard ids are capitalized
-        identifier.rawValue.capitalized
+        identifier.rawValue.firstCapitalized
     }
 
     ///convenience method to get Segue Identifiers
     static func getSegueIdentifier(identifier: SegueIdentifier) -> String {
         //segue ids are capitalized
-        identifier.rawValue.capitalized
+        identifier.rawValue.firstCapitalized
+    }
+
+    static func getTableViewIdentifier(identifier: TableViewIdentifier) -> String {
+        //segue ids are capitalized
+        identifier.rawValue.firstCapitalized
     }
 }
 
+extension StringProtocol {
+    var firstUppercased: String { prefix(1).uppercased() + dropFirst() }
+    var firstCapitalized: String { prefix(1).capitalized + dropFirst() }
+}
