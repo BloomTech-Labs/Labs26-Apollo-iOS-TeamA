@@ -7,7 +7,7 @@ extension UIImageView {
     func downloaded(from url: URL, contentMode mode: UIView.ContentMode = .scaleAspectFill) {
         contentMode = mode
         
-        let networkService = NetworkService()
+        let networkService = NetworkService() // TODO: Use the singleton once it's available
         guard let request = networkService.createRequest(url: url, method: .get) else {
             print("Failed to create request, check URL")
             return
