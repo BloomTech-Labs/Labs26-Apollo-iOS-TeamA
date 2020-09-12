@@ -28,7 +28,11 @@ class ProfileListViewController: UIViewController {
     // MARK: - Private Methods
     
     private func refresh() {
-        profileController.getAllProfiles {
+        profileController.getAllProfiles { error in
+            if let error = error {
+                self.presentAuthError(error: error)
+                return
+            }
             self.tableView.reloadData()
         }
     }
@@ -59,7 +63,8 @@ extension ProfileListViewController: UITableViewDelegate, UITableViewDataSource 
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCell", for: indexPath)
         
         let profile = profileController.profiles[indexPath.row]
-        cell.textLabel?.text = profile.name
+        cell.textLabel?.text = profile.firstName
+        //Todo: display lastName
         cell.detailTextLabel?.text = profile.email
         
         return cell

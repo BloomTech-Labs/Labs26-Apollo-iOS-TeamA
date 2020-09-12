@@ -27,6 +27,6 @@ struct Profile: Codable {
 }
 
 struct ProfileWithMessage: Codable {
-    let profile: Profile
+    let profile: Member
     let message: String?
 }

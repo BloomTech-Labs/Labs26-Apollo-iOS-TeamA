@@ -22,7 +22,7 @@ class ProfileDetailViewController: UIViewController {
     @IBOutlet weak var avatarURLTextField: UITextField!
     
     var profileController: ProfileController = ProfileController.shared
-    var profile: Profile?
+    var profile: Member?
     var isUsersProfile = true
     
     // MARK: - View Lifecycle
@@ -51,10 +51,16 @@ class ProfileDetailViewController: UIViewController {
                 
                 return
         }
-        
+
         profileController.updateAuthenticatedUserProfile(profile, with: name, email: email, avatarURL: avatarURL) { [weak self] (updatedProfile) in
-            
-            guard let self = self else { return }
+
+            guard let self = self,
+                let updatedProfile = updatedProfile
+            else {
+                print("error unwrapping profile")
+                return
+            }
+
             self.updateViews(with: updatedProfile)
         }
     }
@@ -87,19 +93,19 @@ class ProfileDetailViewController: UIViewController {
         }
     }
     
-    private func updateViews(with profile: Profile) {
+    private func updateViews(with profile: Member) {
         guard isViewLoaded else { return }
         
-        nameLabel.text = profile.name
+        nameLabel.text = profile.firstName
+        //TODO: Last name
         emailLabel.text = profile.email
         
-        if let avatarImage = profile.avatarImage {
+        if let avatarImage = profile.image {
             avatarImageView.image = avatarImage
         } else if let avatarURL = profile.avatarURL {
             profileController.image(for: avatarURL, completion: { [weak self] (avatarImage) in
                 guard let self = self else { return }
-                
-                self.profile?.avatarImage = avatarImage
+
                 self.avatarImageView.image = avatarImage
             })
         }
@@ -108,7 +114,8 @@ class ProfileDetailViewController: UIViewController {
         
         navigationItem.rightBarButtonItem = editButtonItem
         
-        nameTextField.text = profile.name
+        nameTextField.text = profile.firstName
+        //TODO: Last name
         emailTextField.text = profile.email
         avatarURLTextField.text = profile.avatarURL?.absoluteString
     }
