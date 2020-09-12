@@ -10,7 +10,7 @@ import UIKit
 import OktaAuth
 
 class ProfileController {
-    let networkService = NetworkService()
+    let networkService = NetworkService.shared
     
     static let shared = ProfileController()
 

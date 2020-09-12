@@ -10,8 +10,8 @@ import XCTest
 @testable import labs_ios_starter
 
 class NetworkServiceTests: XCTestCase {
-    let networkService = NetworkService()
-
+    let networkService = NetworkService.shared
+    
     func testGetRequestNoError() {
         let expectation = self.expectation(description: "Test GET Request Valid URL No Error")
 
