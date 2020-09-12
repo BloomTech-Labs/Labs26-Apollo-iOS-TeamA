@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import UIKit
 @testable import labs_ios_starter
 
 class NetworkServiceTests: XCTestCase {
@@ -61,5 +62,18 @@ class NetworkServiceTests: XCTestCase {
         wait(for: [expectation!], timeout: 3.0)
     }
     
+    /// Tests the ability of downloading an image straight into a UIImageView using a network connection, within a given speed threshold. If this take more than 1 second in healthy network conditions, it won't be a great experience on the UI.
+    func testImageDownloading() throws {
+        let expectation = XCTestExpectation(description: "should wait for XCTAssertNotNil before finishing test")
+        
+        let imageView = UIImageView()
+        imageView.downloaded(from: "https://craphound.com/images/1006884_2adf8fc7.jpg")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // check imageView.image in 1 sec to ensure a speedy download
+            XCTAssertNotNil(imageView.image, "test image did not download, or took too long")
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 1.5)
+    }
 
 }
