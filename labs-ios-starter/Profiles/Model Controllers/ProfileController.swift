@@ -159,8 +159,8 @@ class ProfileController {
             return
         }
         // if testing, use testURL otherwise use webURL
-        let requestURL = !testing ? baseURL : testURL
-            .appendingPathComponent("profiles")
+        let requestURL = baseURL
+            .appendingPathComponent("profile")
             .appendingPathComponent(userID)
         var request = URLRequest(url: requestURL)
         
