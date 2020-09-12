@@ -280,8 +280,9 @@ class ProfileController {
         networkService.loadData(using: request) { result in
             switch result {
             case .success(let data):
-
-                completion(UIImage(data: data))
+                DispatchQueue.main.async {
+                    completion(UIImage(data: data))
+                }
                 return
             case .failure(let error):
                 print(error)
