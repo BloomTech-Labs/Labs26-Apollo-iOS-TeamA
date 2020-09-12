@@ -10,6 +10,7 @@ import UIKit
 import OktaAuth
 
 class ProfileController {
+    let networkService = NetworkService()
     
     static let shared = ProfileController()
 
@@ -23,8 +24,8 @@ class ProfileController {
     private let oktaAuthURL = URL(string: "https://dev-625244.okta.com/")!
 
     lazy var oktaAuth = OktaAuth(baseURL: oktaAuthURL,
-                            clientID: "0oavsbe2kAVi9pJPx4x6",
-                            redirectURI: "labs://apollo/implicit/callback")
+                                 clientID: "0oavsbe2kAVi9pJPx4x6",
+                                 redirectURI: "labs://apollo/implicit/callback")
 
 
     private(set) var authenticatedUserProfile: Member?
@@ -52,60 +53,39 @@ class ProfileController {
             postAuthenticationExpiredNotification()
             NSLog("Credentials do not exist. Unable to get profiles from API")
             DispatchQueue.main.async {
-                completion(ErrorHandler.UserAuthError.noConnection)
+                completion(.noConnection)
             }
             return
         }
         
         let requestURL = baseURL.appendingPathComponent("profiles")
-        var request = URLRequest(url: requestURL)
-        
-        request.addValue("Bearer \(oktaCredentials.idToken)", forHTTPHeaderField: "Authorization")
-        
-        let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            
-            defer {
-                DispatchQueue.main.async {
-                    completion(nil)
+        guard var request = networkService.createRequest(url: requestURL, method: .get) else {
+            print("invalid request")
+            completion(.noConnection)
+            return
+        }
+
+        request.addValue("Bearer \(oktaCredentials.idToken)", forHTTPHeaderField: NetworkService.HttpHeaderType.authorization.rawValue)
+
+        networkService.loadData(using: request) { result in
+            switch result {
+            case .success(let data):
+                guard let profiles = self.networkService.decode(to: [Member].self, data: data) else {
+                    print("couldn't decode profiles")
+                    completion(.noConnection)
+                    return
                 }
-            }
-            
-            if let error = error {
-                NSLog("Error getting all profiles: \(error)")
-                completion(ErrorHandler.UserAuthError.noConnection)
-                return
-            }
-            
-            if let response = response as? HTTPURLResponse,
-                response.statusCode != 200 {
-                NSLog("Returned status code is not the expected 200. Instead it is \(response.statusCode)")
-                completion(ErrorHandler.UserAuthError.noConnection)
-                return
-            }
-            
-            guard let data = data else {
-                NSLog("No data returned from getting all profiles")
-                completion(ErrorHandler.UserAuthError.noConnection)
-                return
-            }
-            
-            let decoder = JSONDecoder()
-            
-            do {
-                let profiles = try decoder.decode([Member].self, from: data)
-                
+
                 DispatchQueue.main.async {
                     self.profiles = profiles
+                    completion(nil)
                 }
-            } catch {
 
-                NSLog("Unable to decode [Profile] from data: \(error)")
-                completion(ErrorHandler.UserAuthError.noConnection)
-
+            case .failure(let error):
+                print("error with web login: \(error)")
+                completion(.noConnection)
             }
         }
-        
-        dataTask.resume()
     }
     
     func getAuthenticatedUserProfile(completion: @escaping () -> Void = { }) {
@@ -158,52 +138,34 @@ class ProfileController {
             }
             return
         }
-        // if testing, use testURL otherwise use webURL
+
         let requestURL = baseURL
             .appendingPathComponent("profile")
             .appendingPathComponent(userID)
-        var request = URLRequest(url: requestURL)
-        
-        request.addValue("Bearer \(oktaCredentials.idToken)", forHTTPHeaderField: "Authorization")
-        
-        let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            
-            var fetchedProfile: Member?
-            
-            defer {
-                DispatchQueue.main.async {
-                    completion(fetchedProfile)
-                }
-            }
-            
-            if let error = error {
-                NSLog("Error getting all profiles: \(error)")
-            }
-            
-            if let response = response as? HTTPURLResponse,
-                response.statusCode != 200 {
-                NSLog("Returned status code is not the expected 200. Instead it is \(response.statusCode)")
-            }
-            
-            guard let data = data else {
-                NSLog("No data returned from getting all profiles")
-                return
-            }
-            
-            let decoder = JSONDecoder()
-            
-            do {
-                let profile = try decoder.decode(Member.self, from: data)
-                fetchedProfile = profile
-            } catch {
-                NSLog("Unable to decode Profile from data: \(error)")
-            }
+        guard var request = networkService.createRequest(url: requestURL, method: .get) else {
+            print("invalid request")
+            return
         }
         
-        dataTask.resume()
+        request.addValue("Bearer \(oktaCredentials.idToken)", forHTTPHeaderField: "Authorization")
+
+        networkService.loadData(using: request) { result in
+            var fetchedProfile: Member?
+            switch result {
+            case .success(let data):
+                fetchedProfile = self.networkService.decode(to: Member.self, data: data)
+                completion(fetchedProfile)
+            case .failure(let error):
+                print("error logging in to heroku backend: \(error)")
+                completion(nil)
+                return
+            }
+
+        }
+
     }
     
-    func updateAuthenticatedUserProfile(_ profile: Member, with name: String, email: String, avatarURL: URL, completion: @escaping (Member) -> Void) {
+    func updateAuthenticatedUserProfile(_ profile: Member, with name: String, email: String, avatarURL: URL, completion: @escaping (Member?) -> Void) {
         
         var oktaCredentials: OktaCredentials
         
@@ -221,55 +183,28 @@ class ProfileController {
         let requestURL = baseURL
             .appendingPathComponent("profiles")
         
-        var request = URLRequest(url: requestURL)
-        request.httpMethod = "PUT"
-        request.addValue("Bearer \(oktaCredentials.idToken)", forHTTPHeaderField: "Authorization")
-        
-        do {
-            request.httpBody = try JSONEncoder().encode(profile)
-        } catch {
-            NSLog("Error encoding profile JSON: \(error)")
-            DispatchQueue.main.async {
-                completion(profile)
-            }
+        guard var request = networkService.createRequest(url: requestURL, method: .put) else {
+            print("invalid request")
+            completion(nil)
             return
         }
-        
-        let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            
-            var profile = profile
-            
-            defer {
-                DispatchQueue.main.async {
-                    completion(profile)
-                }
-            }
-            
-            if let error = error {
-                NSLog("Error adding profile: \(error)")
-                return
-            }
-            
-            if let response = response as? HTTPURLResponse,
-                response.statusCode != 200 {
-                NSLog("Returned status code is not the expected 200. Instead it is \(response.statusCode)")
-                return
-            }
-            
-            guard let data = data else {
-                NSLog("No data returned from updating profile")
-                return
-            }
-            
-            do {
-                profile = try JSONDecoder().decode(ProfileWithMessage.self, from: data).profile
-                self.authenticatedUserProfile = profile
-            } catch {
-                NSLog("Error decoding `ProfileWithMessage`: \(error)")
+        request.httpMethod = "PUT"
+        request.addValue("Bearer \(oktaCredentials.idToken)", forHTTPHeaderField: "Authorization")
+        request.encode(from: profile)
+
+        networkService.loadData(using: request) { (result) in
+            switch result {
+            case .success(let data):
+
+                self.authenticatedUserProfile = self.networkService.decode(to: ProfileWithMessage.self, data: data)?.profile
+                completion(profile)
+
+            case .failure(let error):
+
+                print("Error logging in: \(error)")
+                completion(nil)
             }
         }
-        
-        dataTask.resume()
     }
     
     // NOTE: This method is unused, but left as an example for creating a profile.
@@ -312,67 +247,51 @@ class ProfileController {
         }
         
         let requestURL = baseURL.appendingPathComponent("profiles")
-        var request = URLRequest(url: requestURL)
-        request.httpMethod = "POST"
-        request.addValue("Bearer \(oktaCredentials.idToken)", forHTTPHeaderField: "Authorization")
-        
-        do {
-            request.httpBody = try JSONEncoder().encode(profile)
-        } catch {
-            NSLog("Error encoding profile: \(profile)")
-            defer {
-                DispatchQueue.main.async {
-                    completion()
-                }
-            }
+        guard var request = networkService.createRequest(url: requestURL, method: .post) else {
+            print("invalid request")
+            completion()
             return
         }
-        
-        let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            
-            defer {
-                DispatchQueue.main.async {
-                    completion()
-                }
-            }
-            
-            if let error = error {
-                NSLog("Error adding profile: \(error)")
-            }
-            
-            if let response = response as? HTTPURLResponse,
-                response.statusCode != 200 {
-                NSLog("Returned status code is not the expected 200. Instead it is \(response.statusCode)")
+        request.addValue("Bearer \(oktaCredentials.idToken)", forHTTPHeaderField: "Authorization")
+
+        request.encode(from: profile)
+
+        networkService.loadData(using: request) { result in
+            switch result {
+            case .success(let data):
+                self.profiles.append(profile)
+                completion()
+                print(data)
+                return
+
+            case.failure(let error):
+                completion()
+                print(error)
                 return
             }
-            
-            self.profiles.append(profile)
         }
-        dataTask.resume()
     }
     
     func image(for url: URL, completion: @escaping (UIImage?) -> Void) {
-        let dataTask = URLSession.shared.dataTask(with: url) { (data, _, error) in
-            
-            var fetchedImage: UIImage? = nil
-            
-            defer {
-                DispatchQueue.main.async {
-                    completion(fetchedImage)
-                }
-            }
-            if let error = error {
-                NSLog("Error fetching image for url: \(url.absoluteString), error: \(error)")
+        guard let request = networkService.createRequest(url: url, method: .get) else {
+            print("invalid request")
+            completion(nil)
+            return
+        }
+
+        networkService.loadData(using: request) { result in
+            switch result {
+            case .success(let data):
+
+                completion(UIImage(data: data))
+                return
+            case .failure(let error):
+                print(error)
+                completion(nil)
                 return
             }
-            
-            guard let data = data,
-                let image = UIImage(data: data) else {
-                    return
-            }
-            fetchedImage = image
         }
-        dataTask.resume()
+
     }
     
     func postAuthenticationExpiredNotification() {

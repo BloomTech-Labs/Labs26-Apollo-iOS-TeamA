@@ -55,7 +55,13 @@ class ProfileDetailViewController: UIViewController {
 
         profileController.updateAuthenticatedUserProfile(profile, with: name, email: email, avatarURL: avatarURL) { [weak self] (updatedProfile) in
 
-            guard let self = self else { return }
+            guard let self = self,
+                let updatedProfile = updatedProfile
+            else {
+                print("error unwrapping profile")
+                return
+            }
+
             self.updateViews(with: updatedProfile)
         }
     }

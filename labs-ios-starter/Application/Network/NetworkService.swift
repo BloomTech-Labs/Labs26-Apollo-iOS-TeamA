@@ -84,6 +84,7 @@ class NetworkService {
      */
     enum HttpHeaderType: String {
         case contentType = "Content-Type"
+        case authorization = "Authorization"
     }
 
     /**
