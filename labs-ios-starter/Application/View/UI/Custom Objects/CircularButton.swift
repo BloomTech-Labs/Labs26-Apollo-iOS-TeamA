@@ -1,4 +1,4 @@
-// Copyright © 2020 Lambda, Inc. All rights reserved.
+// Copyright © 2020 Shawn James. All rights reserved.
 // CircularButton.swift
 
 import UIKit
@@ -39,6 +39,7 @@ class CircularButton: UIButton {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         commonInit()
+        layer.cornerRadius = frame.height / 2
     }
     
     /// Sets up the button with configuration
