@@ -10,6 +10,12 @@
 		1D0E1046250A9B7D00A21C44 /* CodingUserInfoKey+MOC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E1045250A9B7D00A21C44 /* CodingUserInfoKey+MOC.swift */; };
 		1D0E1048250A9C7200A21C44 /* Data+PrettyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E1047250A9C7200A21C44 /* Data+PrettyJSON.swift */; };
 		1D0E104B250AAE3100A21C44 /* UIImageView+ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E104A250AAE3100A21C44 /* UIImageView+ImageDownloader.swift */; };
+		1D0E105A250AD64100A21C44 /* Surveys.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D0E1059250AD64100A21C44 /* Surveys.storyboard */; };
+		1D0E105C250AD69200A21C44 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E105B250AD69200A21C44 /* NotificationsViewController.swift */; };
+		1D0E105E250B025B00A21C44 /* TopicDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E105D250B025B00A21C44 /* TopicDetailViewController.swift */; };
+		1D0E1060250B043400A21C44 /* TopicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E105F250B043400A21C44 /* TopicViewController.swift */; };
+		1D0E1062250B046300A21C44 /* TopicNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E1061250B046300A21C44 /* TopicNameViewController.swift */; };
+		1D0E1064250B047400A21C44 /* TopicQuestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E1063250B047400A21C44 /* TopicQuestionsViewController.swift */; };
 		1D46C2142501D292007DEDAF /* OktaAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 1D46C2132501D292007DEDAF /* OktaAuth */; };
 		1D46C21D2501DDB4007DEDAF /* UIView+LivePreviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D46C21C2501DDB4007DEDAF /* UIView+LivePreviews.swift */; };
 		1D46C22125055E81007DEDAF /* StandardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D46C22025055E81007DEDAF /* StandardButton.swift */; };
@@ -77,6 +83,12 @@
 		1D0E1045250A9B7D00A21C44 /* CodingUserInfoKey+MOC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CodingUserInfoKey+MOC.swift"; sourceTree = "<group>"; };
 		1D0E1047250A9C7200A21C44 /* Data+PrettyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+PrettyJSON.swift"; sourceTree = "<group>"; };
 		1D0E104A250AAE3100A21C44 /* UIImageView+ImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+ImageDownloader.swift"; sourceTree = "<group>"; };
+		1D0E1059250AD64100A21C44 /* Surveys.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Surveys.storyboard; sourceTree = "<group>"; };
+		1D0E105B250AD69200A21C44 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
+		1D0E105D250B025B00A21C44 /* TopicDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicDetailViewController.swift; sourceTree = "<group>"; };
+		1D0E105F250B043400A21C44 /* TopicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicViewController.swift; sourceTree = "<group>"; };
+		1D0E1061250B046300A21C44 /* TopicNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicNameViewController.swift; sourceTree = "<group>"; };
+		1D0E1063250B047400A21C44 /* TopicQuestionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicQuestionsViewController.swift; sourceTree = "<group>"; };
 		1D46C21C2501DDB4007DEDAF /* UIView+LivePreviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+LivePreviews.swift"; sourceTree = "<group>"; };
 		1D46C22025055E81007DEDAF /* StandardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardButton.swift; sourceTree = "<group>"; };
 		1D4D9C0125068DEB00348246 /* CircularButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularButton.swift; sourceTree = "<group>"; };
@@ -162,6 +174,43 @@
 			path = "CoreData MO";
 			sourceTree = "<group>";
 		};
+		1D0E1053250AB34E00A21C44 /* Surveys */ = {
+			isa = PBXGroup;
+			children = (
+				1D0E1054250AB35E00A21C44 /* Model Controllers */,
+				1D0E1055250AB36300A21C44 /* View Controllers */,
+				1D0E1056250AB37600A21C44 /* View */,
+			);
+			path = Surveys;
+			sourceTree = "<group>";
+		};
+		1D0E1054250AB35E00A21C44 /* Model Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Model Controllers";
+			sourceTree = "<group>";
+		};
+		1D0E1055250AB36300A21C44 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				1D0E105B250AD69200A21C44 /* NotificationsViewController.swift */,
+				1D0E105D250B025B00A21C44 /* TopicDetailViewController.swift */,
+				1D0E105F250B043400A21C44 /* TopicViewController.swift */,
+				1D0E1061250B046300A21C44 /* TopicNameViewController.swift */,
+				1D0E1063250B047400A21C44 /* TopicQuestionsViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		1D0E1056250AB37600A21C44 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1D0E1059250AD64100A21C44 /* Surveys.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		1D46C21F25055D7E007DEDAF /* Custom Objects */ = {
 			isa = PBXGroup;
 			children = (
@@ -227,6 +276,7 @@
 				46BEB4EB24C98EB400FE0CD1 /* Model */,
 				46BEB4EF24C98ED900FE0CD1 /* Login */,
 				46BEB4F224C98F1100FE0CD1 /* Profiles */,
+				1D0E1053250AB34E00A21C44 /* Surveys */,
 				465DAA2724BD0BC100D94C24 /* App Lifecycle */,
 				466C4287249A889F007D033E /* File Organization.md */,
 			);
@@ -567,6 +617,7 @@
 				B91637212507FA4B00B49A75 /* readme.md in Resources */,
 				46BEB4F124C98F0D00FE0CD1 /* Profiles.storyboard in Resources */,
 				466C427B249A8748007D033E /* Main.storyboard in Resources */,
+				1D0E105A250AD64100A21C44 /* Surveys.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -595,6 +646,8 @@
 				1D0E104B250AAE3100A21C44 /* UIImageView+ImageDownloader.swift in Sources */,
 				B94042242502DF6A0048BCED /* UILabel + Convenience.swift in Sources */,
 				46BEB4EE24C98ECC00FE0CD1 /* ProfileController.swift in Sources */,
+				1D0E105E250B025B00A21C44 /* TopicDetailViewController.swift in Sources */,
+				1D0E1062250B046300A21C44 /* TopicNameViewController.swift in Sources */,
 				46BEB4E724C98D8900FE0CD1 /* Notifications + customNames.swift in Sources */,
 				1D0E1048250A9C7200A21C44 /* Data+PrettyJSON.swift in Sources */,
 				1D0E1046250A9B7D00A21C44 /* CodingUserInfoKey+MOC.swift in Sources */,
@@ -608,7 +661,10 @@
 				B94042272502E1390048BCED /* UIStackView + Convenience.swift in Sources */,
 				1D46C22125055E81007DEDAF /* StandardButton.swift in Sources */,
 				463AD24524CF2CDB00447BB8 /* AddProfileViewController.swift in Sources */,
+				1D0E105C250AD69200A21C44 /* NotificationsViewController.swift in Sources */,
+				1D0E1064250B047400A21C44 /* TopicQuestionsViewController.swift in Sources */,
 				466C4274249A8748007D033E /* AppDelegate.swift in Sources */,
+				1D0E1060250B043400A21C44 /* TopicViewController.swift in Sources */,
 				46C2BC9224D432F90077E49D /* ProfileTabBarViewController.swift in Sources */,
 				B916373225084CD800B49A75 /* ContextQuestion.swift in Sources */,
 				463AD24324CF275900447BB8 /* ProfileDetailViewController.swift in Sources */,
