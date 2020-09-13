@@ -14,6 +14,8 @@ class TopicViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let topicController = TopicController()
+        topicController.postTopic()
     }
     
     // MARK: - Handlers
