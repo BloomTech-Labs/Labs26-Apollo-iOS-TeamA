@@ -36,16 +36,30 @@ class CoreDataManager {
     /// CoreDataManager.shared.persistentContainer.newBackgroundContext()
     /// ```
     /// - Warning: Large processes my hang the UI on the mainContext.
-    /// - context: the selected object space for managed objects. Defaults to mainContext.
-    func saveContext(_ context: NSManagedObjectContext = CoreDataManager.shared.mainContext) throws {
+    /// - parameter context: the selected object space for managed objects. Defaults to mainContext.
+    /// - parameter async: whether or not the action should run async using a perform block
+    func saveContext(_ context: NSManagedObjectContext = CoreDataManager.shared.mainContext, async: Bool = false) throws {
         var error: Error?
-        context.performAndWait {
-            do {
-                try context.save()
-            } catch let saveError {
-                error = saveError
+        
+        switch async {
+            case true:
+                context.perform {
+                    do {
+                        try context.save()
+                    } catch let saveError {
+                        error = saveError
+                    }
+            }
+            case false:
+                context.performAndWait {
+                    do {
+                        try context.save()
+                    } catch let saveError {
+                        error = saveError
+                    }
             }
         }
+        
         if let error = error { throw error }
     }
     

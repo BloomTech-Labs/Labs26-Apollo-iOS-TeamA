@@ -9,6 +9,8 @@
 import UIKit
 import OktaAuth
 
+// TODO: Use as template to display members for topics
+
 class ProfileListViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
@@ -40,7 +42,7 @@ class ProfileListViewController: UIViewController {
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ShowProfileDetail" {
+        if segue.identifier == .getSegueIdentifier(identifier: .showProfileDetail) {
             
             guard let profileDetailVC = segue.destination as? ProfileDetailViewController,
                 let indexPath = tableView.indexPathForSelectedRow else {
@@ -60,11 +62,10 @@ extension ProfileListViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: .getTableViewIdentifier(identifier: .profileCell), for: indexPath)
         
         let profile = profileController.profiles[indexPath.row]
-        cell.textLabel?.text = profile.firstName
-        //Todo: display lastName
+        cell.textLabel?.text = "\(profile.firstName ?? "") \(profile.lastName ?? "")"
         cell.detailTextLabel?.text = profile.email
         
         return cell

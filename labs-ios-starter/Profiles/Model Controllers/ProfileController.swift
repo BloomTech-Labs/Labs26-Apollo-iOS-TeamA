@@ -10,7 +10,7 @@ import UIKit
 import OktaAuth
 
 class ProfileController {
-    let networkService = NetworkService()
+    let networkService = NetworkService.shared
     
     static let shared = ProfileController()
 
@@ -198,8 +198,7 @@ class ProfileController {
                 completion(profile)
 
             case .failure(let error):
-
-                print("Error logging in: \(error)")
+                print("Error authenticating on \(requestURL.absoluteString): \(error)")
                 completion(nil)
             }
         }

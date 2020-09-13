@@ -62,9 +62,9 @@ class LoginViewController: DefaultViewController {
                 self.presentedViewController == nil else { return }
                 
             if exists {
-                self.performSegue(withIdentifier: "ShowDetailProfileList", sender: nil)
+                self.performSegue(withIdentifier: .getSegueIdentifier(identifier: .showDetailProfileList), sender: nil)
             } else {
-                self.performSegue(withIdentifier: "ModalAddProfile", sender: nil)
+                self.performSegue(withIdentifier: .getSegueIdentifier(identifier: .modalAddProfile), sender: nil)
             }
         }
     }
@@ -72,7 +72,7 @@ class LoginViewController: DefaultViewController {
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ModalAddProfile" {
+        if segue.identifier == .getSegueIdentifier(identifier: .modalAddProfile) {
             guard let addProfileVC = segue.destination as? AddProfileViewController else { return }
             addProfileVC.delegate = self
         }
