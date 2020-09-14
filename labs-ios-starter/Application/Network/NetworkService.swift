@@ -47,6 +47,7 @@ extension URLSession: NetworkLoader {
                 // Edge case - standard networking error not handled in response, or no response
                 NSLog("Networking error in \(#file).\(#function) with \(String(describing: request.url?.absoluteString)) \n\(error)")
                 completion(.failure(.unknown))
+                return
             }
 
             guard let data = data else {
