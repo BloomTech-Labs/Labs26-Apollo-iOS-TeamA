@@ -8,15 +8,18 @@
 
 import Foundation
 
+/// Controller for Topic, ContextObject, and Question model
 class TopicController {
     let networkService = NetworkService.shared
     let baseURL = ProfileController.shared.baseURL
 
-    var contexts: [String: ContextObject]  {
+    ///public getter for CONTEXTS
+    var contexts: [ String: [Question] ]  {
         CONTEXTS
     }
 
-    private var CONTEXTS: [String:ContextObject] = [:]
+    ///private setter for contexts
+    private var CONTEXTS: [ String:[Question] ] = [:]
 
     private func createRequest(auth: Bool = true,
                                pathFromBaseURL: String,
@@ -37,7 +40,10 @@ class TopicController {
         return request
     }
 
-    func fetchTopic(all: Bool = true) {
+    typealias CompleteWithTopics = (Result<[Topic], ErrorHandler.NetworkError>) -> Void
+
+    ///fetch all topics, or topics for the logged in user
+    func fetchTopic(all: Bool = true, completion: @escaping CompleteWithTopics) {
         var appendToURL = "topic"
         if !all {
             // Doesn't look like this will work - topic by id is topic id
@@ -51,14 +57,22 @@ class TopicController {
         networkService.loadData(using: request) { result in
             switch result {
             case .success(let data):
-                print(self.networkService.decode(to: [Topic].self, data: data))
+                guard let topics = self.networkService.decode(to: [Topic].self, data: data) else {
+                    print("Error decoding topics")
+                    completion(.failure(.badDecode))
+                    return
+                }
+                completion(.success(topics))
             case .failure(let error):
-                print(error)
+                // bubble error to caller
+                completion(.failure(error))
             }
         }
     }
-    typealias CompleteWithContextQuestions = (Result<[ContextObject], ErrorHandler.NetworkError>) -> Void
-    func getAllContexts(complete: @escaping CompleteWithContextQuestions) {
+
+    typealias CompleteWithContextTitles = (Result<[ContextObject], ErrorHandler.NetworkError>) -> Void
+    ///Get all contexts
+    func getAllContexts(complete: @escaping CompleteWithContextTitles) {
         guard let request = createRequest(pathFromBaseURL: "context") else {
             print("couldn't get context, invalid request")
             return
@@ -72,27 +86,50 @@ class TopicController {
                     return
                 }
                 complete(.success(contexts))
+            //bubble error to caller
             case .failure(let error):
                 complete(.failure(error))
             }
         }
     }
 
-    typealias CompleteWithContextQuestion = (Result<ContextObject, ErrorHandler.NetworkError>) -> Void
-    func getQuestion(with contextID: String, completion: @escaping CompleteWithContextQuestion) {
+    typealias CompleteWithQuestions = (Result<[Question], ErrorHandler.NetworkError>) -> Void
 
-        getAllContexts() { result in
-            guard let question = self.contexts[contextID] else {
-                print("context with ID not found")
-                completion(.failure(.notFound))
-                return
+    func getQuestions(with contextID: String, completion: @escaping CompleteWithQuestions) {
+        //attempt to get questions from cache and return
+        if let cachedQuestions = CONTEXTS[contextID] {
+            completion(.success(cachedQuestions))
+            return
+        }
+        // create request to /questions/contextID
+        guard let request = self.createRequest(pathFromBaseURL: "question/\(contextID)") else {
+            completion(.failure(.badRequest))
+            return
+        }
+
+        // get questions from endpoint
+        self.networkService.loadData(using: request) { [weak self] result in
+            //self is nil here???
+            switch result {
+            // decode questions
+            case .success(let data):
+                guard let questions = self?.networkService.decode(to: [Question].self, data: data) else {
+                    completion(.failure(.badDecode))
+                    return
+                }
+                // set cache
+                self?.CONTEXTS[contextID] = questions
+                completion(.success(questions))
+
+            // bubble error to caller
+            case .failure(let error):
+                completion(.failure(error))
             }
-            completion(.success(question))
         }
 
 
     }
-
+    //TODO
     func postTopic() {
         guard var request = createRequest(pathFromBaseURL: "topic", method: .post) else {
             return
@@ -116,7 +153,3 @@ class TopicController {
         }
     }
 }
-
-
-
-
