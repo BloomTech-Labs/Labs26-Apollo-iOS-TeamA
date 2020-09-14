@@ -36,7 +36,7 @@ extension String {
         //segue ids are capitalized
         identifier.rawValue.firstCapitalized
     }
-
+    ///convenience method to get TableView Identifiers
     static func getTableViewIdentifier(identifier: TableViewIdentifier) -> String {
         //segue ids are capitalized
         identifier.rawValue.firstCapitalized
