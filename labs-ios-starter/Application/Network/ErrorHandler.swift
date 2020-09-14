@@ -41,6 +41,7 @@ class ErrorHandler {
         case headerFieldTooLarge = 431
         //TODO: Determine with BE team when this is triggered
         case internalServerError = 500
+        case badDecode = 998
         case unknown = 999
     }
     
@@ -67,6 +68,7 @@ class ErrorHandler {
             NetworkError.tooManyRequests.rawValue: "Too many requests sent recently",
             NetworkError.headerFieldTooLarge.rawValue: "header too large",
             NetworkError.internalServerError.rawValue: "An internal server error occurred",
+            NetworkError.badDecode.rawValue: "decoding error",
             NetworkError.unknown.rawValue: "An unknown error occured"
         ]
     }()
