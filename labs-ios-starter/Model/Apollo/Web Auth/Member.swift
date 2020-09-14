@@ -19,7 +19,8 @@ struct Member: Equatable, Codable {
         case avatarURL = "avatarUrl"
     }
 
-    var id: String?
+    var oktaID: String?
+    var id: Int?
     var email: String?
     var firstName: String?
     var lastName: String?
@@ -35,7 +36,8 @@ struct Member: Equatable, Codable {
     ///   - password: optional, used for login and updating password only (defaults to nil)
     ///   - firstName: optional, used for registration and updating name only (defaults to nil)
     ///   - lastName: optional, used for registration and updating name only (defaults to nil)
-    init(id: String? = nil, email: String? = nil, firstName: String? = nil, lastName: String? = nil, avatarURL: URL? = nil) {
+    init(oktaID: String?, id: Int?, email: String? = nil, firstName: String? = nil, lastName: String? = nil, avatarURL: URL? = nil) {
+        self.oktaID = oktaID
         self.id = id
         self.email = email
         self.firstName = firstName
@@ -43,8 +45,16 @@ struct Member: Equatable, Codable {
         self.avatarURL = avatarURL
     }
 
+    init (from decoder :Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try? container.decode(Int.self, forKey: .id)
+        if id == nil {
+            oktaID = try? container.decode(String.self, forKey: .id)
+        }
+    }
+
     static func ==(lhs: Member, rhs: Member) -> Bool {
-        lhs.id == rhs.id
+        lhs.oktaID == rhs.oktaID
     }
 
 }

@@ -16,5 +16,5 @@ struct Question: Codable {
     var question: String //questions? need final backend model
     var type: String
     var style: String //for rating
-    var context: ContextQuestion?
+    var context: ContextObject?
 }
