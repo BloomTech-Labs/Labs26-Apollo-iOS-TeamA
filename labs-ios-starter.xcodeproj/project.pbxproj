@@ -41,7 +41,7 @@
 		B916372B250840B700B49A75 /* Bearer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B916372A250840B700B49A75 /* Bearer.swift */; };
 		B916372D250841B200B49A75 /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B916372C250841B200B49A75 /* Topic.swift */; };
 		B91637302508495F00B49A75 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = B916372F2508495F00B49A75 /* Question.swift */; };
-		B916373225084CD800B49A75 /* ContextQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B916373125084CD800B49A75 /* ContextQuestion.swift */; };
+		B916373225084CD800B49A75 /* ContextObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B916373125084CD800B49A75 /* ContextObject.swift */; };
 		B916373525084FDE00B49A75 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = B916373425084FDE00B49A75 /* Response.swift */; };
 		B9163737250850B400B49A75 /* UserImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9163736250850B400B49A75 /* UserImage.swift */; };
 		B91BF7E3250BC4C200D68EA6 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -123,7 +123,7 @@
 		B916372A250840B700B49A75 /* Bearer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bearer.swift; sourceTree = "<group>"; };
 		B916372C250841B200B49A75 /* Topic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
 		B916372F2508495F00B49A75 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
-		B916373125084CD800B49A75 /* ContextQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextQuestion.swift; sourceTree = "<group>"; };
+		B916373125084CD800B49A75 /* ContextObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextObject.swift; sourceTree = "<group>"; };
 		B916373425084FDE00B49A75 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		B9163736250850B400B49A75 /* UserImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImage.swift; sourceTree = "<group>"; };
 		B91BF7EE250C47F600D68EA6 /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
@@ -376,7 +376,7 @@
 			isa = PBXGroup;
 			children = (
 				B916372C250841B200B49A75 /* Topic.swift */,
-				B916373125084CD800B49A75 /* ContextQuestion.swift */,
+				B916373125084CD800B49A75 /* ContextObject.swift */,
 				B916372F2508495F00B49A75 /* Question.swift */,
 				B916373425084FDE00B49A75 /* Response.swift */,
 			);
@@ -386,7 +386,6 @@
 		B91BF7E4250BC56E00D68EA6 /* CreateTopic */ = {
 			isa = PBXGroup;
 			children = (
-				B91BF7E6250BC59600D68EA6 /* TopicController.swift */,
 			);
 			path = CreateTopic;
 			sourceTree = "<group>";
@@ -697,7 +696,7 @@
 				466C4274249A8748007D033E /* AppDelegate.swift in Sources */,
 				1D0E1060250B043400A21C44 /* TopicViewController.swift in Sources */,
 				46C2BC9224D432F90077E49D /* ProfileTabBarViewController.swift in Sources */,
-				B916373225084CD800B49A75 /* ContextQuestion.swift in Sources */,
+				B916373225084CD800B49A75 /* ContextObject.swift in Sources */,
 				463AD24324CF275900447BB8 /* ProfileDetailViewController.swift in Sources */,
 				1D4D9C17250930AB00348246 /* labs-ios-starter.xcdatamodeld in Sources */,
 				B91BF7E3250BC4C200D68EA6 /* (null) in Sources */,
@@ -707,7 +706,6 @@
 				B94042152501D08D0048BCED /* StyleSheet.swift in Sources */,
 				B940422A2502E5070048BCED /* UIButton + Convenience.swift in Sources */,
 				B916373525084FDE00B49A75 /* Response.swift in Sources */,
-				B91BF7E7250BC59600D68EA6 /* TopicController.swift in Sources */,
 				46BEB4E524C98CDC00FE0CD1 /* LoginViewController.swift in Sources */,
 				1D4D9C1325092F4A00348246 /* CoreDataManager.swift in Sources */,
 				1D4D9C0225068DEB00348246 /* CircularButton.swift in Sources */,

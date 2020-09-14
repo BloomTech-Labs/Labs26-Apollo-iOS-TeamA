@@ -221,7 +221,7 @@ class ProfileController {
             NSLog("Credentials do not exist. Unable to create profile")
             return nil
         }
-        return Member(id: userID, email: email, firstName: firstName, lastName: lastName, avatarURL: avatarURL)
+        return Member(oktaID: userID, id: nil, email: email, firstName: firstName, lastName: lastName, avatarURL: avatarURL)
     }
     
     // NOTE: This method is unused, but left as an example for creating a profile on the scaffolding backend.

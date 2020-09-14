@@ -9,12 +9,12 @@
 import Foundation
 
 /// Used to determine a Question's context. so named to avoid collision with Swift.Context
-struct Context: Codable {
+struct ContextObject: Codable {
     var id: Int
-    var context: [String]
+    var title: String
 
     enum CodingKeys: String, CodingKey {
         case id
-        case context = "contextoption"
+        case title = "contextoption"
     }
 }

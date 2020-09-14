@@ -12,6 +12,12 @@ class TopicController {
     let networkService = NetworkService.shared
     let baseURL = ProfileController.shared.baseURL
 
+    var contexts: [String: ContextObject]  {
+        CONTEXTS
+    }
+
+    private var CONTEXTS: [String:ContextObject] = [:]
+
     private func createRequest(auth: Bool = true,
                                pathFromBaseURL: String,
                                method: NetworkService.HttpMethod = .get) -> URLRequest? {
@@ -36,7 +42,7 @@ class TopicController {
         if !all {
             // Doesn't look like this will work - topic by id is topic id
             // TODO: coordinate with BE team to see if we can get a topic by userId endpoint
-            appendToURL = ProfileController.shared.authenticatedUserProfile!.id!
+            appendToURL = "\(ProfileController.shared.authenticatedUserProfile!.id!)"
         }
         guard let request = createRequest(pathFromBaseURL: appendToURL) else {
             return
@@ -51,8 +57,39 @@ class TopicController {
             }
         }
     }
+    typealias CompleteWithContextQuestions = (Result<[ContextObject], ErrorHandler.NetworkError>) -> Void
+    func getAllContexts(complete: @escaping CompleteWithContextQuestions) {
+        guard let request = createRequest(pathFromBaseURL: "context") else {
+            print("couldn't get context, invalid request")
+            return
+        }
+        networkService.loadData(using: request) { result in
+            switch result {
+            case .success(let data):
+                guard let contexts = self.networkService.decode(to: [ContextObject].self, data: data) else {
+                    print("error decoding contexts from valid data")
+                    complete(.failure(.notFound))
+                    return
+                }
+                complete(.success(contexts))
+            case .failure(let error):
+                complete(.failure(error))
+            }
+        }
+    }
 
-    func getAllContexts() {
+    typealias CompleteWithContextQuestion = (Result<ContextObject, ErrorHandler.NetworkError>) -> Void
+    func getQuestion(with contextID: String, completion: @escaping CompleteWithContextQuestion) {
+
+        getAllContexts() { result in
+            guard let question = self.contexts[contextID] else {
+                print("context with ID not found")
+                completion(.failure(.notFound))
+                return
+            }
+            completion(.success(question))
+        }
+
 
     }
 

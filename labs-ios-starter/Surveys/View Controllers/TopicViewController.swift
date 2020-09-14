@@ -15,7 +15,18 @@ class TopicViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let topicController = TopicController()
-        topicController.postTopic()
+        topicController.getAllContexts(complete: { [weak self] result in
+            guard let self = self else {
+                print("TopicVC is nil")
+                return
+            }
+            switch result {
+            case .success(let questions):
+                print(questions)
+            case .failure(let error):
+                self.presentNetworkError(error: error.rawValue)
+            }
+        })
     }
     
     // MARK: - Handlers
