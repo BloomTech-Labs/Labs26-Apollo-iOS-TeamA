@@ -45,12 +45,19 @@ struct Member: Equatable, Codable {
         self.avatarURL = avatarURL
     }
 
-    init (from decoder :Decoder) throws {
+    init (from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        //if id is Int, this is a web user ID
         id = try? container.decode(Int.self, forKey: .id)
+        //if id is String, this is an Okta ID
         if id == nil {
             oktaID = try? container.decode(String.self, forKey: .id)
         }
+
+        email = try? container.decode(String.self, forKey: .email)
+        firstName = try container.decode(String.self, forKey: .firstName)
+        lastName = try container.decode(String.self, forKey: .lastName)
+        avatarURL = try container.decode(URL.self, forKey: .avatarURL)
     }
 
     static func ==(lhs: Member, rhs: Member) -> Bool {
