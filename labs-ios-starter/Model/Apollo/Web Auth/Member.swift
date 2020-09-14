@@ -11,14 +11,7 @@ import UIKit
 
 /// Standard user, leader if topic originator
 struct Member: Equatable, Codable {
-
-    enum CodingKeys: String, CodingKey {
-        case id, email
-        case firstName = "firstname"
-        case lastName = "lastname"
-        case avatarURL = "avatarUrl"
-    }
-
+    // MARK: - Properties -
     var oktaID: String?
     var id: Int?
     var email: String?
@@ -29,6 +22,7 @@ struct Member: Equatable, Codable {
     //holds image after downloading in UserDetailVC
     var image: UIImage?
 
+    // MARK: - Init -
     /// - Parameters:
     ///   - identifier: defaults to new UUID, make sure to assign the correct one when decoding
     ///   rather than generating a new one
@@ -43,6 +37,13 @@ struct Member: Equatable, Codable {
         self.firstName = firstName
         self.lastName = lastName
         self.avatarURL = avatarURL
+    }
+    // MARK: - Codable -
+    enum CodingKeys: String, CodingKey {
+        case id, email
+        case firstName = "firstname"
+        case lastName = "lastname"
+        case avatarURL = "avatarUrl"
     }
 
     init (from decoder: Decoder) throws {
