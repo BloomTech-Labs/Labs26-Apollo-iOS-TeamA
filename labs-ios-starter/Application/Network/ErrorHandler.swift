@@ -39,6 +39,8 @@ class ErrorHandler {
         case timeout = 408
         case tooManyRequests = 429
         case headerFieldTooLarge = 431
+        //TODO: Determine with BE team when this is triggered
+        case internalServerError = 500
         case unknown = 999
     }
     
@@ -64,6 +66,7 @@ class ErrorHandler {
             NetworkError.resourceNotAcceptable.rawValue: "Resource not acceptable",
             NetworkError.tooManyRequests.rawValue: "Too many requests sent recently",
             NetworkError.headerFieldTooLarge.rawValue: "header too large",
+            NetworkError.internalServerError.rawValue: "An internal server error occurred",
             NetworkError.unknown.rawValue: "An unknown error occured"
         ]
     }()

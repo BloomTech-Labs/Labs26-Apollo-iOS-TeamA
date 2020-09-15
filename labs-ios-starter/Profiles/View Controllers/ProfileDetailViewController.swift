@@ -13,11 +13,13 @@ class ProfileDetailViewController: UIViewController {
     // MARK: - Properties and Outlets
     
     @IBOutlet weak var avatarImageView: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var firstNameLabel: UILabel!
+    @IBOutlet weak var lastNameLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
     
     @IBOutlet weak var editStackView: UIStackView!
-    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var firstNameTextField: UITextField!
+    @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var avatarURLTextField: UITextField!
     
@@ -40,7 +42,7 @@ class ProfileDetailViewController: UIViewController {
     @IBAction func updateProfile(_ sender: Any) {
         
         guard let profile = profileController.authenticatedUserProfile,
-            let name = nameTextField.text,
+            let name = firstNameTextField.text,
             let email = emailTextField.text,
             let avatarURLString = avatarURLTextField.text,
             let avatarURL = URL(string: avatarURLString) else {
@@ -96,26 +98,20 @@ class ProfileDetailViewController: UIViewController {
     private func updateViews(with profile: Member) {
         guard isViewLoaded else { return }
         
-        nameLabel.text = profile.firstName
-        //TODO: Last name
+        firstNameLabel.text = profile.firstName
+        lastNameLabel.text = profile.lastName
         emailLabel.text = profile.email
-        
-        if let avatarImage = profile.image {
-            avatarImageView.image = avatarImage
-        } else if let avatarURL = profile.avatarURL {
-            profileController.image(for: avatarURL, completion: { [weak self] (avatarImage) in
-                guard let self = self else { return }
-
-                self.avatarImageView.image = avatarImage
-            })
+        //assign image
+        if let avatarImageURL = profile.avatarURL {
+            self.avatarImageView.downloaded(from: avatarImageURL)
         }
         
         guard isUsersProfile else { return }
         
         navigationItem.rightBarButtonItem = editButtonItem
         
-        nameTextField.text = profile.firstName
-        //TODO: Last name
+        firstNameTextField.text = profile.firstName
+        lastNameTextField.text = profile.lastName
         emailTextField.text = profile.email
         avatarURLTextField.text = profile.avatarURL?.absoluteString
     }
