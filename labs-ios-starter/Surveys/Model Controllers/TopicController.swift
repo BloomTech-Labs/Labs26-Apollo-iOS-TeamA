@@ -93,12 +93,13 @@ class TopicController {
         }
     }
 
-    typealias CompleteWithQuestions = (Result<[Question], ErrorHandler.NetworkError>) -> Void
+    typealias CompleteWithQuestions = (Result<Question, ErrorHandler.NetworkError>) -> Void
 
+    //TODO: Why is BE only giving 1 question???
     func getQuestions(with contextID: String, completion: @escaping CompleteWithQuestions) {
         //attempt to get questions from cache and return
         if let cachedQuestions = CONTEXTS[contextID] {
-            completion(.success(cachedQuestions))
+            completion(.success(cachedQuestions[0]))
             return
         }
         // create request to /questions/contextID
@@ -108,17 +109,17 @@ class TopicController {
         }
 
         // get questions from endpoint
-        self.networkService.loadData(using: request) { [weak self] result in
+        self.networkService.loadData(using: request) { result in
             //self is nil here???
             switch result {
             // decode questions
             case .success(let data):
-                guard let questions = self?.networkService.decode(to: [Question].self, data: data) else {
+                guard let questions = self.networkService.decode(to: Question.self, data: data) else {
                     completion(.failure(.badDecode))
                     return
                 }
                 // set cache
-                self?.CONTEXTS[contextID] = questions
+                self.CONTEXTS[contextID] = [questions]
                 completion(.success(questions))
 
             // bubble error to caller

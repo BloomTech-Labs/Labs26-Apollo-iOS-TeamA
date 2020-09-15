@@ -10,15 +10,16 @@ import Foundation
 
 ///Leaders can post topics
 struct Topic: Codable {
-    var id: UUID // needs to be same type as identifier/token/etc
-    var joinCode: String // can this be the ID actually?
-    var leaderId: UUID
+    var id: Int
+    //required to create
+    var joinCode: String
+    var leaderId: Int
     var members: [Member]?
+    var topicName: String
+    var contextId: Int
 
-    var topicName: String // is this changeable? if not, change to constant
-    var contextQuestion: Question
-    var requestQuestion: [Question] //if we change this to requestQuestions, we'll need a coding key
+    //App use
+    var questions: [Question]
     var responses: [Response]
 
-    var contextId: Int // do we need this?
 }
