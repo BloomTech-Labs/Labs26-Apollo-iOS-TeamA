@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="ContextQuestionMO" representedClassName="ContextQuestionMO" syncable="YES" codeGenerationType="class">
+    <entity name="ContextQuestionMO" representedClassName=".ContextQuestionMO" syncable="YES" codeGenerationType="category">
         <attribute name="context" optional="YES" attributeType="Transformable" customClassName="Array&lt;String&gt;"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <relationship name="question" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="QuestionMO" inverseName="context" inverseEntity="QuestionMO"/>

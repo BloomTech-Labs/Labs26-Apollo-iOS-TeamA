@@ -23,6 +23,11 @@
 		1D4D9C0A25092B5400348246 /* labs_ios_starterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D9C0925092B5400348246 /* labs_ios_starterUITests.swift */; };
 		1D4D9C1325092F4A00348246 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D9C1225092F4A00348246 /* CoreDataManager.swift */; };
 		1D4D9C17250930AB00348246 /* labs-ios-starter.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D9C15250930AB00348246 /* labs-ios-starter.xcdatamodeld */; };
+		1DAAE25425128C6E009FE5EA /* MemberMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAE25325128C6E009FE5EA /* MemberMO.swift */; };
+		1DAAE25625128CAE009FE5EA /* ContextQuestionMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAE25525128CAE009FE5EA /* ContextQuestionMO.swift */; };
+		1DAAE25825128CF0009FE5EA /* QuestionMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAE25725128CF0009FE5EA /* QuestionMO.swift */; };
+		1DAAE25C25128DAF009FE5EA /* ResponseMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAE25B25128DAF009FE5EA /* ResponseMO.swift */; };
+		1DAAE25E25128E03009FE5EA /* TopicMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAE25D25128E03009FE5EA /* TopicMO.swift */; };
 		463AD24324CF275900447BB8 /* ProfileDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463AD24224CF275900447BB8 /* ProfileDetailViewController.swift */; };
 		463AD24524CF2CDB00447BB8 /* AddProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463AD24424CF2CDB00447BB8 /* AddProfileViewController.swift */; };
 		466C4274249A8748007D033E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466C4273249A8748007D033E /* AppDelegate.swift */; };
@@ -99,6 +104,11 @@
 		1D4D9C0B25092B5400348246 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D4D9C1225092F4A00348246 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		1D4D9C16250930AB00348246 /* labs-ios-starter.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "labs-ios-starter.xcdatamodel"; sourceTree = "<group>"; };
+		1DAAE25325128C6E009FE5EA /* MemberMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberMO.swift; sourceTree = "<group>"; };
+		1DAAE25525128CAE009FE5EA /* ContextQuestionMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextQuestionMO.swift; sourceTree = "<group>"; };
+		1DAAE25725128CF0009FE5EA /* QuestionMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionMO.swift; sourceTree = "<group>"; };
+		1DAAE25B25128DAF009FE5EA /* ResponseMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseMO.swift; sourceTree = "<group>"; };
+		1DAAE25D25128E03009FE5EA /* TopicMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicMO.swift; sourceTree = "<group>"; };
 		463AD24224CF275900447BB8 /* ProfileDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailViewController.swift; sourceTree = "<group>"; };
 		463AD24424CF2CDB00447BB8 /* AddProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileViewController.swift; sourceTree = "<group>"; };
 		466C4270249A8748007D033E /* labs-ios-starter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "labs-ios-starter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -174,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				1D4D9C15250930AB00348246 /* labs-ios-starter.xcdatamodeld */,
+				1DAAE24D25128AE1009FE5EA /* Apollo */,
 			);
 			path = "CoreData MO";
 			sourceTree = "<group>";
@@ -239,6 +250,34 @@
 				1D4D9C1225092F4A00348246 /* CoreDataManager.swift */,
 			);
 			path = Persistence;
+			sourceTree = "<group>";
+		};
+		1DAAE24B25128AC8009FE5EA /* Web Auth */ = {
+			isa = PBXGroup;
+			children = (
+				1DAAE25325128C6E009FE5EA /* MemberMO.swift */,
+			);
+			path = "Web Auth";
+			sourceTree = "<group>";
+		};
+		1DAAE24C25128AD2009FE5EA /* Topic */ = {
+			isa = PBXGroup;
+			children = (
+				1DAAE25525128CAE009FE5EA /* ContextQuestionMO.swift */,
+				1DAAE25725128CF0009FE5EA /* QuestionMO.swift */,
+				1DAAE25B25128DAF009FE5EA /* ResponseMO.swift */,
+				1DAAE25D25128E03009FE5EA /* TopicMO.swift */,
+			);
+			path = Topic;
+			sourceTree = "<group>";
+		};
+		1DAAE24D25128AE1009FE5EA /* Apollo */ = {
+			isa = PBXGroup;
+			children = (
+				1DAAE24B25128AC8009FE5EA /* Web Auth */,
+				1DAAE24C25128AD2009FE5EA /* Topic */,
+			);
+			path = Apollo;
 			sourceTree = "<group>";
 		};
 		465DAA2724BD0BC100D94C24 /* App Lifecycle */ = {
@@ -653,6 +692,7 @@
 				1D0E104B250AAE3100A21C44 /* UIImageView+ImageDownloader.swift in Sources */,
 				B94042242502DF6A0048BCED /* UILabel + Convenience.swift in Sources */,
 				46BEB4EE24C98ECC00FE0CD1 /* ProfileController.swift in Sources */,
+				1DAAE25E25128E03009FE5EA /* TopicMO.swift in Sources */,
 				1D0E105E250B025B00A21C44 /* TopicDetailViewController.swift in Sources */,
 				1D0E1062250B046300A21C44 /* TopicNameViewController.swift in Sources */,
 				46BEB4E724C98D8900FE0CD1 /* Notifications + customNames.swift in Sources */,
@@ -670,7 +710,10 @@
 				463AD24524CF2CDB00447BB8 /* AddProfileViewController.swift in Sources */,
 				1D0E105C250AD69200A21C44 /* NotificationsViewController.swift in Sources */,
 				1D0E1064250B047400A21C44 /* TopicQuestionsViewController.swift in Sources */,
+				1DAAE25625128CAE009FE5EA /* ContextQuestionMO.swift in Sources */,
 				466C4274249A8748007D033E /* AppDelegate.swift in Sources */,
+				1DAAE25425128C6E009FE5EA /* MemberMO.swift in Sources */,
+				1DAAE25825128CF0009FE5EA /* QuestionMO.swift in Sources */,
 				1D0E1060250B043400A21C44 /* TopicViewController.swift in Sources */,
 				46C2BC9224D432F90077E49D /* ProfileTabBarViewController.swift in Sources */,
 				B916373225084CD800B49A75 /* ContextQuestion.swift in Sources */,
@@ -688,6 +731,7 @@
 				1D4D9C0225068DEB00348246 /* CircularButton.swift in Sources */,
 				B91BF7F3250D0BB800D68EA6 /* String + identifier.swift in Sources */,
 				1D46C21D2501DDB4007DEDAF /* UIView+LivePreviews.swift in Sources */,
+				1DAAE25C25128DAF009FE5EA /* ResponseMO.swift in Sources */,
 				B91637302508495F00B49A75 /* Question.swift in Sources */,
 				B94042162501D08D0048BCED /* UIView + Convenience.swift in Sources */,
 				B940421D2501D9120048BCED /* AuthService.swift in Sources */,
