@@ -1,4 +1,51 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <elements/>
+    <entity name="ContextQuestionMO" representedClassName="ContextQuestionMO" syncable="YES" codeGenerationType="class">
+        <attribute name="context" optional="YES" attributeType="Transformable" customClassName="Array&lt;String&gt;"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="question" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="QuestionMO" inverseName="context" inverseEntity="QuestionMO"/>
+    </entity>
+    <entity name="MemberMO" representedClassName="MemberMO" syncable="YES" codeGenerationType="class">
+        <attribute name="avatarURL" optional="YES" attributeType="Transformable" customClassName="URL"/>
+        <attribute name="email" optional="YES" attributeType="String"/>
+        <attribute name="firstName" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="image" optional="YES" attributeType="Transformable" customClassName="UIImage"/>
+        <attribute name="lastName" optional="YES" attributeType="String"/>
+        <relationship name="response" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ResponseMO" inverseName="author" inverseEntity="ResponseMO"/>
+        <relationship name="topic" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TopicMO" inverseName="members" inverseEntity="TopicMO"/>
+    </entity>
+    <entity name="QuestionMO" representedClassName="QuestionMO" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="question" optional="YES" attributeType="String"/>
+        <attribute name="style" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <relationship name="context" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContextQuestionMO" inverseName="question" inverseEntity="ContextQuestionMO"/>
+        <relationship name="topic1" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TopicMO" inverseName="contextQuestion" inverseEntity="TopicMO"/>
+        <relationship name="topic2" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TopicMO" inverseName="requestQuestion" inverseEntity="TopicMO"/>
+    </entity>
+    <entity name="ResponseMO" representedClassName="ResponseMO" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="questionId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="response" optional="YES" attributeType="String"/>
+        <relationship name="author" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MemberMO" inverseName="response" inverseEntity="MemberMO"/>
+        <relationship name="topic" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TopicMO" inverseName="responses" inverseEntity="TopicMO"/>
+    </entity>
+    <entity name="TopicMO" representedClassName="TopicMO" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="joinCode" optional="YES" attributeType="String"/>
+        <attribute name="leaderId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="topicName" optional="YES" attributeType="String"/>
+        <relationship name="contextQuestion" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="QuestionMO" inverseName="topic1" inverseEntity="QuestionMO"/>
+        <relationship name="members" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MemberMO" inverseName="topic" inverseEntity="MemberMO"/>
+        <relationship name="requestQuestion" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="QuestionMO" inverseName="topic2" inverseEntity="QuestionMO"/>
+        <relationship name="responses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ResponseMO" inverseName="topic" inverseEntity="ResponseMO"/>
+    </entity>
+    <elements>
+        <element name="TopicMO" positionX="-18" positionY="27" width="128" height="163"/>
+        <element name="ContextQuestionMO" positionX="36" positionY="144" width="128" height="88"/>
+        <element name="QuestionMO" positionX="9" positionY="99" width="128" height="148"/>
+        <element name="MemberMO" positionX="18" positionY="117" width="128" height="163"/>
+        <element name="ResponseMO" positionX="36" positionY="135" width="128" height="118"/>
+    </elements>
 </model>
