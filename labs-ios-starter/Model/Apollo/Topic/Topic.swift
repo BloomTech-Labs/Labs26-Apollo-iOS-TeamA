@@ -31,11 +31,11 @@ struct Topic: Codable {
 
     enum CodingKeys: String, CodingKey {
         case id
-        case joinCode
-        case leaderId
+        case joinCode = "joincode"
+        case leaderId = "leaderid"
         case members
-        case topicName
-        case contextId
+        case topicName = "topicname"
+        case contextId = "contextid"
         case responsesToSend = "responses"
         case questionsToSend = "questions"
     }

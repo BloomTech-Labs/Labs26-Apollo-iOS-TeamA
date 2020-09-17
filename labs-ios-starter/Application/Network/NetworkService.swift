@@ -26,7 +26,6 @@ extension URLSession: NetworkLoader {
             //downcast response to HTTPURLResponse to work with the statusCode
             if let httpResponse = response as? HTTPURLResponse {
                 let statusCode = httpResponse.statusCode
-
                 if statusCode != 200 {
                     //unwrap the handled exception, or log an unhandled exception
                     guard let statusError = ErrorHandler.NetworkError(rawValue: statusCode) else {
@@ -155,7 +154,7 @@ class NetworkService {
             decoder.dateDecodingStrategy = .formatted(dateFormatter)
         }
         //avoid using Coding Keys
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
+
         do {
             return try decoder.decode(T.self, from: data)
         } catch {
