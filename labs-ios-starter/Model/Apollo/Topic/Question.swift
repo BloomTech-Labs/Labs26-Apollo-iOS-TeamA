@@ -13,7 +13,7 @@ import Foundation
 //It seems like questions should have responses...
 struct Question: Codable {
     var id: Int
-    var contextId: Int
+    //var contextId: Int
     var question: String
     var reviewType: String
     var ratingStyle: String
@@ -21,7 +21,7 @@ struct Question: Codable {
 
     enum CodingKeys: String, CodingKey {
         case id
-        case contextId = "contextid"
+        //case contextId = "contextid"
         case question
         case reviewType = "type"
         case ratingStyle = "style"
