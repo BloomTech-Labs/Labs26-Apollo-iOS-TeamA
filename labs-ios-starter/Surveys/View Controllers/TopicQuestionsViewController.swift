@@ -9,6 +9,12 @@ class TopicQuestionsViewController: UIViewController {
     @IBOutlet weak var questionsCollectionView: UICollectionView!
     @IBOutlet var contextSegmentControl: UISegmentedControl!
 
+    @IBAction func postTopicButton(_ sender: UIButton) {
+        //TODO: Context Title
+        postTopic()
+    }
+
+
     let topicController = TopicController()
     let reuseIdentifier = "QuestionsCollectionViewCell"
     let reuseIdentifier2 = "AddNewQuestionCell"
@@ -42,6 +48,8 @@ class TopicQuestionsViewController: UIViewController {
         super.viewDidLoad()
         setupSegmentedControl()
         getAllContextQuestions()
+
+        //baseurl = https://apollo-a-api.herokuapp.com/
     }
 
     private func getAllContextQuestions() {
@@ -74,6 +82,28 @@ class TopicQuestionsViewController: UIViewController {
             }
         }
 
+    }
+    
+    // MARK: - Update -
+    private func postTopic() {
+        topicController.postTopic(with: topicController.contexts[0].title, contextId: 1, questions: topicController.questions) { result in
+            switch result {
+            case .success(let joinCode):
+                self.presentSimpleAlert(with: "Topic Posted!", message: "Your join code is \(joinCode)", preferredStyle: .alert, dismissText: "Got it!")
+            case .failure(let error):
+                self.presentNetworkError(error: error.rawValue) { result in
+                    //unknown/internal error occured:
+                    if let result = result{
+                        //tryAgain was tapped
+                        if result {
+                            self.postTopic()
+                        }
+                    }
+                }
+
+            }
+
+        }
     }
 
     

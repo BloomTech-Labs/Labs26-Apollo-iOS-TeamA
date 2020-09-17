@@ -365,7 +365,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="XSM-yT-fWX">
-                                <rect key="frame" x="0.0" y="147" width="414" height="695"/>
+                                <rect key="frame" x="0.0" y="147" width="414" height="595"/>
                                 <color key="backgroundColor" name="background"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Q8V-GK-RdV">
                                     <size key="itemSize" width="374" height="128"/>
@@ -450,16 +450,27 @@
                                 </segments>
                                 <color key="selectedSegmentTintColor" name="action"/>
                             </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WfL-uy-8gj" userLabel="Send Button" customClass="StandardButton" customModule="labs_ios_starter" customModuleProvider="target">
+                                <rect key="frame" x="8" y="742" width="398" height="66"/>
+                                <state key="normal" title="Send It!"/>
+                                <connections>
+                                    <action selector="postTopicButton:" destination="VRw-Ph-qHy" eventType="touchUpInside" id="vk9-b3-M4E"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="pS7-9o-Fhm" firstAttribute="bottom" secondItem="WfL-uy-8gj" secondAttribute="bottom" id="5Ej-eh-NiV"/>
+                            <constraint firstItem="WfL-uy-8gj" firstAttribute="leading" secondItem="XSM-yT-fWX" secondAttribute="leading" constant="8" id="8T3-6L-QYZ"/>
                             <constraint firstItem="XSM-yT-fWX" firstAttribute="trailing" secondItem="pS7-9o-Fhm" secondAttribute="trailing" id="AWp-y4-tfm"/>
                             <constraint firstItem="pS7-9o-Fhm" firstAttribute="trailing" secondItem="adO-9K-PCb" secondAttribute="trailing" constant="10" id="HGo-QF-qui"/>
+                            <constraint firstItem="WfL-uy-8gj" firstAttribute="trailing" secondItem="XSM-yT-fWX" secondAttribute="trailing" constant="-8" id="Ity-WW-hPg"/>
                             <constraint firstItem="adO-9K-PCb" firstAttribute="top" secondItem="pS7-9o-Fhm" secondAttribute="top" id="KrM-BQ-cHD"/>
                             <constraint firstItem="XSM-yT-fWX" firstAttribute="leading" secondItem="pS7-9o-Fhm" secondAttribute="leading" id="XRk-As-ou6"/>
                             <constraint firstItem="adO-9K-PCb" firstAttribute="leading" secondItem="pS7-9o-Fhm" secondAttribute="leading" constant="10" id="byn-gY-WR0"/>
                             <constraint firstItem="XSM-yT-fWX" firstAttribute="top" secondItem="adO-9K-PCb" secondAttribute="bottom" constant="8" id="da9-i5-s4x"/>
-                            <constraint firstAttribute="bottom" secondItem="XSM-yT-fWX" secondAttribute="bottom" id="gPp-Wr-Lgc"/>
+                            <constraint firstAttribute="bottom" secondItem="XSM-yT-fWX" secondAttribute="bottom" constant="100" id="gPp-Wr-Lgc"/>
+                            <constraint firstItem="WfL-uy-8gj" firstAttribute="top" secondItem="XSM-yT-fWX" secondAttribute="bottom" id="nTN-Tc-gWZ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="pS7-9o-Fhm"/>
                     </view>
