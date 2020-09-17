@@ -33,7 +33,7 @@ class LoginViewController: DefaultViewController {
     // MARK: - Actions
     
     @IBAction func signIn(_ sender: Any) {
-        UIApplication.shared.open(ProfileController.shared.oktaAuth.identityAuthURL()!) { result in
+        UIApplication.shared.open(profileController.oktaAuth.identityAuthURL()!) { result in
 
         }
     }
