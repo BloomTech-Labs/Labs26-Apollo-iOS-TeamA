@@ -11,6 +11,14 @@ import UIKit
 
 /// Standard user, leader if topic originator
 struct Member: Equatable, Codable {
+    // MARK: - Types -
+    enum CodingKeys: String, CodingKey {
+        case id, email
+        case firstName = "firstname"
+        case lastName = "lastname"
+        case avatarURL = "avatarUrl"
+    }
+
     // MARK: - Properties -
     var oktaID: String?
     var id: Int?
@@ -37,13 +45,6 @@ struct Member: Equatable, Codable {
         self.firstName = firstName
         self.lastName = lastName
         self.avatarURL = avatarURL
-    }
-    // MARK: - Codable -
-    enum CodingKeys: String, CodingKey {
-        case id, email
-        case firstName = "firstname"
-        case lastName = "lastname"
-        case avatarURL = "avatarUrl"
     }
 
     init (from decoder: Decoder) throws {
