@@ -1,4 +1,4 @@
-//
+    //
 //  TopicController.swift
 //  labs-ios-starter
 //
@@ -11,15 +11,24 @@ import Foundation
 /// Controller for Topic, ContextObject, and Question model
 class TopicController {
     let networkService = NetworkService.shared
-    let baseURL = ProfileController.shared.baseURL
+    let profileController = ProfileController.shared
+    lazy var baseURL = profileController.baseURL
 
     ///public getter for CONTEXTS
-    var contexts: [ String: [Question] ]  {
+    var contexts: [ContextObject]  {
         CONTEXTS
     }
 
     ///private setter for contexts
-    private var CONTEXTS: [ String:[Question] ] = [:]
+    private var CONTEXTS: [ContextObject] = []
+
+    var questions: [Question] {
+        QUESTIONS
+    }
+
+    private var QUESTIONS: [Question] = []
+
+    typealias CompleteWithNeworkError = (Result<Void, ErrorHandler.NetworkError>) -> Void
 
     private func createRequest(auth: Bool = true,
                                pathFromBaseURL: String,
@@ -70,9 +79,9 @@ class TopicController {
         }
     }
 
-    typealias CompleteWithContextTitles = (Result<[ContextObject], ErrorHandler.NetworkError>) -> Void
+
     ///Get all contexts
-    func getAllContexts(complete: @escaping CompleteWithContextTitles) {
+    func getAllContexts(complete: @escaping CompleteWithNeworkError) {
         guard let request = createRequest(pathFromBaseURL: "context") else {
             print("couldn't get context, invalid request")
             return
@@ -85,7 +94,8 @@ class TopicController {
                     complete(.failure(.notFound))
                     return
                 }
-                complete(.success(contexts))
+                self.CONTEXTS = contexts
+                complete(.success(Void()))
             //bubble error to caller
             case .failure(let error):
                 complete(.failure(error))
@@ -93,17 +103,9 @@ class TopicController {
         }
     }
 
-    typealias CompleteWithQuestions = (Result<Question, ErrorHandler.NetworkError>) -> Void
-
-    //TODO: Why is BE only giving 1 question???
-    func getQuestions(with contextID: String, completion: @escaping CompleteWithQuestions) {
-        //attempt to get questions from cache and return
-        if let cachedQuestions = CONTEXTS[contextID] {
-            completion(.success(cachedQuestions[0]))
-            return
-        }
-        // create request to /questions/contextID
-        guard let request = self.createRequest(pathFromBaseURL: "question/\(contextID)") else {
+    func getQuestions(completion: @escaping CompleteWithNeworkError) {
+        // create request to /question
+        guard let request = self.createRequest(pathFromBaseURL: "question") else {
             completion(.failure(.badRequest))
             return
         }
@@ -114,35 +116,52 @@ class TopicController {
             switch result {
             // decode questions
             case .success(let data):
-                guard let questions = self.networkService.decode(to: Question.self, data: data) else {
+                guard let questions = self.networkService.decode(to: [Question].self, data: data) else {
                     completion(.failure(.badDecode))
                     return
                 }
-                // set cache
-                self.CONTEXTS[contextID] = [questions]
-                completion(.success(questions))
+                self.QUESTIONS = questions
+                completion(.success(Void()))
 
             // bubble error to caller
             case .failure(let error):
                 completion(.failure(error))
             }
         }
-
-
     }
     //TODO
-    func postTopic() {
-        guard var request = createRequest(pathFromBaseURL: "topic", method: .post) else {
-            return
-        }
+    func getAllQuestionsAndContexts(completion: @escaping CompleteWithNeworkError) {
+        getAllContexts { contextResult in
+            switch contextResult {
+            case .success:
+                self.getQuestions() { result in
+                    completion(result)
+                }
+            case.failure:
+                completion(contextResult)
+            }
 
-        //TODO: Dynamic topic
-        let json = """
-                   {
-                    "topicname":"Test"
-                    }
-                   """.data(using: .utf8)!
-        request.addJSONData(json)
+        }
+    }
+    func postTopic(with name: String, contextId: Int, questions: [Question]) {
+
+        // We know this request is good, but we can still guard unwrap it rather than
+        // force unwrapping and assume if something fails it was the user not being logged in
+        guard var request = createRequest(pathFromBaseURL: "topic", method: .post),
+            let token = try? profileController.oktaAuth.credentialsIfAvailable().userID else {
+                print("user isn't logged in")
+                return
+        }
+        //TODO: Responses
+        // Create topic and add to request
+        let topic = Topic(joinCode: UUID().uuidString,
+                          leaderId: token,
+                          topicName: name,
+                          contextId: contextId)
+        //let questionsToSend = questions.map { $0.id }
+
+        // TODO: Save to CoreData
+        request.encode(from: topic)
 
         networkService.loadData(using: request) { result in
             switch result {
