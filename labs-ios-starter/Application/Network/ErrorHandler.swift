@@ -104,6 +104,8 @@ import UIKit
 
 extension UIViewController {
 
+    /// An Auth specific error occurred (This may remain unused and be deleted if there's no specific backend auth errors to handle that aren't handled by OktaAuth
+    /// - Parameter error: The authentication error received
     func presentAuthError(error: ErrorHandler.UserAuthError) {
         guard let errorToDisplay = ErrorHandler.userAuthErrors[error] else {
             print("couldn't retrieve value from ErrorHandler.userAuthErrors Dictionary")
@@ -116,19 +118,38 @@ extension UIViewController {
 
     }
 
-    func presentNetworkError(error: Int) {
+    /// Presents a semantic error if user can take some action, or an unknown error with try again yes/no
+    /// - Parameters:
+    ///   - error: The network error that was received
+    ///   - complete: Completes with the users choice to try again in the case of an unknown error
+    func presentNetworkError(error: Int, complete: @escaping(Bool?) -> Void) {
         guard let errorToDisplay = ErrorHandler.userNetworkErrors[error] else {
             if let error = ErrorHandler.internalNetworkErrors[error] {
                 print("\(#function): Internal Error: \(error)")
+                presentTryAgainError { result in
+                    complete(result)
+                }
             } else {
                 print("\(#function): User Error \(error)")
             }
             return
         }
+
         presentSimpleAlert(with: errorToDisplay.title,
                            message: errorToDisplay.message,
                            preferredStyle: .alert,
                            dismissText: "Ok")
+    }
+
+    /// Unknown Error, Try Again Alert
+    /// - Parameter complete: Completes with the user's decision to try again
+    func presentTryAgainError(complete: @escaping (Bool) -> Void) {
+        presentAlertWithYesNoPrompt(with: "Unknown Error",
+                                    message: "An unknown error occured. Would you like to try again?",
+                                    preferredStyle: .alert) { result in
+
+                                        complete(result)
+        }
     }
 
 }
