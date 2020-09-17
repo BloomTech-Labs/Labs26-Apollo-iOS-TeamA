@@ -246,7 +246,9 @@ class ProfileController {
         let requestURL = baseURL.appendingPathComponent("profiles")
         guard var request = networkService.createRequest(url: requestURL, method: .post) else {
             print("invalid request")
-            completion()
+            DispatchQueue.main.async {
+                completion()
+            }
             return
         }
         request.addValue("Bearer \(oktaCredentials.idToken)", forHTTPHeaderField: "Authorization")
@@ -257,13 +259,18 @@ class ProfileController {
             switch result {
             case .success(let data):
                 self.profiles.append(profile)
-                completion()
+                DispatchQueue.main.async {
+                    completion()
+                }
                 print(data)
                 return
 
             case.failure(let error):
                 completion()
                 print(error)
+                DispatchQueue.main.async {
+                    completion()
+                }
                 return
             }
         }
