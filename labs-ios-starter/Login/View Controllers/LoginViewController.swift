@@ -11,7 +11,7 @@ import OktaAuth
 
 class LoginViewController: DefaultViewController {
     
-    @IBOutlet weak var signInButton: UIButton!
+    @IBOutlet weak var signInButton: StandardButton!
     
     let userTextField = UITextField()
     let profileController = ProfileController.shared
