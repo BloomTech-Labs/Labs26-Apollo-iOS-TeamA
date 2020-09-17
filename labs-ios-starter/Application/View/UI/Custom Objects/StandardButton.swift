@@ -4,7 +4,7 @@
 import UIKit
 
 /// The button styling used for most buttons
-class StandardButton: UIButton {
+final class StandardButton: UIButton {
 
     // MARK: - Properties
         

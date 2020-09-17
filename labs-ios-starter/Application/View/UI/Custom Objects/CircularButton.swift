@@ -9,7 +9,7 @@ enum Icon: String {
 }
 
 /// A rounded button with an ICON
-class CircularButton: UIButton {
+final class CircularButton: UIButton {
     
     // MARK: - Initializers
     
