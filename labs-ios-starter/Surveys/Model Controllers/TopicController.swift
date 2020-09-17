@@ -36,7 +36,7 @@ class TopicController {
 
         let targetURL = baseURL.appendingPathComponent(pathFromBaseURL)
 
-        guard var request = networkService.createRequest(url: targetURL, method: method) else {
+        guard var request = networkService.createRequest(url: targetURL, method: method, headerType: .contentType, headerValue: .json) else {
             print("unable to create request for \(targetURL)")
             return nil
         }
@@ -143,7 +143,9 @@ class TopicController {
 
         }
     }
-    func postTopic(with name: String, contextId: Int, questions: [Question]) {
+    typealias CompleteWithString = (Result<String, ErrorHandler.NetworkError>) -> Void
+
+    func postTopic(with name: String, contextId: Int, questions: [Question], complete: @escaping CompleteWithString) {
 
         // We know this request is good, but we can still guard unwrap it rather than
         // force unwrapping and assume if something fails it was the user not being logged in
@@ -154,7 +156,8 @@ class TopicController {
         }
         //TODO: Responses
         // Create topic and add to request
-        let topic = Topic(joinCode: UUID().uuidString,
+        let joinCode = UUID().uuidString
+        let topic = Topic(joinCode: joinCode,
                           leaderId: token,
                           topicName: name,
                           contextId: contextId)
@@ -165,10 +168,11 @@ class TopicController {
 
         networkService.loadData(using: request) { result in
             switch result {
-            case .success(let data):
-                print(data)
+            case .success:
+                complete(.success(joinCode))
             case .failure(let error):
-                print(error)
+                NSLog("Error POSTing topic with statusCode: \(error.rawValue)")
+                complete(.failure(error))
             }
         }
     }
