@@ -9,40 +9,20 @@ class TopicViewController: UIViewController {
     @IBOutlet weak var topicsCollectionView: UICollectionView!
     
     let reuseIdentifier = "TopicsCollectionViewCell"
-    
+    let topicController = TopicController()
+
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // MARK: - Sample Code -
-        let topicController = TopicController()
-        topicController.getAllContexts(complete: { [weak self] result in
-            guard let self = self else {
-                print("TopicVC is nil")
-                return
-            }
-            switch result {
-            case .success(let contexts):
-                //this actually only gets a single question presently
-                topicController.getQuestions(with: "\(contexts[1].id)") { result in
-                    switch result {
-                    case .success(let questions):
-                        print(questions)
-                    case .failure(let error):
-                        //presents an error or logs to console (depending on if theres some action the user can take)
-                        self.presentNetworkError(error: error.rawValue)
-                    }
-                }
-            case .failure(let error):
-                self.presentNetworkError(error: error.rawValue)
-            }
-        })
+        
     }
-    
-    // MARK: - Handlers
-    
-    // MARK: - Reusable
-    
+
+
+// MARK: - Handlers
+
+// MARK: - Reusable
+
 }
 
 extension TopicViewController: UICollectionViewDataSource {
