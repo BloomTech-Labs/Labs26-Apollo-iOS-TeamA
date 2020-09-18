@@ -13,5 +13,3 @@ Post notifications for auth failure and auth success.
 
 ### Okta Setup for signout redirect to app (https://developer.okta.com/docs/guides/sign-users-out/ios/define-signout-callback/)
 In Info.plist, setup URL Scheme for com.okta.dev-625244
-
-
