@@ -115,7 +115,6 @@ extension UIViewController {
                            message: errorToDisplay.message,
                            preferredStyle: .alert,
                            dismissText: "Ok")
-
     }
 
     /// Presents a semantic error if user can take some action, or an unknown error with try again yes/no
