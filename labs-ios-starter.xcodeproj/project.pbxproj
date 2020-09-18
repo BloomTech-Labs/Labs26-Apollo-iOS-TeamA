@@ -30,7 +30,6 @@
 		1DAAE261251296E1009FE5EA /* MemberMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAE25F251296E1009FE5EA /* MemberMO+CoreDataClass.swift */; };
 		1DAAE262251296E1009FE5EA /* MemberMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAE260251296E1009FE5EA /* MemberMO+CoreDataProperties.swift */; };
 		463AD24324CF275900447BB8 /* ProfileDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463AD24224CF275900447BB8 /* ProfileDetailViewController.swift */; };
-		463AD24524CF2CDB00447BB8 /* AddProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463AD24424CF2CDB00447BB8 /* AddProfileViewController.swift */; };
 		466C4274249A8748007D033E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466C4273249A8748007D033E /* AppDelegate.swift */; };
 		466C4276249A8748007D033E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466C4275249A8748007D033E /* SceneDelegate.swift */; };
 		466C427B249A8748007D033E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 466C4279249A8748007D033E /* Main.storyboard */; };
@@ -66,6 +65,7 @@
 		B94042272502E1390048BCED /* UIStackView + Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94042262502E1390048BCED /* UIStackView + Convenience.swift */; };
 		B940422A2502E5070048BCED /* UIButton + Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94042292502E5070048BCED /* UIButton + Convenience.swift */; };
 		B9404232250321230048BCED /* labs_ios_starterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9404231250321230048BCED /* labs_ios_starterTests.swift */; };
+		B98BBCC325153EEB00FE8A12 /* unused.md in Resources */ = {isa = PBXBuildFile; fileRef = B98BBCC225153EEB00FE8A12 /* unused.md */; };
 		B9983C542513BEC0001D91FE /* QuestionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9983C532513BEC0001D91FE /* QuestionCollectionViewCell.swift */; };
 		B9983C5825141AC6001D91FE /* TopicControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9983C5725141AC6001D91FE /* TopicControllerTests.swift */; };
 		B9983C5925142B74001D91FE /* TopicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91BF818250DC4CA00D68EA6 /* TopicController.swift */; };
@@ -113,7 +113,6 @@
 		1DAAE25F251296E1009FE5EA /* MemberMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MemberMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		1DAAE260251296E1009FE5EA /* MemberMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MemberMO+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		463AD24224CF275900447BB8 /* ProfileDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailViewController.swift; sourceTree = "<group>"; };
-		463AD24424CF2CDB00447BB8 /* AddProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileViewController.swift; sourceTree = "<group>"; };
 		466C4270249A8748007D033E /* labs-ios-starter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "labs-ios-starter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		466C4273249A8748007D033E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		466C4275249A8748007D033E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -154,6 +153,7 @@
 		B940422F250321230048BCED /* labs-ios-starterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "labs-ios-starterTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9404231250321230048BCED /* labs_ios_starterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = labs_ios_starterTests.swift; sourceTree = "<group>"; };
 		B9404233250321230048BCED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B98BBCC225153EEB00FE8A12 /* unused.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = unused.md; sourceTree = "<group>"; };
 		B9983C532513BEC0001D91FE /* QuestionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionCollectionViewCell.swift; sourceTree = "<group>"; };
 		B9983C5725141AC6001D91FE /* TopicControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicControllerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -440,7 +440,6 @@
 			isa = PBXGroup;
 			children = (
 				46BEB4E424C98CDC00FE0CD1 /* LoginViewController.swift */,
-				463AD24424CF2CDB00447BB8 /* AddProfileViewController.swift */,
 				46C2BC9124D432F90077E49D /* ProfileTabBarViewController.swift */,
 			);
 			path = "View Controllers";
@@ -525,6 +524,7 @@
 			isa = PBXGroup;
 			children = (
 				B91637202507FA4B00B49A75 /* OktaAuth.md */,
+				B98BBCC225153EEB00FE8A12 /* unused.md */,
 			);
 			path = Documentation;
 			sourceTree = "<group>";
@@ -682,6 +682,7 @@
 				466C427D249A8749007D033E /* Assets.xcassets in Resources */,
 				B91637212507FA4B00B49A75 /* OktaAuth.md in Resources */,
 				B91BF7F1250D0B6500D68EA6 /* MemberList.storyboard in Resources */,
+				B98BBCC325153EEB00FE8A12 /* unused.md in Resources */,
 				46BEB4F124C98F0D00FE0CD1 /* Profiles.storyboard in Resources */,
 				466C427B249A8748007D033E /* Main.storyboard in Resources */,
 				1D0E105A250AD64100A21C44 /* Surveys.storyboard in Resources */,
@@ -728,7 +729,6 @@
 				B94042112501D0740048BCED /* ErrorHandler.swift in Sources */,
 				B94042272502E1390048BCED /* UIStackView + Convenience.swift in Sources */,
 				1D46C22125055E81007DEDAF /* StandardButton.swift in Sources */,
-				463AD24524CF2CDB00447BB8 /* AddProfileViewController.swift in Sources */,
 				1D0E105C250AD69200A21C44 /* NotificationsViewController.swift in Sources */,
 				1D0E1064250B047400A21C44 /* TopicQuestionsViewController.swift in Sources */,
 				1DAAE25625128CAE009FE5EA /* ContextQuestionMO.swift in Sources */,
