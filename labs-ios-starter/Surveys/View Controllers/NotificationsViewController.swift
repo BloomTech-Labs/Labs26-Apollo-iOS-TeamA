@@ -5,13 +5,13 @@ import UIKit
 
 class NotificationsViewController: UIViewController {
     
-    // MARK: - Outlets & Properties
+    // MARK: - Outlets -
     @IBOutlet weak var notificationsCollectionView: UICollectionView!
-    
-    let reuseIdentifier = "NotificationsCollectionViewCell"
+
+    // MARK: - Properties -
+    let reuseIdentifier = String.collectionViewID(.notificationsCollectionViewCell)
         
-    // MARK: - Lifecycle
-    
+    // MARK: - View Lifecycle -
     override func viewDidLoad() {
         super.viewDidLoad()
     }

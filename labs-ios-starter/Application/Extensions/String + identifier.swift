@@ -24,7 +24,16 @@ enum TableViewIdentifier: String {
     case profileCell
 }
 
+enum CollectionViewIdentifier: String {
+    case notificationsCollectionViewCell
+    case topicsCollectionViewCell
+    case questionsCollectionViewCell
+    case addNewQuestionCell
+    case crudCollectionViewCell = "CRUDCollectionViewCell"
+}
+
 extension String {
+
     ///convenience method to retrieve Storyboard Identifiers
     /// - Parameter identifier: defined in `enum StoryboardIdentifier` in String + identifier.swift
     /// - Returns: the rawValue of the case with the first letter capitalized
@@ -40,11 +49,20 @@ extension String {
         //segue ids are capitalized
         identifier.rawValue.firstCapitalized
     }
+
     ///convenience method to get TableView Identifiers
     /// - Parameter identifier: defined in `enum TableViewIdentifier` in String + identifier.swift
     /// - Returns: the rawValue of the case with the first letter capitalized
     static func tableViewID(_ identifier: TableViewIdentifier) -> String {
         //tableView ids are capitalized
+        identifier.rawValue.firstCapitalized
+    }
+
+    ///convenience method to get CollectionView Identifiers
+    /// - Parameter identifier: defined in `enum CollectionViewIdentifier` in String + identifier.swift
+    /// - Returns: the rawValue of the case with the first letter capitalized
+    static func collectionViewID(_ identifier: CollectionViewIdentifier) -> String {
+        //collectionView ids are capitalized
         identifier.rawValue.firstCapitalized
     }
 }

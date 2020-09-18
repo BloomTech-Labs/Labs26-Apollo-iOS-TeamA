@@ -5,10 +5,11 @@ import UIKit
 
 class TopicNameViewController: UIViewController {
     
-    // MARK: - Outlets & Properties
+    // MARK: - Outlets -
 
+    // MARK: - Properties -
     
-    // MARK: - Lifecycle
+    // MARK: - View Lifecycle -
     
     override func viewDidLoad() {
         super.viewDidLoad()

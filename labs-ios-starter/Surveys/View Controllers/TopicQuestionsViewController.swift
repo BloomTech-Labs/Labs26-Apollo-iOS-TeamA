@@ -5,7 +5,7 @@ import UIKit
 
 class TopicQuestionsViewController: UIViewController {
     
-    // MARK: - Outlets & Properties
+    // MARK: - Outlets
     @IBOutlet weak var questionsCollectionView: UICollectionView!
     @IBOutlet var contextSegmentControl: UISegmentedControl!
 
@@ -14,10 +14,10 @@ class TopicQuestionsViewController: UIViewController {
         postTopic()
     }
 
-
+    // MARK: - Properties -
     let topicController = TopicController()
-    let reuseIdentifier = "QuestionsCollectionViewCell"
-    let reuseIdentifier2 = "AddNewQuestionCell"
+    let reuseIdentifier = String.collectionViewID(.questionsCollectionViewCell)
+    let reuseIdentifier2 = String.collectionViewID(.addNewQuestionCell)
     // TODO: Shawn - Fix these reuseID's
     var questions: [Question] = [] {
         didSet {
