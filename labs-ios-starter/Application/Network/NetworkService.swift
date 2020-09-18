@@ -30,7 +30,7 @@ extension URLSession: NetworkLoader {
                     //unwrap the handled exception, or log an unhandled exception
                     guard let statusError = ErrorHandler.NetworkError(rawValue: statusCode) else {
                         // Edge case - unhandled exception (if this is logged, the ErrorHandler likely needs to be extended)
-                        NSLog("unhandled exception \(statusCode) from \(HTTPURLResponse.localizedString(forStatusCode: statusCode))")
+                        NSLog("unhandled exception \(statusCode) for error: \(HTTPURLResponse.localizedString(forStatusCode: statusCode))")
                         completion(.failure(.unknown))
                         return
                     }
@@ -92,15 +92,6 @@ class NetworkService {
      */
     enum HttpHeaderValue: String {
         case json = "application/json"
-    }
-
-    /**
-     - parameter request: should return nil if there's an error or a valid request object if there isn't
-     - parameter error: should return nil if the request succeeded and a valid error if it didn't
-     */
-    struct EncodingStatus {
-        let request: URLRequest?
-        let error: Error?
     }
 
     // MARK: - Properties -
