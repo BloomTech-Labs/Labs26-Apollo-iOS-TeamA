@@ -42,7 +42,7 @@
 		46BEB4EE24C98ECC00FE0CD1 /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BEB4ED24C98ECC00FE0CD1 /* ProfileController.swift */; };
 		46BEB4F124C98F0D00FE0CD1 /* Profiles.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46BEB4F024C98F0D00FE0CD1 /* Profiles.storyboard */; };
 		46C2BC9224D432F90077E49D /* ProfileTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46C2BC9124D432F90077E49D /* ProfileTabBarViewController.swift */; };
-		B91637212507FA4B00B49A75 /* readme.md in Resources */ = {isa = PBXBuildFile; fileRef = B91637202507FA4B00B49A75 /* readme.md */; };
+		B91637212507FA4B00B49A75 /* OktaAuth.md in Resources */ = {isa = PBXBuildFile; fileRef = B91637202507FA4B00B49A75 /* OktaAuth.md */; };
 		B916372525083B7600B49A75 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = B916372425083B7600B49A75 /* Member.swift */; };
 		B916372D250841B200B49A75 /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B916372C250841B200B49A75 /* Topic.swift */; };
 		B91637302508495F00B49A75 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = B916372F2508495F00B49A75 /* Question.swift */; };
@@ -62,7 +62,6 @@
 		B94042192501D1BD0048BCED /* URLRequest + JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940420F2501D0740048BCED /* URLRequest + JSON.swift */; };
 		B940421A2501D1CE0048BCED /* UIViewController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BF10BD24D388FF001C6753 /* UIViewController+Alerts.swift */; };
 		B940421F2501D9250048BCED /* String+Validate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940421E2501D9250048BCED /* String+Validate.swift */; };
-		B9404221250203B80048BCED /* Auth.md in Resources */ = {isa = PBXBuildFile; fileRef = B9404220250203B80048BCED /* Auth.md */; };
 		B94042242502DF6A0048BCED /* UILabel + Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94042232502DF6A0048BCED /* UILabel + Convenience.swift */; };
 		B94042272502E1390048BCED /* UIStackView + Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94042262502E1390048BCED /* UIStackView + Convenience.swift */; };
 		B940422A2502E5070048BCED /* UIButton + Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94042292502E5070048BCED /* UIButton + Convenience.swift */; };
@@ -130,7 +129,7 @@
 		46BEB4F024C98F0D00FE0CD1 /* Profiles.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profiles.storyboard; sourceTree = "<group>"; };
 		46BF10BD24D388FF001C6753 /* UIViewController+Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerts.swift"; sourceTree = "<group>"; };
 		46C2BC9124D432F90077E49D /* ProfileTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTabBarViewController.swift; sourceTree = "<group>"; };
-		B91637202507FA4B00B49A75 /* readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = readme.md; path = "labs-ios-starter/Profiles/Model Controllers/readme.md"; sourceTree = SOURCE_ROOT; };
+		B91637202507FA4B00B49A75 /* OktaAuth.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = OktaAuth.md; path = "labs-ios-starter/Application/Documentation/OktaAuth.md"; sourceTree = SOURCE_ROOT; };
 		B916372425083B7600B49A75 /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
 		B916372C250841B200B49A75 /* Topic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
 		B916372F2508495F00B49A75 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
@@ -149,7 +148,6 @@
 		B94042132501D08C0048BCED /* StyleSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleSheet.swift; sourceTree = "<group>"; };
 		B94042142501D08D0048BCED /* UIView + Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView + Convenience.swift"; sourceTree = "<group>"; };
 		B940421E2501D9250048BCED /* String+Validate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validate.swift"; sourceTree = "<group>"; };
-		B9404220250203B80048BCED /* Auth.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Auth.md; sourceTree = "<group>"; };
 		B94042232502DF6A0048BCED /* UILabel + Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel + Convenience.swift"; sourceTree = "<group>"; };
 		B94042262502E1390048BCED /* UIStackView + Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView + Convenience.swift"; sourceTree = "<group>"; };
 		B94042292502E5070048BCED /* UIButton + Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton + Convenience.swift"; sourceTree = "<group>"; };
@@ -362,7 +360,6 @@
 		46BEB4EC24C98EBB00FE0CD1 /* Model Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				B91637202507FA4B00B49A75 /* readme.md */,
 				46BEB4ED24C98ECC00FE0CD1 /* ProfileController.swift */,
 			);
 			path = "Model Controllers";
@@ -527,7 +524,7 @@
 		B9404222250203C30048BCED /* Documentation */ = {
 			isa = PBXGroup;
 			children = (
-				B9404220250203B80048BCED /* Auth.md */,
+				B91637202507FA4B00B49A75 /* OktaAuth.md */,
 			);
 			path = Documentation;
 			sourceTree = "<group>";
@@ -682,9 +679,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				466C4280249A8749007D033E /* LaunchScreen.storyboard in Resources */,
-				B9404221250203B80048BCED /* Auth.md in Resources */,
 				466C427D249A8749007D033E /* Assets.xcassets in Resources */,
-				B91637212507FA4B00B49A75 /* readme.md in Resources */,
+				B91637212507FA4B00B49A75 /* OktaAuth.md in Resources */,
 				B91BF7F1250D0B6500D68EA6 /* MemberList.storyboard in Resources */,
 				46BEB4F124C98F0D00FE0CD1 /* Profiles.storyboard in Resources */,
 				466C427B249A8748007D033E /* Main.storyboard in Resources */,

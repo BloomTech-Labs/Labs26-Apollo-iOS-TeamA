@@ -14,23 +14,20 @@ protocol AddProfileDelegate: class {
 
 class AddProfileViewController: DefaultViewController {
 
-    // MARK: - Properties and Outlets
-    
+    // MARK: - Outlets -
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var avatarURLTextField: UITextField!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
+
+    // MARK: - Properties -
     weak var delegate: AddProfileDelegate?
-    
     var profileController: ProfileController = ProfileController.shared
     var keyboardDismissalTapRecognizer: UITapGestureRecognizer!
     
-    // MARK: - View Lifecycle
-    
+    // MARK: - View Lifecycle -
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setUpKeyboardDismissalRecognizer()
         
         nameTextField.delegate = self
@@ -70,8 +67,7 @@ class AddProfileViewController: DefaultViewController {
         }
     }
     
-    // MARK: - Private Methods
-    
+    // MARK: - Private Methods -
     private func setUpKeyboardDismissalRecognizer() {
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(recognizer)
@@ -83,8 +79,7 @@ class AddProfileViewController: DefaultViewController {
     }
 }
 
-// MARK: - UITextFieldDelegate
-
+// MARK: - UITextFieldDelegate -
 extension AddProfileViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         switch textField {

@@ -10,14 +10,17 @@ import UIKit
 import OktaAuth
 
 class LoginViewController: DefaultViewController {
-    
+    // MARK: - Outlets -
     @IBOutlet weak var signInButton: UIButton!
-    
+
+    // MARK: - Properties -
     let userTextField = UITextField()
     let profileController = ProfileController.shared
-    
+
+    // MARK: - View Lifecycle -
     override func viewDidLoad() {
         super.viewDidLoad()
+        // MARK: Add observers
         NotificationCenter.default.addObserver(forName: .oktaAuthenticationSuccessful,
                                                object: nil,
                                                queue: .main,
@@ -27,19 +30,16 @@ class LoginViewController: DefaultViewController {
                                                object: nil,
                                                queue: .main,
                                                using: alertUserOfExpiredCredentials)
-        
     }
     
     // MARK: - Actions
-    
     @IBAction func signIn(_ sender: Any) {
         UIApplication.shared.open(ProfileController.shared.oktaAuth.identityAuthURL()!) { result in
 
         }
     }
     
-    // MARK: - Private Methods
-    
+    // MARK: - Private Methods -
     private func alertUserOfExpiredCredentials(_ notification: Notification) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.presentSimpleAlert(with: "Your Okta credentials have expired",
@@ -49,8 +49,7 @@ class LoginViewController: DefaultViewController {
         }
     }
     
-    // MARK: Notification Handling
-    
+    // MARK: - Notification Handling -
     private func checkForExistingProfile(with notification: Notification) {
         checkForExistingProfile()
     }
@@ -69,8 +68,7 @@ class LoginViewController: DefaultViewController {
         }
     }
     
-    // MARK: - Navigation
-    
+    // MARK: - Navigation -
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == .segueID(.modalAddProfile) {
             guard let addProfileVC = segue.destination as? AddProfileViewController else { return }
@@ -89,16 +87,14 @@ class LoginViewController: DefaultViewController {
 
 }
 
-// MARK: - Add Profile Delegate
-
+// MARK: - Add Profile Delegate -
 extension LoginViewController: AddProfileDelegate {
     func profileWasAdded() {
         checkForExistingProfile()
     }
 }
 
-// MARK: - Live Previews
-
+// MARK: - Live Previews -
 #if DEBUG
 
 import SwiftUI

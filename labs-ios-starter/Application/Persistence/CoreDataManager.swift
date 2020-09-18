@@ -10,6 +10,7 @@ class CoreDataManager {
     
     /// The singleton used to access the CoreData Stack
     static let shared = CoreDataManager()
+    private init() {}
     
     /// The container that encapsulates the CoreData Manager/Stack
     lazy var persistentContainer: NSPersistentContainer = {
