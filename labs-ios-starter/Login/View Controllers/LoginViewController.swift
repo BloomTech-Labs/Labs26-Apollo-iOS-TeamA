@@ -27,14 +27,15 @@ class LoginViewController: DefaultViewController {
                                                object: nil,
                                                queue: .main,
                                                using: alertUserOfExpiredCredentials)
-        
     }
     
     // MARK: - Actions
     
     @IBAction func signIn(_ sender: Any) {
+        signInButton.loadAnimate(true)
         UIApplication.shared.open(profileController.oktaAuth.identityAuthURL()!) { result in
-
+            if result == false { self.signInButton.shakeAnimate() }
+            self.signInButton.loadAnimate(false)
         }
     }
     
@@ -60,7 +61,7 @@ class LoginViewController: DefaultViewController {
             
             guard let self = self,
                 self.presentedViewController == nil else { return }
-                
+            
             if exists {
                 self.performSegue(withIdentifier: .segueID(.showDetailProfileList), sender: nil)
             } else {
@@ -77,16 +78,16 @@ class LoginViewController: DefaultViewController {
             addProfileVC.delegate = self
         }
     }
-
+    
     @objc func reportTextFieldText() {
         guard let text = self.userTextField.text,
-        text != "" else {
-            print("invalid or empty text")
-            return
+            text != "" else {
+                print("invalid or empty text")
+                return
         }
         self.presentSimpleAlert(with: "Textfield", message: text, preferredStyle: .alert, dismissText: "Go away")
     }
-
+    
 }
 
 // MARK: - Add Profile Delegate

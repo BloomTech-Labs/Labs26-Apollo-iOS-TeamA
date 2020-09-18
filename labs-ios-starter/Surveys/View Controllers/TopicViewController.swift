@@ -7,16 +7,22 @@ class TopicViewController: UIViewController {
     
     // MARK: - Outlets & Properties
     @IBOutlet weak var topicsCollectionView: UICollectionView!
+    @IBOutlet weak var addNewTopicButton: CircularButton!
     
     let reuseIdentifier = "TopicsCollectionViewCell"
     
     // MARK: - Lifecycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     // MARK: - Handlers
+    /// Segues to new controller and runs an animation on the button
+    @IBAction func addNewTopicButtonPressed(_ sender: CircularButton) {
+        addNewTopicButton.springAnimate()
+    }
+    
+    
     
     // MARK: - Reusable
     

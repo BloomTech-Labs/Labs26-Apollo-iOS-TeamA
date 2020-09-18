@@ -6,7 +6,8 @@ import UIKit
 class TopicNameViewController: UIViewController {
     
     // MARK: - Outlets & Properties
-
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var nextButton: StandardButton!
     
     // MARK: - Lifecycle
     
@@ -15,6 +16,21 @@ class TopicNameViewController: UIViewController {
     }
     
     // MARK: - Handlers
+    /// Segues to the next controller and runs an animation on the button
+    @IBAction func nextButtonPressed(_ sender: StandardButton) {
+        guard (nameTextField.text != nil) else {
+            nextButton.shakeAnimate()
+            presentSimpleAlert(with: "Please add a title to continue", message: nil, preferredStyle: .alert, dismissText: "Ok")
+            return
+        }
+        
+        nextButton.springAnimate()
+        performSegue(withIdentifier: "TempSegName", sender: self); #warning("Use incoming structs to implement better segueID")
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier == "TempSegName" else { return }
+    }
     
     // MARK: - Reusable
     
