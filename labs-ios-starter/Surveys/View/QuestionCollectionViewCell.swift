@@ -25,7 +25,6 @@ class QuestionCollectionViewCell: UICollectionViewCell {
         if nameLabel.frame.size.height + 50 > height { //50 for padding TODO: More dynamic/less magic
             height = nameLabel.frame.size.height + 50 // padding
         }
-
         self.setDimensions(width: view.frame.width - widthDelta, height: height)
 
     }
