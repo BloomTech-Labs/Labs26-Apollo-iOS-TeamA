@@ -3,8 +3,56 @@
 ###### These methods are unused - but may come in handy!
 
 ### Profile Controller
-// NOTE: This method is unused, but left as an example for creating a profile on the scaffolding backend.
-func addProfile(_ profile: Member, completion: @escaping () -> Void) {
+    // NOTE: This method is unused, but left as an example for creating a profile on the scaffolding backend.
+    func addProfile(_ profile: Member, completion: @escaping () -> Void) {
+        
+        var oktaCredentials: OktaCredentials
+        
+        do {
+            oktaCredentials = try oktaAuth.credentialsIfAvailable()
+        } catch {
+            postAuthenticationExpiredNotification()
+            NSLog("Credentials do not exist. Unable to add profile to API")
+            defer {
+                DispatchQueue.main.async {
+                    completion()
+                }
+            }
+            return
+        }
+        
+        let requestURL = baseURL.appendingPathComponent("profiles")
+        guard var request = networkService.createRequest(url: requestURL, method: .post) else {
+            print("invalid request")
+            DispatchQueue.main.async {
+                completion()
+            }
+            return
+        }
+        request.addValue("Bearer \(oktaCredentials.idToken)", forHTTPHeaderField: "Authorization")
+
+        request.encode(from: profile)
+
+        networkService.loadData(using: request) { result in
+            switch result {
+            case .success(let data):
+                self.profiles.append(profile)
+                DispatchQueue.main.async {
+                    completion()
+                }
+                print(data)
+                return
+
+            case.failure(let error):
+                completion()
+                print(error)
+                DispatchQueue.main.async {
+                    completion()
+                }
+                return
+            }
+        }
+    }
     
     func image(for url: URL, completion: @escaping (UIImage?) -> Void) {
         guard let request = networkService.createRequest(url: url, method: .get) else {
@@ -28,54 +76,6 @@ func addProfile(_ profile: Member, completion: @escaping () -> Void) {
         }
 
     }
-    
-    var oktaCredentials: OktaCredentials
-    
-    do {
-        oktaCredentials = try oktaAuth.credentialsIfAvailable()
-    } catch {
-        postAuthenticationExpiredNotification()
-        NSLog("Credentials do not exist. Unable to add profile to API")
-        defer {
-            DispatchQueue.main.async {
-                completion()
-            }
-        }
-        return
-    }
-    
-    let requestURL = baseURL.appendingPathComponent("profiles")
-    guard var request = networkService.createRequest(url: requestURL, method: .post) else {
-        print("invalid request")
-        DispatchQueue.main.async {
-            completion()
-        }
-        return
-    }
-    request.addValue("Bearer \(oktaCredentials.idToken)", forHTTPHeaderField: "Authorization")
-
-    request.encode(from: profile)
-
-    networkService.loadData(using: request) { result in
-        switch result {
-        case .success(let data):
-            self.profiles.append(profile)
-            DispatchQueue.main.async {
-                completion()
-            }
-            print(data)
-            return
-
-        case.failure(let error):
-            completion()
-            print(error)
-            DispatchQueue.main.async {
-                completion()
-            }
-            return
-        }
-    }
-}
 
 ### AddProfileVC and Protocol
 
