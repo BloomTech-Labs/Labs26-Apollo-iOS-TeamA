@@ -10,7 +10,7 @@ import Foundation
 
 /// Used to determine a Question's context. so named to avoid collision with Swift.Context
 struct ContextObject: Codable {
-    
+    // MARK: - Coding Keys -
     enum CodingKeys: String, CodingKey {
         case id
         case title = "contextoption"

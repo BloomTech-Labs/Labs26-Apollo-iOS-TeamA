@@ -11,9 +11,9 @@ import Foundation
 extension URLRequest {
     /// Add .utf8 encoded data (JSON) to a URLRequest
     /// - Parameters:
-    ///   - request: URLRequest will be unwrapped in body. This will return an error. The original request won't be modified
     ///   - data: Must be encoded in .utf8
-    /// - Returns: an EncodingStatus object with a mutated request and nil error or error and nil request
+    ///
+    /// - Note:  This is a mutating function
     mutating func addJSONData(_ data: Data) {
 
         if self.httpBody != nil {
@@ -26,10 +26,11 @@ extension URLRequest {
 
     /**
      Encode from a Swift object to JSON for transmitting to an endpoint
-     - parameter type: the type to be encoded (i.e. MyCustomType.self)
-     - parameter request: the URLRequest used to transmit the encoded result to the remote server. The original request won't be modified
-     - parameter dateFormatter: optional for use with JSONEncoder.dateEncodingStrategy
-     - returns: An EncodingStatus object which should either contain an error and nil request or request and nil error
+     - Parameters:
+       - encodable: The instance to be encoded and added to the request
+       - dateFormatter: (Optional) for use with JSONEncoder.dateEncodingStrategy
+      error
+     - Note: This is a mutating function
      */
     mutating func encode<T: Encodable>(
         from encodable: T,

@@ -5,7 +5,7 @@ import UIKit
 
 class TopicQuestionsViewController: UIViewController {
     
-    // MARK: - Outlets & Properties
+    // MARK: - Outlets
     @IBOutlet weak var questionsCollectionView: UICollectionView!
     @IBOutlet var contextSegmentControl: UISegmentedControl!
 
@@ -14,10 +14,11 @@ class TopicQuestionsViewController: UIViewController {
         postTopic()
     }
 
-
+    // MARK: - Properties -
+    var topicName: String?
     let topicController = TopicController()
-    let reuseIdentifier = "QuestionsCollectionViewCell"
-    let reuseIdentifier2 = "AddNewQuestionCell"
+    let reuseIdentifier = String.collectionViewID(.questionsCollectionViewCell)
+    let reuseIdentifier2 = String.collectionViewID(.addNewQuestionCell)
     // TODO: Shawn - Fix these reuseID's
     var questions: [Question] = [] {
         didSet {
@@ -86,10 +87,19 @@ class TopicQuestionsViewController: UIViewController {
     
     // MARK: - Update -
     private func postTopic() {
-        topicController.postTopic(with: topicController.contexts[0].title, contextId: 1, questions: topicController.questions) { result in
+        // TODO: Dynamic questions when made available
+        guard let topicName = topicName else {
+            print("TopicName was nil!")
+            return
+        }
+
+        let selected = contextSegmentControl.selectedSegmentIndex
+
+        topicController.postTopic(with: topicName, contextId: selected, questions: topicController.questions) { result in
             switch result {
             case .success(let joinCode):
                 self.presentSimpleAlert(with: "Topic Posted!", message: "Your join code is \(joinCode)", preferredStyle: .alert, dismissText: "Got it!")
+
             case .failure(let error):
                 self.presentNetworkError(error: error.rawValue) { result in
                     //unknown/internal error occured:

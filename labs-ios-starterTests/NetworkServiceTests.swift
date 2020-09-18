@@ -11,7 +11,12 @@ import UIKit
 @testable import labs_ios_starter
 
 class NetworkServiceTests: XCTestCase {
+    // MARK: Properties
+    
+    ///Unit Testing URL
+    private let testURL = URL(string: "https://kd-apollo.herokuapp.com/")!
     let networkService = NetworkService.shared
+    
     
     func testGetRequestNoError() {
         let expectation = self.expectation(description: "Test GET Request Valid URL No Error")

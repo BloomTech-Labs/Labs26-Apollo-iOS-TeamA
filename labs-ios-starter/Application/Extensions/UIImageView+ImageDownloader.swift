@@ -34,7 +34,10 @@ extension UIImageView {
     
     // Helper method
     func downloaded(from link: String, contentMode mode: UIView.ContentMode = .scaleAspectFill) {
-        guard let url = URL(string: link) else { return }
+        guard let url = URL(string: link) else {
+            print("couldn't create URL from \(link) when downloading image")
+            return
+        }
         downloaded(from: url, contentMode: mode)
     }
 }

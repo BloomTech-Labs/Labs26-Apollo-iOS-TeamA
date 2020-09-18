@@ -10,9 +10,10 @@ import UIKit
 
 class ProfileTabBarViewController: UITabBarController {
 
+    // MARK: - View Lifecycle -
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        // MARK: Add Observers
         NotificationCenter.default.addObserver(forName: .oktaAuthenticationExpired,
                                                              object: nil,
                                                              queue: .main,

@@ -5,13 +5,13 @@ import UIKit
 
 class TopicDetailViewController: UIViewController {
     
-    // MARK: - Outlets & Properties
+    // MARK: - Outlets
     @IBOutlet weak var CRUDCollectionView: UICollectionView!
+
+    // MARK: - Properties -
+    let reuseIdentifier = String.collectionViewID(.crudCollectionViewCell)
     
-    let reuseIdentifier = "CRUDCollectionViewCell"
-    
-    // MARK: - Lifecycle
-    
+    // MARK: - View Lifecycle -
     override func viewDidLoad() {
         super.viewDidLoad()
     }

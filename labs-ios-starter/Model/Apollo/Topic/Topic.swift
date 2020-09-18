@@ -8,27 +8,10 @@
 
 import Foundation
 
-///Leaders can post topics
+///Leaders can post topics, members join with a `joinCode`
 struct Topic: Codable {
-    var id: Int?
-    //required to create
-    var joinCode: String?
-    var leaderId: String
-    var members: [Member]?
-    var topicName: String
-    var contextId: Int?
-
-    //App use
-    //doesnt get sent
-    var questions: [Question]?
-    //coding key assigned
-    var questionsToSend: [Int]?
-    //doesn't get sent
-    var responses: [Response]?
-    //coding key assigned
-    var responsesToSend: [Int]?
-
-
+    
+    // MARK: - Coding Keys -
     enum CodingKeys: String, CodingKey {
         case id
         case joinCode = "joincode"
@@ -39,5 +22,23 @@ struct Topic: Codable {
         case responsesToSend = "responses"
         case questionsToSend = "questions"
     }
+
+    var id: Int?
+    //required to create
+    var joinCode: String?
+    var leaderId: String
+    var members: [Member]?
+    var topicName: String
+    var contextId: Int?
+
+    // MARK: App use
+    //doesnt get sent
+    var questions: [Question]?
+    //coding key assigned
+    var questionsToSend: [Int]?
+    //doesn't get sent
+    var responses: [Response]?
+    //coding key assigned
+    var responsesToSend: [Int]?
 
 }
