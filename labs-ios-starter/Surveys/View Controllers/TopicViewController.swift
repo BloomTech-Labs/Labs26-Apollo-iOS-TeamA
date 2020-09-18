@@ -8,7 +8,7 @@ class TopicViewController: UIViewController {
     // MARK: - Outlets & Properties
     @IBOutlet weak var topicsCollectionView: UICollectionView!
     
-    let reuseIdentifier = String.collectionViewCellID(.topicsCollectionViewCell)
+    let reuseIdentifier = String.getCollectionViewCellID(.topicsCollectionViewCell)
     let topicController = TopicController()
 
     // MARK: - Lifecycle

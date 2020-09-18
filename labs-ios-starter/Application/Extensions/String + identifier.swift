@@ -30,6 +30,7 @@ enum CollectionViewIdentifier: String {
     case topicsCollectionViewCell
     case questionsCollectionViewCell
     case addNewQuestionCell
+
     case crudCollectionViewCell = "CRUDCollectionViewCell"
 }
 
@@ -38,7 +39,7 @@ extension String {
     ///convenience method to retrieve Storyboard Identifiers
     /// - Parameter identifier: defined in `enum StoryboardIdentifier` in String + identifier.swift
     /// - Returns: the rawValue of the case with the first letter capitalized
-    static func storyboardID(_ identifier: StoryboardIdentifier) -> String {
+    static func getStoryboardID(_ identifier: StoryboardIdentifier) -> String {
         //storyboard ids are capitalized
         identifier.rawValue.firstCapitalized
     }
@@ -46,7 +47,7 @@ extension String {
     ///convenience method to get Segue Identifiers
     /// - Parameter identifier: defined in `enum SegueIdentifier` in String + identifier.swift
     /// - Returns: the rawValue of the case with the first letter capitalized
-    static func segueID(_ identifier: SegueIdentifier) -> String {
+    static func getSegueID(_ identifier: SegueIdentifier) -> String {
         //segue ids are capitalized
         identifier.rawValue.firstCapitalized
     }
@@ -54,7 +55,7 @@ extension String {
     ///convenience method to get TableView Identifiers
     /// - Parameter identifier: defined in `enum TableViewIdentifier` in String + identifier.swift
     /// - Returns: the rawValue of the case with the first letter capitalized
-    static func tableViewCellID(_ identifier: TableViewIdentifier) -> String {
+    static func getTableViewCellID(_ identifier: TableViewIdentifier) -> String {
         //tableView ids are capitalized
         identifier.rawValue.firstCapitalized
     }
@@ -62,7 +63,7 @@ extension String {
     ///convenience method to get CollectionView Identifiers
     /// - Parameter identifier: defined in `enum CollectionViewIdentifier` in String + identifier.swift
     /// - Returns: the rawValue of the case with the first letter capitalized
-    static func collectionViewCellID(_ identifier: CollectionViewIdentifier) -> String {
+    static func getCollectionViewCellID(_ identifier: CollectionViewIdentifier) -> String {
         //collectionView ids are capitalized
         identifier.rawValue.firstCapitalized
     }

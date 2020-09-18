@@ -9,7 +9,7 @@ class TopicDetailViewController: UIViewController {
     @IBOutlet weak var CRUDCollectionView: UICollectionView!
 
     // MARK: - Properties -
-    let reuseIdentifier = String.collectionViewCellID(.crudCollectionViewCell)
+    let reuseIdentifier = String.getCollectionViewCellID(.crudCollectionViewCell)
     
     // MARK: - View Lifecycle -
     override func viewDidLoad() {
