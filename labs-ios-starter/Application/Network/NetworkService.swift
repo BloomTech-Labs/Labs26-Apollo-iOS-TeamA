@@ -12,6 +12,12 @@ import Foundation
 typealias URLHandler = (Data?, HTTPURLResponse?, Error?) -> Void
 /// Completion Handler using ErrorHandler class to handle common errors
 typealias URLCompletion = ((Result<Data, ErrorHandler.NetworkError>) -> Void)
+/// Completion Handler with String .success and NetworkError .failure
+typealias CompleteWithString = (Result<String, ErrorHandler.NetworkError>) -> Void
+/// Completion Handler with [Topic] .success and NetworkError .failure
+typealias CompleteWithTopics = (Result<[Topic], ErrorHandler.NetworkError>) -> Void
+/// Completion Handler with Void .success and NetworkError .failure
+typealias CompleteWithNeworkError = (Result<Void, ErrorHandler.NetworkError>) -> Void
 
 protocol NetworkLoader {
     func loadData(using request: URLRequest, with completion: @escaping URLCompletion)

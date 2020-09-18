@@ -14,42 +14,53 @@ class TopicController {
     let profileController = ProfileController.shared
     lazy var baseURL = profileController.baseURL
 
-    ///public getter for CONTEXTS
+    /// public getter for CONTEXTS
     var contexts: [ContextObject]  {
         CONTEXTS
     }
-    ///private setter for contexts
+    /// private setter for contexts
     private var CONTEXTS: [ContextObject] = []
-
+    /// public getter for QUESTIONS
     var questions: [Question] {
         QUESTIONS
     }
-
+    /// private setter for questions
     private var QUESTIONS: [Question] = []
 
-    typealias CompleteWithNeworkError = (Result<Void, ErrorHandler.NetworkError>) -> Void
+    // MARK: - Create -
+    func postTopic(with name: String, contextId: Int, questions: [Question], complete: @escaping CompleteWithString) {
 
-    private func createRequest(auth: Bool = true,
-                               pathFromBaseURL: String,
-                               method: NetworkService.HttpMethod = .get) -> URLRequest? {
-
-        let targetURL = baseURL.appendingPathComponent(pathFromBaseURL)
-
-        guard var request = networkService.createRequest(url: targetURL, method: method, headerType: .contentType, headerValue: .json) else {
-            print("unable to create request for \(targetURL)")
-            return nil
+        // We know this request is good, but we can still guard unwrap it rather than
+        // force unwrapping and assume if something fails it was the user not being logged in
+        guard var request = createRequest(pathFromBaseURL: "topic", method: .post),
+            let token = try? profileController.oktaAuth.credentialsIfAvailable().userID else {
+                print("user isn't logged in")
+                return
         }
+        //TODO: Responses
+        // Create topic and add to request
+        let joinCode = UUID().uuidString
+        let topic = Topic(joinCode: joinCode,
+                          leaderId: token,
+                          topicName: name,
+                          contextId: contextId)
+        //let questionsToSend = questions.map { $0.id }
 
-        if auth {
-            //add bearer to request
-            request.addAuthIfAvailable()
+        // TODO: Save to CoreData
+        request.encode(from: topic)
+
+        networkService.loadData(using: request) { result in
+            switch result {
+            case .success:
+                complete(.success(joinCode))
+            case .failure(let error):
+                NSLog("Error POSTing topic with statusCode: \(error.rawValue)")
+                complete(.failure(error))
+            }
         }
-
-        return request
     }
 
-    typealias CompleteWithTopics = (Result<[Topic], ErrorHandler.NetworkError>) -> Void
-
+    // MARK: - Read -
     ///fetch all topics, or topics for the logged in user
     func fetchTopic(all: Bool = true, completion: @escaping CompleteWithTopics) {
         var appendToURL = "topic"
@@ -127,7 +138,7 @@ class TopicController {
             }
         }
     }
-    //TODO
+
     func getAllQuestionsAndContexts(completion: @escaping CompleteWithNeworkError) {
         getAllContexts { contextResult in
             switch contextResult {
@@ -141,37 +152,25 @@ class TopicController {
 
         }
     }
-    typealias CompleteWithString = (Result<String, ErrorHandler.NetworkError>) -> Void
 
-    func postTopic(with name: String, contextId: Int, questions: [Question], complete: @escaping CompleteWithString) {
+    // MARK: - Helper Methods -
+    private func createRequest(auth: Bool = true,
+                               pathFromBaseURL: String,
+                               method: NetworkService.HttpMethod = .get) -> URLRequest? {
 
-        // We know this request is good, but we can still guard unwrap it rather than
-        // force unwrapping and assume if something fails it was the user not being logged in
-        guard var request = createRequest(pathFromBaseURL: "topic", method: .post),
-            let token = try? profileController.oktaAuth.credentialsIfAvailable().userID else {
-                print("user isn't logged in")
-                return
+        let targetURL = baseURL.appendingPathComponent(pathFromBaseURL)
+
+        guard var request = networkService.createRequest(url: targetURL, method: method, headerType: .contentType, headerValue: .json) else {
+            print("unable to create request for \(targetURL)")
+            return nil
         }
-        //TODO: Responses
-        // Create topic and add to request
-        let joinCode = UUID().uuidString
-        let topic = Topic(joinCode: joinCode,
-                          leaderId: token,
-                          topicName: name,
-                          contextId: contextId)
-        //let questionsToSend = questions.map { $0.id }
 
-        // TODO: Save to CoreData
-        request.encode(from: topic)
-
-        networkService.loadData(using: request) { result in
-            switch result {
-            case .success:
-                complete(.success(joinCode))
-            case .failure(let error):
-                NSLog("Error POSTing topic with statusCode: \(error.rawValue)")
-                complete(.failure(error))
-            }
+        if auth {
+            //add bearer to request
+            request.addAuthIfAvailable()
         }
+
+        return request
     }
+
 }
