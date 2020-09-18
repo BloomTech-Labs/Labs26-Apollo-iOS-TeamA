@@ -86,7 +86,9 @@ class TopicQuestionsViewController: UIViewController {
     
     // MARK: - Update -
     private func postTopic() {
-        topicController.postTopic(with: topicController.contexts[0].title, contextId: 1, questions: topicController.questions) { result in
+        // TODO: Dynamic questions when made available
+        let selected = contextSegmentControl.selectedSegmentIndex
+        topicController.postTopic(with: topicController.contexts[selected].title, contextId: selected, questions: topicController.questions) { result in
             switch result {
             case .success(let joinCode):
                 self.presentSimpleAlert(with: "Topic Posted!", message: "Your join code is \(joinCode)", preferredStyle: .alert, dismissText: "Got it!")
