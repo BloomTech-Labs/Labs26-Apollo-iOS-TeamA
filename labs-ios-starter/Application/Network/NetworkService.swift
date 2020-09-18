@@ -153,7 +153,6 @@ class NetworkService {
         if let dateFormatter = dateFormatter {
             decoder.dateDecodingStrategy = .formatted(dateFormatter)
         }
-        //avoid using Coding Keys
 
         do {
             return try decoder.decode(T.self, from: data)
