@@ -11,7 +11,6 @@ import Foundation
 class ErrorHandler {
 
     // MARK: - Singleton -
-    
     ///singleton instance
     static var shared = ErrorHandler()
     private init() {}
