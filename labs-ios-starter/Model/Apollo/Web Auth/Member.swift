@@ -11,7 +11,7 @@ import UIKit
 
 /// Standard user, leader if topic originator
 struct Member: Equatable, Codable {
-    // MARK: - Types -
+    // MARK: - Coding Keys -
     enum CodingKeys: String, CodingKey {
         case id, email
         case firstName = "firstname"
