@@ -8,7 +8,7 @@
 
 import Foundation
 
-///Leaders can post topics
+///Leaders can post topics, members join with a `joinCode`
 struct Topic: Codable {
     var id: Int?
     //required to create
@@ -18,7 +18,7 @@ struct Topic: Codable {
     var topicName: String
     var contextId: Int?
 
-    //App use
+    // MARK: App use
     //doesnt get sent
     var questions: [Question]?
     //coding key assigned
