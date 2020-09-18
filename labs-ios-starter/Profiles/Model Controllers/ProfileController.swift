@@ -10,26 +10,24 @@ import UIKit
 import OktaAuth
 
 class ProfileController {
+    // MARK: - Properties -
     let networkService = NetworkService.shared
-    
-    static let shared = ProfileController()
+    private(set) var authenticatedUserProfile: Member?
+    private(set) var profiles: [Member] = []
 
     /// Apollo API base URL
     let baseURL = URL(string: "https://apollo-a-api.herokuapp.com")!
-
-    ///Unit Testing URL
-    private let testURL = URL(string: "https://kd-apollo.herokuapp.com/")!
-
-    ///Okta auth URL
+    /// Okta auth URL
     private let oktaAuthURL = URL(string: "https://dev-625244.okta.com/")!
+    /// Callback URI
+    let callbackURI = "labs://apollo/implicit/callback"
 
+    /// Okta Auth Credentials
     lazy var oktaAuth = OktaAuth(baseURL: oktaAuthURL,
-                                 clientID: "0oavsbe2kAVi9pJPx4x6",
-                                 redirectURI: "labs://apollo/implicit/callback")
-
-    private(set) var authenticatedUserProfile: Member?
-    private(set) var profiles: [Member] = []
+    clientID: "0oavsbe2kAVi9pJPx4x6",
+    redirectURI: callbackURI)
     
+    static let shared = ProfileController()
     private init() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(refreshProfiles),
@@ -224,80 +222,7 @@ class ProfileController {
         return Member(oktaID: userID, id: nil, email: email, firstName: firstName, lastName: lastName, avatarURL: avatarURL)
     }
     
-    // NOTE: This method is unused, but left as an example for creating a profile on the scaffolding backend.
-    
-    func addProfile(_ profile: Member, completion: @escaping () -> Void) {
-        
-        var oktaCredentials: OktaCredentials
-        
-        do {
-            oktaCredentials = try oktaAuth.credentialsIfAvailable()
-        } catch {
-            postAuthenticationExpiredNotification()
-            NSLog("Credentials do not exist. Unable to add profile to API")
-            defer {
-                DispatchQueue.main.async {
-                    completion()
-                }
-            }
-            return
-        }
-        
-        let requestURL = baseURL.appendingPathComponent("profiles")
-        guard var request = networkService.createRequest(url: requestURL, method: .post) else {
-            print("invalid request")
-            DispatchQueue.main.async {
-                completion()
-            }
-            return
-        }
-        request.addValue("Bearer \(oktaCredentials.idToken)", forHTTPHeaderField: "Authorization")
 
-        request.encode(from: profile)
-
-        networkService.loadData(using: request) { result in
-            switch result {
-            case .success(let data):
-                self.profiles.append(profile)
-                DispatchQueue.main.async {
-                    completion()
-                }
-                print(data)
-                return
-
-            case.failure(let error):
-                completion()
-                print(error)
-                DispatchQueue.main.async {
-                    completion()
-                }
-                return
-            }
-        }
-    }
-    
-    func image(for url: URL, completion: @escaping (UIImage?) -> Void) {
-        guard let request = networkService.createRequest(url: url, method: .get) else {
-            print("invalid request")
-            completion(nil)
-            return
-        }
-
-        networkService.loadData(using: request) { result in
-            switch result {
-            case .success(let data):
-                DispatchQueue.main.async {
-                    completion(UIImage(data: data))
-                }
-                return
-            case .failure(let error):
-                print(error)
-                completion(nil)
-                return
-            }
-        }
-
-    }
     
     func postAuthenticationExpiredNotification() {
         NotificationCenter.default.post(name: .oktaAuthenticationExpired, object: nil)

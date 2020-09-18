@@ -68,14 +68,6 @@ class LoginViewController: DefaultViewController {
         }
     }
     
-    // MARK: - Navigation -
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == .segueID(.modalAddProfile) {
-            guard let addProfileVC = segue.destination as? AddProfileViewController else { return }
-            addProfileVC.delegate = self
-        }
-    }
-
     @objc func reportTextFieldText() {
         guard let text = self.userTextField.text,
         text != "" else {
@@ -85,13 +77,6 @@ class LoginViewController: DefaultViewController {
         self.presentSimpleAlert(with: "Textfield", message: text, preferredStyle: .alert, dismissText: "Go away")
     }
 
-}
-
-// MARK: - Add Profile Delegate -
-extension LoginViewController: AddProfileDelegate {
-    func profileWasAdded() {
-        checkForExistingProfile()
-    }
 }
 
 // MARK: - Live Previews -
