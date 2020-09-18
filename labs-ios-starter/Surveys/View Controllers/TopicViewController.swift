@@ -9,17 +9,20 @@ class TopicViewController: UIViewController {
     @IBOutlet weak var topicsCollectionView: UICollectionView!
     
     let reuseIdentifier = "TopicsCollectionViewCell"
-    
+    let topicController = TopicController()
+
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
     }
-    
-    // MARK: - Handlers
-    
-    // MARK: - Reusable
-    
+
+
+// MARK: - Handlers
+
+// MARK: - Reusable
+
 }
 
 extension TopicViewController: UICollectionViewDataSource {

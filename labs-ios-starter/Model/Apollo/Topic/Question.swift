@@ -12,9 +12,18 @@ import Foundation
 
 //It seems like questions should have responses...
 struct Question: Codable {
-    var id: UUID
-    var question: String //questions? need final backend model
-    var type: String
-    var style: String //for rating
-    var context: ContextQuestion?
+    var id: Int
+    //var contextId: Int
+    var question: String
+    var reviewType: String
+    var ratingStyle: String
+
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        //case contextId = "contextid"
+        case question
+        case reviewType = "type"
+        case ratingStyle = "style"
+    }
 }

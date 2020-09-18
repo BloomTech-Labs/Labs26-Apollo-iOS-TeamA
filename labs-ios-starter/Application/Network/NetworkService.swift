@@ -24,20 +24,19 @@ extension URLSession: NetworkLoader {
     func loadData(using request: URLRequest, with completion: @escaping URLCompletion) {
         self.dataTask(with: request) { (data, response, error) in
             //downcast response to HTTPURLResponse to work with the statusCode
-            if let response = response as? HTTPURLResponse {
-                let statusCode = response.statusCode
-                // first digit not a 2, it could be an error (need confirmation from BE team)
+            if let httpResponse = response as? HTTPURLResponse {
+                let statusCode = httpResponse.statusCode
                 if statusCode != 200 {
                     //unwrap the handled exception, or log an unhandled exception
-                    guard let error = ErrorHandler.NetworkError(rawValue: statusCode) else {
+                    guard let statusError = ErrorHandler.NetworkError(rawValue: statusCode) else {
                         // Edge case - unhandled exception (if this is logged, the ErrorHandler likely needs to be extended)
-                        NSLog("unhandled exception in \(#file).\(#function): \(statusCode)")
+                        NSLog("unhandled exception \(statusCode) from \(HTTPURLResponse.localizedString(forStatusCode: statusCode))")
                         completion(.failure(.unknown))
                         return
                     }
                     //log and complete with the error to be further handled by the caller
-                    NSLog("\(#file).\(#function) completed with error: \(error)")
-                    completion(.failure(error))
+                    NSLog("\(#file).\(#function) completed with error: \(statusError)\ndescription: \(HTTPURLResponse.localizedString(forStatusCode: statusCode))")
+                    completion(.failure(statusError))
                     return
                 }
 
@@ -47,6 +46,7 @@ extension URLSession: NetworkLoader {
                 // Edge case - standard networking error not handled in response, or no response
                 NSLog("Networking error in \(#file).\(#function) with \(String(describing: request.url?.absoluteString)) \n\(error)")
                 completion(.failure(.unknown))
+                return
             }
 
             guard let data = data else {
@@ -153,8 +153,7 @@ class NetworkService {
         if let dateFormatter = dateFormatter {
             decoder.dateDecodingStrategy = .formatted(dateFormatter)
         }
-        //avoid using Coding Keys
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
+
         do {
             return try decoder.decode(T.self, from: data)
         } catch {
