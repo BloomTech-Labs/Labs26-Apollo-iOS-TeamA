@@ -9,7 +9,8 @@
 import Foundation
 
 extension URLRequest {
-    ///add the user's bearer token to a request
+    /// Add the user's bearer token to a request
+    /// - Note: This is a mutating function
     mutating func addAuthIfAvailable() {
         guard let oktaCredentials = try? ProfileController.shared.oktaAuth.credentialsIfAvailable() else {
             return
