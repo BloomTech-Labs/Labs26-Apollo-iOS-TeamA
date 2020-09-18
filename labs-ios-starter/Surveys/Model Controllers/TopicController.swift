@@ -28,6 +28,14 @@ class TopicController {
     private var QUESTIONS: [Question] = []
 
     // MARK: - Create -
+    // TODO: Responses
+
+    /// Post a topic to the web back end with the currently signed in user as the leader
+    /// - Parameters:
+    ///   - name: The name of the topic
+    ///   - contextId: the context question's ID
+    ///   - questions: the questions chosen
+    ///   - complete: completes with the topic's join code
     func postTopic(with name: String, contextId: Int, questions: [Question], complete: @escaping CompleteWithString) {
 
         // We know this request is good, but we can still guard unwrap it rather than
@@ -37,7 +45,6 @@ class TopicController {
                 print("user isn't logged in")
                 return
         }
-        //TODO: Responses
         // Create topic and add to request
         let joinCode = UUID().uuidString
         let topic = Topic(joinCode: joinCode,
@@ -61,15 +68,23 @@ class TopicController {
     }
 
     // MARK: - Read -
-    ///fetch all topics, or topics for the logged in user
+
+    /// fetch all topics, or topics for the currently logged in user
+    /// - Parameters:
+    ///   - all: fetch topics for all users (`true`) or just the currently logged in user (`false`)
+    ///   - completion: Completes with `[Topic]`. Topics are also stored in the controller...
     func fetchTopic(all: Bool = true, completion: @escaping CompleteWithTopics) {
-        var appendToURL = "topic"
+
         if !all {
-            // Doesn't look like this will work - topic by id is topic id
-            // TODO: coordinate with BE team to see if we can get a topic by userId endpoint
-            appendToURL = "\(ProfileController.shared.authenticatedUserProfile!.id!)"
+            guard let userID = ProfileController.shared.authenticatedUserProfile?.id else {
+                print("🛑! User isn't logged in!")
+                completion(.failure(.unauthorized))
+                return
+            }
+            // TODO: filter topics by user ID before returning/assigning locally
+
         }
-        guard let request = createRequest(pathFromBaseURL: appendToURL) else {
+        guard let request = createRequest(pathFromBaseURL: "topic") else {
             return
         }
         
