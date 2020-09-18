@@ -62,7 +62,7 @@ extension ProfileListViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: .tableViewID(.profileCell), for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: .tableViewCellID(.profileCell), for: indexPath)
         
         let profile = profileController.profiles[indexPath.row]
         cell.textLabel?.text = "\(profile.firstName ?? "") \(profile.lastName ?? "")"

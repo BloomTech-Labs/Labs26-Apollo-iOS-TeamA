@@ -54,7 +54,7 @@ extension String {
     ///convenience method to get TableView Identifiers
     /// - Parameter identifier: defined in `enum TableViewIdentifier` in String + identifier.swift
     /// - Returns: the rawValue of the case with the first letter capitalized
-    static func tableViewID(_ identifier: TableViewIdentifier) -> String {
+    static func tableViewCellID(_ identifier: TableViewIdentifier) -> String {
         //tableView ids are capitalized
         identifier.rawValue.firstCapitalized
     }
@@ -62,7 +62,7 @@ extension String {
     ///convenience method to get CollectionView Identifiers
     /// - Parameter identifier: defined in `enum CollectionViewIdentifier` in String + identifier.swift
     /// - Returns: the rawValue of the case with the first letter capitalized
-    static func collectionViewID(_ identifier: CollectionViewIdentifier) -> String {
+    static func collectionViewCellID(_ identifier: CollectionViewIdentifier) -> String {
         //collectionView ids are capitalized
         identifier.rawValue.firstCapitalized
     }
