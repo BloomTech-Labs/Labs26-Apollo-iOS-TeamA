@@ -21,7 +21,6 @@ class QuestionCollectionViewCell: UICollectionViewCell {
         }
 
         //increase height if needed
-
         var height = height
         if nameLabel.frame.size.height + 50 > height { //50 for padding TODO: More dynamic/less magic
             height = nameLabel.frame.size.height + 50 // padding
