@@ -78,7 +78,6 @@ class TopicController {
         }
     }
 
-
     ///Get all contexts
     func getAllContexts(complete: @escaping CompleteWithNeworkError) {
         guard let request = createRequest(pathFromBaseURL: "context") else {
