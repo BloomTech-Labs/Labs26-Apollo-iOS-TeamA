@@ -18,7 +18,6 @@ class TopicController {
     var contexts: [ContextObject]  {
         CONTEXTS
     }
-
     ///private setter for contexts
     private var CONTEXTS: [ContextObject] = []
 
