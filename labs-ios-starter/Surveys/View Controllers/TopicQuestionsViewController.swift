@@ -15,6 +15,7 @@ class TopicQuestionsViewController: UIViewController {
     }
 
     // MARK: - Properties -
+    var topicName: String?
     let topicController = TopicController()
     let reuseIdentifier = String.collectionViewID(.questionsCollectionViewCell)
     let reuseIdentifier2 = String.collectionViewID(.addNewQuestionCell)
@@ -87,11 +88,18 @@ class TopicQuestionsViewController: UIViewController {
     // MARK: - Update -
     private func postTopic() {
         // TODO: Dynamic questions when made available
+        guard let topicName = topicName else {
+            print("TopicName was nil!")
+            return
+        }
+
         let selected = contextSegmentControl.selectedSegmentIndex
-        topicController.postTopic(with: topicController.contexts[selected].title, contextId: selected, questions: topicController.questions) { result in
+
+        topicController.postTopic(with: topicName, contextId: selected, questions: topicController.questions) { result in
             switch result {
             case .success(let joinCode):
                 self.presentSimpleAlert(with: "Topic Posted!", message: "Your join code is \(joinCode)", preferredStyle: .alert, dismissText: "Got it!")
+
             case .failure(let error):
                 self.presentNetworkError(error: error.rawValue) { result in
                     //unknown/internal error occured:
