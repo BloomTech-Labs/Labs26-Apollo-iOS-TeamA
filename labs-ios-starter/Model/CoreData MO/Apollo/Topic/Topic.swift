@@ -1,13 +1,13 @@
 // Copyright © 2020 Shawn James. All rights reserved.
-// TopicMO.swift
+// Topic.swift
 
 import CoreData
 
-final public class TopicMO: NSManagedObject, Codable {
+final public class Topic: NSManagedObject, Codable {
     
     // MARK: - Coding Keys
     
-    enum TopicMOCodingKeys: CodingKey {
+    enum TopicCodingKeys: CodingKey {
         case id, joinCode, leaderId, topicName
     }
     
@@ -30,7 +30,7 @@ final public class TopicMO: NSManagedObject, Codable {
     /// ```
     /// let jsonDecoder = JSONDecoder()
     /// jsonDecoder.userInfo[CodingUserInfoKey.managedObjectContext] = CoreDataManager.shared.mainContext
-    /// let topic = try! jsonDecoder.decode(TopicMO.self, from: mockJsonData)
+    /// let topic = try! jsonDecoder.decode(Topic.self, from: mockJsonData)
     /// ```
     required convenience public init(from decoder: Decoder) throws {
         guard let moc = decoder.userInfo[CodingUserInfoKey.managedObjectContext] as? NSManagedObjectContext else {
@@ -38,7 +38,7 @@ final public class TopicMO: NSManagedObject, Codable {
         }
         self.init(context: moc)
         
-        let container = try decoder.container(keyedBy: TopicMOCodingKeys.self)
+        let container = try decoder.container(keyedBy: TopicCodingKeys.self)
         
         self.id = try container.decode(UUID.self, forKey: .id)
         self.joinCode = try container.decode(String.self, forKey: .joinCode)
@@ -49,11 +49,11 @@ final public class TopicMO: NSManagedObject, Codable {
     /// Used for encoding
     /// ```
     ///  let jsonEncoder = JSONEncoder()
-    ///  let topic = TopicMO(identifier: 1, leaderID: 7, joinCode: "JoinCode123", topicName: "This is a topic name")
+    ///  let topic = Topic(identifier: 1, leaderID: 7, joinCode: "JoinCode123", topicName: "This is a topic name")
     ///  let jsonData = try jsonEncoder.encode(topic)
     /// ```
     public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: TopicMOCodingKeys.self)
+        var container = encoder.container(keyedBy: TopicCodingKeys.self)
         
         try container.encode(id, forKey: .id)
         try container.encode(joinCode, forKey: .joinCode)

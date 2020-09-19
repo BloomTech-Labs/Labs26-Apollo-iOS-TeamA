@@ -1,22 +1,22 @@
+////
+////  ContextQuestion.swift
+////  labs-ios-starter
+////
+////  Created by Kenny on 9/8/20.
+////  Copyright © 2020 Lambda, Inc. All rights reserved.
+////
 //
-//  ContextQuestion.swift
-//  labs-ios-starter
+//import Foundation
 //
-//  Created by Kenny on 9/8/20.
-//  Copyright © 2020 Lambda, Inc. All rights reserved.
+///// Used to determine a Question's context. so named to avoid collision with Swift.Context
+//struct ContextObject: Codable {
+//    // MARK: - Coding Keys -
+//    enum CodingKeys: String, CodingKey {
+//        case id
+//        case title = "contextoption"
+//    }
 //
-
-import Foundation
-
-/// Used to determine a Question's context. so named to avoid collision with Swift.Context
-struct ContextObject: Codable {
-    // MARK: - Coding Keys -
-    enum CodingKeys: String, CodingKey {
-        case id
-        case title = "contextoption"
-    }
-
-    var id: Int
-    var title: String
-
-}
+//    var id: Int
+//    var title: String
+//
+//}

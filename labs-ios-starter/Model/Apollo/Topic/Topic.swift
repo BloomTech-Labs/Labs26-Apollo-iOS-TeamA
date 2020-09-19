@@ -10,7 +10,7 @@ import Foundation
 
 ///Leaders can post topics, members join with a `joinCode`
 struct Topic: Codable {
-    
+
     // MARK: - Coding Keys -
     enum CodingKeys: String, CodingKey {
         case id

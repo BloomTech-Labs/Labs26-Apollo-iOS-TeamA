@@ -1,16 +1,16 @@
 // Copyright © 2020 Shawn James. All rights reserved.
-// MemberMO+CoreDataClass.swift
+// Member+CoreDataClass.swift
 //
 
 import UIKit
 import CoreData
 
 
-public class MemberMO: NSManagedObject, Codable {
+public class Member: NSManagedObject, Codable {
 
     // MARK: - Coding Keys
     
-    enum MemberMOCodingKeys: CodingKey {
+    enum MemberCodingKeys: CodingKey {
         case id, firstName, lastName, email, avatarURL
     }
     
@@ -37,7 +37,7 @@ public class MemberMO: NSManagedObject, Codable {
     /// ```
     /// let jsonDecoder = JSONDecoder()
     /// jsonDecoder.userInfo[CodingUserInfoKey.managedObjectContext] = CoreDataManager.shared.mainContext
-    /// let topic = try! jsonDecoder.decode(TopicMO.self, from: mockJsonData)
+    /// let topic = try! jsonDecoder.decode(Topic.self, from: mockJsonData)
     /// ```
     required convenience public init(from decoder: Decoder) throws {
         guard let moc = decoder.userInfo[CodingUserInfoKey.managedObjectContext] as? NSManagedObjectContext else {
@@ -45,7 +45,7 @@ public class MemberMO: NSManagedObject, Codable {
         }
         self.init(context: moc)
         
-        let container = try decoder.container(keyedBy: MemberMOCodingKeys.self)
+        let container = try decoder.container(keyedBy: MemberCodingKeys.self)
         
         self.id = try container.decode(String.self, forKey: .id)
         self.firstName = try container.decode(String.self, forKey: .firstName)
@@ -57,11 +57,11 @@ public class MemberMO: NSManagedObject, Codable {
     /// Used for encoding
     /// ```
     ///  let jsonEncoder = JSONEncoder()
-    ///  let topic = TopicMO(identifier: 1, leaderID: 7, joinCode: "JoinCode123", topicName: "This is a topic name")
+    ///  let topic = Topic(identifier: 1, leaderID: 7, joinCode: "JoinCode123", topicName: "This is a topic name")
     ///  let jsonData = try jsonEncoder.encode(topic)
     /// ```
     public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: MemberMOCodingKeys.self)
+        var container = encoder.container(keyedBy: MemberCodingKeys.self)
         
         try container.encode(id, forKey: .id)
         try container.encode(firstName, forKey: .firstName)

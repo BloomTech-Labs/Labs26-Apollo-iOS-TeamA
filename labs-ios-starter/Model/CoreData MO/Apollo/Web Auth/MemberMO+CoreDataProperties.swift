@@ -1,15 +1,15 @@
 // Copyright © 2020 Shawn James. All rights reserved.
-// MemberMO+CoreDataProperties.swift
+// Member+CoreDataProperties.swift
 //
 
 import UIKit
 import CoreData
 
 
-extension MemberMO {
+extension Member {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<MemberMO> {
-        return NSFetchRequest<MemberMO>(entityName: "MemberMO")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<Member> {
+        return NSFetchRequest<Member>(entityName: "Member")
     }
 
     @NSManaged public var id: String?
@@ -18,7 +18,7 @@ extension MemberMO {
     @NSManaged public var lastName: String?
     @NSManaged public var avatarURL: URL?
     @NSManaged public var image: UIImage?
-    @NSManaged public var topic: TopicMO?
-    @NSManaged public var response: ResponseMO?
+    @NSManaged public var topic: Topic?
+    @NSManaged public var response: Response?
 
 }

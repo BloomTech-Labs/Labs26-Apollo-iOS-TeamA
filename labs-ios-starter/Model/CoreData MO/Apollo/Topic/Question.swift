@@ -1,13 +1,13 @@
 // Copyright © 2020 Shawn James. All rights reserved.
-// QuestionMO.swift
+// Question.swift
 
 import CoreData
 
-final public class QuestionMO: NSManagedObject, Codable {
+final public class Question: NSManagedObject, Codable {
     
     // MARK: - Coding Keys
     
-    enum QuestionMOCodingKeys: CodingKey {
+    enum QuestionCodingKeys: CodingKey {
         case id, question, style, type
     }
     
@@ -30,7 +30,7 @@ final public class QuestionMO: NSManagedObject, Codable {
     /// ```
     /// let jsonDecoder = JSONDecoder()
     /// jsonDecoder.userInfo[CodingUserInfoKey.managedObjectContext] = CoreDataManager.shared.mainContext
-    /// let topic = try! jsonDecoder.decode(TopicMO.self, from: mockJsonData)
+    /// let topic = try! jsonDecoder.decode(Topic.self, from: mockJsonData)
     /// ```
     required convenience public init(from decoder: Decoder) throws {
         guard let moc = decoder.userInfo[CodingUserInfoKey.managedObjectContext] as? NSManagedObjectContext else {
@@ -38,7 +38,7 @@ final public class QuestionMO: NSManagedObject, Codable {
         }
         self.init(context: moc)
         
-        let container = try decoder.container(keyedBy: QuestionMOCodingKeys.self)
+        let container = try decoder.container(keyedBy: QuestionCodingKeys.self)
         
         self.id = try container.decode(UUID.self, forKey: .id)
         self.question = try container.decode(String.self, forKey: .question)
@@ -50,11 +50,11 @@ final public class QuestionMO: NSManagedObject, Codable {
     /// Used for encoding
     /// ```
     ///  let jsonEncoder = JSONEncoder()
-    ///  let topic = TopicMO(identifier: 1, leaderID: 7, joinCode: "JoinCode123", topicName: "This is a topic name")
+    ///  let topic = Topic(identifier: 1, leaderID: 7, joinCode: "JoinCode123", topicName: "This is a topic name")
     ///  let jsonData = try jsonEncoder.encode(topic)
     /// ```
     public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: QuestionMOCodingKeys.self)
+        var container = encoder.container(keyedBy: QuestionCodingKeys.self)
         
         try container.encode(id, forKey: .id)
         try container.encode(question, forKey: .question)
