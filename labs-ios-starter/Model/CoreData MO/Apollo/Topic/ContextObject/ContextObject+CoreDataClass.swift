@@ -1,45 +1,47 @@
 // Copyright © 2020 Shawn James. All rights reserved.
-// ContextObject.swift
+// ContextObject+CoreDataClass.swift
+//
 
 import CoreData
 
-final public class ContextObject: NSManagedObject, Codable {
-    
+/// Used to determine a Question's context. so named to avoid collision with Swift.Context
+public final class ContextObject: NSManagedObject, Codable {
     // MARK: - Coding Keys
-    
-    enum ContextObjectCodingKeys: CodingKey {
-        case id, context
+
+    enum ContextObjectCodingKeys: String, CodingKey {
+        case id
+        case title = "contextoption"
     }
-    
-    // MARK: - Initializers
-    
+
+    // MARK: - Initializer
+
     /// Used to create managed object
-    @discardableResult convenience init(id: UUID,
-                                        context: [String],
+    @discardableResult convenience init(id: Int64,
+                                        title: String,
                                         moc: NSManagedObjectContext = CoreDataManager.shared.mainContext) {
         self.init(context: moc)
         self.id = id
-        self.context = context
+        self.title = title
     }
-    
+
     /// Used to create managed objects by way of decoding
     /// ```
     /// let jsonDecoder = JSONDecoder()
     /// jsonDecoder.userInfo[CodingUserInfoKey.managedObjectContext] = CoreDataManager.shared.mainContext
     /// let topic = try! jsonDecoder.decode(Topic.self, from: mockJsonData)
     /// ```
-    required convenience public init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         guard let moc = decoder.userInfo[CodingUserInfoKey.managedObjectContext] as? NSManagedObjectContext else {
             throw ErrorHandler.DecoderConfigurationError.missingManagedObjectContext
         }
         self.init(context: moc)
-        
+
         let container = try decoder.container(keyedBy: ContextObjectCodingKeys.self)
-        
-        self.id = try container.decode(UUID.self, forKey: .id)
-        self.context = try container.decode([String].self, forKey: .context)
+
+        id = try container.decode(Int64.self, forKey: .id)
+        title = try container.decode(String.self, forKey: .title)
     }
-    
+
     /// Used for encoding
     /// ```
     ///  let jsonEncoder = JSONEncoder()
@@ -48,9 +50,8 @@ final public class ContextObject: NSManagedObject, Codable {
     /// ```
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: ContextObjectCodingKeys.self)
-        
+
         try container.encode(id, forKey: .id)
-        try container.encode(context, forKey: .context)
+        try container.encode(title, forKey: .title)
     }
-    
 }

@@ -1,52 +1,56 @@
 // Copyright © 2020 Shawn James. All rights reserved.
-// Question.swift
+// Question+CoreDataClass.swift
+//
 
 import CoreData
 
-final public class Question: NSManagedObject, Codable {
-    
+/// Leaders and users can ask questions
+public final class Question: NSManagedObject, Codable {
     // MARK: - Coding Keys
-    
-    enum QuestionCodingKeys: CodingKey {
-        case id, question, style, type
+
+    enum QuestionCodingKeys: String, CodingKey {
+        case id
+        case question
+        case reviewType = "type"
+        case ratingStyle = "style"
+        // case contextId = "contextid"
     }
-    
-    // MARK: - Initializers
-    
+
+    // MARK: - Initializer
+
     /// Used to create managed object
-    @discardableResult convenience init(id: UUID,
+    @discardableResult convenience init(id: Int64,
                                         question: String,
-                                        style: String,
-                                        type: String,
+                                        reviewType: String,
+                                        ratingStyle: String,
                                         context: NSManagedObjectContext = CoreDataManager.shared.mainContext) {
         self.init(context: context)
         self.id = id
         self.question = question
-        self.style = style
-        self.type = type
+        self.reviewType = reviewType
+        self.ratingStyle = ratingStyle
     }
-    
+
     /// Used to create managed objects by way of decoding
     /// ```
     /// let jsonDecoder = JSONDecoder()
     /// jsonDecoder.userInfo[CodingUserInfoKey.managedObjectContext] = CoreDataManager.shared.mainContext
     /// let topic = try! jsonDecoder.decode(Topic.self, from: mockJsonData)
     /// ```
-    required convenience public init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         guard let moc = decoder.userInfo[CodingUserInfoKey.managedObjectContext] as? NSManagedObjectContext else {
             throw ErrorHandler.DecoderConfigurationError.missingManagedObjectContext
         }
         self.init(context: moc)
-        
-        let container = try decoder.container(keyedBy: QuestionCodingKeys.self)
-        
-        self.id = try container.decode(UUID.self, forKey: .id)
-        self.question = try container.decode(String.self, forKey: .question)
-        self.style = try container.decode(String.self, forKey: .style)
-        self.type = try container.decode(String.self, forKey: .type)
 
+        let container = try decoder.container(keyedBy: QuestionCodingKeys.self)
+
+        id = try container.decode(Int64.self, forKey: .id)
+        question = try container.decode(String.self, forKey: .question)
+        reviewType = try container.decode(String.self, forKey: .reviewType)
+        ratingStyle = try container.decode(String.self, forKey: .ratingStyle)
     }
-    
+
     /// Used for encoding
     /// ```
     ///  let jsonEncoder = JSONEncoder()
@@ -55,11 +59,10 @@ final public class Question: NSManagedObject, Codable {
     /// ```
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: QuestionCodingKeys.self)
-        
+
         try container.encode(id, forKey: .id)
         try container.encode(question, forKey: .question)
-        try container.encode(style, forKey: .style)
-        try container.encode(type, forKey: .type)
+        try container.encode(reviewType, forKey: .reviewType)
+        try container.encode(ratingStyle, forKey: .ratingStyle)
     }
-    
 }
