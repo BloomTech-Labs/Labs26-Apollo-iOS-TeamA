@@ -33,6 +33,7 @@
 		1D4D9C0A25092B5400348246 /* labs_ios_starterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D9C0925092B5400348246 /* labs_ios_starterUITests.swift */; };
 		1D4D9C1325092F4A00348246 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D9C1225092F4A00348246 /* CoreDataManager.swift */; };
 		1D4D9C17250930AB00348246 /* labs-ios-starter.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D9C15250930AB00348246 /* labs-ios-starter.xcdatamodeld */; };
+		1DB156B22516B8C60084ECA0 /* TopicControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9983C5725141AC6001D91FE /* TopicControllerTests.swift */; };
 		463AD24324CF275900447BB8 /* ProfileDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463AD24224CF275900447BB8 /* ProfileDetailViewController.swift */; };
 		466C4274249A8748007D033E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466C4273249A8748007D033E /* AppDelegate.swift */; };
 		466C4276249A8748007D033E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466C4275249A8748007D033E /* SceneDelegate.swift */; };
@@ -606,8 +607,8 @@
 			children = (
 				B9404231250321230048BCED /* labs_ios_starterTests.swift */,
 				B9390BE6250991D300131227 /* NetworkServiceTests.swift */,
-				B9404233250321230048BCED /* Info.plist */,
 				B9983C5725141AC6001D91FE /* TopicControllerTests.swift */,
+				B9404233250321230048BCED /* Info.plist */,
 			);
 			path = "labs-ios-starterTests";
 			sourceTree = "<group>";
@@ -822,6 +823,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DB156B22516B8C60084ECA0 /* TopicControllerTests.swift in Sources */,
 				B9390BE7250991D300131227 /* NetworkServiceTests.swift in Sources */,
 				B9404232250321230048BCED /* labs_ios_starterTests.swift in Sources */,
 			);
