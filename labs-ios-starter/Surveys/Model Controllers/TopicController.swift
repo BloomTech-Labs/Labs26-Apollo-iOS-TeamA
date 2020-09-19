@@ -91,7 +91,9 @@ class TopicController {
         networkService.loadData(using: request) { result in
             switch result {
             case let .success(data):
-                guard let topics = self.networkService.decode(to: [Topic].self, data: data) else {
+                guard let topics = self.networkService.decode(to: [Topic].self,
+                                                              data: data,
+                                                              moc: CoreDataManager.shared.mainContext) else {
                     print("Error decoding topics")
                     completion(.failure(.badDecode))
                     return
@@ -113,7 +115,9 @@ class TopicController {
         networkService.loadData(using: request) { result in
             switch result {
             case let .success(data):
-                guard let contexts = self.networkService.decode(to: [ContextObject].self, data: data) else {
+                guard let contexts = self.networkService.decode(to: [ContextObject].self,
+                                                                data: data,
+                                                                moc: CoreDataManager.shared.mainContext) else {
                     print("error decoding contexts from valid data")
                     complete(.failure(.notFound))
                     return
@@ -140,7 +144,9 @@ class TopicController {
             switch result {
             // decode questions
             case let .success(data):
-                guard let questions = self.networkService.decode(to: [Question].self, data: data) else {
+                guard let questions = self.networkService.decode(to: [Question].self,
+                                                                 data: data,
+                                                                 moc: CoreDataManager.shared.mainContext) else {
                     completion(.failure(.badDecode))
                     return
                 }
