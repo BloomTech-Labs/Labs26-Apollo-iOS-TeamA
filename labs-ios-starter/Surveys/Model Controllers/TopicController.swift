@@ -39,7 +39,7 @@ class TopicController {
     ///   - contextId: the context question's ID
     ///   - questions: the questions chosen
     ///   - complete: completes with the topic's join code
-    func postTopic(with name: String, contextId: Int64, questions: [Question], complete: @escaping CompleteWithString) {
+    func postTopic(with name: String, contextId: Int, questions: [Question], complete: @escaping CompleteWithString) {
         // We know this request is good, but we can still guard unwrap it rather than
         // force unwrapping and assume if something fails it was the user not being logged in
         guard var request = createRequest(pathFromBaseURL: "topic", method: .post),
@@ -52,7 +52,7 @@ class TopicController {
         let topic = Topic(joinCode: joinCode,
                           leaderId: token,
                           topicName: name,
-                          contextId: contextId)
+                          contextId: Int64(contextId))
         // let questionsToSend = questions.map { $0.id }
 
         // TODO: Save to CoreData
