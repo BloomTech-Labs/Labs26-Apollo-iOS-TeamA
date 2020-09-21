@@ -4,10 +4,10 @@
 import UIKit
 
 class TopicViewController: UIViewController {
-    
     // MARK: - Outlets & Properties
-    @IBOutlet weak var topicsCollectionView: UICollectionView!
-    
+
+    @IBOutlet var topicsCollectionView: UICollectionView!
+
     let reuseIdentifier = String.getCollectionViewCellID(.topicsCollectionViewCell)
     let topicController = TopicController()
 
@@ -24,7 +24,7 @@ class TopicViewController: UIViewController {
     }
 
     // MARK: - Lifecycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         topicController.fetchTopic { result in
@@ -34,7 +34,7 @@ class TopicViewController: UIViewController {
                     self.topics = topics
                 }
             case .failure(let error):
-                self.presentNetworkError(error: error.rawValue) { (tryAgain) in
+                self.presentNetworkError(error: error.rawValue) { tryAgain in
                     if let tryAgain = tryAgain {
                         if tryAgain {
                             // TODO:
@@ -46,44 +46,41 @@ class TopicViewController: UIViewController {
         }
     }
 
-
     // MARK: - Handlers
 
     // MARK: - Reusable
-
 }
 
 extension TopicViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //TODO: Topics I'm a leader of vs topics I'm a member of (2 sections, or dynamic)
+        // TODO: Topics I'm a leader of vs topics I'm a member of (2 sections, or dynamic)
         topics?.count ?? 0
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = topicsCollectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? TopicCollectionViewCell else {
             fatalError("couldn't downcast TopicCollectionViewCell 🚨CHANGE THIS BEFORE PRODUCTION🚨")
         }
 
-        cell.topic = self.topics?[indexPath.row]
+        cell.topic = topics?[indexPath.row]
         cell.setDimensions(width: view.frame.width - 40, height: 80)
         return cell
     }
-    
 }
 
 // MARK: - Live Previews
 
 #if DEBUG
 
-import SwiftUI
+    import SwiftUI
 
-struct TopicViewControllerPreview: PreviewProvider {
-    static var previews: some View {
-        let storyboard = UIStoryboard(name: "Surveys", bundle: .main)
-        let tabBarController = storyboard.instantiateInitialViewController() as? UITabBarController
-        
-        return tabBarController?.view.livePreview.edgesIgnoringSafeArea(.all)
+    struct TopicViewControllerPreview: PreviewProvider {
+        static var previews: some View {
+            let storyboard = UIStoryboard(name: "Surveys", bundle: .main)
+            let tabBarController = storyboard.instantiateInitialViewController() as? UITabBarController
+
+            return tabBarController?.view.livePreview.edgesIgnoringSafeArea(.all)
+        }
     }
-}
 
 #endif
