@@ -66,7 +66,9 @@ class ProfileController {
         networkService.loadData(using: request) { result in
             switch result {
             case .success(let data):
-                guard let profiles = self.networkService.decode(to: [Member].self, data: data) else {
+                guard let profiles = self.networkService.decode(to: [Member].self,
+                                                                data: data,
+                                                                moc: CoreDataManager.shared.mainContext) else {
                     print("couldn't decode profiles")
                     completion(.noConnection)
                     return
@@ -149,7 +151,9 @@ class ProfileController {
             var fetchedProfile: Member?
             switch result {
             case .success(let data):
-                fetchedProfile = self.networkService.decode(to: Member.self, data: data)
+                fetchedProfile = self.networkService.decode(to: Member.self,
+                                                            data: data,
+                                                            moc: CoreDataManager.shared.mainContext)
                 completion(fetchedProfile)
             case .failure(let error):
                 print("error logging in to heroku backend: \(error)")
