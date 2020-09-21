@@ -326,9 +326,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2KR-hX-KIj" customClass="StandardButton" customModule="labs_ios_starter" customModuleProvider="target">
-                                <rect key="frame" x="20" y="343" width="374" height="60"/>
+                                <rect key="frame" x="20" y="343" width="374" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="lyV-uv-a1g"/>
+                                    <constraint firstAttribute="height" constant="50" id="lyV-uv-a1g"/>
                                 </constraints>
                                 <state key="normal" title="Next"/>
                                 <connections>
@@ -454,7 +454,10 @@
                                 <color key="selectedSegmentTintColor" name="action"/>
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WfL-uy-8gj" userLabel="Send Button" customClass="StandardButton" customModule="labs_ios_starter" customModuleProvider="target">
-                                <rect key="frame" x="8" y="742" width="398" height="66"/>
+                                <rect key="frame" x="20" y="742" width="374" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="tED-wK-u22"/>
+                                </constraints>
                                 <state key="normal" title="Send It!"/>
                                 <connections>
                                     <action selector="postTopicButton:" destination="VRw-Ph-qHy" eventType="touchUpInside" id="vk9-b3-M4E"/>
@@ -463,16 +466,15 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="pS7-9o-Fhm" firstAttribute="bottom" secondItem="WfL-uy-8gj" secondAttribute="bottom" id="5Ej-eh-NiV"/>
-                            <constraint firstItem="WfL-uy-8gj" firstAttribute="leading" secondItem="XSM-yT-fWX" secondAttribute="leading" constant="8" id="8T3-6L-QYZ"/>
+                            <constraint firstItem="pS7-9o-Fhm" firstAttribute="bottom" secondItem="WfL-uy-8gj" secondAttribute="bottom" constant="16" id="5Ej-eh-NiV"/>
+                            <constraint firstItem="WfL-uy-8gj" firstAttribute="leading" secondItem="XSM-yT-fWX" secondAttribute="leading" constant="20" id="8T3-6L-QYZ"/>
                             <constraint firstItem="XSM-yT-fWX" firstAttribute="trailing" secondItem="pS7-9o-Fhm" secondAttribute="trailing" id="AWp-y4-tfm"/>
                             <constraint firstItem="pS7-9o-Fhm" firstAttribute="trailing" secondItem="adO-9K-PCb" secondAttribute="trailing" constant="10" id="HGo-QF-qui"/>
-                            <constraint firstItem="WfL-uy-8gj" firstAttribute="trailing" secondItem="XSM-yT-fWX" secondAttribute="trailing" constant="-8" id="Ity-WW-hPg"/>
+                            <constraint firstItem="WfL-uy-8gj" firstAttribute="trailing" secondItem="XSM-yT-fWX" secondAttribute="trailing" constant="-20" id="Ity-WW-hPg"/>
                             <constraint firstItem="adO-9K-PCb" firstAttribute="top" secondItem="pS7-9o-Fhm" secondAttribute="top" id="KrM-BQ-cHD"/>
                             <constraint firstItem="XSM-yT-fWX" firstAttribute="leading" secondItem="pS7-9o-Fhm" secondAttribute="leading" id="XRk-As-ou6"/>
                             <constraint firstItem="adO-9K-PCb" firstAttribute="leading" secondItem="pS7-9o-Fhm" secondAttribute="leading" constant="10" id="byn-gY-WR0"/>
                             <constraint firstItem="XSM-yT-fWX" firstAttribute="top" secondItem="adO-9K-PCb" secondAttribute="bottom" constant="8" id="da9-i5-s4x"/>
-                            <constraint firstAttribute="bottom" secondItem="XSM-yT-fWX" secondAttribute="bottom" constant="100" id="gPp-Wr-Lgc"/>
                             <constraint firstItem="WfL-uy-8gj" firstAttribute="top" secondItem="XSM-yT-fWX" secondAttribute="bottom" id="nTN-Tc-gWZ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="pS7-9o-Fhm"/>
