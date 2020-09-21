@@ -1,4 +1,4 @@
-    //
+//
 //  TopicController.swift
 //  labs-ios-starter
 //
@@ -15,19 +15,22 @@ class TopicController {
     lazy var baseURL = profileController.baseURL
 
     /// public getter for CONTEXTS
-    var contexts: [ContextObject]  {
-        CONTEXTS
-    }
-    /// private setter for contexts
-    private var CONTEXTS: [ContextObject] = []
-    /// public getter for QUESTIONS
-    var questions: [Question] {
-        QUESTIONS
-    }
-    /// private setter for questions
-    private var QUESTIONS: [Question] = []
+           /// public getter for CONTEXTS
+        var contexts: [ContextObject]  {
+            CONTEXTS
+        }
+        /// private setter for contexts
+        private var CONTEXTS: [ContextObject] = []
+
+        /// public getter for QUESTIONS
+        var questions: [Question] {
+            QUESTIONS
+        }
+        /// private setter for questions
+        private var QUESTIONS: [Question] = []
 
     // MARK: - Create -
+
     // TODO: Responses
 
     /// Post a topic to the web back end with the currently signed in user as the leader
@@ -37,21 +40,20 @@ class TopicController {
     ///   - questions: the questions chosen
     ///   - complete: completes with the topic's join code
     func postTopic(with name: String, contextId: Int, questions: [Question], complete: @escaping CompleteWithString) {
-
         // We know this request is good, but we can still guard unwrap it rather than
         // force unwrapping and assume if something fails it was the user not being logged in
         guard var request = createRequest(pathFromBaseURL: "topic", method: .post),
             let token = try? profileController.oktaAuth.credentialsIfAvailable().userID else {
-                print("user isn't logged in")
-                return
+            print("user isn't logged in")
+            return
         }
         // Create topic and add to request
         let joinCode = UUID().uuidString
         let topic = Topic(joinCode: joinCode,
                           leaderId: token,
                           topicName: name,
-                          contextId: contextId)
-        //let questionsToSend = questions.map { $0.id }
+                          contextId: Int64(contextId))
+        // let questionsToSend = questions.map { $0.id }
 
         // TODO: Save to CoreData
         request.encode(from: topic)
@@ -60,7 +62,7 @@ class TopicController {
             switch result {
             case .success:
                 complete(.success(joinCode))
-            case .failure(let error):
+            case let .failure(error):
                 NSLog("Error POSTing topic with statusCode: \(error.rawValue)")
                 complete(.failure(error))
             }
@@ -74,7 +76,6 @@ class TopicController {
     ///   - all: fetch topics for all users (`true`) or just the currently logged in user (`false`)
     ///   - completion: Completes with `[Topic]`. Topics are also stored in the controller...
     func fetchTopic(all: Bool = true, completion: @escaping CompleteWithTopics) {
-
         if !all {
             guard let userID = ProfileController.shared.authenticatedUserProfile?.id else {
                 print("🛑! User isn't logged in!")
@@ -82,29 +83,30 @@ class TopicController {
                 return
             }
             // TODO: filter topics by user ID before returning/assigning locally
-
         }
         guard let request = createRequest(pathFromBaseURL: "topic") else {
             return
         }
-        
+
         networkService.loadData(using: request) { result in
             switch result {
-            case .success(let data):
-                guard let topics = self.networkService.decode(to: [Topic].self, data: data) else {
+            case let .success(data):
+                guard let topics = self.networkService.decode(to: [Topic].self,
+                                                              data: data,
+                                                              moc: CoreDataManager.shared.mainContext) else {
                     print("Error decoding topics")
                     completion(.failure(.badDecode))
                     return
                 }
                 completion(.success(topics))
-            case .failure(let error):
+            case let .failure(error):
                 // bubble error to caller
                 completion(.failure(error))
             }
         }
     }
 
-    ///Get all contexts
+    /// Get all contexts
     func getAllContexts(complete: @escaping CompleteWithNeworkError) {
         guard let request = createRequest(pathFromBaseURL: "context") else {
             print("couldn't get context, invalid request")
@@ -112,16 +114,18 @@ class TopicController {
         }
         networkService.loadData(using: request) { result in
             switch result {
-            case .success(let data):
-                guard let contexts = self.networkService.decode(to: [ContextObject].self, data: data) else {
+            case let .success(data):
+                guard let contexts = self.networkService.decode(to: [ContextObject].self,
+                                                                data: data,
+                                                                moc: CoreDataManager.shared.mainContext) else {
                     print("error decoding contexts from valid data")
                     complete(.failure(.notFound))
                     return
                 }
                 self.CONTEXTS = contexts
                 complete(.success(Void()))
-            //bubble error to caller
-            case .failure(let error):
+            // bubble error to caller
+            case let .failure(error):
                 complete(.failure(error))
             }
         }
@@ -129,18 +133,20 @@ class TopicController {
 
     func getQuestions(completion: @escaping CompleteWithNeworkError) {
         // create request to /question
-        guard let request = self.createRequest(pathFromBaseURL: "question") else {
+        guard let request = createRequest(pathFromBaseURL: "question") else {
             completion(.failure(.badRequest))
             return
         }
 
         // get questions from endpoint
-        self.networkService.loadData(using: request) { result in
-            //self is nil here???
+        networkService.loadData(using: request) { result in
+            // self is nil here???
             switch result {
             // decode questions
-            case .success(let data):
-                guard let questions = self.networkService.decode(to: [Question].self, data: data) else {
+            case let .success(data):
+                guard let questions = self.networkService.decode(to: [Question].self,
+                                                                 data: data,
+                                                                 moc: CoreDataManager.shared.mainContext) else {
                     completion(.failure(.badDecode))
                     return
                 }
@@ -148,7 +154,7 @@ class TopicController {
                 completion(.success(Void()))
 
             // bubble error to caller
-            case .failure(let error):
+            case let .failure(error):
                 completion(.failure(error))
             }
         }
@@ -158,21 +164,20 @@ class TopicController {
         getAllContexts { contextResult in
             switch contextResult {
             case .success:
-                self.getQuestions() { result in
+                self.getQuestions { result in
                     completion(result)
                 }
-            case.failure:
+            case .failure:
                 completion(contextResult)
             }
-
         }
     }
 
     // MARK: - Helper Methods -
+
     private func createRequest(auth: Bool = true,
                                pathFromBaseURL: String,
                                method: NetworkService.HttpMethod = .get) -> URLRequest? {
-
         let targetURL = baseURL.appendingPathComponent(pathFromBaseURL)
 
         guard var request = networkService.createRequest(url: targetURL, method: method, headerType: .contentType, headerValue: .json) else {
@@ -181,11 +186,10 @@ class TopicController {
         }
 
         if auth {
-            //add bearer to request
+            // add bearer to request
             request.addAuthIfAvailable()
         }
 
         return request
     }
-
 }
