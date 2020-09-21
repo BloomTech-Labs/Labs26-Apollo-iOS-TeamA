@@ -732,7 +732,6 @@
 				1D0545292515C3BC006E8665 /* Topic+CoreDataProperties.swift in Sources */,
 				1D0545252515C3BC006E8665 /* Question+CoreDataProperties.swift in Sources */,
 				B940421A2501D1CE0048BCED /* UIViewController+Alerts.swift in Sources */,
-				B916372D250841B200B49A75 /* Topic.swift in Sources */,
 				B9091EEF25183F2E009BA6A7 /* TopicCollectionViewCell.swift in Sources */,
 				46BEB4E924C98DAF00FE0CD1 /* ProfileListViewController.swift in Sources */,
 				B94042112501D0740048BCED /* ErrorHandler.swift in Sources */,
