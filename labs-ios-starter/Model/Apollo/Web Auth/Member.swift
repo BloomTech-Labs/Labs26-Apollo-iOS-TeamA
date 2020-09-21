@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 /// Standard user, leader if topic originator
 struct Member: Equatable, Codable {
     // MARK: - Coding Keys -
@@ -20,8 +19,7 @@ struct Member: Equatable, Codable {
     }
 
     // MARK: - Properties -
-    var oktaID: String?
-    var id: Int?
+    var id: String?
     var email: String?
     var firstName: String?
     var lastName: String?
@@ -39,8 +37,7 @@ struct Member: Equatable, Codable {
     ///   - firstName: optional, used for registration and updating name only (defaults to nil)
     ///   - lastName: optional, used for registration and updating name only (defaults to nil)
     ///   - avatarURL: optional, used for displaying the user's profile image
-    init(oktaID: String?, id: Int?, email: String? = nil, firstName: String? = nil, lastName: String? = nil, avatarURL: URL? = nil) {
-        self.oktaID = oktaID
+    init(id: String?, email: String? = nil, firstName: String? = nil, lastName: String? = nil, avatarURL: URL? = nil) {
         self.id = id
         self.email = email
         self.firstName = firstName
@@ -50,13 +47,8 @@ struct Member: Equatable, Codable {
     /// Manual decoding to handle same key used for different properties
     init (from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        //if id is Int, this is a web user ID
-        id = try? container.decode(Int.self, forKey: .id)
-        //if id is String, this is an Okta ID
-        if id == nil {
-            oktaID = try? container.decode(String.self, forKey: .id)
-        }
 
+        id = try? container.decode(String.self, forKey: .id)
         email = try? container.decode(String.self, forKey: .email)
         firstName = try container.decode(String.self, forKey: .firstName)
         lastName = try container.decode(String.self, forKey: .lastName)
@@ -64,7 +56,7 @@ struct Member: Equatable, Codable {
     }
     // MARK: - Equatable Conformance -
     static func ==(lhs: Member, rhs: Member) -> Bool {
-        lhs.oktaID == rhs.oktaID
+        lhs.id == rhs.id
     }
 
 }

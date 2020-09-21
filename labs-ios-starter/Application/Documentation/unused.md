@@ -161,3 +161,23 @@
             checkForExistingProfile()
         }
     }
+    
+###### Controller:
+
+    func createProfile(with email: String, firstName: String, lastName: String, avatarURL: URL) -> Member? {
+        var oktaCredentials: OktaCredentials
+        
+        do {
+            oktaCredentials = try oktaAuth.credentialsIfAvailable()
+        } catch {
+            postAuthenticationExpiredNotification()
+            NSLog("Credentials do not exist. Unable to create a profile for the authenticated user")
+            return nil
+        }
+        
+        guard let userID = oktaCredentials.userID else {
+            NSLog("Credentials do not exist. Unable to create profile")
+            return nil
+        }
+        return Member(oktaID: userID, id: nil, email: email, firstName: firstName, lastName: lastName, avatarURL: avatarURL)
+    }
