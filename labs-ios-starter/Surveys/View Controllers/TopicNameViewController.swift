@@ -23,7 +23,7 @@ class TopicNameViewController: UIViewController {
     // MARK: - Navigation -
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == .segueID(.showQuestions) {
+        if segue.identifier == .getSegueID(.showQuestions) {
             //TODO: prevent segue instead of popping back if no name is entered
             guard let topicName = nameTextField.text,
                 !topicName.isEmpty else {

@@ -9,14 +9,14 @@ extension Member {
         return NSFetchRequest<Member>(entityName: "Member")
     }
 
-    @NSManaged public var oktaID: String?
+    
 //    @NSManaged public var id: Int64
-    public var id: Int64? {
+    public var id: String? {
         get {
             willAccessValue(forKey: "id")
             defer { didAccessValue(forKey: "id") }
 
-            return primitiveValue(forKey: "id") as? Int64
+            return primitiveValue(forKey: "id") as? String
         }
         set {
             willChangeValue(forKey: "id")

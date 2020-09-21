@@ -26,15 +26,13 @@ public final class Member: NSManagedObject, Codable {
     ///   - firstName: optional, used for registration and updating name only (defaults to nil)
     ///   - lastName: optional, used for registration and updating name only (defaults to nil)
     ///   - avatarURL: optional, used for displaying the user's profile image
-    @discardableResult convenience init(oktaID: String?,
-                                        id: Int64?,
+    @discardableResult convenience init(id: String?,
                                         email: String?,
                                         firstName: String?,
                                         lastName: String?,
                                         avatarURL: URL?,
                                         context: NSManagedObjectContext = CoreDataManager.shared.mainContext) {
         self.init(context: context)
-        self.oktaID = oktaID
         self.id = id
         self.email = email
         self.firstName = firstName
@@ -57,13 +55,8 @@ public final class Member: NSManagedObject, Codable {
         self.init(context: moc)
 
         let container = try decoder.container(keyedBy: MemberCodingKeys.self)
-        // if id is Int, this is a web user ID
-        id = try? container.decode(Int64.self, forKey: .id)
-        // if id is String, this is an Okta ID
-        if id == nil {
-            oktaID = try? container.decode(String.self, forKey: .id)
-        }
 
+        id = try? container.decode(String.self, forKey: .id)
         email = try? container.decode(String.self, forKey: .email)
         firstName = try container.decode(String.self, forKey: .firstName)
         lastName = try container.decode(String.self, forKey: .lastName)
@@ -90,6 +83,6 @@ public final class Member: NSManagedObject, Codable {
 
     // FIXME: - This may be redundant? Not sure. Revisit later.
     static func == (lhs: Member, rhs: Member) -> Bool {
-        lhs.oktaID == rhs.oktaID
+        lhs.id == rhs.id
     }
 }

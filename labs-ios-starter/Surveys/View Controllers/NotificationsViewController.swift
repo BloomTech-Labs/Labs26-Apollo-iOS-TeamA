@@ -9,7 +9,7 @@ class NotificationsViewController: UIViewController {
     @IBOutlet weak var notificationsCollectionView: UICollectionView!
 
     // MARK: - Properties -
-    let reuseIdentifier = String.collectionViewID(.notificationsCollectionViewCell)
+    let reuseIdentifier = String.getCollectionViewCellID(.notificationsCollectionViewCell)
         
     // MARK: - View Lifecycle -
     override func viewDidLoad() {

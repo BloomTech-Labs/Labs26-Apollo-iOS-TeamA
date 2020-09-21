@@ -42,7 +42,7 @@ class ProfileListViewController: UIViewController {
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == .segueID(.showProfileDetail) {
+        if segue.identifier == .getSegueID(.showProfileDetail) {
             
             guard let profileDetailVC = segue.destination as? ProfileDetailViewController,
                 let indexPath = tableView.indexPathForSelectedRow else {
@@ -62,7 +62,7 @@ extension ProfileListViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: .tableViewID(.profileCell), for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: .getTableViewCellID(.profileCell), for: indexPath)
         
         let profile = profileController.profiles[indexPath.row]
         cell.textLabel?.text = "\(profile.firstName ?? "") \(profile.lastName ?? "")"

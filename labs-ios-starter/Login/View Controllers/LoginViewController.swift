@@ -61,9 +61,10 @@ class LoginViewController: DefaultViewController {
                 self.presentedViewController == nil else { return }
                 
             if exists {
-                self.performSegue(withIdentifier: .segueID(.showDetailProfileList), sender: nil)
+                self.performSegue(withIdentifier:
+                    .getSegueID(.showDetailProfileList), sender: nil)
             } else {
-                self.performSegue(withIdentifier: .segueID(.modalAddProfile), sender: nil)
+                self.performSegue(withIdentifier: .getSegueID(.modalAddProfile), sender: nil)
             }
         }
     }

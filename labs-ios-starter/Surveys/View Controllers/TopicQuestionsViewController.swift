@@ -17,8 +17,8 @@ class TopicQuestionsViewController: UIViewController {
     // MARK: - Properties -
     var topicName: String?
     let topicController = TopicController()
-    let reuseIdentifier = String.collectionViewID(.questionsCollectionViewCell)
-    let reuseIdentifier2 = String.collectionViewID(.addNewQuestionCell)
+    let reuseIdentifier = String.getCollectionViewCellID(.questionsCollectionViewCell)
+    let reuseIdentifier2 = String.getCollectionViewCellID(.addNewQuestionCell)
     // TODO: Shawn - Fix these reuseID's
     var questions: [Question] = [] {
         didSet {
