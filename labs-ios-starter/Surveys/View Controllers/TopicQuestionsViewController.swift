@@ -94,7 +94,7 @@ class TopicQuestionsViewController: UIViewController {
         }
 
         let selected = contextSegmentControl.selectedSegmentIndex
-        #warning("Error 500 here")
+        
         topicController.postTopic(with: topicName, contextId: selected, questions: topicController.questions) { result in
             switch result {
             case .success(let joinCode):
