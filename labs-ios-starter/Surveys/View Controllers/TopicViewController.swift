@@ -15,13 +15,28 @@ class TopicViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        topicController.fetchTopic { result in
+            switch result {
+            case .success(let topics):
+                DispatchQueue.main.async {
+                    print(topics)
+                }
+            case .failure(let error):
+                self.presentNetworkError(error: error.rawValue) { (tryAgain) in
+                    if let tryAgain = tryAgain {
+                        if tryAgain {
+//                            topicController.fetchTopic()
+                        }
+                    }
+                }
+            }
+        }
     }
 
 
-// MARK: - Handlers
+    // MARK: - Handlers
 
-// MARK: - Reusable
+    // MARK: - Reusable
 
 }
 
