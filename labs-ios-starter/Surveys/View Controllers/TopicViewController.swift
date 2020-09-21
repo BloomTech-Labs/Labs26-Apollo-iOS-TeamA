@@ -11,6 +11,18 @@ class TopicViewController: UIViewController {
     let reuseIdentifier = String.getCollectionViewCellID(.topicsCollectionViewCell)
     let topicController = TopicController()
 
+    var topics: [Topic]? {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else {
+                    print("TopicViewController is nil")
+                    return
+                }
+                self.topicsCollectionView.reloadData()
+            }
+        }
+    }
+
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -19,12 +31,13 @@ class TopicViewController: UIViewController {
             switch result {
             case .success(let topics):
                 DispatchQueue.main.async {
-                    print(topics)
+                    self.topics = topics
                 }
             case .failure(let error):
                 self.presentNetworkError(error: error.rawValue) { (tryAgain) in
                     if let tryAgain = tryAgain {
                         if tryAgain {
+                            // TODO:
 //                            topicController.fetchTopic()
                         }
                     }
@@ -42,11 +55,16 @@ class TopicViewController: UIViewController {
 
 extension TopicViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        //TODO: Topics I'm a leader of vs topics I'm a member of (2 sections, or dynamic)
+        topics?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = topicsCollectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        guard let cell = topicsCollectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? TopicCollectionViewCell else {
+            fatalError("couldn't downcast TopicCollectionViewCell 🚨CHANGE THIS BEFORE PRODUCTION🚨")
+        }
+
+        cell.topic = self.topics?[indexPath.row]
         cell.setDimensions(width: view.frame.width - 40, height: 80)
         return cell
     }
