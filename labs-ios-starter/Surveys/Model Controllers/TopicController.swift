@@ -14,7 +14,8 @@
         let profileController = ProfileController.shared
         lazy var baseURL = profileController.baseURL
 
-        /// public getter for CONTEXTS
+    /// public getter for CONTEXTS
+           /// public getter for CONTEXTS
         var contexts: [ContextObject]  {
             CONTEXTS
         }
@@ -28,43 +29,42 @@
         /// private setter for questions
         private var QUESTIONS: [Question] = []
 
-        // MARK: - Create -
-        // TODO: Responses
+    // MARK: - Create -
 
-        /// Post a topic to the web back end with the currently signed in user as the leader
-        /// - Parameters:
-        ///   - name: The name of the topic
-        ///   - contextId: the context question's ID
-        ///   - questions: the questions chosen
-        ///   - complete: completes with the topic's join code
-        func postTopic(with name: String, contextId: Int, questions: [Question], complete: @escaping CompleteWithString) {
+    // TODO: Responses
 
-            // We know this request is good, but we can still guard unwrap it rather than
-            // force unwrapping and assume if something fails it was the user not being logged in
-            guard var request = createRequest(pathFromBaseURL: "topic", method: .post),
-                  let token = try? profileController.oktaAuth.credentialsIfAvailable().userID else {
-                print("user isn't logged in")
-                return
-            }
-            // Create topic and add to request
-            let joinCode = UUID().uuidString
-            let topic = Topic(joinCode: joinCode,
-                              leaderId: token,
-                              topicName: name,
-                              contextId: contextId)
-            //let questionsToSend = questions.map { $0.id }
+    /// Post a topic to the web back end with the currently signed in user as the leader
+    /// - Parameters:
+    ///   - name: The name of the topic
+    ///   - contextId: the context question's ID
+    ///   - questions: the questions chosen
+    ///   - complete: completes with the topic's join code
+    func postTopic(with name: String, contextId: Int, questions: [Question], complete: @escaping CompleteWithString) {
+        // We know this request is good, but we can still guard unwrap it rather than
+        // force unwrapping and assume if something fails it was the user not being logged in
+        guard var request = createRequest(pathFromBaseURL: "topic", method: .post),
+            let token = try? profileController.oktaAuth.credentialsIfAvailable().userID else {
+            print("user isn't logged in")
+            return
+        }
+        // Create topic and add to request
+        let joinCode = UUID().uuidString
+        let topic = Topic(joinCode: joinCode,
+                          leaderId: token,
+                          topicName: name,
+                          contextId: Int64(contextId))
+        // let questionsToSend = questions.map { $0.id }
 
             // TODO: Save to CoreData
             request.encode(from: topic)
 
-            networkService.loadData(using: request) { result in
-                switch result {
-                case .success:
-                    complete(.success(joinCode))
-                case .failure(let error):
-                    NSLog("Error POSTing topic with statusCode: \(error.rawValue)")
-                    complete(.failure(error))
-                }
+        networkService.loadData(using: request) { result in
+            switch result {
+            case .success:
+                complete(.success(joinCode))
+            case let .failure(error):
+                NSLog("Error POSTing topic with statusCode: \(error.rawValue)")
+                complete(.failure(error))
             }
         }
 
@@ -78,13 +78,17 @@
 
 
             guard let request = createRequest(pathFromBaseURL: "topic") else {
+                print("🛑! User isn't logged in!")
+                completion(.failure(.unauthorized))
                 return
-            }
+            }               
 
             networkService.loadData(using: request) { result in
                 switch result {
                 case .success(let data):
-                    guard let topics = self.networkService.decode(to: [Topic].self, data: data) else {
+                    guard let topics = self.networkService.decode(to: [Topic].self,
+                                                              data: data,
+                                                              moc: CoreDataManager.shared.mainContext) else {
                         print("Error decoding topics")
                         completion(.failure(.badDecode))
                         return
@@ -115,10 +119,10 @@
                     // bubble error to caller
                     completion(.failure(error))
                 }
-
             }
         }
 
+                
         ///Get all contexts
         func getAllContexts(complete: @escaping CompleteWithNeworkError) {
             guard let request = createRequest(pathFromBaseURL: "context") else {
@@ -128,7 +132,9 @@
             networkService.loadData(using: request) { result in
                 switch result {
                 case .success(let data):
-                    guard let contexts = self.networkService.decode(to: [ContextObject].self, data: data) else {
+                    guard let contexts = self.networkService.decode(to: [ContextObject].self,
+                                                                data: data,
+                                                                moc: CoreDataManager.shared.mainContext) else {
                         print("error decoding contexts from valid data")
                         complete(.failure(.notFound))
                         return
@@ -148,14 +154,16 @@
                 completion(.failure(.badRequest))
                 return
             }
-
+                
             // get questions from endpoint
             self.networkService.loadData(using: request) { result in
                 //self is nil here???
                 switch result {
                 // decode questions
                 case .success(let data):
-                    guard let questions = self.networkService.decode(to: [Question].self, data: data) else {
+                    guard let questions = self.networkService.decode(to: [Question].self,
+                                                                 data: data,
+                                                                 moc: CoreDataManager.shared.mainContext) else {
                         completion(.failure(.badDecode))
                         return
                     }
@@ -179,16 +187,15 @@
                 case.failure:
                     completion(contextResult)
                 }
-
             }
         }
 
-        // MARK: - Helper Methods -
-        private func createRequest(auth: Bool = true,
-                                   pathFromBaseURL: String,
-                                   method: NetworkService.HttpMethod = .get) -> URLRequest? {
+    // MARK: - Helper Methods -
 
-            let targetURL = baseURL.appendingPathComponent(pathFromBaseURL)
+    private func createRequest(auth: Bool = true,
+                               pathFromBaseURL: String,
+                               method: NetworkService.HttpMethod = .get) -> URLRequest? {
+        let targetURL = baseURL.appendingPathComponent(pathFromBaseURL)
 
             guard var request = networkService.createRequest(url: targetURL, method: method, headerType: .contentType, headerValue: .json) else {
                 print("unable to create request for \(targetURL)")
@@ -204,3 +211,4 @@
         }
 
     }
+}

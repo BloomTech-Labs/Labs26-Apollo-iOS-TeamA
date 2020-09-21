@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 /// Standard URL Handler that can be used in Unit Tests with mock data
 typealias URLHandler = (Data?, HTTPURLResponse?, Error?) -> Void
@@ -143,12 +144,17 @@ class NetworkService {
     func decode<T: Decodable>(
         to type: T.Type,
         data: Data,
-        dateFormatter: DateFormatter? = nil
+        dateFormatter: DateFormatter? = nil,
+        moc: NSManagedObjectContext? = nil
     ) -> T? {
         let decoder = JSONDecoder()
         //for optional dateFormatter
         if let dateFormatter = dateFormatter {
             decoder.dateDecodingStrategy = .formatted(dateFormatter)
+        }
+        // for optional MOC
+        if let moc = moc { // moc = managedObjectContext
+            decoder.userInfo[CodingUserInfoKey.managedObjectContext] = moc
         }
 
         do {

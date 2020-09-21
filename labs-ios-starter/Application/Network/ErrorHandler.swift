@@ -124,8 +124,11 @@ extension UIViewController {
         guard let errorToDisplay = ErrorHandler.userNetworkErrors[error] else {
             if let error = ErrorHandler.internalNetworkErrors[error] {
                 print("\(#function): Internal Error: \(error)")
-                presentTryAgainError { result in
-                    complete(result)
+                
+                DispatchQueue.main.async {
+                    self.presentTryAgainError { result in
+                        complete(result)
+                    }
                 }
             } else {
                 print("\(#function): User Error \(error)")
