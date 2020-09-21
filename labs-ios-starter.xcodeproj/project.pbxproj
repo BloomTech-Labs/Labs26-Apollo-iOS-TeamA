@@ -41,6 +41,7 @@
 		46BEB4EE24C98ECC00FE0CD1 /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BEB4ED24C98ECC00FE0CD1 /* ProfileController.swift */; };
 		46BEB4F124C98F0D00FE0CD1 /* Profiles.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46BEB4F024C98F0D00FE0CD1 /* Profiles.storyboard */; };
 		46C2BC9224D432F90077E49D /* ProfileTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46C2BC9124D432F90077E49D /* ProfileTabBarViewController.swift */; };
+		B9091EEF25183F2E009BA6A7 /* TopicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9091EEE25183F2E009BA6A7 /* TopicCollectionViewCell.swift */; };
 		B91637212507FA4B00B49A75 /* OktaAuth.md in Resources */ = {isa = PBXBuildFile; fileRef = B91637202507FA4B00B49A75 /* OktaAuth.md */; };
 		B916372525083B7600B49A75 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = B916372425083B7600B49A75 /* Member.swift */; };
 		B916372D250841B200B49A75 /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B916372C250841B200B49A75 /* Topic.swift */; };
@@ -67,7 +68,6 @@
 		B9404232250321230048BCED /* labs_ios_starterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9404231250321230048BCED /* labs_ios_starterTests.swift */; };
 		B98BBCC325153EEB00FE8A12 /* unused.md in Resources */ = {isa = PBXBuildFile; fileRef = B98BBCC225153EEB00FE8A12 /* unused.md */; };
 		B9983C542513BEC0001D91FE /* QuestionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9983C532513BEC0001D91FE /* QuestionCollectionViewCell.swift */; };
-		B9983C5825141AC6001D91FE /* TopicControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9983C5725141AC6001D91FE /* TopicControllerTests.swift */; };
 		B9983C5925142B74001D91FE /* TopicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91BF818250DC4CA00D68EA6 /* TopicController.swift */; };
 /* End PBXBuildFile section */
 
@@ -128,6 +128,7 @@
 		46BEB4F024C98F0D00FE0CD1 /* Profiles.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profiles.storyboard; sourceTree = "<group>"; };
 		46BF10BD24D388FF001C6753 /* UIViewController+Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerts.swift"; sourceTree = "<group>"; };
 		46C2BC9124D432F90077E49D /* ProfileTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTabBarViewController.swift; sourceTree = "<group>"; };
+		B9091EEE25183F2E009BA6A7 /* TopicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCollectionViewCell.swift; sourceTree = "<group>"; };
 		B91637202507FA4B00B49A75 /* OktaAuth.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = OktaAuth.md; path = "labs-ios-starter/Application/Documentation/OktaAuth.md"; sourceTree = SOURCE_ROOT; };
 		B916372425083B7600B49A75 /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
 		B916372C250841B200B49A75 /* Topic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
@@ -155,7 +156,6 @@
 		B9404233250321230048BCED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B98BBCC225153EEB00FE8A12 /* unused.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = unused.md; sourceTree = "<group>"; };
 		B9983C532513BEC0001D91FE /* QuestionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionCollectionViewCell.swift; sourceTree = "<group>"; };
-		B9983C5725141AC6001D91FE /* TopicControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicControllerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,6 +228,7 @@
 			children = (
 				1D0E1059250AD64100A21C44 /* Surveys.storyboard */,
 				B9983C532513BEC0001D91FE /* QuestionCollectionViewCell.swift */,
+				B9091EEE25183F2E009BA6A7 /* TopicCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -556,7 +557,6 @@
 				B9404231250321230048BCED /* labs_ios_starterTests.swift */,
 				B9390BE6250991D300131227 /* NetworkServiceTests.swift */,
 				B9404233250321230048BCED /* Info.plist */,
-				B9983C5725141AC6001D91FE /* TopicControllerTests.swift */,
 			);
 			path = "labs-ios-starterTests";
 			sourceTree = "<group>";
@@ -725,6 +725,7 @@
 				B94042192501D1BD0048BCED /* URLRequest + JSON.swift in Sources */,
 				B940421A2501D1CE0048BCED /* UIViewController+Alerts.swift in Sources */,
 				B916372D250841B200B49A75 /* Topic.swift in Sources */,
+				B9091EEF25183F2E009BA6A7 /* TopicCollectionViewCell.swift in Sources */,
 				46BEB4E924C98DAF00FE0CD1 /* ProfileListViewController.swift in Sources */,
 				B94042112501D0740048BCED /* ErrorHandler.swift in Sources */,
 				B94042272502E1390048BCED /* UIStackView + Convenience.swift in Sources */,
@@ -768,7 +769,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9390BE7250991D300131227 /* NetworkServiceTests.swift in Sources */,
-				B9983C5825141AC6001D91FE /* TopicControllerTests.swift in Sources */,
 				B9404232250321230048BCED /* labs_ios_starterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
