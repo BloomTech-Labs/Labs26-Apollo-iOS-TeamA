@@ -15,19 +15,19 @@ class TopicController {
     lazy var baseURL = profileController.baseURL
 
     /// public getter for CONTEXTS
-    var contexts: [ContextObject] {
-        CONTEXTS
-    }
+           /// public getter for CONTEXTS
+        var contexts: [ContextObject]  {
+            CONTEXTS
+        }
+        /// private setter for contexts
+        private var CONTEXTS: [ContextObject] = []
 
-    /// private setter for contexts
-    private var CONTEXTS: [ContextObject] = []
-    /// public getter for QUESTIONS
-    var questions: [Question] {
-        QUESTIONS
-    }
-
-    /// private setter for questions
-    private var QUESTIONS: [Question] = []
+        /// public getter for QUESTIONS
+        var questions: [Question] {
+            QUESTIONS
+        }
+        /// private setter for questions
+        private var QUESTIONS: [Question] = []
 
     // MARK: - Create -
 
