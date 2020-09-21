@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="8G5-qa-L0a">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="8G5-qa-L0a">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -46,7 +46,7 @@
                                                 <constraint firstItem="Euh-wU-OmR" firstAttribute="leading" secondItem="VmC-7l-cTA" secondAttribute="leading" constant="8" id="cXd-2k-Myb"/>
                                             </constraints>
                                         </collectionViewCellContentView>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" name="cell"/>
                                         <size key="customSize" width="374" height="128"/>
                                     </collectionViewCell>
                                 </cells>
@@ -79,7 +79,7 @@
             <objects>
                 <viewController id="aZv-jt-onU" customClass="TopicDetailViewController" customModule="labs_ios_starter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="R8Y-7V-T2F">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="6b0-Ru-Eek">
@@ -173,7 +173,7 @@
                                                 <constraint firstAttribute="bottom" secondItem="mJ7-Kx-xhe" secondAttribute="bottom" constant="8" id="pyM-ee-HAQ"/>
                                             </constraints>
                                         </collectionViewCellContentView>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" name="cell"/>
                                         <size key="customSize" width="374" height="80"/>
                                     </collectionViewCell>
                                 </cells>
@@ -257,7 +257,7 @@
                                                 <constraint firstAttribute="bottom" secondItem="u42-Iz-bzt" secondAttribute="bottom" constant="30" id="sbH-p2-ssN"/>
                                             </constraints>
                                         </collectionViewCellContentView>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" name="cell"/>
                                         <size key="customSize" width="374" height="80"/>
                                         <connections>
                                             <segue destination="aZv-jt-onU" kind="presentation" id="Opz-La-5xH"/>
@@ -308,7 +308,7 @@
             <objects>
                 <viewController id="Qtl-Jb-c92" customClass="TopicNameViewController" customModule="labs_ios_starter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gbi-qB-SWx">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Placeholder..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GWP-JC-dNk">
@@ -364,7 +364,7 @@
             <objects>
                 <viewController id="VRw-Ph-qHy" customClass="TopicQuestionsViewController" customModule="labs_ios_starter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NYf-KN-tmm">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="XSM-yT-fWX">
@@ -407,7 +407,7 @@
                                                 <constraint firstItem="VoP-Eq-9Y5" firstAttribute="centerY" secondItem="s4z-AU-DuX" secondAttribute="centerY" id="lEy-PZ-aJM"/>
                                             </constraints>
                                         </collectionViewCellContentView>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" name="cell"/>
                                         <size key="customSize" width="374" height="80"/>
                                         <connections>
                                             <outlet property="nameLabel" destination="VoP-Eq-9Y5" id="yLp-zu-Do2"/>
@@ -504,7 +504,7 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="cL9-DB-R1s">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="selectedImageTintColor" name="accent"/>
                     </tabBar>
                     <connections>
                         <segue destination="JBl-el-86M" kind="relationship" relationship="viewControllers" id="Etg-hA-iTI"/>
@@ -520,7 +520,9 @@
         <scene sceneID="Ior-y1-bQK">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="JBl-el-86M" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Surveys" image="bubble.left.and.bubble.right.fill" catalog="system" id="Zrp-cK-DqN"/>
+                    <tabBarItem key="tabBarItem" title="Surveys" image="bubble.left.and.bubble.right.fill" catalog="system" id="Zrp-cK-DqN">
+                        <color key="badgeColor" name="accent"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="AMf-aA-jkr">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
@@ -578,6 +580,7 @@
             <point key="canvasLocation" x="-1707.2463768115942" y="975.66964285714278"/>
         </scene>
     </scenes>
+    <color key="tintColor" name="accent"/>
     <resources>
         <image name="bell.fill" catalog="system" width="128" height="124"/>
         <image name="bubble.left.and.bubble.right.fill" catalog="system" width="128" height="97"/>
@@ -585,11 +588,17 @@
         <image name="person.circle.fill" catalog="system" width="128" height="121"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="plus.circle.fill" catalog="system" width="128" height="121"/>
+        <namedColor name="accent">
+            <color red="0.5899999737739563" green="0.38999998569488525" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="action">
             <color red="0.5899999737739563" green="0.38999998569488525" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="background">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="cell">
+            <color red="0.89011829219827354" green="0.93585979040957157" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
