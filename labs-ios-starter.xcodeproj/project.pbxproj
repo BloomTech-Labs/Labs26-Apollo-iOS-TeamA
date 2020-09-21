@@ -323,7 +323,6 @@
 		466C4272249A8748007D033E /* labs-ios-starter */ = {
 			isa = PBXGroup;
 			children = (
-				B91BF7E5250BC57700D68EA6 /* Feature-topic */,
 				B940420B2501D0090048BCED /* Application */,
 				46BEB4EB24C98EB400FE0CD1 /* Model */,
 				46BEB4EF24C98ED900FE0CD1 /* Login */,
@@ -420,21 +419,6 @@
 				B916373425084FDE00B49A75 /* Response.swift */,
 			);
 			path = Topic;
-			sourceTree = "<group>";
-		};
-		B91BF7E4250BC56E00D68EA6 /* CreateTopic */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = CreateTopic;
-			sourceTree = "<group>";
-		};
-		B91BF7E5250BC57700D68EA6 /* Feature-topic */ = {
-			isa = PBXGroup;
-			children = (
-				B91BF7E4250BC56E00D68EA6 /* CreateTopic */,
-			);
-			path = "Feature-topic";
 			sourceTree = "<group>";
 		};
 		B94042072501CE670048BCED /* View Controllers */ = {
