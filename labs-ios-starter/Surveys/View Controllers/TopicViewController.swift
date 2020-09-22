@@ -4,11 +4,12 @@
 import UIKit
 
 class TopicViewController: UIViewController {
-    
     // MARK: - Outlets & Properties
-    @IBOutlet weak var topicsCollectionView: UICollectionView!
-    
-    let reuseIdentifier = String.getCollectionViewCellID(.topicsCollectionViewCell)
+
+    @IBOutlet var topicsCollectionView: UICollectionView!
+
+    let cellReuseIdentifier = String.getCollectionViewCellID(.topicsCollectionViewCell)
+    let headerReuseIdentifier = String.getCollectionViewHeaderId(.topicSectionHeader)
     let topicController = TopicController()
 
     var topics: [Topic]? {
@@ -24,7 +25,7 @@ class TopicViewController: UIViewController {
     }
 
     // MARK: - Lifecycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         topicController.fetchTopic { result in
@@ -34,7 +35,7 @@ class TopicViewController: UIViewController {
                     self.topics = topics
                 }
             case .failure(let error):
-                self.presentNetworkError(error: error.rawValue) { (tryAgain) in
+                self.presentNetworkError(error: error.rawValue) { tryAgain in
                     if let tryAgain = tryAgain {
                         if tryAgain {
                             // TODO:
@@ -46,44 +47,61 @@ class TopicViewController: UIViewController {
         }
     }
 
-
     // MARK: - Handlers
 
     // MARK: - Reusable
-
 }
 
-extension TopicViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //TODO: Topics I'm a leader of vs topics I'm a member of (2 sections, or dynamic)
-        topics?.count ?? 0
+extension TopicViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return TopicCVSections.allCases.count
     }
-    
+
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerReuseIdentifier, for: indexPath) as? TopicSectionHeader {
+            sectionHeader.sectionHeaderLabel.text = TopicCVSections(rawValue: indexPath.section)?.description
+            return sectionHeader
+        }
+        fatalError("Failed to configure collectionView header. Broken method or out of range.")
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let section = TopicCVSections(rawValue: section) else { return 0 }
+        switch section {
+        case .leader: return topics?.count ?? 0 // TODO: frc.items in this section.count
+        case .member: return 0 // TODO: frc.items in this section.count
+        }
+    }
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = topicsCollectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? TopicCollectionViewCell else {
+        guard let cell = topicsCollectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as? TopicCollectionViewCell else {
             fatalError("couldn't downcast TopicCollectionViewCell 🚨CHANGE THIS BEFORE PRODUCTION🚨")
         }
-
-        cell.topic = self.topics?[indexPath.row]
-        cell.setDimensions(width: view.frame.width - 40, height: 80)
-        return cell
+        guard let section = TopicCVSections(rawValue: indexPath.section) else {
+            fatalError("Section broken or out of range")
+        }
+        switch section {
+        case .leader, .member:
+            cell.topic = topics?[indexPath.row]
+            cell.setDimensions(width: view.frame.width - 40, height: 80)
+            return cell
+        }
     }
-    
 }
 
 // MARK: - Live Previews
 
 #if DEBUG
 
-import SwiftUI
+    import SwiftUI
 
-struct TopicViewControllerPreview: PreviewProvider {
-    static var previews: some View {
-        let storyboard = UIStoryboard(name: "Surveys", bundle: .main)
-        let tabBarController = storyboard.instantiateInitialViewController() as? UITabBarController
-        
-        return tabBarController?.view.livePreview.edgesIgnoringSafeArea(.all)
+    struct TopicViewControllerPreview: PreviewProvider {
+        static var previews: some View {
+            let storyboard = UIStoryboard(name: "Surveys", bundle: .main)
+            let tabBarController = storyboard.instantiateInitialViewController() as? UITabBarController
+
+            return tabBarController?.view.livePreview.edgesIgnoringSafeArea(.all)
+        }
     }
-}
 
 #endif
