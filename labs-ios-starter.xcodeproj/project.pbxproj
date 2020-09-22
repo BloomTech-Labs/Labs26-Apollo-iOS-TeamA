@@ -33,7 +33,8 @@
 		1D4D9C0A25092B5400348246 /* labs_ios_starterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D9C0925092B5400348246 /* labs_ios_starterUITests.swift */; };
 		1D4D9C1325092F4A00348246 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D9C1225092F4A00348246 /* CoreDataManager.swift */; };
 		1D4D9C17250930AB00348246 /* labs-ios-starter.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D9C15250930AB00348246 /* labs-ios-starter.xcdatamodeld */; };
-		1DB156B22516B8C60084ECA0 /* TopicControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9983C5725141AC6001D91FE /* TopicControllerTests.swift */; };
+		1DB156B22516B8C60084ECA0 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		1DB3E114251A526D00A2F88F /* TopicCVSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB3E113251A526D00A2F88F /* TopicCVSections.swift */; };
 		463AD24324CF275900447BB8 /* ProfileDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463AD24224CF275900447BB8 /* ProfileDetailViewController.swift */; };
 		466C4274249A8748007D033E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466C4273249A8748007D033E /* AppDelegate.swift */; };
 		466C4276249A8748007D033E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466C4275249A8748007D033E /* SceneDelegate.swift */; };
@@ -116,6 +117,7 @@
 		1D4D9C0B25092B5400348246 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D4D9C1225092F4A00348246 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		1D4D9C16250930AB00348246 /* labs-ios-starter.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "labs-ios-starter.xcdatamodel"; sourceTree = "<group>"; };
+		1DB3E113251A526D00A2F88F /* TopicCVSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCVSections.swift; sourceTree = "<group>"; };
 		463AD24224CF275900447BB8 /* ProfileDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailViewController.swift; sourceTree = "<group>"; };
 		466C4270249A8748007D033E /* labs-ios-starter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "labs-ios-starter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		466C4273249A8748007D033E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -264,6 +266,7 @@
 			children = (
 				1D0E1054250AB35E00A21C44 /* Model Controllers */,
 				1D0E1055250AB36300A21C44 /* View Controllers */,
+				1DB3E112251A51E300A2F88F /* View Models */,
 				1D0E1056250AB37600A21C44 /* View */,
 			);
 			path = Surveys;
@@ -323,6 +326,14 @@
 				1D4D9C1225092F4A00348246 /* CoreDataManager.swift */,
 			);
 			path = Persistence;
+			sourceTree = "<group>";
+		};
+		1DB3E112251A51E300A2F88F /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				1DB3E113251A526D00A2F88F /* TopicCVSections.swift */,
+			);
+			path = "View Models";
 			sourceTree = "<group>";
 		};
 		465DAA2724BD0BC100D94C24 /* App Lifecycle */ = {
@@ -426,21 +437,6 @@
 				B91BF7EE250C47F600D68EA6 /* Profile.swift */,
 			);
 			path = "Okta Auth";
-			sourceTree = "<group>";
-		};
-		B91BF7E4250BC56E00D68EA6 /* CreateTopic */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = CreateTopic;
-			sourceTree = "<group>";
-		};
-		B91BF7E5250BC57700D68EA6 /* Feature-topic */ = {
-			isa = PBXGroup;
-			children = (
-				B91BF7E4250BC56E00D68EA6 /* CreateTopic */,
-			);
-			path = "Feature-topic";
 			sourceTree = "<group>";
 		};
 		B94042072501CE670048BCED /* View Controllers */ = {
@@ -562,7 +558,6 @@
 			children = (
 				B9404231250321230048BCED /* labs_ios_starterTests.swift */,
 				B9390BE6250991D300131227 /* NetworkServiceTests.swift */,
-				B9983C5725141AC6001D91FE /* TopicControllerTests.swift */,
 				B9404233250321230048BCED /* Info.plist */,
 			);
 			path = "labs-ios-starterTests";
@@ -732,6 +727,7 @@
 				1D0545292515C3BC006E8665 /* Topic+CoreDataProperties.swift in Sources */,
 				1D0545252515C3BC006E8665 /* Question+CoreDataProperties.swift in Sources */,
 				B940421A2501D1CE0048BCED /* UIViewController+Alerts.swift in Sources */,
+				1DB3E114251A526D00A2F88F /* TopicCVSections.swift in Sources */,
 				B9091EEF25183F2E009BA6A7 /* TopicCollectionViewCell.swift in Sources */,
 				46BEB4E924C98DAF00FE0CD1 /* ProfileListViewController.swift in Sources */,
 				B94042112501D0740048BCED /* ErrorHandler.swift in Sources */,
@@ -774,7 +770,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1DB156B22516B8C60084ECA0 /* TopicControllerTests.swift in Sources */,
+				1DB156B22516B8C60084ECA0 /* (null) in Sources */,
 				B9390BE7250991D300131227 /* NetworkServiceTests.swift in Sources */,
 				B9404232250321230048BCED /* labs_ios_starterTests.swift in Sources */,
 			);
