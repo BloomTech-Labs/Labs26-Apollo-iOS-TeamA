@@ -69,7 +69,6 @@ public final class Topic: NSManagedObject, Codable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: TopicCodingKeys.self)
 
-        try container.encode(id, forKey: .id)
         try container.encode(joinCode, forKey: .joinCode)
         try container.encode(leaderId, forKey: .leaderId)
         try container.encode(topicName, forKey: .topicName)
