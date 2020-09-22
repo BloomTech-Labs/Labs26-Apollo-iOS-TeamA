@@ -47,6 +47,7 @@
 		46BEB4F124C98F0D00FE0CD1 /* Profiles.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46BEB4F024C98F0D00FE0CD1 /* Profiles.storyboard */; };
 		46C2BC9224D432F90077E49D /* ProfileTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46C2BC9124D432F90077E49D /* ProfileTabBarViewController.swift */; };
 		B9091EEF25183F2E009BA6A7 /* TopicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9091EEE25183F2E009BA6A7 /* TopicCollectionViewCell.swift */; };
+		B90989C9251AA46C0084A1D7 /* FetchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90989C8251AA46C0084A1D7 /* FetchController.swift */; };
 		B91637212507FA4B00B49A75 /* OktaAuth.md in Resources */ = {isa = PBXBuildFile; fileRef = B91637202507FA4B00B49A75 /* OktaAuth.md */; };
 		B9163737250850B400B49A75 /* UserImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9163736250850B400B49A75 /* UserImage.swift */; };
 		B91BF7E3250BC4C200D68EA6 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -133,6 +134,7 @@
 		46BF10BD24D388FF001C6753 /* UIViewController+Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerts.swift"; sourceTree = "<group>"; };
 		46C2BC9124D432F90077E49D /* ProfileTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTabBarViewController.swift; sourceTree = "<group>"; };
 		B9091EEE25183F2E009BA6A7 /* TopicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCollectionViewCell.swift; sourceTree = "<group>"; };
+		B90989C8251AA46C0084A1D7 /* FetchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchController.swift; sourceTree = "<group>"; };
 		B91637202507FA4B00B49A75 /* OktaAuth.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = OktaAuth.md; path = "labs-ios-starter/Application/Documentation/OktaAuth.md"; sourceTree = SOURCE_ROOT; };
 		B9163736250850B400B49A75 /* UserImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImage.swift; sourceTree = "<group>"; };
 		B91BF7EE250C47F600D68EA6 /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
@@ -322,6 +324,7 @@
 			isa = PBXGroup;
 			children = (
 				1D4D9C1225092F4A00348246 /* CoreDataManager.swift */,
+				B90989C8251AA46C0084A1D7 /* FetchController.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -740,6 +743,7 @@
 				1D0545212515C3BC006E8665 /* Response+CoreDataProperties.swift in Sources */,
 				46BEB4E524C98CDC00FE0CD1 /* LoginViewController.swift in Sources */,
 				1D0545242515C3BC006E8665 /* Question+CoreDataClass.swift in Sources */,
+				B90989C9251AA46C0084A1D7 /* FetchController.swift in Sources */,
 				1D4D9C1325092F4A00348246 /* CoreDataManager.swift in Sources */,
 				1D4D9C0225068DEB00348246 /* CircularButton.swift in Sources */,
 				1D0545202515C3BC006E8665 /* Response+CoreDataClass.swift in Sources */,
