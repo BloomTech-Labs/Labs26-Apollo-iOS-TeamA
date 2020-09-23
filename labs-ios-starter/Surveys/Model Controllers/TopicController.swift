@@ -55,7 +55,12 @@
                               contextId: Int64(contextId))
             // let questionsToSend = questions.map { $0.id }
 
-            // TODO: Save to CoreData
+            do {
+                try CoreDataManager.shared.saveContext()
+            } catch let saveError {
+                // The user doesn't need to be notified about this (maybe they could be through a label, but wouldn't reccommend anything that interrupts them like an alert)
+                NSLog("Error saving Topic: \(name) to CoreData: \(saveError)")
+            }
             request.encode(from: topic)
 
             networkService.loadData(using: request) { result in
