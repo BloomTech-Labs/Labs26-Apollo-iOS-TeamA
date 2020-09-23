@@ -10,7 +10,6 @@ class TopicQuestionsViewController: UIViewController {
     @IBOutlet var contextSegmentControl: UISegmentedControl!
 
     @IBAction func postTopicButton(_ sender: UIButton) {
-        //TODO: Context Title
         postTopic()
     }
 

@@ -297,7 +297,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Topic Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IkA-BA-5Dw">
-                                                    <rect key="frame" x="8.5" y="25" width="90.5" height="30"/>
+                                                    <rect key="frame" x="8" y="25" width="90.5" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -313,10 +313,10 @@
                                             <constraints>
                                                 <constraint firstItem="u42-Iz-bzt" firstAttribute="top" secondItem="IUo-Ov-4Oj" secondAttribute="top" constant="30" id="5KL-2L-6zg"/>
                                                 <constraint firstAttribute="trailing" secondItem="u42-Iz-bzt" secondAttribute="trailing" constant="8" id="9t5-Dq-gP3"/>
-                                                <constraint firstItem="u42-Iz-bzt" firstAttribute="leading" secondItem="IkA-BA-5Dw" secondAttribute="trailing" constant="254.5" id="Hqm-fE-IYy"/>
+                                                <constraint firstItem="u42-Iz-bzt" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="IkA-BA-5Dw" secondAttribute="trailing" constant="8" id="Hqm-fE-IYy"/>
                                                 <constraint firstItem="IkA-BA-5Dw" firstAttribute="top" secondItem="IUo-Ov-4Oj" secondAttribute="top" constant="25" id="OIg-hw-ljg"/>
                                                 <constraint firstAttribute="bottom" secondItem="IkA-BA-5Dw" secondAttribute="bottom" constant="25" id="aex-aO-agE"/>
-                                                <constraint firstItem="IkA-BA-5Dw" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="IUo-Ov-4Oj" secondAttribute="leading" constant="8" id="jgP-qQ-JW3"/>
+                                                <constraint firstItem="IkA-BA-5Dw" firstAttribute="leading" secondItem="IUo-Ov-4Oj" secondAttribute="leading" constant="8" id="jgP-qQ-JW3"/>
                                                 <constraint firstAttribute="bottom" secondItem="u42-Iz-bzt" secondAttribute="bottom" constant="30" id="sbH-p2-ssN"/>
                                             </constraints>
                                         </collectionViewCellContentView>
