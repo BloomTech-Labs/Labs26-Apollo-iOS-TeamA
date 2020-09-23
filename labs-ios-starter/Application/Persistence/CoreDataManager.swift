@@ -26,6 +26,8 @@ class CoreDataManager {
     
     /// The main object space for managed objects. Uses the main thread.
     var mainContext: NSManagedObjectContext {
+        let context = persistentContainer.viewContext
+        context.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
         return persistentContainer.viewContext
     }
     

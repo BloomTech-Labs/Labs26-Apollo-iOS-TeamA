@@ -19,6 +19,8 @@ enum SegueIdentifier: String {
     case showDetailProfileList
     case modalAddProfile
     case showQuestions
+    case popoverMemberList
+    case topicDetailSegue
 }
 
 enum TableViewIdentifier: String {
