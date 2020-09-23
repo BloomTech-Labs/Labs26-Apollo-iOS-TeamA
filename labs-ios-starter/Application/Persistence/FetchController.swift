@@ -20,7 +20,7 @@ class FetchController {
     ///   - predicate: NSPredicate used to filter CoreData results
     ///   - context: The context used to execute the request (no default)
     /// - Returns: An array of Topic if the fetch succeeds, nil if it fails
-    func fetchTopicRequest(with predicate: NSPredicate, context: NSManagedObjectContext) -> [Topic]? {
+    private func fetchTopicRequest(with predicate: NSPredicate, context: NSManagedObjectContext) -> [Topic]? {
 
         let fetchRequest: NSFetchRequest<Topic> = Topic.fetchRequest()
 
@@ -37,13 +37,15 @@ class FetchController {
 
     /// Fetches [Topic] from CoreData where the currently logged in user matches the Topic's leaderId
     /// - Parameters:
-    ///   - identifiersToFetch: The identifiers to attempt to retrieve from CoreData
+    ///   - identifiersToFetch: The identifiers of Topics to attempt to retrieve from CoreData
     ///   - context: The context used to execute the request
     /// - Returns: An array of Topic on success, or nil on failure
-    func fetchLeaderTopics(identifiersToFetch: [Int], context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [Topic]? {
+    func fetchLeaderTopics(with identifiersToFetch: [Int], context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [Topic]? {
         guard let userID = profileController.authenticatedUserProfile?.id else {
-            print("user not logged in")
-            return nil
+            print("user not logged in, testing")
+            let userID = "Test1"
+            let predicate = NSPredicate(format: "id IN %@ AND leaderId == %@", identifiersToFetch, userID)
+            return fetchTopicRequest(with: predicate, context: context)
         }
         let predicate = NSPredicate(format: "id IN %@ AND leaderId == %@", identifiersToFetch, userID)
 
@@ -52,10 +54,10 @@ class FetchController {
 
     /// Fetches [Topic] from CoreData where the currently logged in user matches a member in the Topic
     /// - Parameters:
-    ///   - identifiersToFetch: The identifiers to attempt to retrieve from CoreData
+    ///   - identifiersToFetch: The identifiers of Topics to attempt to retrieve from CoreData
     ///   - context: The context used to execute the request
     /// - Returns: An array of Topic on success, or nil on failure
-    func fetchMemberTopics(withIdentifiers identifiersToFetch: [Int], context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [Topic]? {
+    func fetchMemberTopics(with identifiersToFetch: [Int], context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [Topic]? {
 
         guard let user = profileController.authenticatedUserProfile else {
             print("user not logged in")
