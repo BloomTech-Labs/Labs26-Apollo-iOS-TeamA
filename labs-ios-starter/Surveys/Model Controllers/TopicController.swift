@@ -168,6 +168,7 @@
                         completion(.failure(.badDecode))
                         return
                     }
+                    try? CoreDataManager.shared.saveContext()
                     self.QUESTIONS = questions
                     completion(.success(Void()))
 

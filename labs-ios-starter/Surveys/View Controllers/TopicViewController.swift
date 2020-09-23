@@ -27,6 +27,35 @@ class TopicViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchTopics()
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == .getSegueID(.topicDetailSegue) {
+            guard let topicDetailViewController = segue.destination as? TopicDetailViewController else {
+                print("Invalid Segue for presenting Topic Detail")
+                return
+            }
+            guard let selectedIndex = topicsCollectionView.indexPathsForSelectedItems?.first else {
+                print("couldn't get selected index")
+                return
+            }
+            guard let topic = self.topics?[selectedIndex.item] else {
+                print("no topic")
+                return
+            }
+
+            //TESTING, REMOVE
+            let member = Member(id: "1", email: "1@1.com", firstName: "firstOne", lastName: "lastOne", avatarURL: URL(string: "http://www.url.com"))
+            var members = NSSet()
+            members = members.adding(member) as NSSet
+            topic.members = members
+
+            topicDetailViewController.topic = topic
+        }
+    }
+
+    private func fetchTopics() {
         topicController.fetchTopic { result in
             switch result {
             case .success(let topics):
@@ -45,6 +74,9 @@ class TopicViewController: UIViewController {
             }
         }
     }
+
+    // MARK: - Navigation -
+
 
 
     // MARK: - Handlers
