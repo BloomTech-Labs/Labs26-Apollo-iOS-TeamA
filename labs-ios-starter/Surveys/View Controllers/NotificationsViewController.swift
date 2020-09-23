@@ -11,7 +11,6 @@ class NotificationsViewController: UIViewController {
 
     // MARK: - Properties -
 
-    static let shared = NotificationsViewController()
     var blockOperations = [BlockOperation]()
     let reuseIdentifier = String.getCollectionViewCellID(.notificationsCollectionViewCell)
 
@@ -37,11 +36,16 @@ class NotificationsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        UserDefaults.standard.set(true, forKey: .notificationsVCdidLoad)
     }
 
     override func awakeFromNib() {
         super.awakeFromNib()
         updateNotificationsBadge()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateNotificationsBadge),
+                                               name: .notificationsBadgeNeedsUpdate,
+                                               object: nil)
     }
 
     deinit {
@@ -50,13 +54,17 @@ class NotificationsViewController: UIViewController {
             operation.cancel()
         }
         blockOperations.removeAll(keepingCapacity: false)
+
+        NotificationCenter.default.removeObserver(self)
+
+        UserDefaults.standard.set(false, forKey: .notificationsVCdidLoad)
     }
 
     // MARK: - Methods
 
     @objc func updateNotificationsBadge() {
         let messageCount = fetchedResultsController.fetchedObjects?.count ?? 0
-        NotificationCenter.default.post(name: .notificationsBadgeNeedsUpdate, object: messageCount)
+        NotificationCenter.default.post(name: .updateNotificationsBadge, object: messageCount)
     }
 }
 
