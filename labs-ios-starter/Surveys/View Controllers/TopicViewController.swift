@@ -44,6 +44,12 @@ class TopicViewController: UIViewController {
                 }
             }
         }
+//        // FIXME: - Load the NotificationsViewController in a better way
+//        tabBarController?.selectedIndex = 1
+//        DispatchQueue.main.async {
+//            self.tabBarController?.selectedIndex = 0
+//        }
+        NotificationsViewController.shared.viewDidLoad()
     }
 
 

@@ -11,6 +11,7 @@ class NotificationsViewController: UIViewController {
 
     // MARK: - Properties -
 
+    static let shared = NotificationsViewController()
     var blockOperations = [BlockOperation]()
     let reuseIdentifier = String.getCollectionViewCellID(.notificationsCollectionViewCell)
 

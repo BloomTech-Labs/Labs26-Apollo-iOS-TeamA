@@ -11,7 +11,9 @@ class TopicQuestionsViewController: UIViewController {
 
     @IBAction func postTopicButton(_ sender: UIButton) {
         //TODO: Context Title
-        postTopic()
+//        postTopic()
+        _ = NewNotificationsMessage(topicName!)
+        dismiss(animated: true)
     }
 
     // MARK: - Properties -
