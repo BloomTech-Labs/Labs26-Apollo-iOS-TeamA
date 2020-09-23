@@ -8,12 +8,28 @@ class TopicDetailViewController: UIViewController {
     // MARK: - Outlets
     @IBOutlet weak var CRUDCollectionView: UICollectionView!
 
+    // MARK: - Actions -
+    @IBAction func showMembers(_ sender: UIButton) {
+        // Popover Segue to ProfileListViewController
+    }
+
     // MARK: - Properties -
+    var topic: Topic?
     let reuseIdentifier = String.getCollectionViewCellID(.crudCollectionViewCell)
     
     // MARK: - View Lifecycle -
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == .getSegueID(.popoverMemberList) {
+            guard let memberList = segue.destination as? MemberListViewController else {
+                print("Invalid Segue for presenting Member List")
+                return
+            }
+            memberList.topic = self.topic
+        }
     }
     
     // MARK: - Handlers
@@ -34,6 +50,14 @@ extension TopicDetailViewController: UICollectionViewDataSource {
     }
     
 }
+
+extension TopicDetailViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        performSegue(withIdentifier: .getSegueID(.popoverMemberList), sender: nil)
+    }
+}
+
+
 
 // MARK: - Live Previews
 
