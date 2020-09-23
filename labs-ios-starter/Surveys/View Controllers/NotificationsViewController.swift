@@ -7,6 +7,7 @@ import UIKit
 class NotificationsViewController: UIViewController {
     // MARK: - Outlets -
 
+    @IBOutlet var editButton: UIBarButtonItem!
     @IBOutlet var notificationsCollectionView: UICollectionView!
 
     // MARK: - Properties -
@@ -46,6 +47,8 @@ class NotificationsViewController: UIViewController {
                                                selector: #selector(updateNotificationsBadge),
                                                name: .notificationsBadgeNeedsUpdate,
                                                object: nil)
+
+        navigationItem.rightBarButtonItem = editButtonItem
     }
 
     deinit {
@@ -79,8 +82,22 @@ extension NotificationsViewController: UICollectionViewDataSource {
         }
 
         cell.setDimensions(width: view.frame.width - 40, height: 80)
-        cell.messageLabel.text = fetchedResultsController.fetchedObjects?[indexPath.row].message
+        let managedObject = fetchedResultsController.fetchedObjects?[indexPath.row]
+        cell.messageLabel.text = managedObject?.message
+        cell.managedObject = managedObject
         return cell
+    }
+
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+
+        if let indexPaths = notificationsCollectionView?.indexPathsForVisibleItems {
+            for indexPath in indexPaths {
+                if let cell = notificationsCollectionView.cellForItem(at: indexPath) as? NotificationsCollectionViewCell {
+                    cell.isEditing = editing
+                }
+            }
+        }
     }
 }
 

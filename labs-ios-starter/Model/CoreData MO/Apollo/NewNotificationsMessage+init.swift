@@ -8,7 +8,7 @@ extension NewNotificationsMessage {
         // Init values
         self.init(context: CoreDataManager.shared.mainContext)
         self.message = message
-        unread = true
+        unread = true // in the future, there could be support to have read/ unread messages, rather than just exist/ delete
         timestamp = Date()
 
         try? CoreDataManager.shared.saveContext() // Save the new notifications message
