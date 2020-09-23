@@ -38,7 +38,7 @@ class ErrorHandler {
         case timeout = 408
         case tooManyRequests = 429
         case headerFieldTooLarge = 431
-        //TODO: Determine with BE team when this is triggered
+        /// Triggered for almost any error with the backend
         case internalServerError = 500
         case badDecode = 998
         case unknown = 999

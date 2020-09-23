@@ -24,7 +24,7 @@ protocol NetworkLoader {
     func loadData(using request: URLRequest, with completion: @escaping URLCompletion)
 }
 
-// TODO: Improve error handling
+// TODO: Figure out how to get { "message": String } from BE when error occurs
 /// Provide default error and response handling for network tasks
 extension URLSession: NetworkLoader {
 
