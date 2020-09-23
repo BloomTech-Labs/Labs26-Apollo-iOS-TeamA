@@ -36,6 +36,10 @@ enum CollectionViewIdentifier: String {
     case crudCollectionViewCell = "CRUDCollectionViewCell"
 }
 
+enum CollectionViewHeaderId: String {
+    case topicSectionHeader
+}
+
 extension String {
     // User Defaults
     static let notificationsVCdidLoad = "notificationsVCdidLoad" // Bool: Whether or not the notifications view controller is loaded
@@ -68,6 +72,14 @@ extension String {
     /// - Parameter identifier: defined in `enum CollectionViewIdentifier` in String + identifier.swift
     /// - Returns: the rawValue of the case with the first letter capitalized
     static func getCollectionViewCellID(_ identifier: CollectionViewIdentifier) -> String {
+        // collectionView ids are capitalized
+        identifier.rawValue.firstCapitalized
+    }
+
+    /// convenience method to get CollectionView Header Identifiers
+    /// - Parameter identifier: defined in `enum CollectionViewHeaderId` in String + identifier.swift
+    /// - Returns: the rawValue of the case with the first letter capitalized
+    static func getCollectionViewHeaderId(_ identifier: CollectionViewHeaderId) -> String {
         // collectionView ids are capitalized
         identifier.rawValue.firstCapitalized
     }
