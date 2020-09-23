@@ -12,5 +12,6 @@ extension Notification.Name {
     static let oktaAuthenticationSuccessful = Notification.Name("oktaAuthenticationSuccessful")
     static let oktaAuthenticationFailed = Notification.Name("oktaAuthenticationFailed")
     static let oktaAuthenticationExpired = Notification.Name("oktaAuthenticationExpired")
+    static let updateNotificationsBadge = Notification.Name("updateNotificationsBadge")
     static let notificationsBadgeNeedsUpdate = Notification.Name("notificationsBadgeNeedsUpdate")
 }

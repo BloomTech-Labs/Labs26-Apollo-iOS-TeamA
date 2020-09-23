@@ -5,19 +5,16 @@ import CoreData
 
 extension NewNotificationsMessage {
     convenience init(_ message: String) {
+        // Init values
         self.init(context: CoreDataManager.shared.mainContext)
         self.message = message
         unread = true
         timestamp = Date()
-    }
 
-    /// Cleans up the call for quickly creating new notifications messages
-    func newNotificationsMessage(_ message: String) {
-        _ = NewNotificationsMessage(message)
-        performSave()
-    }
+        try? CoreDataManager.shared.saveContext() // Save the new notifications message
 
-    private func performSave() {
-        try? CoreDataManager.shared.saveContext()
+        if !UserDefaults.standard.bool(forKey: .notificationsVCdidLoad) { // check to see if VC has loaded
+            NotificationCenter.default.post(Notification(name: .notificationsBadgeNeedsUpdate)) // update manually if needed
+        }
     }
 }

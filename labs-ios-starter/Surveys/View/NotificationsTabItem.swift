@@ -8,7 +8,7 @@ class NotificationsTabItem: UITabBarItem {
     /// Storyboard init
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        NotificationCenter.default.addObserver(forName: .notificationsBadgeNeedsUpdate,
+        NotificationCenter.default.addObserver(forName: .updateNotificationsBadge,
                                                object: nil,
                                                queue: .main,
                                                using: updateBadge(notification:))
