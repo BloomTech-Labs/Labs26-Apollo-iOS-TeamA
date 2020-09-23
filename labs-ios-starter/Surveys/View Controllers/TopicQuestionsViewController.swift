@@ -4,22 +4,23 @@
 import UIKit
 
 class TopicQuestionsViewController: UIViewController {
-    
     // MARK: - Outlets
-    @IBOutlet weak var questionsCollectionView: UICollectionView!
+
+    @IBOutlet var questionsCollectionView: UICollectionView!
     @IBOutlet var contextSegmentControl: UISegmentedControl!
 
     @IBAction func postTopicButton(_ sender: UIButton) {
-        //TODO: Context Title
+        // TODO: Context Title
         postTopic()
     }
 
     // MARK: - Properties -
+
     var topicName: String?
     let topicController = TopicController()
-    let reuseIdentifier = String.getCollectionViewCellID(.questionsCollectionViewCell)
-    let reuseIdentifier2 = String.getCollectionViewCellID(.addNewQuestionCell)
-    // TODO: Shawn - Fix these reuseID's
+    let questionsCellReuseId = String.getCollectionViewCellID(.questionsCollectionViewCell)
+    let addNewQuestionCellReuseId = String.getCollectionViewCellID(.addNewQuestionCell)
+
     var questions: [Question] = [] {
         didSet {
             DispatchQueue.main.async { [weak self] in
@@ -33,18 +34,17 @@ class TopicQuestionsViewController: UIViewController {
     }
 
     @objc private func setupSegmentedControl() {
-        self.contextSegmentControl.setDimensions(width: self.contextSegmentControl.frame.size.width, height: 50)
+        contextSegmentControl.setDimensions(width: contextSegmentControl.frame.size.width, height: 50)
         setupSegmentLabels()
     }
 
     private func setupSegmentLabels() {
         UILabel.appearance(whenContainedInInstancesOf: [UISegmentedControl.self]).numberOfLines = 0
         UILabel.appearance(whenContainedInInstancesOf: [UISegmentedControl.self]).font = .systemFont(ofSize: 11)
-
     }
-    
+
     // MARK: - Lifecycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSegmentedControl()
@@ -53,11 +53,10 @@ class TopicQuestionsViewController: UIViewController {
     }
 
     private func getAllContextQuestions() {
-        self.topicController.getAllQuestionsAndContexts() { [weak self] result in
+        topicController.getAllQuestionsAndContexts { [weak self] result in
             guard let self = self else { return }
 
             switch result {
-
             case .success:
                 for (index, topic) in self.topicController.contexts.enumerated() {
                     DispatchQueue.main.async {
@@ -78,13 +77,12 @@ class TopicQuestionsViewController: UIViewController {
                         }
                     }
                 }
-
             }
         }
-
     }
-    
+
     // MARK: - Update -
+
     private func postTopic() {
         // TODO: Dynamic questions when made available
         guard let topicName = topicName else {
@@ -101,77 +99,70 @@ class TopicQuestionsViewController: UIViewController {
 
             case .failure(let error):
                 self.presentNetworkError(error: error.rawValue) { result in
-                    //unknown/internal error occured:
-                    if let result = result{
-                        //tryAgain was tapped
+                    // unknown/internal error occured:
+                    if let result = result {
+                        // tryAgain was tapped
                         if result {
                             self.postTopic()
                         }
                     }
                 }
-
             }
-
         }
     }
 
-    
     // MARK: - Handlers
-    
+
     // MARK: - Reusable
-    
 }
 
 extension TopicQuestionsViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return questions.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.row {
-        case 0..<(questions.count):
-                let cell = questionsCollectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! QuestionCollectionViewCell
+        case 0 ..< questions.count:
+            let cell = questionsCollectionView.dequeueReusableCell(withReuseIdentifier: questionsCellReuseId, for: indexPath) as! QuestionCollectionViewCell
 
-                cell.updateViews( adjustingForWidthOf: view,
-                                  question: questions[indexPath.item].question )
-                return cell
+            cell.updateViews(adjustingForWidthOf: view,
+                             question: questions[indexPath.item].question)
+            return cell
 
-            default:
+        default:
 
-                let cell = questionsCollectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier2, for: indexPath) as! QuestionCollectionViewCell
-                //TODO: We need a question/text to pass in
-                cell.updateViews(adjustingForWidthOf: view)
+            let cell = questionsCollectionView.dequeueReusableCell(withReuseIdentifier: addNewQuestionCellReuseId, for: indexPath) as! QuestionCollectionViewCell
+            // TODO: We need a question/text to pass in
+            cell.updateViews(adjustingForWidthOf: view)
 
-                return cell
+            return cell
         }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard indexPath.row == questions.count else { return }
 
-        //not sure what to do with this
-        //questions+=1
+        // questions+=1
         collectionView.reloadData()
     }
-    
 }
 
 // MARK: - Segmented Control Delegate -
-
 
 // MARK: - Live Previews
 
 #if DEBUG
 
-import SwiftUI
+    import SwiftUI
 
-struct TopicQuestionsViewControllerPreview: PreviewProvider {
-    static var previews: some View {
-        let storyboard = UIStoryboard(name: "Surveys", bundle: .main)
-        let tabBarController = storyboard.instantiateInitialViewController() as? UITabBarController
-        
-        return tabBarController?.view.livePreview.edgesIgnoringSafeArea(.all)
+    struct TopicQuestionsViewControllerPreview: PreviewProvider {
+        static var previews: some View {
+            let storyboard = UIStoryboard(name: "Surveys", bundle: .main)
+            let tabBarController = storyboard.instantiateInitialViewController() as? UITabBarController
+
+            return tabBarController?.view.livePreview.edgesIgnoringSafeArea(.all)
+        }
     }
-}
 
 #endif

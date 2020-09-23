@@ -4,9 +4,9 @@
 import UIKit
 
 class TopicDetailViewController: UIViewController {
-    
     // MARK: - Outlets
-    @IBOutlet weak var CRUDCollectionView: UICollectionView!
+
+    @IBOutlet var CRUDCollectionView: UICollectionView!
 
     // MARK: - Actions -
     @IBAction func showMembers(_ sender: UIButton) {
@@ -14,10 +14,12 @@ class TopicDetailViewController: UIViewController {
     }
 
     // MARK: - Properties -
+
     var topic: Topic?
     let reuseIdentifier = String.getCollectionViewCellID(.crudCollectionViewCell)
-    
+
     // MARK: - View Lifecycle -
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -33,22 +35,20 @@ class TopicDetailViewController: UIViewController {
     }
     
     // MARK: - Handlers
-    
+
     // MARK: - Reusable
-    
 }
 
 extension TopicDetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = CRUDCollectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
         cell.setDimensions(width: view.frame.width - 40, height: 80)
         return cell
     }
-    
 }
 
 extension TopicDetailViewController: UICollectionViewDelegate {
@@ -63,15 +63,15 @@ extension TopicDetailViewController: UICollectionViewDelegate {
 
 #if DEBUG
 
-import SwiftUI
+    import SwiftUI
 
-struct TopicDetailViewControllerPreview: PreviewProvider {
-    static var previews: some View {
-        let storyboard = UIStoryboard(name: "Surveys", bundle: .main)
-        let tabBarController = storyboard.instantiateInitialViewController() as? UITabBarController
-        
-        return tabBarController?.view.livePreview.edgesIgnoringSafeArea(.all)
+    struct TopicDetailViewControllerPreview: PreviewProvider {
+        static var previews: some View {
+            let storyboard = UIStoryboard(name: "Surveys", bundle: .main)
+            let tabBarController = storyboard.instantiateInitialViewController() as? UITabBarController
+
+            return tabBarController?.view.livePreview.edgesIgnoringSafeArea(.all)
+        }
     }
-}
 
 #endif
