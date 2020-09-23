@@ -33,7 +33,10 @@
 		1D4D9C0A25092B5400348246 /* labs_ios_starterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D9C0925092B5400348246 /* labs_ios_starterUITests.swift */; };
 		1D4D9C1325092F4A00348246 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D9C1225092F4A00348246 /* CoreDataManager.swift */; };
 		1D4D9C17250930AB00348246 /* labs-ios-starter.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D9C15250930AB00348246 /* labs-ios-starter.xcdatamodeld */; };
-		1DB156B22516B8C60084ECA0 /* TopicControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9983C5725141AC6001D91FE /* TopicControllerTests.swift */; };
+		1D938DD9251AED4300D3013D /* NotificationsTabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D938DD8251AED4300D3013D /* NotificationsTabItem.swift */; };
+		1D938DDD251AF69700D3013D /* NotificationsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D938DDC251AF69700D3013D /* NotificationsCollectionViewCell.swift */; };
+		1D938DE1251AFB5A00D3013D /* NewNotificationsMessage+init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D938DE0251AFB5A00D3013D /* NewNotificationsMessage+init.swift */; };
+		1DB156B22516B8C60084ECA0 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		463AD24324CF275900447BB8 /* ProfileDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463AD24224CF275900447BB8 /* ProfileDetailViewController.swift */; };
 		466C4274249A8748007D033E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466C4273249A8748007D033E /* AppDelegate.swift */; };
 		466C4276249A8748007D033E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466C4275249A8748007D033E /* SceneDelegate.swift */; };
@@ -116,6 +119,9 @@
 		1D4D9C0B25092B5400348246 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D4D9C1225092F4A00348246 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		1D4D9C16250930AB00348246 /* labs-ios-starter.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "labs-ios-starter.xcdatamodel"; sourceTree = "<group>"; };
+		1D938DD8251AED4300D3013D /* NotificationsTabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsTabItem.swift; sourceTree = "<group>"; };
+		1D938DDC251AF69700D3013D /* NotificationsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsCollectionViewCell.swift; sourceTree = "<group>"; };
+		1D938DE0251AFB5A00D3013D /* NewNotificationsMessage+init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewNotificationsMessage+init.swift"; sourceTree = "<group>"; };
 		463AD24224CF275900447BB8 /* ProfileDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailViewController.swift; sourceTree = "<group>"; };
 		466C4270249A8748007D033E /* labs-ios-starter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "labs-ios-starter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		466C4273249A8748007D033E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -253,6 +259,7 @@
 			children = (
 				1D05452F2515C441006E8665 /* Web Auth */,
 				1D0545312515C45C006E8665 /* Topic */,
+				1D938DE0251AFB5A00D3013D /* NewNotificationsMessage+init.swift */,
 				1D4D9C15250930AB00348246 /* labs-ios-starter.xcdatamodeld */,
 			);
 			name = Apollo;
@@ -295,6 +302,8 @@
 				1D0E1059250AD64100A21C44 /* Surveys.storyboard */,
 				B9983C532513BEC0001D91FE /* QuestionCollectionViewCell.swift */,
 				B9091EEE25183F2E009BA6A7 /* TopicCollectionViewCell.swift */,
+				1D938DD8251AED4300D3013D /* NotificationsTabItem.swift */,
+				1D938DDC251AF69700D3013D /* NotificationsCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -428,21 +437,6 @@
 			path = "Okta Auth";
 			sourceTree = "<group>";
 		};
-		B91BF7E4250BC56E00D68EA6 /* CreateTopic */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = CreateTopic;
-			sourceTree = "<group>";
-		};
-		B91BF7E5250BC57700D68EA6 /* Feature-topic */ = {
-			isa = PBXGroup;
-			children = (
-				B91BF7E4250BC56E00D68EA6 /* CreateTopic */,
-			);
-			path = "Feature-topic";
-			sourceTree = "<group>";
-		};
 		B94042072501CE670048BCED /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -562,7 +556,6 @@
 			children = (
 				B9404231250321230048BCED /* labs_ios_starterTests.swift */,
 				B9390BE6250991D300131227 /* NetworkServiceTests.swift */,
-				B9983C5725141AC6001D91FE /* TopicControllerTests.swift */,
 				B9404233250321230048BCED /* Info.plist */,
 			);
 			path = "labs-ios-starterTests";
@@ -725,7 +718,9 @@
 				1D0E1062250B046300A21C44 /* TopicNameViewController.swift in Sources */,
 				46BEB4E724C98D8900FE0CD1 /* Notifications + customNames.swift in Sources */,
 				1D0E1048250A9C7200A21C44 /* Data+PrettyJSON.swift in Sources */,
+				1D938DDD251AF69700D3013D /* NotificationsCollectionViewCell.swift in Sources */,
 				1D0E1046250A9B7D00A21C44 /* CodingUserInfoKey+MOC.swift in Sources */,
+				1D938DE1251AFB5A00D3013D /* NewNotificationsMessage+init.swift in Sources */,
 				B940421F2501D9250048BCED /* String+Validate.swift in Sources */,
 				1D0545262515C3BC006E8665 /* Member+CoreDataClass.swift in Sources */,
 				B94042192501D1BD0048BCED /* URLRequest + JSON.swift in Sources */,
@@ -755,6 +750,7 @@
 				1D0545282515C3BC006E8665 /* Topic+CoreDataClass.swift in Sources */,
 				1D0545212515C3BC006E8665 /* Response+CoreDataProperties.swift in Sources */,
 				46BEB4E524C98CDC00FE0CD1 /* LoginViewController.swift in Sources */,
+				1D938DD9251AED4300D3013D /* NotificationsTabItem.swift in Sources */,
 				1D0545242515C3BC006E8665 /* Question+CoreDataClass.swift in Sources */,
 				1D4D9C1325092F4A00348246 /* CoreDataManager.swift in Sources */,
 				1D4D9C0225068DEB00348246 /* CircularButton.swift in Sources */,
@@ -774,7 +770,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1DB156B22516B8C60084ECA0 /* TopicControllerTests.swift in Sources */,
+				1DB156B22516B8C60084ECA0 /* (null) in Sources */,
 				B9390BE7250991D300131227 /* NetworkServiceTests.swift in Sources */,
 				B9404232250321230048BCED /* labs_ios_starterTests.swift in Sources */,
 			);
