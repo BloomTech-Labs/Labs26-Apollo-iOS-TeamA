@@ -49,8 +49,7 @@ class TopicQuestionsViewController: UIViewController {
         super.viewDidLoad()
         setupSegmentedControl()
         getAllContextQuestions()
-
-        // baseurl = https://apollo-a-api.herokuapp.com/
+        //baseurl = https://apollo-a-api.herokuapp.com/
     }
 
     private func getAllContextQuestions() {
@@ -91,8 +90,8 @@ class TopicQuestionsViewController: UIViewController {
             return
         }
 
-        let selected = contextSegmentControl.selectedSegmentIndex
-
+        let selected = contextSegmentControl.selectedSegmentIndex + 1
+        
         topicController.postTopic(with: topicName, contextId: selected, questions: topicController.questions) { result in
             switch result {
             case .success(let joinCode):

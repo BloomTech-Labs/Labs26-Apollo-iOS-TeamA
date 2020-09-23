@@ -151,17 +151,25 @@ class TopicController {
             return
         }
 
-        // get questions from endpoint
-        networkService.loadData(using: request) { result in
-            // self is nil here???
-            switch result {
-            // decode questions
-            case .success(let data):
-                guard let questions = self.networkService.decode(to: [Question].self,
-                                                                 data: data,
-                                                                 moc: CoreDataManager.shared.mainContext) else {
-                    completion(.failure(.badDecode))
-                    return
+            // get questions from endpoint
+            self.networkService.loadData(using: request) { result in
+                //self is nil here???
+                switch result {
+                // decode questions
+                case .success(let data):
+                    guard let questions = self.networkService.decode(to: [Question].self,
+                                                                     data: data,
+                                                                     moc: CoreDataManager.shared.mainContext) else {
+                        completion(.failure(.badDecode))
+                        return
+                    }
+                    try? CoreDataManager.shared.saveContext()
+                    self.QUESTIONS = questions
+                    completion(.success(Void()))
+
+                // bubble error to caller
+                case .failure(let error):
+                    completion(.failure(error))
                 }
                 self.QUESTIONS = questions
                 completion(.success(Void()))

@@ -11,11 +11,12 @@ import OktaAuth
 
 // TODO: Use as template to display members for topics
 
-class ProfileListViewController: UIViewController {
+class MemberListViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
     var profileController = ProfileController.shared
+    var topic: Topic?
     
     // MARK: - View Lifecycle
     
@@ -23,20 +24,13 @@ class ProfileListViewController: UIViewController {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        
-        refresh()
+        updateViews()
     }
     
     // MARK: - Private Methods
     
-    private func refresh() {
-        profileController.getAllProfiles { error in
-            if let error = error {
-                self.presentAuthError(error: error)
-                return
-            }
-            self.tableView.reloadData()
-        }
+    private func updateViews() {
+        self.tableView.reloadData()
     }
     
     // MARK: - Navigation
@@ -50,23 +44,27 @@ class ProfileListViewController: UIViewController {
             }
             
             profileDetailVC.isUsersProfile = false
-            profileDetailVC.profile = profileController.profiles[indexPath.row]
+            profileDetailVC.profile = topic?.members?.allObjects[indexPath.row] as? Member
         }
     }
 }
 
-extension ProfileListViewController: UITableViewDelegate, UITableViewDataSource {
+extension MemberListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return profileController.profiles.count
+        return topic?.members?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: .getTableViewCellID(.profileCell), for: indexPath)
         
-        let profile = profileController.profiles[indexPath.row]
-        cell.textLabel?.text = "\(profile.firstName ?? "") \(profile.lastName ?? "")"
-        cell.detailTextLabel?.text = profile.email
+        guard let member = topic?.members?.allObjects[indexPath.row] as? Member else {
+            print("couldn't pull member out of NSSet")
+            return UITableViewCell()
+        }
+        //default values "unwrap" optionals (prevents Optional(first name))
+        cell.textLabel?.text = "\(member.firstName ?? "") \(member.lastName ?? "")"
+        cell.detailTextLabel?.text = member.email ?? ""
         
         return cell
     }
