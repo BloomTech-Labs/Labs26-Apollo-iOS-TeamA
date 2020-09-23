@@ -13,15 +13,7 @@ class TopicController {
     let networkService = NetworkService.shared
     let profileController = ProfileController.shared
     lazy var baseURL = profileController.baseURL
-
-    /// public getter for CONTEXTS
-    /// public getter for CONTEXTS
-    var contexts: [ContextObject]  {
-        CONTEXTS
-    }
-    /// private setter for contexts
-    private var CONTEXTS: [ContextObject] = []
-
+    
     /// public getter for QUESTIONS
     var questions: [Question] {
         QUESTIONS
@@ -146,7 +138,13 @@ class TopicController {
                     complete(.failure(.notFound))
                     return
                 }
-                self.CONTEXTS = contexts
+                do {
+                    try CoreDataManager.shared.saveContext()
+                } catch let saveContextError {
+                    print("Error saving context: \(saveContextError)")
+                }
+
+
                 complete(.success(Void()))
             //bubble error to caller
             case .failure(let error):

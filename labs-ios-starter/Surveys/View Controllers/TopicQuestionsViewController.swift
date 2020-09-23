@@ -16,6 +16,7 @@ class TopicQuestionsViewController: UIViewController {
     // MARK: - Properties -
     var topicName: String?
     let topicController = TopicController()
+    let fetchController = FetchController()
     let reuseIdentifier = String.getCollectionViewCellID(.questionsCollectionViewCell)
     let reuseIdentifier2 = String.getCollectionViewCellID(.addNewQuestionCell)
     // TODO: Shawn - Fix these reuseID's
@@ -58,13 +59,17 @@ class TopicQuestionsViewController: UIViewController {
             switch result {
 
             case .success:
-                for (index, topic) in self.topicController.contexts.enumerated() {
+                guard let contexts = self.fetchController.fetchContextRequest() else {
+                    print("couldn't fetch contexts")
+                    return
+                }
+                for (index, context) in contexts.enumerated() {
                     DispatchQueue.main.async {
-                        self.contextSegmentControl.setTitle(topic.title, forSegmentAt: index)
+                        self.contextSegmentControl.setTitle(context.title, forSegmentAt: index)
                     }
                 }
-
-                self.questions = self.topicController.questions
+//
+//                self.questions = self.topicController.questions
 
             case .failure(let error):
                 print("failure getting questions")

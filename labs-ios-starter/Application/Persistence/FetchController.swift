@@ -13,7 +13,7 @@ class FetchController {
     // MARK: - Properties -
     let profileController = ProfileController.shared
 
-    // MARK: - Fetch Requests -
+    // MARK: - Topic Fetch Requests -
 
     /// Fetches [Topic] from CoreData based on predicate
     /// - Parameters:
@@ -64,10 +64,28 @@ class FetchController {
             return nil
         }
 
+        // TODO: Test
         // need predicate for id IN identifiersToFetch AND userId IN Topic.members.map { $0.id }
         // (member in Topic.members)
         let predicate = NSPredicate(format: "id IN %@ AND %@ IN members", identifiersToFetch, user)
 
         return fetchTopicRequest(with: predicate, context: context)
     }
+
+    // MARK: - Context Fetch Requests -
+    func fetchContextRequest(context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [ContextObject]? {
+
+        let fetchRequest: NSFetchRequest<ContextObject> = ContextObject.fetchRequest()
+        
+        do {
+            let contexts = try context.fetch(fetchRequest)
+            return contexts
+        } catch let fetchError {
+            print("Error Fetching Topics user is a Leader of: \(fetchError)")
+            return nil
+        }
+
+    }
+
 }
+
