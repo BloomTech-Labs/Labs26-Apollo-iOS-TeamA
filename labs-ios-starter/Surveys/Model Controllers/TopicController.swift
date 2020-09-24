@@ -5,9 +5,8 @@
 //  Created by Kenny on 9/12/20.
 //  Copyright © 2020 Lambda, Inc. All rights reserved.
 //
-
 import Foundation
-
+// MARK: - FOO -
 /// Controller for Topic, ContextObject, and Question model
 class TopicController {
     let networkService = NetworkService.shared
@@ -15,9 +14,7 @@ class TopicController {
     lazy var baseURL = profileController.baseURL
 
     // MARK: - Create -
-
     // TODO: Responses
-
     /// Post a topic to the web back end with the currently signed in user as the leader
     /// - Parameters:
     ///   - name: The name of the topic
@@ -39,7 +36,6 @@ class TopicController {
                           topicName: name,
                           contextId: Int64(contextId))
         // let questionsToSend = questions.map { $0.id }
-
         do {
             try CoreDataManager.shared.saveContext(CoreDataManager.shared.backgroundContext, async: true)
         } catch let saveError {
@@ -60,7 +56,6 @@ class TopicController {
     }
 
     // MARK: - Read -
-
     /// fetch all topics, or topics for the currently logged in user
     /// - Parameters:
     ///   - all: fetch topics for all users (`true`) or just the currently logged in user (`false`)
@@ -97,65 +92,11 @@ class TopicController {
                             if members.contains(user) {
                                 userTopics.append(topic)
                             }
-                            
                         }
                     }
-                    completion(.success(userTopics))
-                
-                case .failure(let error):
-                    // bubble error to caller
-                    completion(.failure(error))
-            }
-        }
-    }
-    
-    ///Get all contexts
-    func getAllContexts(complete: @escaping CompleteWithNetworkError) {
-        guard let request = createRequest(pathFromBaseURL: "context") else {
-            print("couldn't get context, invalid request")
-            return
-        }
-        networkService.loadData(using: request) { result in
-            switch result {
-                case .success(let data):
-                    guard let contexts = self.networkService.decode(to: [ContextObject].self,
-                                                                    data: data,
-                                                                    moc: CoreDataManager.shared.mainContext) else {
-                                                                        print("error decoding contexts from valid data")
-                                                                        complete(.failure(.notFound))
-                                                                        return
-                    }
-                    self.CONTEXTS = contexts
-                    complete(.success(Void()))
-                //bubble error to caller
-                case .failure(let error):
-                    complete(.failure(error))
-            }
-        }
-    }
-    
-    func getQuestions(completion: @escaping CompleteWithNetworkError) {
-        // create request to /question
-        guard let request = self.createRequest(pathFromBaseURL: "question") else {
-            completion(.failure(.badRequest))
-            return
-        }
-        
-        // get questions from endpoint
-        self.networkService.loadData(using: request) { result in
-            //self is nil here???
-            switch result {
-                // decode questions
-                case .success(let data):
-                    guard let questions = self.networkService.decode(to: [Question].self,
-                                                                     data: data,
-                                                                     moc: CoreDataManager.shared.mainContext) else {
-                                                                        completion(.failure(.badDecode))
-                                                                        return
-                    }
-                    try? CoreDataManager.shared.saveContext()
-                    completion(.success(Void()))
                 }
+                completion(.success(userTopics))
+
             case let .failure(error):
                 // bubble error to caller
                 completion(.failure(error))
@@ -164,7 +105,7 @@ class TopicController {
     }
 
     /// Get all contexts
-    func getAllContexts(complete: @escaping CompleteWithNeworkError) {
+    func getAllContexts(complete: @escaping CompleteWithNetworkError) {
         guard let request = createRequest(pathFromBaseURL: "context") else {
             print("couldn't get context, invalid request")
             return
@@ -194,7 +135,7 @@ class TopicController {
         }
     }
 
-    func getQuestions(completion: @escaping CompleteWithNeworkError) {
+    func getQuestions(completion: @escaping CompleteWithNetworkError) {
         // create request to /question
         guard let request = createRequest(pathFromBaseURL: "question") else {
             completion(.failure(.badRequest))
@@ -207,7 +148,7 @@ class TopicController {
             switch result {
             // decode questions
             case let .success(data):
-                guard let questions = self.networkService.decode(to: [Question].self,
+                guard let _ = self.networkService.decode(to: [Question].self,
                                                                  data: data,
                                                                  moc: CoreDataManager.shared.mainContext) else {
                     completion(.failure(.badDecode))
@@ -224,30 +165,8 @@ class TopicController {
     }
 
     func getAllQuestionsAndContexts(completion: @escaping CompleteWithNetworkError) {
-                        completion(result)
-                }
-                case.failure:
-                    completion(contextResult)
-            }
-        }
-    }
-
-    // MARK: - Update
-
-    // MARK: - Delete
-    /// Deletes a topic from the server
-    /// - Warning: This method should `ONLY` be called by the leader of a topic for their own survey
-    func deleteTopic(topic: Topic, completion: @escaping CompleteWithNetworkError) {
-        guard
-            let id = topic.id,
-            let deleteRequest = createRequest(pathFromBaseURL: "topic/\(id)", method: .delete)
-        else {
-            completion(.failure(.badRequest))
-            return
-        }
-
-        networkService.loadData(using: deleteRequest) { result in
-            switch result {
+        getAllContexts { contextResult in
+            switch contextResult {
             case .success:
                 self.getQuestions { result in
                     completion(result)
@@ -257,27 +176,51 @@ class TopicController {
             }
         }
     }
-                self.getQuestions { result in
-                    completion(result)
+
+    // MARK: - Update -
+
+    func updateTopic(topic: Topic, completion: @escaping CompleteWithNetworkError) {
+        // send topic to server. save in CoreData
+    }
+
+    // MARK: - Delete
+        /// Deletes a topic from the server
+        /// - Warning: This method should `ONLY` be called by the leader of a topic for their own survey
+        func deleteTopic(topic: Topic, completion: @escaping CompleteWithNetworkError) {
+            guard
+                let id = topic.id,
+                let deleteRequest = createRequest(pathFromBaseURL: "topic/\(id)", method: .delete)
+            else {
+                completion(.failure(.badRequest))
+                return
+            }
+
+            networkService.loadData(using: deleteRequest) { result in
+                switch result {
+                case .success:
+                    completion(.success(Void()))
+                case let .failure(error):
+                    completion(.failure(error))
                 }
-            case .failure:
-                completion(contextResult)
+            }
+        }
+
+    // MARK: - Helper Methods -
+    private func createRequest(auth: Bool = true,
+                               pathFromBaseURL: String,
                                method: NetworkService.HttpMethod = .get) -> URLRequest? {
         let targetURL = baseURL.appendingPathComponent(pathFromBaseURL)
 
-
+        guard var request = networkService.createRequest(url: targetURL, method: method, headerType: .contentType, headerValue: .json) else {
             print("unable to create request for \(targetURL)")
             return nil
         }
 
         if auth {
             // add bearer to request
-
+            request.addAuthIfAvailable()
         }
 
         return request
     }
-
 }
-            // add bearer to request
-

@@ -20,6 +20,7 @@ class TopicQuestionsViewController: UIViewController {
     let topicController = TopicController()
     let questionsCellReuseId = String.getCollectionViewCellID(.questionsCollectionViewCell)
     let addNewQuestionCellReuseId = String.getCollectionViewCellID(.addNewQuestionCell)
+    private var fetchController = FetchController()
 
     var questions: [Question] = [] {
         didSet {
