@@ -117,7 +117,7 @@ class TopicController {
     }
     
     ///Get all contexts
-    func getAllContexts(complete: @escaping CompleteWithNeworkError) {
+    func getAllContexts(complete: @escaping CompleteWithNetworkError) {
         guard let request = createRequest(pathFromBaseURL: "context") else {
             print("couldn't get context, invalid request")
             return
@@ -141,7 +141,7 @@ class TopicController {
         }
     }
     
-    func getQuestions(completion: @escaping CompleteWithNeworkError) {
+    func getQuestions(completion: @escaping CompleteWithNetworkError) {
         // create request to /question
         guard let request = self.createRequest(pathFromBaseURL: "question") else {
             completion(.failure(.badRequest))
@@ -171,7 +171,7 @@ class TopicController {
         }
     }
     
-    func getAllQuestionsAndContexts(completion: @escaping CompleteWithNeworkError) {
+    func getAllQuestionsAndContexts(completion: @escaping CompleteWithNetworkError) {
         getAllContexts { contextResult in
             switch contextResult {
                 case .success:
@@ -188,7 +188,6 @@ class TopicController {
     
     // MARK: - Delete
     
-    func deleteTopic()
     
     // MARK: - Helper Methods -
     private func createRequest(auth: Bool = true,
