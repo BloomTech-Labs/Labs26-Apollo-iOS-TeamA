@@ -26,9 +26,14 @@ class CoreDataManager {
     /// The main object space for managed objects. Uses the main thread.
     var mainContext: NSManagedObjectContext {
         let context = persistentContainer.viewContext
-        #warning("Might need to change this policy")
-        context.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
-        return persistentContainer.viewContext
+        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        return context
+    }
+
+    var backgroundContext: NSManagedObjectContext {
+        let context = persistentContainer.newBackgroundContext()
+        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        return context
     }
 
     // MARK: - Methods
@@ -36,7 +41,7 @@ class CoreDataManager {
     /// Performs a save on the passed-in context.
     /// ```
     /// // Create new background context
-    /// CoreDataManager.shared.persistentContainer.newBackgroundContext()
+    /// CoreDataManager.shared.backgroundContext()
     /// ```
     /// - Warning: Large processes my hang the UI on the mainContext.
     /// - parameter context: the selected object space for managed objects. Defaults to mainContext.
