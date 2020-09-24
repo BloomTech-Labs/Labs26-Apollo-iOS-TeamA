@@ -6,8 +6,8 @@
 //  Copyright © 2020 Lambda, Inc. All rights reserved.
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 class FetchController {
     // MARK: - Properties -
@@ -21,7 +21,6 @@ class FetchController {
     ///   - context: The context used to execute the request (no default)
     /// - Returns: An array of Topic if the fetch succeeds, nil if it fails
     private func fetchTopicRequest(with predicate: NSPredicate, context: NSManagedObjectContext) -> [Topic]? {
-
         let fetchRequest: NSFetchRequest<Topic> = Topic.fetchRequest()
 
         fetchRequest.predicate = predicate
@@ -32,7 +31,6 @@ class FetchController {
             print("Error Fetching Topics user is a Leader of: \(fetchError)")
             return nil
         }
-
     }
 
     /// Fetches [Topic] from CoreData where the currently logged in user matches the Topic's leaderId
@@ -58,7 +56,6 @@ class FetchController {
     ///   - context: The context used to execute the request
     /// - Returns: An array of Topic on success, or nil on failure
     func fetchMemberTopics(with identifiersToFetch: [Int], context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [Topic]? {
-
         guard let user = profileController.authenticatedUserProfile else {
             print("user not logged in")
             return nil
@@ -74,18 +71,28 @@ class FetchController {
 
     // MARK: - Context Fetch Requests -
     func fetchContextRequest(context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [ContextObject]? {
-
         let fetchRequest: NSFetchRequest<ContextObject> = ContextObject.fetchRequest()
-        
+
         do {
             let contexts = try context.fetch(fetchRequest)
             return contexts
         } catch let fetchError {
-            print("Error Fetching Topics user is a Leader of: \(fetchError)")
+            print("Error Fetching Contexts: \(fetchError)")
             return nil
         }
-
     }
 
-}
+    // MARK: - Question Fetch Requests -
+    // TODO: When BE is configured to have different questions, pass in necessary data to only get questions you're looking for
+    func fetchQuestionRequest(context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [Question]? {
+        let fetchRequest: NSFetchRequest<Question> = Question.fetchRequest()
 
+        do {
+            let questions = try context.fetch(fetchRequest)
+            return questions
+        } catch let fetchError {
+            print("Error Fetching Questions: \(fetchError)")
+            return nil
+        }
+    }
+}

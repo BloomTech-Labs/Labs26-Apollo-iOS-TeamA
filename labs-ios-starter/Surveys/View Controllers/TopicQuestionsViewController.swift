@@ -59,18 +59,24 @@ class TopicQuestionsViewController: UIViewController {
             switch result {
 
             case .success:
+                // get contexts from CoreData
                 guard let contexts = self.fetchController.fetchContextRequest() else {
                     print("couldn't fetch contexts")
                     return
                 }
+                // set segmentControl titles
                 for (index, context) in contexts.enumerated() {
                     DispatchQueue.main.async {
                         self.contextSegmentControl.setTitle(context.title, forSegmentAt: index)
                     }
                 }
-//
-//                self.questions = self.topicController.questions
-
+                // get questions from CoreData
+                guard let questions = self.fetchController.fetchQuestionRequest() else {
+                    print("Couldn't fetch questions")
+                    return
+                }
+                // reload questions tableViewController (can use FRC here)
+                self.questions = questions
             case .failure(let error):
                 print("failure getting questions")
 
