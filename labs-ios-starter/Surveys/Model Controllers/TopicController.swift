@@ -116,7 +116,6 @@ class TopicController {
         }
     }
     
-    
     ///Get all contexts
     func getAllContexts(complete: @escaping CompleteWithNeworkError) {
         guard let request = createRequest(pathFromBaseURL: "context") else {
@@ -184,6 +183,12 @@ class TopicController {
             }
         }
     }
+    
+    // MARK: - Update
+    
+    // MARK: - Delete
+    
+    func deleteTopic()
     
     // MARK: - Helper Methods -
     private func createRequest(auth: Bool = true,
