@@ -39,15 +39,12 @@ class TopicController {
                           topicName: name,
                           contextId: Int64(contextId))
         // let questionsToSend = questions.map { $0.id }
-        let context = CoreDataManager.shared.backgroundContext
-        context.perform {
-            do {
-                // TODO: move backgroundContext logic to save method in CoreDataManager?
-                try context.save()
-            } catch let saveError {
-                // The user doesn't need to be notified about this (maybe they could be through a label, but wouldn't reccommend anything that interrupts them like an alert)
-                NSLog("Error saving Topic: \(name) to CoreData: \(saveError)")
-            }
+
+        do {
+            try CoreDataManager.shared.saveContext(CoreDataManager.shared.backgroundContext, async: true)
+        } catch let saveError {
+            // The user doesn't need to be notified about this (maybe they could be through a label, but wouldn't reccommend anything that interrupts them like an alert)
+            NSLog("Error saving Topic: \(name) to CoreData: \(saveError)")
         }
         request.encode(from: topic)
 
