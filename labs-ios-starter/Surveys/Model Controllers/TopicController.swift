@@ -116,9 +116,8 @@ class TopicController {
         }
     }
     
-    
     ///Get all contexts
-    func getAllContexts(complete: @escaping CompleteWithNeworkError) {
+    func getAllContexts(complete: @escaping CompleteWithNetworkError) {
         guard let request = createRequest(pathFromBaseURL: "context") else {
             print("couldn't get context, invalid request")
             return
@@ -142,7 +141,7 @@ class TopicController {
         }
     }
     
-    func getQuestions(completion: @escaping CompleteWithNeworkError) {
+    func getQuestions(completion: @escaping CompleteWithNetworkError) {
         // create request to /question
         guard let request = self.createRequest(pathFromBaseURL: "question") else {
             completion(.failure(.badRequest))
@@ -172,7 +171,7 @@ class TopicController {
         }
     }
     
-    func getAllQuestionsAndContexts(completion: @escaping CompleteWithNeworkError) {
+    func getAllQuestionsAndContexts(completion: @escaping CompleteWithNetworkError) {
         getAllContexts { contextResult in
             switch contextResult {
                 case .success:
@@ -181,6 +180,30 @@ class TopicController {
                 }
                 case.failure:
                     completion(contextResult)
+            }
+        }
+    }
+
+    // MARK: - Update
+
+    // MARK: - Delete
+    /// Deletes a topic from the server
+    /// - Warning: This method should `ONLY` be called by the leader of a topic for their own survey
+    func deleteTopic(topic: Topic, completion: @escaping CompleteWithNetworkError) {
+        guard
+            let id = topic.id,
+            let deleteRequest = createRequest(pathFromBaseURL: "topic/\(id)", method: .delete)
+        else {
+            completion(.failure(.badRequest))
+            return
+        }
+
+        networkService.loadData(using: deleteRequest) { result in
+            switch result {
+            case .success:
+                completion(.success(Void()))
+            case let .failure(error):
+                completion(.failure(error))
             }
         }
     }
