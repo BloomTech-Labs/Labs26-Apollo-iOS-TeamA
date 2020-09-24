@@ -94,10 +94,19 @@ class TopicQuestionsViewController: UIViewController {
         
         topicController.postTopic(with: topicName, contextId: selected, questions: topicController.questions) { result in
             switch result {
-            case .success(let joinCode):
-                self.presentSimpleAlert(with: "Topic Posted!", message: "Your join code is \(joinCode)", preferredStyle: .alert, dismissText: "Got it!")
+            case let .success(joinCode):
+                DispatchQueue.main.async {
+                    self.presentSimpleAlert(with: "Topic Posted!",
+                                            message: "A join code will be sent to your notifications.",
+                                            preferredStyle: .alert,
+                                            dismissText: "Ok") { _ in
+                                                
+                        _ = NewNotificationsMessage("Created \(topicName) with join code: \(joinCode)")
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                }
 
-            case .failure(let error):
+            case let .failure(error):
                 self.presentNetworkError(error: error.rawValue) { result in
                     // unknown/internal error occured:
                     if let result = result {

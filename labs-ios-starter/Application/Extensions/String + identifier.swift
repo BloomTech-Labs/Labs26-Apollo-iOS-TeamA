@@ -41,6 +41,9 @@ enum CollectionViewHeaderId: String {
 }
 
 extension String {
+    // User Defaults
+    static let notificationsVCdidLoad = "notificationsVCdidLoad" // Bool: Whether or not the notifications view controller is loaded
+
     /// convenience method to retrieve Storyboard Identifiers
     /// - Parameter identifier: defined in `enum StoryboardIdentifier` in String + identifier.swift
     /// - Returns: the rawValue of the case with the first letter capitalized
