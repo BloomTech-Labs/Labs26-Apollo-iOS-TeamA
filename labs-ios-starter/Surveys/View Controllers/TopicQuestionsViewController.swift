@@ -103,8 +103,12 @@ class TopicQuestionsViewController: UIViewController {
         }
 
         let selected = contextSegmentControl.selectedSegmentIndex + 1
-        
-        topicController.postTopic(with: topicName, contextId: selected, questions: topicController.questions) { result in
+        guard let questions = fetchController.fetchQuestionRequest() else {
+            print("couldn't fetch questions from CoreData")
+            return
+        }
+
+        topicController.postTopic(with: topicName, contextId: selected, questions: questions) { result in
             switch result {
             case .success(let joinCode):
                 self.presentSimpleAlert(with: "Topic Posted!", message: "Your join code is \(joinCode)", preferredStyle: .alert, dismissText: "Got it!")

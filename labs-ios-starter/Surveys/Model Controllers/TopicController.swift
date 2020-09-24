@@ -13,13 +13,6 @@ class TopicController {
     let networkService = NetworkService.shared
     let profileController = ProfileController.shared
     lazy var baseURL = profileController.baseURL
-    
-    /// public getter for QUESTIONS
-    var questions: [Question] {
-        QUESTIONS
-    }
-    /// private setter for questions
-    private var QUESTIONS: [Question] = []
 
     // MARK: - Create -
 
@@ -35,7 +28,7 @@ class TopicController {
         // We know this request is good, but we can still guard unwrap it rather than
         // force unwrapping and assume if something fails it was the user not being logged in
         guard var request = createRequest(pathFromBaseURL: "topic", method: .post),
-              let token = try? profileController.oktaAuth.credentialsIfAvailable().userID else {
+            let token = try? profileController.oktaAuth.credentialsIfAvailable().userID else {
             print("user isn't logged in")
             return
         }
@@ -48,7 +41,7 @@ class TopicController {
         // let questionsToSend = questions.map { $0.id }
 
         do {
-            //TODO: Save on background context?
+            // TODO: Save on background context?
             try CoreDataManager.shared.saveContext(CoreDataManager.shared.mainContext, async: true)
         } catch let saveError {
             // The user doesn't need to be notified about this (maybe they could be through a label, but wouldn't reccommend anything that interrupts them like an alert)
@@ -74,8 +67,6 @@ class TopicController {
     ///   - all: fetch topics for all users (`true`) or just the currently logged in user (`false`)
     ///   - completion: Completes with `[Topic]`. Topics are also stored in the controller...
     func fetchTopic(all: Bool = false, completion: @escaping CompleteWithTopics) {
-
-
         guard let request = createRequest(pathFromBaseURL: "topic") else {
             print("🛑! User isn't logged in!")
             completion(.failure(.unauthorized))
@@ -84,7 +75,7 @@ class TopicController {
 
         networkService.loadData(using: request) { result in
             switch result {
-            case .success(let data):
+            case let .success(data):
                 guard let topics = self.networkService.decode(to: [Topic].self,
                                                               data: data,
                                                               moc: CoreDataManager.shared.mainContext) else {
@@ -101,7 +92,6 @@ class TopicController {
                     }
                     // This is going to be quite the expensive check if there are a lot of topics with a lot of members
                     for topic in topics {
-
                         if topic.leaderId == user.id { // member is leader
                             userTopics.append(topic)
                         } else if let members = topic.members { // member is user
@@ -109,20 +99,18 @@ class TopicController {
                                 userTopics.append(topic)
                             }
                         }
-
                     }
                 }
                 completion(.success(userTopics))
 
-            case .failure(let error):
+            case let .failure(error):
                 // bubble error to caller
                 completion(.failure(error))
             }
         }
     }
 
-
-    ///Get all contexts
+    /// Get all contexts
     func getAllContexts(complete: @escaping CompleteWithNeworkError) {
         guard let request = createRequest(pathFromBaseURL: "context") else {
             print("couldn't get context, invalid request")
@@ -130,11 +118,11 @@ class TopicController {
         }
         networkService.loadData(using: request) { result in
             switch result {
-            case .success(let data):
-                //fetch contexts and save to CoreData
+            case let .success(data):
+                // fetch contexts and save to CoreData
                 guard self.networkService.decode(to: [ContextObject].self,
-                                                                data: data,
-                                                                moc: CoreDataManager.shared.mainContext) != nil else {
+                                                 data: data,
+                                                 moc: CoreDataManager.shared.mainContext) != nil else {
                     print("error decoding contexts from valid data. see surrounding lines for more information from NetworkService")
                     complete(.failure(.notFound))
                     return
@@ -144,10 +132,10 @@ class TopicController {
                 } catch let saveContextError {
                     print("Error saving context: \(saveContextError)")
                 }
-                
+
                 complete(.success(Void()))
-            //bubble error to caller
-            case .failure(let error):
+            // bubble error to caller
+            case let .failure(error):
                 complete(.failure(error))
             }
         }
@@ -155,17 +143,17 @@ class TopicController {
 
     func getQuestions(completion: @escaping CompleteWithNeworkError) {
         // create request to /question
-        guard let request = self.createRequest(pathFromBaseURL: "question") else {
+        guard let request = createRequest(pathFromBaseURL: "question") else {
             completion(.failure(.badRequest))
             return
         }
 
         // get questions from endpoint
-        self.networkService.loadData(using: request) { result in
-            //self is nil here???
+        networkService.loadData(using: request) { result in
+            // self is nil here???
             switch result {
             // decode questions
-            case .success(let data):
+            case let .success(data):
                 guard let questions = self.networkService.decode(to: [Question].self,
                                                                  data: data,
                                                                  moc: CoreDataManager.shared.mainContext) else {
@@ -173,11 +161,10 @@ class TopicController {
                     return
                 }
                 try? CoreDataManager.shared.saveContext()
-                self.QUESTIONS = questions
                 completion(.success(Void()))
 
             // bubble error to caller
-            case .failure(let error):
+            case let .failure(error):
                 completion(.failure(error))
             }
         }
@@ -187,10 +174,10 @@ class TopicController {
         getAllContexts { contextResult in
             switch contextResult {
             case .success:
-                self.getQuestions() { result in
+                self.getQuestions { result in
                     completion(result)
                 }
-            case.failure:
+            case .failure:
                 completion(contextResult)
             }
         }
@@ -209,11 +196,10 @@ class TopicController {
         }
 
         if auth {
-            //add bearer to request
+            // add bearer to request
             request.addAuthIfAvailable()
         }
 
         return request
     }
-
 }
