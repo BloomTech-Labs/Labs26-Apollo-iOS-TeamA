@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ContextObject" representedClassName=".ContextObject" syncable="YES">
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="title" attributeType="String"/>
@@ -23,6 +23,11 @@
                 <constraint value="id"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
+    </entity>
+    <entity name="NewNotificationsMessage" representedClassName="NewNotificationsMessage" syncable="YES" codeGenerationType="class">
+        <attribute name="message" attributeType="String"/>
+        <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="unread" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
     </entity>
     <entity name="Question" representedClassName=".Question" syncable="YES">
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -68,6 +73,7 @@
     <elements>
         <element name="ContextObject" positionX="0" positionY="99" width="128" height="73"/>
         <element name="Member" positionX="-54" positionY="18" width="128" height="163"/>
+        <element name="NewNotificationsMessage" positionX="-36" positionY="81" width="128" height="88"/>
         <element name="Question" positionX="-36" positionY="54" width="128" height="118"/>
         <element name="Response" positionX="-18" positionY="81" width="128" height="118"/>
         <element name="Topic" positionX="-63" positionY="-18" width="128" height="193"/>
