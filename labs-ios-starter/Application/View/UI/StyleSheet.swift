@@ -13,12 +13,11 @@ import UIKit
 // MARK: - CGFloat + constants -
 extension CGFloat {
     static let cornerRadius: CGFloat = 8
-
 }
 
 // MARK: - UIColor + getColor -
 extension UIColor {
-    ///these colors are in XCAssets
+    /// these colors are in XCAssets
     enum ThemeColorName: String {
         case action, accent, background, cell
     }
@@ -32,10 +31,8 @@ extension UIColor {
 }
 
 class DefaultViewController: UIViewController {
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.view.backgroundColor = .background
+        view.backgroundColor = .background
     }
-
 }

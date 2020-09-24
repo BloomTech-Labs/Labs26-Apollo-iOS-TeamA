@@ -15,7 +15,7 @@ extension URLRequest {
         guard let oktaCredentials = try? ProfileController.shared.oktaAuth.credentialsIfAvailable() else {
             return
         }
-        
-        self.addValue("Bearer \(oktaCredentials.idToken)", forHTTPHeaderField: NetworkService.HttpHeaderType.authorization.rawValue)
+
+        addValue("Bearer \(oktaCredentials.idToken)", forHTTPHeaderField: NetworkService.HttpHeaderType.authorization.rawValue)
     }
 }

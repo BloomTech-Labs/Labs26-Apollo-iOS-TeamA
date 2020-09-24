@@ -6,8 +6,8 @@
 //  Copyright © 2020 Kenny Dubroff. All rights reserved.
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 /// Standard URL Handler that can be used in Unit Tests with mock data
 typealias URLHandler = (Data?, HTTPURLResponse?, Error?) -> Void
@@ -27,26 +27,24 @@ protocol NetworkLoader {
 // TODO: Figure out how to get { "message": String } from BE when error occurs
 /// Provide default error and response handling for network tasks
 extension URLSession: NetworkLoader {
-
     func loadData(using request: URLRequest, with completion: @escaping URLCompletion) {
-        self.dataTask(with: request) { (data, response, error) in
-            //downcast response to HTTPURLResponse to work with the statusCode
+        dataTask(with: request) { data, response, error in
+            // downcast response to HTTPURLResponse to work with the statusCode
             if let httpResponse = response as? HTTPURLResponse {
                 let statusCode = httpResponse.statusCode
                 if statusCode != 200 {
-                    //unwrap the handled exception, or log an unhandled exception
+                    // unwrap the handled exception, or log an unhandled exception
                     guard let statusError = ErrorHandler.NetworkError(rawValue: statusCode) else {
                         // Edge case - unhandled exception (if this is logged, the ErrorHandler likely needs to be extended)
                         NSLog("unhandled exception \(statusCode) for error: \(HTTPURLResponse.localizedString(forStatusCode: statusCode))")
                         completion(.failure(.unknown))
                         return
                     }
-                    //log and complete with the error to be further handled by the caller
+                    // log and complete with the error to be further handled by the caller
                     NSLog("\(#file).\(#function) completed with error: \(statusError)\ndescription: \(HTTPURLResponse.localizedString(forStatusCode: statusCode))")
                     completion(.failure(statusError))
                     return
                 }
-
             }
 
             if let error = error {
@@ -69,7 +67,6 @@ extension URLSession: NetworkLoader {
 }
 
 class NetworkService {
-
     // MARK: - Pseudo Singleton -
     // (init not private to allow for Mock Data Testing) -
     /// Singleton for production use, use standard init in testing
@@ -77,7 +74,7 @@ class NetworkService {
 
     // MARK: - Types -
 
-    ///Used to set a`URLRequest`'s HTTP Method
+    /// Used to set a`URLRequest`'s HTTP Method
     enum HttpMethod: String {
         case get = "GET"
         case patch = "PATCH"
@@ -103,16 +100,16 @@ class NetworkService {
 
     // MARK: - Properties -
     var errorHandler = ErrorHandler.shared
-    ///used to switch between live and Mock Data
+    /// used to switch between live and Mock Data
     var dataLoader: NetworkLoader
 
-    //MARK: - Init -
-    ///defaults to URLSession implementation
+    // MARK: - Init -
+    /// defaults to URLSession implementation
     init(dataLoader: NetworkLoader = URLSession.shared) {
         self.dataLoader = dataLoader
     }
 
-    ///for json encoding/decoding (can be modified to meet specific criteria)
+    /// for json encoding/decoding (can be modified to meet specific criteria)
     var dateFormatter: DateFormatter {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .short
@@ -148,7 +145,7 @@ class NetworkService {
         moc: NSManagedObjectContext? = nil
     ) -> T? {
         let decoder = JSONDecoder()
-        //for optional dateFormatter
+        // for optional dateFormatter
         if let dateFormatter = dateFormatter {
             decoder.dateDecodingStrategy = .formatted(dateFormatter)
         }
@@ -166,7 +163,6 @@ class NetworkService {
     }
 
     func loadData(using request: URLRequest, with completion: @escaping URLCompletion) {
-        self.dataLoader.loadData(using: request, with: completion)
+        dataLoader.loadData(using: request, with: completion)
     }
-
 }

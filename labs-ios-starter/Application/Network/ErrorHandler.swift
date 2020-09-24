@@ -9,9 +9,8 @@
 import Foundation
 
 class ErrorHandler {
-
     // MARK: - Singleton -
-    ///singleton instance
+    /// singleton instance
     static var shared = ErrorHandler()
     private init() {}
 
@@ -22,6 +21,7 @@ class ErrorHandler {
         case success(Value)
         case failure(Error)
     }
+
     /// Used to provide alerts to the user
     struct UserError {
         let title: String
@@ -43,7 +43,7 @@ class ErrorHandler {
         case badDecode = 998
         case unknown = 999
     }
-    
+
     /// The required init from decoder used for managed objects can throw this error when the managed object context is missing or has broken
     enum DecoderConfigurationError: Error {
         case missingManagedObjectContext
@@ -54,7 +54,7 @@ class ErrorHandler {
             NetworkError.unauthorized.rawValue: UserError(title: "Unauthorized", message: "Please login again"),
             NetworkError.forbidden.rawValue: UserError(title: "Forbidden", message: "Access to that resource is restricted"),
             NetworkError.timeout.rawValue: UserError(title: "Timed out", message: "Please check your connection or try again later."),
-            NetworkError.notFound.rawValue: UserError(title: "Not Found", message: "Sorry, we're having trouble finding that resource")
+            NetworkError.notFound.rawValue: UserError(title: "Not Found", message: "Sorry, we're having trouble finding that resource"),
         ]
 
     }()
@@ -68,7 +68,7 @@ class ErrorHandler {
             NetworkError.headerFieldTooLarge.rawValue: "header too large",
             NetworkError.internalServerError.rawValue: "An internal server error occurred",
             NetworkError.badDecode.rawValue: "decoding error",
-            NetworkError.unknown.rawValue: "An unknown error occured"
+            NetworkError.unknown.rawValue: "An unknown error occured",
         ]
     }()
 
@@ -81,14 +81,13 @@ class ErrorHandler {
     }
 
     /// ViewControllers can pull UserErrors out by passing in the UserAuthError they receive from an AuthService method
-    static let userAuthErrors: [UserAuthError:UserError] = [
+    static let userAuthErrors: [UserAuthError: UserError] = [
         UserAuthError.invalidEmail: UserError(title: UserAuthError.invalidEmail.rawValue, message: "That E-Mail address was incorrectly formatted. Please try again."),
         UserAuthError.invalidPassword: UserError(title: UserAuthError.invalidPassword.rawValue, message: "That username and/or password was incorrect. Please try again."),
-        UserAuthError.noConnection: UserError(title: UserAuthError.noConnection.rawValue, message: "Please check your internet connection and try again")
+        UserAuthError.noConnection: UserError(title: UserAuthError.noConnection.rawValue, message: "Please check your internet connection and try again"),
     ]
 
     func getAuthError(authError: UserAuthError) -> UserError? {
-
         guard let error = ErrorHandler.userAuthErrors[authError] else {
             print("\(authError.rawValue) not defined in userAuthErrors")
             return nil
@@ -96,13 +95,11 @@ class ErrorHandler {
 
         return error
     }
-
 }
 
 import UIKit
 
 extension UIViewController {
-
     /// An Auth specific error occurred (This may remain unused and be deleted if there's no specific backend auth errors to handle that aren't handled by OktaAuth
     /// - Parameter error: The authentication error received
     func presentAuthError(error: ErrorHandler.UserAuthError) {
@@ -120,11 +117,11 @@ extension UIViewController {
     /// - Parameters:
     ///   - error: The network error that was received
     ///   - complete: Completes with the users choice to try again in the case of an unknown error
-    func presentNetworkError(error: Int, complete: @escaping(Bool?) -> Void) {
+    func presentNetworkError(error: Int, complete: @escaping (Bool?) -> Void) {
         guard let errorToDisplay = ErrorHandler.userNetworkErrors[error] else {
             if let error = ErrorHandler.internalNetworkErrors[error] {
                 print("\(#function): Internal Error: \(error)")
-                
+
                 DispatchQueue.main.async {
                     self.presentTryAgainError { result in
                         complete(result)
@@ -149,8 +146,7 @@ extension UIViewController {
                                     message: "An unknown error occured. Would you like to try again?",
                                     preferredStyle: .alert) { result in
 
-                                        complete(result)
+            complete(result)
         }
     }
-
 }

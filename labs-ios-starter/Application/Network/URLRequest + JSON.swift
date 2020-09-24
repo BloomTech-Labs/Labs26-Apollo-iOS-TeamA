@@ -15,13 +15,11 @@ extension URLRequest {
     ///
     /// - Note:  This is a mutating function
     mutating func addJSONData(_ data: Data) {
-
-        if self.httpBody != nil {
-            self.httpBody!.append(data)
+        if httpBody != nil {
+            httpBody!.append(data)
         } else {
-            self.httpBody = data
+            httpBody = data
         }
-
     }
 
     /**
@@ -37,20 +35,19 @@ extension URLRequest {
         dateFormatter: DateFormatter? = nil
     ) {
         let jsonEncoder = JSONEncoder()
-        //for optional dateFormatter
+        // for optional dateFormatter
         if let dateFormatter = dateFormatter {
             jsonEncoder.dateEncodingStrategy = .formatted(dateFormatter)
         }
         do {
             let data = try jsonEncoder.encode(encodable)
-            if self.httpBody != nil {
-                self.httpBody!.append(data)
+            if httpBody != nil {
+                httpBody!.append(data)
             } else {
-                self.httpBody = data
+                httpBody = data
             }
         } catch {
             print("Error encoding object into JSON \(error)")
         }
     }
-
 }

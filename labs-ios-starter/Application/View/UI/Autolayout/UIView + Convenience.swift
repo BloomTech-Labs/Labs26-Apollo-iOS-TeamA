@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 extension UIView {
-
     enum ViewSize: CGFloat {
         case small = 30
         case medium = 60
@@ -29,10 +28,10 @@ extension UIView {
                      size: ViewSize? = nil) {
         self.init()
         self.translatesAutoresizingMaskIntoConstraints = translatesAutoresizingMaskIntoConstraints
-        //appearance
+        // appearance
         self.backgroundColor = backgroundColor
-        self.layer.cornerRadius = cornerRadius
-        //size
+        layer.cornerRadius = cornerRadius
+        // size
         if let size = size {
             setDimensions(width: size.rawValue, height: size.rawValue)
         }
@@ -71,7 +70,6 @@ extension UIView {
                 anchorTrailing: CGFloat = 0,
                 width: CGFloat? = nil,
                 height: CGFloat? = nil) {
-
         if let top = top {
             topAnchor.constraint(equalTo: top, constant: paddingTop).isActive = true
         }
@@ -111,10 +109,8 @@ extension UIView {
     func center(in view: UIView,
                 paddingX: CGFloat = 0,
                 paddingY: CGFloat = 0) {
-
         centerX(in: view, paddingX: paddingX)
         centerY(in: view, paddingY: paddingY)
-
     }
 
     /// Center a view horizontally in the designated view

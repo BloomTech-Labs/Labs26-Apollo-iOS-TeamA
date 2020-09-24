@@ -131,10 +131,11 @@ class TopicController {
         networkService.loadData(using: request) { result in
             switch result {
             case .success(let data):
-                guard let contexts = self.networkService.decode(to: [ContextObject].self,
+                //fetch contexts and save to CoreData
+                guard self.networkService.decode(to: [ContextObject].self,
                                                                 data: data,
-                                                                moc: CoreDataManager.shared.mainContext) else {
-                    print("error decoding contexts from valid data")
+                                                                moc: CoreDataManager.shared.mainContext) != nil else {
+                    print("error decoding contexts from valid data. see surrounding lines for more information from NetworkService")
                     complete(.failure(.notFound))
                     return
                 }
@@ -143,8 +144,7 @@ class TopicController {
                 } catch let saveContextError {
                     print("Error saving context: \(saveContextError)")
                 }
-
-
+                
                 complete(.success(Void()))
             //bubble error to caller
             case .failure(let error):

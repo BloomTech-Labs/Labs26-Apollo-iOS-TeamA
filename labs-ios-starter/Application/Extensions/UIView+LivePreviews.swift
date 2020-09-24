@@ -3,22 +3,21 @@
 
 #if DEBUG
 
-import SwiftUI
+    import SwiftUI
 
-extension UIView {
-    var livePreview: some View { LivePreview(view: self) }
-    
-    struct LivePreview<V: UIView>: UIViewRepresentable {
-        let view: V
-        
-        func makeUIView(context: UIViewRepresentableContext<LivePreview<V>>) -> V {
-            return view
+    extension UIView {
+        var livePreview: some View { LivePreview(view: self) }
+
+        struct LivePreview<V: UIView>: UIViewRepresentable {
+            let view: V
+
+            func makeUIView(context: UIViewRepresentableContext<LivePreview<V>>) -> V {
+                return view
+            }
+
+            func updateUIView(_ uiView: V, context: Context) {}
         }
-        
-        func updateUIView(_ uiView: V, context: Context) { }
     }
-    
-}
 
 #endif
 
@@ -26,16 +25,16 @@ extension UIView {
 
 //// MARK: - Live Previews
 //
-//#if DEBUG
+// #if DEBUG
 //
-//import SwiftUI
+// import SwiftUI
 //
-//struct <#FileName#>Preview: PreviewProvider {
+// struct <#FileName#>Preview: PreviewProvider {
 //    static var previews: some View {
 //        let viewController = <#FileName#>()
 //
 //        return viewController.view.livePreview.edgesIgnoringSafeArea(.all)
 //    }
-//}
+// }
 //
-//#endif
+// #endif

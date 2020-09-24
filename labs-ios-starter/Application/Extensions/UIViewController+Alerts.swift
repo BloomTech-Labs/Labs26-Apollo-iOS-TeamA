@@ -9,7 +9,6 @@
 import UIKit
 
 extension UIViewController {
-
     /// Present an alert with a message, dismiss button, and custom dismiss text
     /// - Parameters:
     ///   - title: The alert's title
@@ -42,7 +41,6 @@ extension UIViewController {
                                      message: String,
                                      preferredStyle: UIAlertController.Style,
                                      complete: @escaping (Bool) -> Void) {
-
         let alert = UIAlertController(title: title,
                                       message: message,
                                       preferredStyle: preferredStyle)
