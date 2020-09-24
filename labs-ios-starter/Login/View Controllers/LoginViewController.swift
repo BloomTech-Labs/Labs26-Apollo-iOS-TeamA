@@ -30,13 +30,16 @@ class LoginViewController: DefaultViewController {
                                                object: nil,
                                                queue: .main,
                                                using: alertUserOfExpiredCredentials)
+
+        UIApplication.shared.open(ProfileController.shared.oktaAuth.identityAuthURL()!) { result in
+
+        }
+        
     }
     
     // MARK: - Actions
     @IBAction func signIn(_ sender: Any) {
-        UIApplication.shared.open(ProfileController.shared.oktaAuth.identityAuthURL()!) { result in
 
-        }
     }
     
     // MARK: - Private Methods -
@@ -61,12 +64,16 @@ class LoginViewController: DefaultViewController {
                 self.presentedViewController == nil else { return }
                 
             if exists {
-                self.performSegue(withIdentifier:
-                    .getSegueID(.showDetailProfileList), sender: nil)
+                self.handleLogin()
             } else {
-                self.performSegue(withIdentifier: .getSegueID(.modalAddProfile), sender: nil)
+                print("not logged in")
+                //self.performSegue(withIdentifier: .getSegueID(.modalAddProfile), sender: nil)
             }
         }
+    }
+
+    func handleLogin() {
+        
     }
     
     @objc func reportTextFieldText() {
