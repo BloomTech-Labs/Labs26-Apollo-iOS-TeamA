@@ -36,8 +36,9 @@
 		1D938DD9251AED4300D3013D /* NotificationsTabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D938DD8251AED4300D3013D /* NotificationsTabItem.swift */; };
 		1D938DDD251AF69700D3013D /* NotificationsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D938DDC251AF69700D3013D /* NotificationsCollectionViewCell.swift */; };
 		1D938DE1251AFB5A00D3013D /* NewNotificationsMessage+init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D938DE0251AFB5A00D3013D /* NewNotificationsMessage+init.swift */; };
+		1DA1163C251CF89F00FA94B1 /* TopicCVSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA1163B251CF89E00FA94B1 /* TopicCVSections.swift */; };
 		1DB156B22516B8C60084ECA0 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		1DB3E114251A526D00A2F88F /* TopicCVSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DB3E113251A526D00A2F88F /* TopicCVSections.swift */; };
+		1DB3E114251A526D00A2F88F /* (null) in Sources */ = {isa = PBXBuildFile; };
 		463AD24324CF275900447BB8 /* ProfileDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463AD24224CF275900447BB8 /* ProfileDetailViewController.swift */; };
 		466C4274249A8748007D033E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466C4273249A8748007D033E /* AppDelegate.swift */; };
 		466C4276249A8748007D033E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466C4275249A8748007D033E /* SceneDelegate.swift */; };
@@ -125,6 +126,7 @@
 		1D938DD8251AED4300D3013D /* NotificationsTabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsTabItem.swift; sourceTree = "<group>"; };
 		1D938DDC251AF69700D3013D /* NotificationsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsCollectionViewCell.swift; sourceTree = "<group>"; };
 		1D938DE0251AFB5A00D3013D /* NewNotificationsMessage+init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewNotificationsMessage+init.swift"; sourceTree = "<group>"; };
+		1DA1163B251CF89E00FA94B1 /* TopicCVSections.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCVSections.swift; sourceTree = "<group>"; };
 		463AD24224CF275900447BB8 /* ProfileDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailViewController.swift; sourceTree = "<group>"; };
 		466C4270249A8748007D033E /* labs-ios-starter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "labs-ios-starter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		466C4273249A8748007D033E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -345,7 +347,7 @@
 		1DB3E112251A51E300A2F88F /* View Models */ = {
 			isa = PBXGroup;
 			children = (
-				1DB3E113251A526D00A2F88F /* TopicCVSections.swift */,
+				1DA1163B251CF89E00FA94B1 /* TopicCVSections.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -743,7 +745,7 @@
 				1D0545292515C3BC006E8665 /* Topic+CoreDataProperties.swift in Sources */,
 				1D0545252515C3BC006E8665 /* Question+CoreDataProperties.swift in Sources */,
 				B940421A2501D1CE0048BCED /* UIViewController+Alerts.swift in Sources */,
-				1DB3E114251A526D00A2F88F /* TopicCVSections.swift in Sources */,
+				1DB3E114251A526D00A2F88F /* (null) in Sources */,
 				B9091EEF25183F2E009BA6A7 /* TopicCollectionViewCell.swift in Sources */,
 				46BEB4E924C98DAF00FE0CD1 /* MemberListViewController.swift in Sources */,
 				B94042112501D0740048BCED /* ErrorHandler.swift in Sources */,
@@ -758,6 +760,7 @@
 				1D0545272515C3BC006E8665 /* Member+CoreDataProperties.swift in Sources */,
 				463AD24324CF275900447BB8 /* ProfileDetailViewController.swift in Sources */,
 				1D4D9C17250930AB00348246 /* labs-ios-starter.xcdatamodeld in Sources */,
+				1DA1163C251CF89F00FA94B1 /* TopicCVSections.swift in Sources */,
 				B91BF7E3250BC4C200D68EA6 /* (null) in Sources */,
 				B91BF7EF250C47F600D68EA6 /* Profile.swift in Sources */,
 				B9163737250850B400B49A75 /* UserImage.swift in Sources */,
