@@ -20,6 +20,7 @@ class TopicQuestionsViewController: UIViewController {
     let topicController = TopicController()
     let questionsCellReuseId = String.getCollectionViewCellID(.questionsCollectionViewCell)
     let addNewQuestionCellReuseId = String.getCollectionViewCellID(.addNewQuestionCell)
+    private var fetchController = FetchController()
 
     var questions: [Question] = [] {
         didSet {
@@ -58,14 +59,24 @@ class TopicQuestionsViewController: UIViewController {
 
             switch result {
             case .success:
-                for (index, topic) in self.topicController.contexts.enumerated() {
+                // get contexts from CoreData
+                guard let contexts = self.fetchController.fetchContextRequest() else {
+                    print("couldn't fetch contexts")
+                    return
+                }
+                // set segmentControl titles
+                for (index, context) in contexts.enumerated() {
                     DispatchQueue.main.async {
-                        self.contextSegmentControl.setTitle(topic.title, forSegmentAt: index)
+                        self.contextSegmentControl.setTitle(context.title, forSegmentAt: index)
                     }
                 }
-
-                self.questions = self.topicController.questions
-
+                // get questions from CoreData
+                guard let questions = self.fetchController.fetchQuestionRequest() else {
+                    print("Couldn't fetch questions")
+                    return
+                }
+                // reload questions tableViewController (can use FRC here)
+                self.questions = questions
             case .failure(let error):
                 print("failure getting questions")
 
@@ -91,8 +102,12 @@ class TopicQuestionsViewController: UIViewController {
         }
 
         let selected = contextSegmentControl.selectedSegmentIndex + 1
-        
-        topicController.postTopic(with: topicName, contextId: selected, questions: topicController.questions) { result in
+        guard let questions = fetchController.fetchQuestionRequest() else {
+            print("couldn't fetch questions from CoreData")
+            return
+        }
+
+        topicController.postTopic(with: topicName, contextId: selected, questions: questions) { result in
             switch result {
             case let .success(joinCode):
                 DispatchQueue.main.async {

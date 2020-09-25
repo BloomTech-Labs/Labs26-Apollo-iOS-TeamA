@@ -9,7 +9,6 @@ extension Member {
         return NSFetchRequest<Member>(entityName: "Member")
     }
 
-    
 //    @NSManaged public var id: Int64
     public var id: String? {
         get {
