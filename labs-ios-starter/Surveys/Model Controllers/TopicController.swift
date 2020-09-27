@@ -178,6 +178,36 @@ class TopicController {
     }
 
     // MARK: - Update -
+    /// Assign an array of questions to a Topic (creates relationship in CoreData and on Server)
+    func addQuestions(_ questions: [Question], to topic: Topic, completion: @escaping CompleteWithNetworkError) {
+        var questionSet = NSSet()
+        questionSet = questionSet.adding(questions) as NSSet
+        if topic.questions != nil {
+            topic.questions = topic.questions!.addingObjects(from: questionSet as! Set<Question>) as NSSet
+        } else {
+            topic.questions = questionSet
+        }
+        try? CoreDataManager.shared.saveContext()
+
+        guard var request = createRequest(pathFromBaseURL: "question", method: .post) else {
+            print("Couldn't create request")
+            completion(.failure(.badRequest))
+            return
+        }
+        request.encode(from: topic)
+
+        networkService.loadData(using: request) { result in
+            switch result {
+            case .success(let data):
+                print(data)
+                completion(.success(Void()))
+            case .failure(let error):
+                completion(.failure(error))
+                print(error)
+            }
+        }
+
+    }
 
     func updateTopic(topic: Topic, completion: @escaping CompleteWithNetworkError) {
         // send topic to server. save in CoreData
