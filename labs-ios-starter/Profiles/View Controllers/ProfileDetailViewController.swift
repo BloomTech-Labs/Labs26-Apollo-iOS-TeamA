@@ -101,6 +101,7 @@ class ProfileDetailViewController: UIViewController {
         firstNameLabel.text = profile.firstName
         lastNameLabel.text = profile.lastName
         emailLabel.text = profile.email
+        roundedImageView()
         //assign image
         if let avatarImageURL = profile.avatarURL {
             self.avatarImageView.downloaded(from: avatarImageURL)
@@ -114,5 +115,12 @@ class ProfileDetailViewController: UIViewController {
         lastNameTextField.text = profile.lastName
         emailTextField.text = profile.email
         avatarURLTextField.text = profile.avatarURL?.absoluteString
+    }
+    /// Makes the imageView circular with a border. Image rect must be a square
+    private func roundedImageView() {
+        self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.width / 2
+        avatarImageView.layer.masksToBounds = true
+        avatarImageView.layer.borderWidth = 2
+        avatarImageView.layer.borderColor = UIColor.action.cgColor
     }
 }
