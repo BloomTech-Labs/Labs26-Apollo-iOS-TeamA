@@ -6,7 +6,27 @@
 //  Copyright © 2020 Lambda, Inc. All rights reserved.
 //
 import Foundation
-// MARK: - FOO -
+
+// MARK: - Codable Types -
+/// Used to get topic ID after sending to backend
+struct TopicID: Codable {
+    let topic: DecodeTopic
+}
+/// Member of TopicID
+struct DecodeTopic: Codable {
+    let id: Int
+}
+
+/// Used to encode topic and question id in order to establish their relationship in the backend
+struct TopicQuestion: Codable {
+    enum CodingKeys: String, CodingKey {
+        case topicId = "topicid"
+        case questionId = "questionid"
+    }
+    var topicId: Int
+    var questionId: Int
+}
+
 /// Controller for Topic, ContextObject, and Question model
 class TopicController {
     let networkService = NetworkService.shared
@@ -42,14 +62,6 @@ class TopicController {
             NSLog("Error saving Topic: \(name) to CoreData: \(saveError)")
         }
         request.encode(from: topic)
-
-        struct TopicID: Codable {
-            let topic: DecodeTopic
-        }
-
-        struct DecodeTopic: Codable {
-            let id: Int
-        }
 
         networkService.loadData(using: request) { result in
             switch result {
@@ -205,15 +217,6 @@ class TopicController {
     // MARK: - Update -
     /// Assign an array of questions to a Topic (creates relationship in CoreData and on Server)
     func addQuestions(_ questions: [Question], to topic: Topic, completion: @escaping CompleteWithNetworkError) {
-        //TODO: Move this struct
-        struct TopicQuestion: Codable {
-            enum CodingKeys: String, CodingKey {
-                case topicId = "topicid"
-                case questionId = "questionid"
-            }
-            var topicId: Int
-            var questionId: Int
-        }
 
         for question in questions {
             let topicQuestion = TopicQuestion(topicId: Int(topic.id ?? 0), questionId: Int(question.id))
