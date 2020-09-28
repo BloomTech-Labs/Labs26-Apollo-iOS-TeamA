@@ -5,7 +5,6 @@ import UIKit
 
 class TopicViewController: UIViewController {
     // MARK: - Outlets & Properties
-
     @IBOutlet var topicsCollectionView: UICollectionView!
 
     private let refreshControl = UIRefreshControl()
@@ -26,13 +25,13 @@ class TopicViewController: UIViewController {
     }
 
     // MARK: - Lifecycle
-
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchTopics()
         configureRefreshControl()
     }
 
+    // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == .getSegueID(.topicDetailSegue) {
             guard let topicDetailViewController = segue.destination as? TopicDetailViewController else {
@@ -58,20 +57,7 @@ class TopicViewController: UIViewController {
         }
     }
 
-    private func configureRefreshControl() {
-        refreshControl.addTarget(self, action: #selector(refreshControlHandler), for: .valueChanged)
-        topicsCollectionView.alwaysBounceVertical = true
-        topicsCollectionView.refreshControl = refreshControl
-    }
-
-    @objc private func refreshControlHandler() {
-        if !topicsCollectionView.isDragging { fetchTopics() }
-    }
-
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if refreshControl.isRefreshing { fetchTopics() }
-    }
-
+    // MARK: - Methods
     private func fetchTopics() {
         refreshControl.beginRefreshing()
 
@@ -93,8 +79,27 @@ class TopicViewController: UIViewController {
             }
         }
     }
+
+    // MARK: - Pull to Refresh
+    /// Configures the collectionView's refreshControl
+    private func configureRefreshControl() {
+        refreshControl.addTarget(self, action: #selector(refreshControlHandler), for: .valueChanged)
+        topicsCollectionView.alwaysBounceVertical = true
+        topicsCollectionView.refreshControl = refreshControl
+    }
+
+    // Handler for the refresh control. Called when refreshControl value changes
+    @objc private func refreshControlHandler() {
+        if !topicsCollectionView.isDragging { fetchTopics() } // don't call in the middle of a drag
+    }
+
+    // Used to wait until dragging has ended to send the fetch request
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if refreshControl.isRefreshing { fetchTopics() } // must be refreshing to call
+    }
 }
 
+// MARK: - CollectionView DataSource & Delegate
 extension TopicViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return TopicCVSections.allCases.count
