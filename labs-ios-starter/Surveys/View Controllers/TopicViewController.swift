@@ -8,6 +8,7 @@ class TopicViewController: UIViewController {
 
     @IBOutlet var topicsCollectionView: UICollectionView!
 
+    private let refreshControl = UIRefreshControl()
     let cellReuseIdentifier = String.getCollectionViewCellID(.topicsCollectionViewCell)
     let headerReuseIdentifier = String.getCollectionViewHeaderId(.topicSectionHeader)
     let topicController = TopicController()
@@ -29,6 +30,7 @@ class TopicViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchTopics()
+        configureRefreshControl()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -55,8 +57,24 @@ class TopicViewController: UIViewController {
             topicDetailViewController.topic = topic
         }
     }
+    
+    private func configureRefreshControl() {
+        refreshControl.addTarget(self, action: #selector(refreshControlHandler), for: .valueChanged)
+        topicsCollectionView.alwaysBounceVertical = true
+        topicsCollectionView.refreshControl = refreshControl
+    }
+    
+    @objc private func refreshControlHandler() {
+        if !topicsCollectionView.isDragging { fetchTopics() }
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if refreshControl.isRefreshing { fetchTopics() }
+    }
 
     private func fetchTopics() {
+        refreshControl.beginRefreshing()
+
         topicController.fetchTopic { result in
             switch result {
             case .success(let topics):
@@ -76,13 +94,6 @@ class TopicViewController: UIViewController {
         }
     }
 
-    // MARK: - Navigation -
-
-
-
-    // MARK: - Handlers
-
-    // MARK: - Reusable
 }
 
 extension TopicViewController: UICollectionViewDataSource, UICollectionViewDelegate {
