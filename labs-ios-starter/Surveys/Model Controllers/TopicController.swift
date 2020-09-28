@@ -149,8 +149,8 @@ class TopicController {
             // decode questions
             case let .success(data):
                 guard let _ = self.networkService.decode(to: [Question].self,
-                                                                 data: data,
-                                                                 moc: CoreDataManager.shared.mainContext) else {
+                                                         data: data,
+                                                         moc: CoreDataManager.shared.mainContext) else {
                     completion(.failure(.badDecode))
                     return
                 }
@@ -184,26 +184,26 @@ class TopicController {
     }
 
     // MARK: - Delete
-        /// Deletes a topic from the server
-        /// - Warning: This method should `ONLY` be called by the leader of a topic for their own survey
-        func deleteTopic(topic: Topic, completion: @escaping CompleteWithNetworkError) {
-            guard
-                let id = topic.id,
-                let deleteRequest = createRequest(pathFromBaseURL: "topic/\(id)", method: .delete)
-            else {
-                completion(.failure(.badRequest))
-                return
-            }
+    /// Deletes a topic from the server
+    /// - Warning: This method should `ONLY` be called by the leader of a topic for their own survey
+    func deleteTopic(topic: Topic, completion: @escaping CompleteWithNetworkError) {
+        guard
+            let id = topic.id,
+            let deleteRequest = createRequest(pathFromBaseURL: "topic/\(id)", method: .delete)
+        else {
+            completion(.failure(.badRequest))
+            return
+        }
 
-            networkService.loadData(using: deleteRequest) { result in
-                switch result {
-                case .success:
-                    completion(.success(Void()))
-                case let .failure(error):
-                    completion(.failure(error))
-                }
+        networkService.loadData(using: deleteRequest) { result in
+            switch result {
+            case .success:
+                completion(.success(Void()))
+            case let .failure(error):
+                completion(.failure(error))
             }
         }
+    }
 
     // MARK: - Helper Methods -
     private func createRequest(auth: Bool = true,
