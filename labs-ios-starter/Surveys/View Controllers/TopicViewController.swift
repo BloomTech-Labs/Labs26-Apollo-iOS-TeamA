@@ -43,12 +43,12 @@ class TopicViewController: UIViewController {
                 print("couldn't get selected index")
                 return
             }
-            guard let topic = self.topics?[selectedIndex.item] else {
+            guard let topic = topics?[selectedIndex.item] else {
                 print("no topic")
                 return
             }
 
-            //TESTING, REMOVE
+            // TESTING, REMOVE
             let member = Member(id: "1", email: "1@1.com", firstName: "firstOne", lastName: "lastOne", avatarURL: URL(string: "http://www.url.com"))
             var members = NSSet()
             members = members.adding(member) as NSSet
@@ -57,17 +57,17 @@ class TopicViewController: UIViewController {
             topicDetailViewController.topic = topic
         }
     }
-    
+
     private func configureRefreshControl() {
         refreshControl.addTarget(self, action: #selector(refreshControlHandler), for: .valueChanged)
         topicsCollectionView.alwaysBounceVertical = true
         topicsCollectionView.refreshControl = refreshControl
     }
-    
+
     @objc private func refreshControlHandler() {
         if !topicsCollectionView.isDragging { fetchTopics() }
     }
-    
+
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if refreshControl.isRefreshing { fetchTopics() }
     }
@@ -77,11 +77,11 @@ class TopicViewController: UIViewController {
 
         topicController.fetchTopic { result in
             switch result {
-            case .success(let topics):
+            case let .success(topics):
                 DispatchQueue.main.async {
                     self.topics = topics
                 }
-            case .failure(let error):
+            case let .failure(error):
                 self.presentNetworkError(error: error.rawValue) { tryAgain in
                     if let tryAgain = tryAgain {
                         if tryAgain {
@@ -93,7 +93,6 @@ class TopicViewController: UIViewController {
             }
         }
     }
-
 }
 
 extension TopicViewController: UICollectionViewDataSource, UICollectionViewDelegate {
