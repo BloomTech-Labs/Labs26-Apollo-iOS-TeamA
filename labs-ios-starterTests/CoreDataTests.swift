@@ -15,10 +15,10 @@ class CoreDataTests: XCTestCase {
 
     func testCanSaveAndFetchTopic() {
         let member = Member(id: "Test1", email: "test1@test.com", firstName: "Test", lastName: "Member", avatarURL: URL(string: "http://devgauge.com"))
-        let members = NSSet().adding(member) as NSSet
         //members = members.adding(member) as NSSet
         
-        Topic(id: 1, joinCode: "join1", leaderId: member.id!, members: members, topicName: "TestTopic", contextId: 2)
+        let topic = Topic(id: 1, joinCode: "join1", leaderId: member.id!, topicName: "TestTopic", contextId: 2)
+        topic.addToMembers(member)
 
         do {
             try CoreDataManager.shared.saveContext()

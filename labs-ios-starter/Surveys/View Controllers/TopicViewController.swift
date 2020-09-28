@@ -56,11 +56,10 @@ class TopicViewController: LoginViewController {
 
             //TESTING, REMOVE
             let member = Member(id: "1", email: "1@1.com", firstName: "firstOne", lastName: "lastOne", avatarURL: URL(string: "http://www.url.com"))
-            var members = NSSet()
-            members = members.adding(member) as NSSet
-            topic.members = members
+            topic.addToMembers(member)
+            topicDetailViewController.id = topic.id
+            try? CoreDataManager.shared.saveContext()
 
-            topicDetailViewController.topic = topic
         }
     }
 

@@ -24,10 +24,10 @@ class TopicDetailViewController: UIViewController {
     let reuseIdentifier = String.getCollectionViewCellID(.crudCollectionViewCell)
 
     // MARK: - View Lifecycle -
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        guard let id = id else {return}
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        guard let id = self.id else {return}
         self.topic = fetchController.fetchTopic(with: id)
     }
 
