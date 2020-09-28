@@ -66,16 +66,14 @@ class TopicController {
         networkService.loadData(using: request) { result in
             switch result {
             case let .success(data):
-
-                guard let topicID = self.networkService.decode(to: TopicID.self, data: data)?.topic.id else {
-                    print("Couldn't get ID from newly created topic")
+                //get id from data and save to CoreData
+                guard let id = self.getTopicID(from: data) else {
                     complete(.failure(.badDecode))
                     return
                 }
-
-                topic.id = Int64(topicID)
+                topic.id = id
                 try? CoreDataManager.shared.saveContext(CoreDataManager.shared.backgroundContext, async: true)
-
+                //link questions to topic and send to server
                 self.addQuestions(questions, to: topic) { (result) in
                     switch result {
                     case .success:
@@ -243,11 +241,6 @@ class TopicController {
             }
         }
         try? CoreDataManager.shared.saveContext()
-//        if topic.questions != nil {
-//            topic.questions = topic.questions!.addingObjects(from: questionSet as! Set<AnyHashable>) as NSSet
-//        } else {
-//            topic.questions = questionSet
-//        }
 
     }
 
@@ -294,5 +287,13 @@ class TopicController {
         }
 
         return request
+    }
+
+    private func getTopicID(from data: Data) -> Int64? {
+        guard let topicID = self.networkService.decode(to: TopicID.self, data: data)?.topic.id else {
+            print("Couldn't get ID from newly created topic")
+            return nil
+        }
+        return Int64(topicID)
     }
 }
