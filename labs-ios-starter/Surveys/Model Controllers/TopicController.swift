@@ -35,7 +35,6 @@ class TopicController {
                           leaderId: token,
                           topicName: name,
                           contextId: Int64(contextId))
-        // let questionsToSend = questions.map { $0.id }
         do {
             try CoreDataManager.shared.saveContext(CoreDataManager.shared.backgroundContext, async: true)
         } catch let saveError {
@@ -44,10 +43,36 @@ class TopicController {
         }
         request.encode(from: topic)
 
+        struct TopicID: Codable {
+            let topic: DecodeTopic
+        }
+
+        struct DecodeTopic: Codable {
+            let id: Int
+        }
+
         networkService.loadData(using: request) { result in
             switch result {
-            case .success:
-                complete(.success(joinCode))
+            case let .success(data):
+
+                guard let topicID = self.networkService.decode(to: TopicID.self, data: data)?.topic.id else {
+                    print("Couldn't get ID from newly created topic")
+                    complete(.failure(.badDecode))
+                    return
+                }
+
+                topic.id = Int64(topicID)
+                try? CoreDataManager.shared.saveContext(CoreDataManager.shared.backgroundContext, async: true)
+
+                self.addQuestions(questions, to: topic) { (result) in
+                    switch result {
+                    case .success:
+                        complete(.success(joinCode))
+                    case .failure(let error):
+                        complete(.failure(error))
+                    }
+                }
+
             case let .failure(error):
                 NSLog("Error POSTing topic with statusCode: \(error.rawValue)")
                 complete(.failure(error))
@@ -180,32 +205,46 @@ class TopicController {
     // MARK: - Update -
     /// Assign an array of questions to a Topic (creates relationship in CoreData and on Server)
     func addQuestions(_ questions: [Question], to topic: Topic, completion: @escaping CompleteWithNetworkError) {
-        var questionSet = NSSet()
-        questionSet = questionSet.adding(questions) as NSSet
-        if topic.questions != nil {
-            topic.questions = topic.questions!.addingObjects(from: questionSet as! Set<Question>) as NSSet
-        } else {
-            topic.questions = questionSet
+        //TODO: Move this struct
+        struct TopicQuestion: Codable {
+            enum CodingKeys: String, CodingKey {
+                case topicId = "topicid"
+                case questionId = "questionid"
+            }
+            var topicId: Int
+            var questionId: Int
         }
-        try? CoreDataManager.shared.saveContext()
 
-        guard var request = createRequest(pathFromBaseURL: "question", method: .post) else {
-            print("Couldn't create request")
-            completion(.failure(.badRequest))
-            return
-        }
-        request.encode(from: topic)
+        for question in questions {
+            let topicQuestion = TopicQuestion(topicId: Int(topic.id ?? 0), questionId: Int(question.id))
 
-        networkService.loadData(using: request) { result in
-            switch result {
-            case .success(let data):
-                print(data)
-                completion(.success(Void()))
-            case .failure(let error):
-                completion(.failure(error))
-                print(error)
+            topic.questions = topic.questions!.adding(question) as NSSet
+
+            guard var request = createRequest(pathFromBaseURL: "topicquestion", method: .post) else {
+                print("Couldn't create request")
+                completion(.failure(.badRequest))
+                return
+            }
+
+            request.encode(from: topicQuestion)
+
+            networkService.loadData(using: request) { result in
+                switch result {
+                case .success(let data):
+                    print(data)
+                    completion(.success(Void()))
+                case .failure(let error):
+                    completion(.failure(error))
+                    print(error)
+                }
             }
         }
+        try? CoreDataManager.shared.saveContext()
+//        if topic.questions != nil {
+//            topic.questions = topic.questions!.addingObjects(from: questionSet as! Set<AnyHashable>) as NSSet
+//        } else {
+//            topic.questions = questionSet
+//        }
 
     }
 
