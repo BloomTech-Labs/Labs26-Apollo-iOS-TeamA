@@ -3,11 +3,12 @@
 
 import UIKit
 
-class TopicViewController: UIViewController {
+class TopicViewController: LoginViewController {
     // MARK: - Outlets & Properties
 
     @IBOutlet var topicsCollectionView: UICollectionView!
 
+    let spinner = UIActivityIndicatorView(style: .large)
     let cellReuseIdentifier = String.getCollectionViewCellID(.topicsCollectionViewCell)
     let headerReuseIdentifier = String.getCollectionViewHeaderId(.topicSectionHeader)
     let topicController = TopicController()
@@ -25,9 +26,16 @@ class TopicViewController: UIViewController {
     }
 
     // MARK: - Lifecycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        spinner.startAnimating()
+        view.addSubview(spinner)
+        spinner.center = view.center
+    }
+    /// from LoginViewController.swift
+    // TODO: Spinner
+    override func handleLogin() {
         fetchTopics()
     }
 
@@ -57,18 +65,23 @@ class TopicViewController: UIViewController {
     }
 
     private func fetchTopics() {
+        if !self.spinner.isAnimating {
+            self.spinner.startAnimating()
+        }
+
         topicController.fetchTopic { result in
             switch result {
             case .success(let topics):
                 DispatchQueue.main.async {
                     self.topics = topics
+                    self.spinner.stopAnimating()
                 }
             case .failure(let error):
+                self.spinner.stopAnimating()
                 self.presentNetworkError(error: error.rawValue) { tryAgain in
                     if let tryAgain = tryAgain {
                         if tryAgain {
-                            // TODO:
-//                            topicController.fetchTopic()
+                            self.fetchTopics()
                         }
                     }
                 }
