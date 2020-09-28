@@ -14,7 +14,7 @@
         <scene sceneID="vJW-fU-OnN">
             <objects>
                 <navigationController storyboardIdentifier="ProfileNavigationController" id="Qtu-zv-a3B" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Me" image="person" catalog="system" id="g9L-uN-kCt"/>
+                    <tabBarItem key="tabBarItem" title="Me" image="person.circle.fill" catalog="system" id="g9L-uN-kCt"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="E4J-bA-0ha">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -163,7 +163,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="person" catalog="system" width="128" height="117"/>
+        <image name="person.circle.fill" catalog="system" width="128" height="121"/>
         <namedColor name="accent">
             <color red="0.5899999737739563" green="0.38999998569488525" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
