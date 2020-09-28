@@ -14,14 +14,25 @@ class TopicDetailViewController: UIViewController {
     }
 
     // MARK: - Properties -
-
-    var topic: Topic?
+    var id: Int64?
+    let fetchController = FetchController()
+    var topic: Topic? {
+        didSet {
+            updateViews()
+        }
+    }
     let reuseIdentifier = String.getCollectionViewCellID(.crudCollectionViewCell)
 
     // MARK: - View Lifecycle -
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        guard let id = id else {return}
+        self.topic = fetchController.fetchTopic(with: id)
+    }
+
+    private func updateViews() {
+        CRUDCollectionView.reloadData()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -41,7 +52,7 @@ class TopicDetailViewController: UIViewController {
 
 extension TopicDetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return topic?.questions?.count ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
