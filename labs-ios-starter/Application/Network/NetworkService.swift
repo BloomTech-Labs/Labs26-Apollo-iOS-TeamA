@@ -16,7 +16,7 @@ typealias URLCompletion = ((Result<Data, ErrorHandler.NetworkError>) -> Void)
 /// Completion Handler with String .success and NetworkError .failure
 typealias CompleteWithString = (Result<String, ErrorHandler.NetworkError>) -> Void
 /// Completion Handler with [Topic] .success and NetworkError .failure
-typealias CompleteWithTopics = (Result<[Topic]?, ErrorHandler.NetworkError>) -> Void
+typealias CompleteWithTopics = (Result<[Topic], ErrorHandler.NetworkError>) -> Void
 /// Completion Handler with Void .success and NetworkError .failure
 typealias CompleteWithNetworkError = (Result<Void, ErrorHandler.NetworkError>) -> Void
 

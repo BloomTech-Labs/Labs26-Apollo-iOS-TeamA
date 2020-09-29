@@ -59,7 +59,7 @@ class TopicController {
     /// Fetch all topics from server and save them to CoreData.
     /// - Parameters:
     ///   - completion: Completes with `[Topic]`. Topics are also stored in the controller...
-    func fetchTopicsFromServer(completion: @escaping CompleteWithTopics) {
+    func fetchTopicsFromServer(completion: @escaping CompleteWithNetworkError) {
         guard let request = createRequest(pathFromBaseURL: "topic") else {
             print("🛑! User isn't logged in!")
             completion(.failure(.unauthorized))
@@ -79,7 +79,7 @@ class TopicController {
 
                 try? CoreDataManager.shared.saveContext()
 
-                completion(.success(nil))
+                completion(.success(Void()))
 
             case let .failure(error):
                 completion(.failure(error)) // bubble error to caller
