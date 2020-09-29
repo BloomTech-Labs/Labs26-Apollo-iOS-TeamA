@@ -16,6 +16,7 @@ public final class Topic: NSManagedObject, Codable {
         case contextId = "contextid"
         case responsesToSend = "responses"
         case questionsToSend = "questions"
+        case timeStamp = "updated_at"
     }
 
     // MARK: - Initializer
@@ -36,6 +37,8 @@ public final class Topic: NSManagedObject, Codable {
         self.topicName = topicName
         self.contextId = contextId
         self.topicName = topicName
+
+        section = leaderId == ProfileController.shared.authenticatedUserProfile?.id ? "Leader" : "Member"
     }
 
     /// Used to create managed objects by way of decoding
@@ -58,6 +61,9 @@ public final class Topic: NSManagedObject, Codable {
         leaderId = try container.decode(String.self, forKey: .leaderId)
         topicName = try container.decode(String.self, forKey: .topicName)
         contextId = try container.decode(Int64.self, forKey: .contextId)
+        timeStamp = try container.decode(String.self, forKey: .timeStamp)
+
+        section = leaderId == ProfileController.shared.authenticatedUserProfile?.id ? "Leader" : "Member"
     }
 
     /// Used for encoding
