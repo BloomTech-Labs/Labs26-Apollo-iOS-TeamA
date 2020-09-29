@@ -71,6 +71,7 @@ class TopicViewController: LoginViewController {
             switch result {
             case .success:
                 DispatchQueue.main.async { [self] in
+                    self.refreshControl.endRefreshing()
                     self.spinner.stopAnimating()
 
                     do {
@@ -81,7 +82,7 @@ class TopicViewController: LoginViewController {
 
                     self.topicsCollectionView.reloadData()
                 }
-            case .failure(let error):
+            case let .failure(error):
                 self.spinner.stopAnimating()
                 self.presentNetworkError(error: error.rawValue) { tryAgain in
                     if let tryAgain = tryAgain {
@@ -101,23 +102,26 @@ class TopicViewController: LoginViewController {
         topicsCollectionView.alwaysBounceVertical = true
         topicsCollectionView.refreshControl = refreshControl
     }
-    
+
     // Handler for the refresh control. Called when refreshControl value changes
     @objc private func refreshControlHandler() {
         if !topicsCollectionView.isDragging { fetchTopics() } // don't call in the middle of a drag
     }
-    
+
     // Used to wait until dragging has ended to send the fetch request
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if refreshControl.isRefreshing { fetchTopics() } // must be refreshing to call
     }
-    
 }
 
 // MARK: - CollectionView DataSource & Delegate
 extension TopicViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return fetchController.sections?.count ?? 0
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return fetchController.sections?[section].numberOfObjects ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
