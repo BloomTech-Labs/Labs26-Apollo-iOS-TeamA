@@ -5,9 +5,9 @@ import UIKit
 
 class TopicViewController: LoginViewController {
     // MARK: - Outlets & Properties
-
     @IBOutlet var topicsCollectionView: UICollectionView!
 
+    private let refreshControl = UIRefreshControl()
     let spinner = UIActivityIndicatorView(style: .large)
     let cellReuseIdentifier = String.getCollectionViewCellID(.topicsCollectionViewCell)
     let headerReuseIdentifier = String.getCollectionViewHeaderId(.topicSectionHeader)
@@ -37,8 +37,10 @@ class TopicViewController: LoginViewController {
     // TODO: Spinner
     override func handleLogin() {
         fetchTopics()
+        configureRefreshControl()
     }
 
+    // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == .getSegueID(.topicDetailSegue) {
             guard let topicDetailViewController = segue.destination as? TopicDetailViewController else {
@@ -49,12 +51,12 @@ class TopicViewController: LoginViewController {
                 print("couldn't get selected index")
                 return
             }
-            guard let topic = self.topics?[selectedIndex.item] else {
+            guard let topic = topics?[selectedIndex.item] else {
                 print("no topic")
                 return
             }
 
-            //TESTING, REMOVE
+            // TESTING, REMOVE
             let member = Member(id: "1", email: "1@1.com", firstName: "firstOne", lastName: "lastOne", avatarURL: URL(string: "http://www.url.com"))
             var members = NSSet()
             members = members.adding(member) as NSSet
@@ -64,14 +66,16 @@ class TopicViewController: LoginViewController {
         }
     }
 
+    // MARK: - Methods
     private func fetchTopics() {
+        refreshControl.beginRefreshing()
         if !self.spinner.isAnimating {
             self.spinner.startAnimating()
         }
 
         topicController.fetchTopic { result in
             switch result {
-            case .success(let topics):
+            case let .success(topics):
                 DispatchQueue.main.async {
                     self.topics = topics
                     self.spinner.stopAnimating()
@@ -89,15 +93,26 @@ class TopicViewController: LoginViewController {
         }
     }
 
-    // MARK: - Navigation -
+    // MARK: - Pull to Refresh
+    /// Configures the collectionView's refreshControl
+    private func configureRefreshControl() {
+        refreshControl.addTarget(self, action: #selector(refreshControlHandler), for: .valueChanged)
+        topicsCollectionView.alwaysBounceVertical = true
+        topicsCollectionView.refreshControl = refreshControl
+    }
 
+    // Handler for the refresh control. Called when refreshControl value changes
+    @objc private func refreshControlHandler() {
+        if !topicsCollectionView.isDragging { fetchTopics() } // don't call in the middle of a drag
+    }
 
-
-    // MARK: - Handlers
-
-    // MARK: - Reusable
+    // Used to wait until dragging has ended to send the fetch request
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if refreshControl.isRefreshing { fetchTopics() } // must be refreshing to call
+    }
 }
 
+// MARK: - CollectionView DataSource & Delegate
 extension TopicViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return TopicCVSections.allCases.count
