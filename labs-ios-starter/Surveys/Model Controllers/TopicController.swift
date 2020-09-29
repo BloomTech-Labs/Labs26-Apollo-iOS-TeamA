@@ -168,7 +168,6 @@ class TopicController {
 
     // MARK: - Delete
     /// Deletes a topic from the server
-    /// - Warning: This method should `ONLY` be called by the leader of a topic for their own survey
     func deleteTopic(topic: Topic, completion: @escaping CompleteWithNetworkError) {
         guard
             topic.section == "Leader",
