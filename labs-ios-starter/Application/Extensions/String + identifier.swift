@@ -32,6 +32,7 @@ enum CollectionViewIdentifier: String {
     case topicsCollectionViewCell
     case questionsCollectionViewCell
     case addNewQuestionCell
+    case questionDetailCell
 
     case crudCollectionViewCell = "CRUDCollectionViewCell"
 }
