@@ -55,7 +55,10 @@ class TopicQuestionsViewController: UIViewController {
 
     private func getAllContextQuestions() {
         topicController.getAllQuestionsAndContexts { [weak self] result in
-            guard let self = self else { return }
+            guard let self = self else {
+                print("Topic Controller is nil")
+                return
+            }
 
             switch result {
             case .success:
@@ -76,7 +79,7 @@ class TopicQuestionsViewController: UIViewController {
                     return
                 }
                 // reload questions tableViewController (can use FRC here)
-                self.questions = questions
+                self.questions = questions                
             case .failure(let error):
                 print("failure getting questions")
 
