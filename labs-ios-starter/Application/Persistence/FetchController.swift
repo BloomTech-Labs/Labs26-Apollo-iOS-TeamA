@@ -95,4 +95,18 @@ class FetchController {
             return nil
         }
     }
+
+    func fetchTopicsNotOnServer(_ ids: [Int64], context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [Topic]? {
+        let fetchRequest: NSFetchRequest<Topic> = Topic.fetchRequest()
+
+        let predicate = NSPredicate(format: "NOT (%d IN %@)", ids)
+        fetchRequest.predicate = predicate
+        do {
+            let topics = try context.fetch(fetchRequest)
+            return topics
+        } catch let fetchError {
+            print("Error fetching Topics: \(fetchError)")
+            return nil
+        }
+    }
 }

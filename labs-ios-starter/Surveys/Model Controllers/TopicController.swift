@@ -6,6 +6,7 @@
 //  Copyright © 2020 Lambda, Inc. All rights reserved.
 //
 import Foundation
+import CoreData
 
 // MARK: - Codable Types -
 /// Used to get topic ID after sending to backend
@@ -104,16 +105,25 @@ class TopicController {
         networkService.loadData(using: request) { result in
             switch result {
             case let .success(data):
-                guard self.networkService.decode(to: [Topic].self,
+                let context = CoreDataManager.shared.backgroundContext
+                guard let topics = self.networkService.decode(to: [Topic].self,
                                                  data: data,
-                                                 moc: CoreDataManager.shared.mainContext) != nil else {
+                                                 moc: context) else {
                     print("Error decoding topics")
                     completion(.failure(.badDecode))
                     return
                 }
+                //save any updates and clear the context
+                //try? CoreDataManager.shared.saveContext(context, async: true)
 
-                try? CoreDataManager.shared.saveContext()
+                let serverTopicIDs = topics.compactMap { $0.id }
+                guard let topicsNotOnServer = FetchController().fetchTopicsNotOnServer(serverTopicIDs, context: context) else {
+                    print("no topics to delete")
+                    completion(.success(Void()))
+                    return
+                }
 
+                self.deleteTopicsFromCoreData(topics: topicsNotOnServer, context: context)
                 completion(.success(Void()))
 
             case let .failure(error):
@@ -251,6 +261,13 @@ class TopicController {
                 completion(.failure(error))
             }
         }
+    }
+
+    func deleteTopicsFromCoreData(topics: [Topic], context: NSManagedObjectContext = CoreDataManager.shared.mainContext) {
+        for topic in topics {
+            context.delete(topic)
+        }
+        try? CoreDataManager.shared.saveContext()
     }
 
     // MARK: - Helper Methods -
