@@ -66,5 +66,4 @@ class CoreDataTests: XCTestCase {
         XCTAssertNotNil(fetchedTopic?.questions)
         XCTAssertEqual(fetchedTopic?.questions?.count, 6)
     }
-
 }
