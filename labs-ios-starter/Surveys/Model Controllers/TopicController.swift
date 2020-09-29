@@ -91,11 +91,10 @@ class TopicController {
     }
 
     // MARK: - Read -
-    /// fetch all topics, or topics for the currently logged in user
+    /// Fetch all topics from server and save them to CoreData.
     /// - Parameters:
-    ///   - all: fetch topics for all users (`true`) or just the currently logged in user (`false`)
     ///   - completion: Completes with `[Topic]`. Topics are also stored in the controller...
-    func fetchTopic(all: Bool = false, completion: @escaping CompleteWithTopics) {
+    func fetchTopicsFromServer(completion: @escaping CompleteWithNetworkError) {
         guard let request = createRequest(pathFromBaseURL: "topic") else {
             print("🛑! User isn't logged in!")
             completion(.failure(.unauthorized))
@@ -105,36 +104,20 @@ class TopicController {
         networkService.loadData(using: request) { result in
             switch result {
             case let .success(data):
-                guard let topics = self.networkService.decode(to: [Topic].self,
-                                                              data: data,
-                                                              moc: CoreDataManager.shared.mainContext) else {
+                guard self.networkService.decode(to: [Topic].self,
+                                                 data: data,
+                                                 moc: CoreDataManager.shared.mainContext) != nil else {
                     print("Error decoding topics")
                     completion(.failure(.badDecode))
                     return
                 }
-                var userTopics: [Topic] = []
-                if !all {
-                    guard let user = ProfileController.shared.authenticatedUserProfile else {
-                        print("🛑! User isn't logged in!")
-                        completion(.failure(.unauthorized))
-                        return
-                    }
-                    // This is going to be quite the expensive check if there are a lot of topics with a lot of members
-                    for topic in topics {
-                        if topic.leaderId == user.id { // member is leader
-                            userTopics.append(topic)
-                        } else if let members = topic.members { // member is user
-                            if members.contains(user) {
-                                userTopics.append(topic)
-                            }
-                        }
-                    }
-                }
-                completion(.success(userTopics))
+
+                try? CoreDataManager.shared.saveContext()
+
+                completion(.success(Void()))
 
             case let .failure(error):
-                // bubble error to caller
-                completion(.failure(error))
+                completion(.failure(error)) // bubble error to caller
             }
         }
     }

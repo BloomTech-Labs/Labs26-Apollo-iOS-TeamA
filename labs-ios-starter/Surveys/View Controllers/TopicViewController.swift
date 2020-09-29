@@ -1,6 +1,7 @@
 // Copyright © 2020 Shawn James. All rights reserved.
 // TopicViewController.swift
 
+import CoreData
 import UIKit
 
 class TopicViewController: LoginViewController {
@@ -13,28 +14,26 @@ class TopicViewController: LoginViewController {
     let headerReuseIdentifier = String.getCollectionViewHeaderId(.topicSectionHeader)
     let topicController = TopicController()
 
-    var topics: [Topic]? {
-        didSet {
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else {
-                    print("TopicViewController is nil")
-                    return
-                }
-                self.topicsCollectionView.reloadData()
-            }
-        }
-    }
+    private var fetchController: NSFetchedResultsController<Topic> = {
+        let fetchRequest: NSFetchRequest<Topic> = Topic.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "timeStamp", ascending: false)]
+        let mainContext = CoreDataManager.shared.mainContext
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                                                  managedObjectContext: mainContext,
+                                                                  sectionNameKeyPath: "section",
+                                                                  cacheName: nil)
+        return fetchedResultsController
+    }()
 
     // MARK: - Lifecycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         spinner.startAnimating()
         view.addSubview(spinner)
         spinner.center = view.center
     }
+
     /// from LoginViewController.swift
-    // TODO: Spinner
     override func handleLogin() {
         fetchTopics()
         configureRefreshControl()
@@ -51,10 +50,7 @@ class TopicViewController: LoginViewController {
                 print("couldn't get selected index")
                 return
             }
-            guard let topic = topics?[selectedIndex.item] else {
-                print("no topic")
-                return
-            }
+            let topic = fetchController.object(at: selectedIndex)
 
             // TESTING, REMOVE
             let member = Member(id: "1", email: "1@1.com", firstName: "firstOne", lastName: "lastOne", avatarURL: URL(string: "http://www.url.com"))
@@ -69,18 +65,24 @@ class TopicViewController: LoginViewController {
     // MARK: - Methods
     private func fetchTopics() {
         refreshControl.beginRefreshing()
-        if !self.spinner.isAnimating {
-            self.spinner.startAnimating()
-        }
+        if !spinner.isAnimating { spinner.startAnimating() }
 
-        topicController.fetchTopic { result in
+        topicController.fetchTopicsFromServer { result in
             switch result {
-            case let .success(topics):
-                DispatchQueue.main.async {
-                    self.topics = topics
+            case .success:
+                DispatchQueue.main.async { [self] in
+                    self.refreshControl.endRefreshing()
                     self.spinner.stopAnimating()
+
+                    do {
+                        try self.fetchController.performFetch()
+                    } catch {
+                        print("Failure to perform fetch on fetchedResultsController: \(error)")
+                    }
+
+                    self.topicsCollectionView.reloadData()
                 }
-            case .failure(let error):
+            case let .failure(error):
                 self.spinner.stopAnimating()
                 self.presentNetworkError(error: error.rawValue) { tryAgain in
                     if let tryAgain = tryAgain {
@@ -115,54 +117,28 @@ class TopicViewController: LoginViewController {
 // MARK: - CollectionView DataSource & Delegate
 extension TopicViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return TopicCVSections.allCases.count
+        return fetchController.sections?.count ?? 0
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return fetchController.sections?[section].numberOfObjects ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerReuseIdentifier, for: indexPath) as? TopicSectionHeader {
-            sectionHeader.sectionHeaderLabel.text = TopicCVSections(rawValue: indexPath.section)?.description
+            let headerName = fetchController.sections?[indexPath.section].name ?? ""
+            sectionHeader.sectionHeaderLabel.text = headerName
             return sectionHeader
         }
         fatalError("Failed to configure collectionView header. Broken method or out of range.")
-    }
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let section = TopicCVSections(rawValue: section) else { return 0 }
-        switch section {
-        case .leader: return topics?.count ?? 0 // TODO: frc.items in this section.count
-        case .member: return 0 // TODO: frc.items in this section.count
-        }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = topicsCollectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as? TopicCollectionViewCell else {
             fatalError("couldn't downcast TopicCollectionViewCell 🚨CHANGE THIS BEFORE PRODUCTION🚨")
         }
-        guard let section = TopicCVSections(rawValue: indexPath.section) else {
-            fatalError("Section broken or out of range")
-        }
-        switch section {
-        case .leader, .member:
-            cell.topic = topics?[indexPath.row]
-            cell.setDimensions(width: view.frame.width - 40, height: 80)
-            return cell
-        }
+        cell.topic = fetchController.object(at: indexPath)
+        cell.setDimensions(width: view.frame.width - 40, height: 80)
+        return cell
     }
 }
-
-// MARK: - Live Previews
-
-#if DEBUG
-
-    import SwiftUI
-
-    struct TopicViewControllerPreview: PreviewProvider {
-        static var previews: some View {
-            let storyboard = UIStoryboard(name: "Surveys", bundle: .main)
-            let tabBarController = storyboard.instantiateInitialViewController() as? UITabBarController
-
-            return tabBarController?.view.livePreview.edgesIgnoringSafeArea(.all)
-        }
-    }
-
-#endif

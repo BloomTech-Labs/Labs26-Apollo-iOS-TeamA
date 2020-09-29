@@ -270,7 +270,7 @@
             <objects>
                 <viewController id="a9t-U2-oeJ" customClass="MemberListViewController" customModule="labs_ios_starter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4vn-Ub-yLy">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ZDw-oa-tGf">
@@ -360,7 +360,6 @@
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <color key="backgroundColor" name="cell"/>
-                                        <size key="customSize" width="374" height="80"/>
                                         <connections>
                                             <outlet property="nameLabel" destination="IkA-BA-5Dw" id="jsv-4B-V9J"/>
                                             <segue destination="aZv-jt-onU" kind="presentation" identifier="TopicDetailSegue" id="Opz-La-5xH"/>
