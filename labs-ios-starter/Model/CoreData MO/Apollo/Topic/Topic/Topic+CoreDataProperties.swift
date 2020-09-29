@@ -53,6 +53,8 @@ extension Topic {
         }
     }
 
+    @NSManaged public var timeStamp: String?
+
     // MARK: - Relationships
 
     @NSManaged public var members: NSSet?
@@ -66,6 +68,10 @@ extension Topic {
 
     @NSManaged public var questions: NSSet? // doesn't get sent
     @NSManaged public var responses: NSSet? // doesn't get sent
+
+    // Sections (Used for CollectionView Headers)
+
+    @NSManaged public var section: String?
 }
 
 // MARK: Generated accessors for members

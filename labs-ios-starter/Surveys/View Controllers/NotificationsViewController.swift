@@ -28,7 +28,7 @@ class NotificationsViewController: UIViewController {
         do {
             try fetchedResultsController.performFetch()
         } catch {
-            print("Error Fetching -> IncompleteTasksTableView in fetchedResultsController: \(error)")
+            print("Failure to perform initial fetch in fetchedResultsController: \(error)")
         }
         return fetchedResultsController
     }()
