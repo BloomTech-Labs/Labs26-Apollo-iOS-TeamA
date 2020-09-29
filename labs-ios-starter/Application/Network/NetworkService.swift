@@ -33,6 +33,12 @@ extension URLSession: NetworkLoader {
             if let httpResponse = response as? HTTPURLResponse {
                 let statusCode = httpResponse.statusCode
                 if statusCode != 200 {
+                    // Get error message from backend
+                    if let data = data,
+                       let errorDict = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String:String],
+                       let errorMessage = errorDict["message"] {
+                        print("Error with response: \(errorMessage)")
+                    }
                     // unwrap the handled exception, or log an unhandled exception
                     guard let statusError = ErrorHandler.NetworkError(rawValue: statusCode) else {
                         // Edge case - unhandled exception (if this is logged, the ErrorHandler likely needs to be extended)

@@ -53,4 +53,18 @@ class CoreDataTests: XCTestCase {
         fetchedTopic?.topicName = "Changed It"
         XCTAssertNotEqual(name, fetchedTopic?.topicName)
     }
+
+    func testCanEstablishQuestionToTopicRelationship() {
+        let fetchedTopic = fetchController.fetchLeaderTopics(with: [1])?[0]
+
+        guard let fetchedQuestions = fetchController.fetchQuestionRequest() else {
+            XCTFail("Couldn't unwrap fetched questions")
+            return
+        }
+
+        fetchedTopic?.questions = fetchedTopic?.questions?.addingObjects(from: fetchedQuestions) as NSSet?
+        XCTAssertNotNil(fetchedTopic?.questions)
+        XCTAssertEqual(fetchedTopic?.questions?.count, 6)
+    }
+
 }
