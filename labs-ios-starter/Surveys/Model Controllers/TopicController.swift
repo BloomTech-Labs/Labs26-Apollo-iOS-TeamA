@@ -6,7 +6,27 @@
 //  Copyright © 2020 Lambda, Inc. All rights reserved.
 //
 import Foundation
-// MARK: - FOO -
+
+// MARK: - Codable Types -
+/// Used to get topic ID after sending to backend
+struct TopicID: Codable {
+    let topic: DecodeTopic
+}
+/// Member of TopicID
+struct DecodeTopic: Codable {
+    let id: Int
+}
+
+/// Used to encode topic and question id in order to establish their relationship in the backend
+struct TopicQuestion: Codable {
+    enum CodingKeys: String, CodingKey {
+        case topicId = "topicid"
+        case questionId = "questionid"
+    }
+    var topicId: Int
+    var questionId: Int
+}
+
 /// Controller for Topic, ContextObject, and Question model
 class TopicController {
     let networkService = NetworkService.shared
@@ -35,7 +55,6 @@ class TopicController {
                           leaderId: token,
                           topicName: name,
                           contextId: Int64(contextId))
-        // let questionsToSend = questions.map { $0.id }
         do {
             try CoreDataManager.shared.saveContext(CoreDataManager.shared.backgroundContext, async: true)
         } catch let saveError {
@@ -46,8 +65,24 @@ class TopicController {
 
         networkService.loadData(using: request) { result in
             switch result {
-            case .success:
-                complete(.success(joinCode))
+            case let .success(data):
+                //get id from data and save to CoreData
+                guard let id = self.getTopicID(from: data) else {
+                    complete(.failure(.badDecode))
+                    return
+                }
+                topic.id = id
+                try? CoreDataManager.shared.saveContext(CoreDataManager.shared.backgroundContext, async: true)
+                //link questions to topic and send to server
+                self.addQuestions(questions, to: topic) { (result) in
+                    switch result {
+                    case .success:
+                        complete(.success(joinCode))
+                    case .failure(let error):
+                        complete(.failure(error))
+                    }
+                }
+
             case let .failure(error):
                 NSLog("Error POSTing topic with statusCode: \(error.rawValue)")
                 complete(.failure(error))
@@ -178,6 +213,36 @@ class TopicController {
     }
 
     // MARK: - Update -
+    /// Assign an array of questions to a Topic (creates relationship in CoreData and on Server)
+    func addQuestions(_ questions: [Question], to topic: Topic, completion: @escaping CompleteWithNetworkError) {
+
+        for question in questions {
+            let topicQuestion = TopicQuestion(topicId: Int(topic.id ?? 0), questionId: Int(question.id))
+
+            topic.questions = topic.questions!.adding(question) as NSSet
+
+            guard var request = createRequest(pathFromBaseURL: "topicquestion", method: .post) else {
+                print("Couldn't create request")
+                completion(.failure(.badRequest))
+                return
+            }
+
+            request.encode(from: topicQuestion)
+
+            networkService.loadData(using: request) { result in
+                switch result {
+                case .success(let data):
+                    print(data)
+                    completion(.success(Void()))
+                case .failure(let error):
+                    completion(.failure(error))
+                    print(error)
+                }
+            }
+        }
+        try? CoreDataManager.shared.saveContext()
+
+    }
 
     func updateTopic(topic: Topic, completion: @escaping CompleteWithNetworkError) {
         // send topic to server. save in CoreData
@@ -222,5 +287,13 @@ class TopicController {
         }
 
         return request
+    }
+
+    private func getTopicID(from data: Data) -> Int64? {
+        guard let topicID = self.networkService.decode(to: TopicID.self, data: data)?.topic.id else {
+            print("Couldn't get ID from newly created topic")
+            return nil
+        }
+        return Int64(topicID)
     }
 }
