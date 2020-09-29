@@ -60,7 +60,7 @@
         <attribute name="leaderId" attributeType="String"/>
         <attribute name="questionsToSend" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="Array&lt;Int&gt;"/>
         <attribute name="responsesToSend" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="Array&lt;Int&gt;"/>
-        <attribute name="section" attributeType="String" defaultValueString="&quot;Member&quot;"/>
+        <attribute name="section" attributeType="String" defaultValueString="&quot;Leader&quot;"/>
         <attribute name="timeStamp" optional="YES" attributeType="String"/>
         <attribute name="topicName" optional="YES" attributeType="String" defaultValueString="Member"/>
         <relationship name="members" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Member" inverseName="topic" inverseEntity="Member"/>
