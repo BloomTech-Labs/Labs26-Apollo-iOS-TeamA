@@ -11,6 +11,12 @@ import UIKit
 class QuestionCollectionViewCell: UICollectionViewCell {
     @IBOutlet var nameLabel: UILabel!
 
+    var question: Question? {
+        didSet {
+            updateViews(adjustingForWidthOf: self, question: question!.question)
+        }
+    }
+
     ///set nameLabel.text, initialize label parameters
     func updateViews( adjustingForWidthOf view: UIView, withWidthDeltaOf widthDelta: CGFloat = 40, height: CGFloat = 40, question: String? = nil, font: UIFont = .systemFont(ofSize: 17) ) {
         nameLabel.numberOfLines = 0

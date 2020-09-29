@@ -18,6 +18,12 @@ class TopicDetailViewController: UIViewController {
     let fetchController = FetchController()
     var topic: Topic? {
         didSet {
+            questions = fetchController.fetchQuestionRequest()
+        }
+    }
+
+    var questions: [Question]? {
+        didSet {
             updateViews()
         }
     }
@@ -52,11 +58,14 @@ class TopicDetailViewController: UIViewController {
 
 extension TopicDetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return topic?.questions?.count ?? 0
+        return self.questions?.count ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = CRUDCollectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        guard let cell = CRUDCollectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? QuestionCollectionViewCell else {
+            // TOOD: Remove before prod
+            fatalError("invalid identifier") }
+        cell.question = self.questions?[indexPath.item]
         cell.setDimensions(width: view.frame.width - 40, height: 80)
         return cell
     }
