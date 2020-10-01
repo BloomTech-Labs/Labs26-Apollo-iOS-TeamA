@@ -69,6 +69,20 @@ class FetchController {
         return fetchTopicRequest(with: predicate, context: context)
     }
 
+    func fetchTopicsNotOnServer(_ ids: [Int64], context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [Topic]? {
+        let fetchRequest: NSFetchRequest<Topic> = Topic.fetchRequest()
+
+        let predicate = NSPredicate(format: "NOT (id IN %@)", ids)
+        fetchRequest.predicate = predicate
+        do {
+            let topics = try context.fetch(fetchRequest)
+            return topics
+        } catch let fetchError {
+            print("Error fetching Topics: \(fetchError)")
+            return nil
+        }
+    }
+
     // MARK: - Context Fetch Requests -
     func fetchContextRequest(context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [ContextObject]? {
         let fetchRequest: NSFetchRequest<ContextObject> = ContextObject.fetchRequest()
@@ -96,17 +110,4 @@ class FetchController {
         }
     }
 
-    func fetchTopicsNotOnServer(_ ids: [Int64], context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [Topic]? {
-        let fetchRequest: NSFetchRequest<Topic> = Topic.fetchRequest()
-
-        let predicate = NSPredicate(format: "NOT (%d IN %@)", ids)
-        fetchRequest.predicate = predicate
-        do {
-            let topics = try context.fetch(fetchRequest)
-            return topics
-        } catch let fetchError {
-            print("Error fetching Topics: \(fetchError)")
-            return nil
-        }
-    }
 }
