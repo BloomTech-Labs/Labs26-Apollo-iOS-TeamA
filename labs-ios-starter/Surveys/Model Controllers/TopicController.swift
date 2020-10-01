@@ -267,7 +267,7 @@ class TopicController {
         for topic in topics {
             context.delete(topic)
         }
-        try? CoreDataManager.shared.saveContext()
+        try? CoreDataManager.shared.saveContext(context, async: true)
     }
 
     // MARK: - Helper Methods -
