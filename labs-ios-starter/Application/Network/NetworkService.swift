@@ -34,10 +34,8 @@ extension URLSession: NetworkLoader {
                 let statusCode = httpResponse.statusCode
                 if statusCode != 200 {
                     // Get error message from backend
-                    if let data = data,
-                       let errorDict = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String:String],
-                       let errorMessage = errorDict["message"] {
-                        print("Error with response: \(errorMessage)")
+                    if let data = data {
+                        print(data.prettyPrintedJSONString as Any)
                     }
                     // unwrap the handled exception, or log an unhandled exception
                     guard let statusError = ErrorHandler.NetworkError(rawValue: statusCode) else {
