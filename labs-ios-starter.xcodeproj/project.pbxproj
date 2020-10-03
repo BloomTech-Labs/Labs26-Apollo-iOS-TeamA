@@ -56,6 +56,7 @@
 		B90989D1251ABE9F0084A1D7 /* CoreDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90989D0251ABE9F0084A1D7 /* CoreDataTests.swift */; };
 		B91637212507FA4B00B49A75 /* OktaAuth.md in Resources */ = {isa = PBXBuildFile; fileRef = B91637202507FA4B00B49A75 /* OktaAuth.md */; };
 		B9163737250850B400B49A75 /* UserImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9163736250850B400B49A75 /* UserImage.swift */; };
+		B917E2E32526DD14004B16BA /* SingleRowPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B917E2E22526DD14004B16BA /* SingleRowPickerView.swift */; };
 		B91BF7E3250BC4C200D68EA6 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		B91BF7EF250C47F600D68EA6 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91BF7EE250C47F600D68EA6 /* Profile.swift */; };
 		B91BF7F1250D0B6500D68EA6 /* MemberList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B91BF7F0250D0B6500D68EA6 /* MemberList.storyboard */; };
@@ -148,6 +149,7 @@
 		B90989D0251ABE9F0084A1D7 /* CoreDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataTests.swift; sourceTree = "<group>"; };
 		B91637202507FA4B00B49A75 /* OktaAuth.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = OktaAuth.md; path = "labs-ios-starter/Application/Documentation/OktaAuth.md"; sourceTree = SOURCE_ROOT; };
 		B9163736250850B400B49A75 /* UserImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImage.swift; sourceTree = "<group>"; };
+		B917E2E22526DD14004B16BA /* SingleRowPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleRowPickerView.swift; sourceTree = "<group>"; };
 		B91BF7EE250C47F600D68EA6 /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		B91BF7F0250D0B6500D68EA6 /* MemberList.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MemberList.storyboard; sourceTree = "<group>"; };
 		B91BF7F2250D0BB800D68EA6 /* String + identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + identifier.swift"; sourceTree = "<group>"; };
@@ -313,6 +315,7 @@
 				B9091EEE25183F2E009BA6A7 /* TopicCollectionViewCell.swift */,
 				1D938DD8251AED4300D3013D /* NotificationsTabItem.swift */,
 				1D938DDC251AF69700D3013D /* NotificationsCollectionViewCell.swift */,
+				B917E2E22526DD14004B16BA /* SingleRowPickerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -776,6 +779,7 @@
 				B9983C542513BEC0001D91FE /* QuestionCollectionViewCell.swift in Sources */,
 				B94042102501D0740048BCED /* NetworkService.swift in Sources */,
 				466C4276249A8748007D033E /* SceneDelegate.swift in Sources */,
+				B917E2E32526DD14004B16BA /* SingleRowPickerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
