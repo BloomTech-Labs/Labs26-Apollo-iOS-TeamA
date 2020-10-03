@@ -3,37 +3,32 @@
 
 import UIKit
 
-class NotificationsCollectionViewCell: UICollectionViewCell {
+class NotificationsCollectionViewCell: ApolloCollectionViewCell {
     // MARK: - Outlets
-
     @IBOutlet var messageLabel: UILabel! {
         didSet {
-            updateViews()
+            configureDismissButton()
         }
     }
 
-    @IBOutlet var deleteButtonBackground: UIVisualEffectView!
-    @IBOutlet var deleteButton: UIButton!
-
-    // MARK: - Properties
-
-    var isEditing = false {
-        didSet {
-            updateViews()
-        }
-    }
+    @IBOutlet var dismissButton: UIButton!
     
+    // MARK: - Properties
     var managedObject: NewNotificationsMessage?
 
     // MARK: - Methods
-
-    @IBAction func deleteButtonPressed(_ sender: UIButton) {
+    @IBAction func dismissButtonPressed(_ sender: UIButton) {
         guard let object = managedObject else { return }
         CoreDataManager.shared.deleteObject(object)
     }
 
-    private func updateViews() {
-        deleteButtonBackground.isHidden = !isEditing
-        deleteButton.isHidden = !isEditing
+    private func configureDismissButton() {
+        dismissButton.clipsToBounds = true
+        dismissButton.layer.cornerRadius = .cornerRadius
+        dismissButton.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+
+        let lineView = UIView(frame: CGRect(x: 0, y: 0, width: dismissButton.frame.width, height: 1.2))
+        lineView.backgroundColor = .background
+        dismissButton.addSubview(lineView)
     }
 }

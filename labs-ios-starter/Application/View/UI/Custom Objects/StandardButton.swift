@@ -47,12 +47,21 @@ class StandardButton: UIButton {
         super.init(coder: coder)
         commonInit()
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if traitCollection.userInterfaceStyle == .dark {
+            layer.shadowColor = nil
+            layer.shadowOpacity = 0
+        } else {
+            setShadow()
+        }
+    }
 
     /// Sets up the button with configuration
     private func commonInit() {
-        setShadow()
         setColors()
         setShape()
+        if traitCollection.userInterfaceStyle == .light { setShadow() }
     }
 
     // MARK: - Configuration Methods

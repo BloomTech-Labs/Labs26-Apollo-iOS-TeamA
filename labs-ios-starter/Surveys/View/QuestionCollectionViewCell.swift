@@ -8,7 +8,7 @@
 
 import UIKit
 
-class QuestionCollectionViewCell: UICollectionViewCell {
+class QuestionCollectionViewCell: ApolloCollectionViewCell {
     @IBOutlet var nameLabel: UILabel!
 
     ///set nameLabel.text, initialize label parameters

@@ -19,7 +19,7 @@ extension CGFloat {
 extension UIColor {
     /// these colors are in XCAssets
     enum ThemeColorName: String {
-        case action, accent, background, cell
+        case action, accent, background, cell, shadow, cellText
     }
 
     static func getColor(_ named: ThemeColorName) -> UIColor {
@@ -28,6 +28,7 @@ extension UIColor {
 
     static var background = getColor(.background)
     static var action = getColor(.action)
+    static var shadow = getColor(.shadow)
 }
 
 class DefaultViewController: UIViewController {
