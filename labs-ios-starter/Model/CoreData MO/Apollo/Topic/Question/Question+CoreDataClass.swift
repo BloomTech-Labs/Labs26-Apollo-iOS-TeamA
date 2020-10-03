@@ -11,7 +11,7 @@ public final class Question: NSManagedObject, Codable {
     enum QuestionCodingKeys: String, CodingKey {
         case id
         case question
-        case reviewType = "type"
+        //case reviewType = "type"
         case ratingStyle = "style"
         // case contextId = "contextid"
     }
@@ -47,7 +47,7 @@ public final class Question: NSManagedObject, Codable {
 
         id = try container.decode(Int64.self, forKey: .id)
         question = try container.decode(String.self, forKey: .question)
-        reviewType = try container.decode(String.self, forKey: .reviewType)
+        //reviewType = try container.decode(String.self, forKey: .reviewType)
         ratingStyle = try container.decode(String.self, forKey: .ratingStyle)
     }
 
@@ -62,7 +62,7 @@ public final class Question: NSManagedObject, Codable {
 
         try container.encode(id, forKey: .id)
         try container.encode(question, forKey: .question)
-        try container.encode(reviewType, forKey: .reviewType)
+        //try container.encode(reviewType, forKey: .reviewType)
         try container.encode(ratingStyle, forKey: .ratingStyle)
     }
 }

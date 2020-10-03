@@ -165,7 +165,7 @@ class TopicController {
 
     func getQuestions(completion: @escaping CompleteWithNetworkError) {
         // create request to /question
-        guard let request = createRequest(pathFromBaseURL: "question") else {
+        guard let request = createRequest(pathFromBaseURL: "contextquestion") else {
             completion(.failure(.badRequest))
             return
         }
@@ -184,7 +184,7 @@ class TopicController {
                 }
                 try? CoreDataManager.shared.saveContext()
                 completion(.success(Void()))
-
+                
             // bubble error to caller
             case let .failure(error):
                 completion(.failure(error))

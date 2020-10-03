@@ -163,7 +163,7 @@ class NetworkService {
         do {
             return try decoder.decode(T.self, from: data)
         } catch {
-            print("Error Decoding JSON into \(String(describing: type)) Object \(error)")
+            print("Error Decoding JSON into \(String(describing: type)) Object \(error) with Data: \n\(String(describing: data.prettyPrintedJSONString))")
             return nil
         }
     }
