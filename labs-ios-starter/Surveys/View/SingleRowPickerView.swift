@@ -36,11 +36,6 @@ class SingleRowPickerView: UIPickerView {
         super.init(coder: coder)
     }
 
-    override func layoutIfNeeded() {
-
-    }
-
-
     func commoninit() {
         tap = UITapGestureRecognizer(target: self, action: #selector(changeRow))
         tap!.delegate = tapDelegate

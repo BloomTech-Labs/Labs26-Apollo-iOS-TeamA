@@ -163,11 +163,13 @@ extension TopicQuestionsViewController: UIPickerViewDelegate, UIPickerViewDataSo
             return UIView()
         }
 
+        let padding:CGFloat = 20
+        let pickerLabelHeight:CGFloat = 50
         let pickerLabel = UILabel(frame: CGRect(
                                     x: 0,
                                     y: 0,
-                                    width: pickerView.frame.size.width - 20,
-                                    height: 50)
+                                    width: pickerView.frame.size.width - padding,
+                                    height: pickerLabelHeight)
         )
 
         pickerLabel.numberOfLines = 0
@@ -175,24 +177,25 @@ extension TopicQuestionsViewController: UIPickerViewDelegate, UIPickerViewDataSo
         pickerLabel.sizeToFit()
         pickerLabel.lineBreakMode = .byWordWrapping
         //down arrow
+        let width:CGFloat = 40
+        let height = width/2
         let arrowView = UIButton(frame: CGRect(
                                 x: 0,
                                 y: 0,
-                                width: 40,
-                                height: 20)
+                                width: width,
+                                height: height)
         )
 
         if row != questions.count - 1 {
-            //arrowView.tag = row
-            //arrowView.addTarget(self, action: #selector(selectRow(sender:)), for: .touchUpInside)
             let image = UIImage(systemName: "chevron.down")
             arrowView.setImage(image, for: .normal)
 
+            let stackViewHeight:CGFloat = 70
             let stackView = UIStackView(frame: CGRect(
                                             x: 0,
                                             y: 0,
-                                            width: pickerView.frame.size.width - 20,
-                                            height: 70)
+                                            width: pickerView.frame.size.width - padding,
+                                            height: stackViewHeight)
             )
             stackView.spacing = 0
             stackView.distribution = .fillProportionally
@@ -217,22 +220,18 @@ extension TopicQuestionsViewController: SingleRowSpinnerDelegate {
     func updateSpinner() {
         let row = pickerView.selectedRow(inComponent: 0)
         if row != pickerView.numberOfRows(inComponent: 0) - 1 { // -1 to account for non 0 based count
-            print("I'm at row \(pickerView.selectedRow(inComponent: 0))")
 
             let nextRow = pickerView.selectedRow(inComponent: 0) + 1
 
             #warning("Race condition!")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
                 self.pickerView.selectRow(nextRow, inComponent: 0, animated: true)
-                print("I'm at row \(self.pickerView.selectedRow(inComponent: 0))")
             }
 
         }
     }
 
 }
-
-// MARK: - Segmented Control Delegate -
 
 // MARK: - Live Previews
 
