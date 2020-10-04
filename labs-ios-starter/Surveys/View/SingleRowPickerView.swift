@@ -10,13 +10,17 @@ import UIKit
 
 typealias CompletionHandler = () -> Void
 
+protocol SingleRowSpinnerDelegate: UIGestureRecognizerDelegate {
+    func updateSpinner()
+}
+
 class SingleRowPickerView: UIPickerView {
 
     var rowHeight: CGFloat {
         self.rowSize(forComponent: 0).height
     }
 
-    var tapDelegate: UIGestureRecognizerDelegate? {
+    var tapDelegate: SingleRowSpinnerDelegate? {
         didSet {
             commoninit()
         }
@@ -30,6 +34,10 @@ class SingleRowPickerView: UIPickerView {
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+
+    override func layoutIfNeeded() {
+
     }
 
 
@@ -47,9 +55,8 @@ class SingleRowPickerView: UIPickerView {
             let selectedRowFrame = self.bounds.insetBy(dx: 0, dy: (self.frame.height - rowHeight) / 2)
             let userTappedOnSelectedRow = selectedRowFrame.contains(tap!.location(in: self))
             if userTappedOnSelectedRow {
-                let selectedRow = self.selectedRow(inComponent: 0)
-                selectRow(selectedRow+1, inComponent: 0, animated: true)
-                delegate?.pickerView?(self, didSelectRow: selectedRow+1, inComponent: 0)
+                tapDelegate?.updateSpinner()
+                self.layoutIfNeeded()
             }
         }
     }

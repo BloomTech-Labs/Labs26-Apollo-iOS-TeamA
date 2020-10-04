@@ -3,7 +3,7 @@
 
 import UIKit
 
-class TopicQuestionsViewController: UIViewController, UIGestureRecognizerDelegate {
+class TopicQuestionsViewController: UIViewController {
     // MARK: - Outlets
 
     @IBOutlet var pickerView: SingleRowPickerView!
@@ -208,6 +208,25 @@ extension TopicQuestionsViewController: UIPickerViewDelegate, UIPickerViewDataSo
 
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
         100
+    }
+
+}
+
+extension TopicQuestionsViewController: SingleRowSpinnerDelegate {
+
+    func updateSpinner() {
+        let row = pickerView.selectedRow(inComponent: 0)
+        if row != pickerView.numberOfRows(inComponent: 0) - 1 { // -1 to account for non 0 based count
+            print("I'm at row \(pickerView.selectedRow(inComponent: 0))")
+
+            let nextRow = pickerView.selectedRow(inComponent: 0) + 1
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                self.pickerView.selectRow(nextRow, inComponent: 0, animated: true)
+                print("I'm at row \(self.pickerView.selectedRow(inComponent: 0))")
+            }
+
+        }
     }
 
 }
