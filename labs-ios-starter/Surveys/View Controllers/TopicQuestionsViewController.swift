@@ -221,6 +221,7 @@ extension TopicQuestionsViewController: SingleRowSpinnerDelegate {
 
             let nextRow = pickerView.selectedRow(inComponent: 0) + 1
 
+            #warning("Race condition!")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
                 self.pickerView.selectRow(nextRow, inComponent: 0, animated: true)
                 print("I'm at row \(self.pickerView.selectedRow(inComponent: 0))")
