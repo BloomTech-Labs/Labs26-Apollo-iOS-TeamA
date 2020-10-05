@@ -7,7 +7,6 @@ import UIKit
 class NotificationsViewController: UIViewController {
     // MARK: - Outlets -
 
-    @IBOutlet var editButton: UIBarButtonItem!
     @IBOutlet var notificationsCollectionView: UICollectionView!
 
     // MARK: - Properties -
@@ -81,23 +80,11 @@ extension NotificationsViewController: UICollectionViewDataSource {
             fatalError("Failed to dequeue reusable cell for notificationsCollectionView")
         }
 
-        cell.setDimensions(width: view.frame.width - 40, height: 80)
+        cell.setDimensions(width: view.frame.width - 40, height: 150)
         let managedObject = fetchedResultsController.fetchedObjects?[indexPath.row]
-        cell.messageLabel.text = managedObject?.message
         cell.managedObject = managedObject
+        cell.messageLabel.text = managedObject?.message
         return cell
-    }
-
-    override func setEditing(_ editing: Bool, animated: Bool) {
-        super.setEditing(editing, animated: animated)
-
-        if let indexPaths = notificationsCollectionView?.indexPathsForVisibleItems {
-            for indexPath in indexPaths {
-                if let cell = notificationsCollectionView.cellForItem(at: indexPath) as? NotificationsCollectionViewCell {
-                    cell.isEditing = editing
-                }
-            }
-        }
     }
 }
 
@@ -193,21 +180,3 @@ extension NotificationsViewController: NSFetchedResultsControllerDelegate {
         })
     }
 }
-
-// MARK: - Live Previews
-
-#if DEBUG
-
-    import SwiftUI
-
-    struct NotificationsViewControllerPreview: PreviewProvider {
-        static var previews: some View {
-            let storyboard = UIStoryboard(name: "Surveys", bundle: .main)
-            let tabBarController = storyboard.instantiateInitialViewController() as? UITabBarController
-            tabBarController?.selectedIndex = 1
-
-            return tabBarController?.view.livePreview.edgesIgnoringSafeArea(.all)
-        }
-    }
-
-#endif

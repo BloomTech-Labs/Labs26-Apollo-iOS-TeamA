@@ -9,6 +9,7 @@
 import UIKit
 
 class TopicCollectionViewCell: UICollectionViewCell {
+class TopicCollectionViewCell: ApolloCollectionViewCell {
     // MARK: - Outlets -
     @IBOutlet var nameLabel: UILabel!
 

@@ -184,7 +184,7 @@ class TopicController {
                 }
                 try? CoreDataManager.shared.saveContext()
                 completion(.success(Void()))
-
+                
             // bubble error to caller
             case let .failure(error):
                 completion(.failure(error))
