@@ -35,7 +35,7 @@ extension URLSession: NetworkLoader {
                 if statusCode != 200 {
                     // Get error message from backend
                     if let data = data {
-                        print(data.prettyPrintedJSONString as Any)
+                        data.debugPrintJSON()
                     }
                     // unwrap the handled exception, or log an unhandled exception
                     guard let statusError = ErrorHandler.NetworkError(rawValue: statusCode) else {
@@ -161,7 +161,8 @@ class NetworkService {
         do {
             return try decoder.decode(T.self, from: data)
         } catch {
-            print("Error Decoding JSON into \(String(describing: type)) Object \(error) with Data: \n\(String(describing: data.prettyPrintedJSONString))")
+            print("Error Decoding JSON into \(String(describing: type)) Object \(error) with Data:")
+            data.debugPrintJSON()
             return nil
         }
     }
