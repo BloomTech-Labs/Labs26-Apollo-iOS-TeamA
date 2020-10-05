@@ -8,7 +8,6 @@
 
 import UIKit
 
-class TopicCollectionViewCell: UICollectionViewCell {
 class TopicCollectionViewCell: ApolloCollectionViewCell {
     // MARK: - Outlets -
     @IBOutlet var nameLabel: UILabel!
@@ -21,6 +20,6 @@ class TopicCollectionViewCell: ApolloCollectionViewCell {
 
     // MARK: - View Lifecycle -
     private func updateViews() {
-        self.nameLabel.text = topic?.topicName
+        nameLabel.text = topic?.topicName
     }
 }
