@@ -117,13 +117,19 @@ class TopicController {
                 //try? CoreDataManager.shared.saveContext(context, async: true)
 
                 let serverTopicIDs = topics.compactMap { $0.id }
-                guard let topicsNotOnServer = FetchController().fetchTopicsNotOnServer(serverTopicIDs, context: context) else {
+
+                if let topicsNotOnServer = FetchController().fetchTopicsNotOnServer(serverTopicIDs, context: context) {
+                    self.deleteTopicsFromCoreData(topics: topicsNotOnServer, context: context)
+                } else {
                     print("no topics to delete")
-                    completion(.success(Void()))
-                    return
                 }
 
-                self.deleteTopicsFromCoreData(topics: topicsNotOnServer, context: context)
+                do {
+                    try CoreDataManager.shared.saveContext()
+                } catch let fetchTopicError {
+                    print("Error Fetching Topics: \(fetchTopicError)")
+                }
+                // succeeed whether deleting topics or not
                 completion(.success(Void()))
 
             case let .failure(error):
