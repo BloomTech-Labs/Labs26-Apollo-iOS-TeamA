@@ -13,11 +13,11 @@ class TopicQuestionsViewController: UIViewController {
 
     @IBAction func postTopicButton(_ sender: UIButton) {
         // TODO: Context Title
-        guard let contextID = contextID else {
-            print("no conext id")
-            return
-        }
-        postTopic(contextID: contextID)
+//        guard let contextID = contextID else {
+//            print("no context id")
+//            return
+//        }
+//        postTopic(contextID: contextID)
     }
 
     // MARK: - Properties -
@@ -40,12 +40,14 @@ class TopicQuestionsViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupPickerView()
+
+    }
+
+    private func setupPickerView() {
         pickerView.delegate = self
         pickerView.dataSource = self
         pickerView.tapDelegate = self
-
-        getAllContextQuestions()
-        //baseurl = https://apollo-a-api.herokuapp.com/
     }
 
     private func getAllContextQuestions() {
@@ -67,7 +69,6 @@ class TopicQuestionsViewController: UIViewController {
             return
         }
 
-        //let selected = contextSegmentControl.selectedSegmentIndex + 1
         guard let questions = fetchController.fetchQuestionRequest() else {
             print("couldn't fetch questions from CoreData")
             return
@@ -76,6 +77,7 @@ class TopicQuestionsViewController: UIViewController {
         topicController.postTopic(with: topicName, contextId: contextID, questions: questions) { result in
             switch result {
             case let .success(joinCode):
+                // alert user of success and add notification
                 DispatchQueue.main.async {
                     self.presentSimpleAlert(with: "Topic Posted!",
                                             message: "A join code will be sent to your notifications.",
@@ -83,6 +85,7 @@ class TopicQuestionsViewController: UIViewController {
                                             dismissText: "Ok") { _ in
 
                         _ = NewNotificationsMessage("Created \(topicName) with join code: \(joinCode)")
+
                         self.dismiss(animated: true, completion: nil)
                     }
                 }
@@ -101,6 +104,7 @@ class TopicQuestionsViewController: UIViewController {
         }
     }
 
+    // Supposed to prevent collisions with tap gesture recognizers, may or may not be needed
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
@@ -215,6 +219,7 @@ extension TopicQuestionsViewController: UIPickerViewDelegate, UIPickerViewDataSo
 
 }
 
+// Move the spinner to the next row when the row is tapped
 extension TopicQuestionsViewController: SingleRowSpinnerDelegate {
 
     func updateSpinner() {
