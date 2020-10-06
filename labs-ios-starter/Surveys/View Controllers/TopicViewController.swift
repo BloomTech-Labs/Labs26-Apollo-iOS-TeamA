@@ -70,15 +70,27 @@ class TopicViewController: LoginViewController {
 
     // MARK: - Methods
     private func fetchTopics() {
-        refreshControl.beginRefreshing()
+        if !refreshControl.isRefreshing { refreshControl.beginRefreshing() }
         if !spinner.isAnimating { spinner.startAnimating() }
 
         topicController.fetchTopicsFromServer { result in
             switch result {
             case let .success(topics):
                 DispatchQueue.main.async { [self] in
-                    self.topics = topics
-                    self.refreshControl.endRefreshing()
+                    let fetchController = FetchController()
+                    // map IDs
+                    let serverTopicIDs = topics.map { Int($0.id ?? 0) }
+                    // fetch topics from CoreData
+                    let memberTopics = fetchController.fetchMemberTopics(with: serverTopicIDs)!
+                    let leaderTopics = fetchController.fetchLeaderTopics(with: serverTopicIDs)!
+                    // init topics and append arrays
+                    self.topics = []
+                    self.topics?.append(contentsOf: memberTopics)
+                    self.topics?.append(contentsOf: leaderTopics)
+
+                    if self.refreshControl.isRefreshing {
+                        self.refreshControl.endRefreshing()
+                    }
                     self.spinner.stopAnimating()
                 }
 
