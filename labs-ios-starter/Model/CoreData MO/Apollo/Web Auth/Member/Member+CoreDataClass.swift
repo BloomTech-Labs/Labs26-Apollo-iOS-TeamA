@@ -58,9 +58,9 @@ public final class Member: NSManagedObject, Codable {
 
         id = try? container.decode(String.self, forKey: .id)
         email = try? container.decode(String.self, forKey: .email)
-        firstName = try container.decode(String.self, forKey: .firstName)
-        lastName = try container.decode(String.self, forKey: .lastName)
-        avatarURL = try container.decode(URL.self, forKey: .avatarURL)
+        firstName = try? container.decode(String.self, forKey: .firstName)
+        lastName = try? container.decode(String.self, forKey: .lastName)
+        avatarURL = try? container.decode(URL.self, forKey: .avatarURL)
     }
 
     /// Used for encoding

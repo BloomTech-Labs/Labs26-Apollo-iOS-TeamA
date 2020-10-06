@@ -63,7 +63,11 @@ public final class Topic: NSManagedObject, Codable {
         contextId = try container.decode(Int64.self, forKey: .contextId)
         timeStamp = try container.decode(String.self, forKey: .timeStamp)
 
-        section = leaderId == ProfileController.shared.authenticatedUserProfile?.id ? "Leader" : "Member"
+        guard let userId = ProfileController.shared.authenticatedUserProfile?.id else {
+            print("failed to read userId in app while decoding Topic")
+            return
+        }
+        section = leaderId == userId ? "Leader" : "Member"
     }
 
     /// Used for encoding
