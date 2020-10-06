@@ -1,7 +1,6 @@
 // Copyright © 2020 Shawn James. All rights reserved.
 // TopicViewController.swift
 
-import CoreData
 import UIKit
 
 class TopicViewController: LoginViewController {
@@ -14,16 +13,22 @@ class TopicViewController: LoginViewController {
     let headerReuseIdentifier = String.getCollectionViewHeaderId(.topicSectionHeader)
     let topicController = TopicController()
 
-    private var fetchController: NSFetchedResultsController<Topic> = {
-        let fetchRequest: NSFetchRequest<Topic> = Topic.fetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "timeStamp", ascending: false)]
-        let mainContext = CoreDataManager.shared.mainContext
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
-                                                                  managedObjectContext: mainContext,
-                                                                  sectionNameKeyPath: "section",
-                                                                  cacheName: nil)
-        return fetchedResultsController
-    }()
+    var topics: [Topic]? {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else {
+                    print("TopicViewController is nil")
+                    return
+                }
+
+                guard self.topics != nil else { return }
+
+                DispatchQueue.main.async {
+                    self.topicsCollectionView.reloadData()
+                }
+            }
+        }
+    }
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -50,7 +55,8 @@ class TopicViewController: LoginViewController {
                 print("couldn't get selected index")
                 return
             }
-            let topic = fetchController.object(at: selectedIndex)
+
+            guard let topic = topics?[selectedIndex.row] else { return }
 
             // TESTING, REMOVE
             let member = Member(id: "1", email: "1@1.com", firstName: "firstOne", lastName: "lastOne", avatarURL: URL(string: "http://www.url.com"))
@@ -69,19 +75,13 @@ class TopicViewController: LoginViewController {
 
         topicController.fetchTopicsFromServer { result in
             switch result {
-            case .success:
+            case let .success(topics):
                 DispatchQueue.main.async { [self] in
+                    self.topics = topics
                     self.refreshControl.endRefreshing()
                     self.spinner.stopAnimating()
-
-                    do {
-                        try self.fetchController.performFetch()
-                    } catch {
-                        print("Failure to perform fetch on fetchedResultsController: \(error)")
-                    }
-
-                    self.topicsCollectionView.reloadData()
                 }
+
             case let .failure(error):
                 self.spinner.stopAnimating()
                 self.presentNetworkError(error: error.rawValue) { tryAgain in
@@ -117,28 +117,55 @@ class TopicViewController: LoginViewController {
 // MARK: - CollectionView DataSource & Delegate
 extension TopicViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return fetchController.sections?.count ?? 0
+        return TopicCVSection.allCases.count
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return fetchController.sections?[section].numberOfObjects ?? 0
+        guard
+            let section = TopicCVSection(rawValue: section), // >< "Missing section",
+            let leaderCount = topics?.filter({ $0.section == "Leader" }).count ?? 0, // >< "failed to filter leader topics
+            let memberCount = topics?.filter({ $0.section == "Member" }).count ?? 0 // >< "failed to filter member topics
+        else {
+            print("Early exit from numberOfItemsInSection")
+            return 1
+        }
+        switch section {
+        case .leader: return leaderCount
+        case .member: return memberCount
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        if let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerReuseIdentifier, for: indexPath) as? TopicSectionHeader {
-            let headerName = fetchController.sections?[indexPath.section].name ?? ""
-            sectionHeader.sectionHeaderLabel.text = headerName
-            return sectionHeader
+        guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                                  withReuseIdentifier: headerReuseIdentifier,
+                                                                                  for: indexPath) as? TopicSectionHeader
+        else {
+            fatalError("Failed to configure collectionView header. Broken method or out of range.")
         }
-        fatalError("Failed to configure collectionView header. Broken method or out of range.")
+        let section = indexPath.section
+        sectionHeader.sectionHeaderLabel.text = TopicCVSection(rawValue: section)!.description
+
+        return sectionHeader
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = topicsCollectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as? TopicCollectionViewCell else {
-            fatalError("couldn't downcast TopicCollectionViewCell 🚨CHANGE THIS BEFORE PRODUCTION🚨")
+        guard
+            let section = TopicCVSection(rawValue: indexPath.section), // >< "Section broken or out of range",
+            let topic = topics?[indexPath.row], // >< "Missing topic",
+            let cell = topicsCollectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier,
+                                                                for: indexPath) as? TopicCollectionViewCell // >< "Bad cell"
+        else {
+            fatalError("couldn't configure TopicCollectionViewCell 🚨CHANGE THIS BEFORE PRODUCTION🚨")
         }
-        cell.topic = fetchController.object(at: indexPath)
-        cell.setDimensions(width: view.frame.width - 40, height: 80)
-        return cell
+        switch section { // implementation is same for now but may be different later
+        case .leader:
+            cell.topic = topic
+            cell.setDimensions(width: view.frame.width - 40, height: 80) // size in delegate methods to remove warnings?
+            return cell
+        case .member:
+            cell.topic = topic
+            cell.setDimensions(width: view.frame.width - 40, height: 80) // size in delegate methods to remove warnings?
+            return cell
+        }
     }
 }
