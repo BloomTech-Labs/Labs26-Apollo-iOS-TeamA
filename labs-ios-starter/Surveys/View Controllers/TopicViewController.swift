@@ -2,8 +2,9 @@
 // TopicViewController.swift
 
 import UIKit
+import CoreData
 
-class TopicViewController: LoginViewController {
+class TopicViewController: LoginViewController, NSFetchedResultsControllerDelegate {
     // MARK: - Outlets & Properties
     @IBOutlet var topicsCollectionView: UICollectionView!
 
@@ -13,22 +14,37 @@ class TopicViewController: LoginViewController {
     let headerReuseIdentifier = String.getCollectionViewHeaderId(.topicSectionHeader)
     let topicController = TopicController()
 
-    var topics: [Topic]? {
-        didSet {
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else {
-                    print("TopicViewController is nil")
-                    return
-                }
+    lazy var fetchedResultsController: NSFetchedResultsController<Topic> = {
 
-                guard self.topics != nil else { return }
+        let fetchRequest: NSFetchRequest<Topic> = Topic.fetchRequest()
 
-                DispatchQueue.main.async {
-                    self.topicsCollectionView.reloadData()
-                }
-            }
+        fetchRequest.sortDescriptors = [
+            NSSortDescriptor(key: "timeStamp",
+                             ascending: true)
+        ]
+
+        if let member = profileController.authenticatedUserProfile,
+              let userId = member.id {
+            fetchRequest.predicate = NSPredicate(format: "leaderId == %@ OR %@ IN members", userId, member)
         }
-    }
+
+        let context = CoreDataManager.shared.mainContext
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                             managedObjectContext: context,
+                                             sectionNameKeyPath: "section",
+                                             cacheName: nil)
+        frc.delegate = self
+        do {
+            try frc.performFetch()
+        } catch let frcError {
+            NSLog(
+                """
+                Error fetching data from frc: \(#file), \(#function), \(#line) -
+                \(frcError)
+                """)
+        }
+        return frc
+    }()
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -56,7 +72,7 @@ class TopicViewController: LoginViewController {
                 return
             }
 
-            guard let topic = topics?[selectedIndex.row] else { return }
+            guard let topic = fetchedResultsController.fetchedObjects?[selectedIndex.row] else { return }
 
             // TESTING, REMOVE
             let member = Member(id: "1", email: "1@1.com", firstName: "firstOne", lastName: "lastOne", avatarURL: URL(string: "http://www.url.com"))
@@ -75,18 +91,23 @@ class TopicViewController: LoginViewController {
 
         topicController.fetchTopicsFromServer { result in
             switch result {
-            case let .success(topics):
+            case .success:
                 DispatchQueue.main.async { [self] in
-                    let fetchController = FetchController()
-                    // map IDs
-                    let serverTopicIDs = topics.map { Int($0.id ?? 0) }
-                    // fetch topics from CoreData
-                    let memberTopics = fetchController.fetchMemberTopics(with: serverTopicIDs)!
-                    let leaderTopics = fetchController.fetchLeaderTopics(with: serverTopicIDs)!
-                    // init topics and append arrays
-                    self.topics = []
-                    self.topics?.append(contentsOf: memberTopics)
-                    self.topics?.append(contentsOf: leaderTopics)
+                    do {
+                        try fetchedResultsController.performFetch()
+                    } catch {
+                        print("Error fetching Topics from CoreData")
+                    }
+//                    let fetchController = FetchController()
+//                    // map IDs
+//                    let serverTopicIDs = topics.map { Int($0.id ?? 0) }
+//                    // fetch topics from CoreData
+//                    let memberTopics = fetchController.fetchMemberTopics(with: serverTopicIDs)!
+//                    let leaderTopics = fetchController.fetchLeaderTopics(with: serverTopicIDs)!
+//                    // init topics and append arrays
+//                    self.topics = []
+//                    self.topics?.append(contentsOf: memberTopics)
+//                    self.topics?.append(contentsOf: leaderTopics)
 
                     if self.refreshControl.isRefreshing {
                         self.refreshControl.endRefreshing()
@@ -129,22 +150,23 @@ class TopicViewController: LoginViewController {
 // MARK: - CollectionView DataSource & Delegate
 extension TopicViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return TopicCVSection.allCases.count
+        return fetchedResultsController.sections?.count ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard
-            let section = TopicCVSection(rawValue: section), // >< "Missing section",
-            let leaderCount = topics?.filter({ $0.section == "Leader" }).count ?? 0, // >< "failed to filter leader topics
-            let memberCount = topics?.filter({ $0.section == "Member" }).count ?? 0 // >< "failed to filter member topics
-        else {
-            print("Early exit from numberOfItemsInSection")
-            return 1
-        }
-        switch section {
-        case .leader: return leaderCount
-        case .member: return memberCount
-        }
+//        guard
+//            let section = TopicCVSection(rawValue: section), // >< "Missing section",
+//            let leaderCount = topics?.filter({ $0.section == "Leader" }).count ?? 0, // >< "failed to filter leader topics
+//            let memberCount = topics?.filter({ $0.section == "Member" }).count ?? 0 // >< "failed to filter member topics
+//        else {
+//            print("Early exit from numberOfItemsInSection")
+//            return 1
+//        }
+//        switch section {
+//        case .leader: return leaderCount
+//        case .member: return memberCount
+//        }
+        fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -163,7 +185,7 @@ extension TopicViewController: UICollectionViewDataSource, UICollectionViewDeleg
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard
             let section = TopicCVSection(rawValue: indexPath.section), // >< "Section broken or out of range",
-            let topic = topics?[indexPath.row], // >< "Missing topic",
+            let topic = fetchedResultsController.fetchedObjects?[indexPath.row], // >< "Missing topic",
             let cell = topicsCollectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier,
                                                                 for: indexPath) as? TopicCollectionViewCell // >< "Bad cell"
         else {
