@@ -26,6 +26,7 @@
 		1D0E1062250B046300A21C44 /* TopicNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E1061250B046300A21C44 /* TopicNameViewController.swift */; };
 		1D0E1064250B047400A21C44 /* TopicQuestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E1063250B047400A21C44 /* TopicQuestionsViewController.swift */; };
 		1D28AD5D2523EC5600825688 /* ApolloCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D28AD5C2523EC5600825688 /* ApolloCollectionViewCell.swift */; };
+		1D28AE8D252BF03E00825688 /* TopicCVSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D28AE8C252BF03E00825688 /* TopicCVSection.swift */; };
 		1D46C2142501D292007DEDAF /* OktaAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 1D46C2132501D292007DEDAF /* OktaAuth */; };
 		1D46C21D2501DDB4007DEDAF /* UIView+LivePreviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D46C21C2501DDB4007DEDAF /* UIView+LivePreviews.swift */; };
 		1D46C22125055E81007DEDAF /* StandardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D46C22025055E81007DEDAF /* StandardButton.swift */; };
@@ -116,6 +117,7 @@
 		1D0E1061250B046300A21C44 /* TopicNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicNameViewController.swift; sourceTree = "<group>"; };
 		1D0E1063250B047400A21C44 /* TopicQuestionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicQuestionsViewController.swift; sourceTree = "<group>"; };
 		1D28AD5C2523EC5600825688 /* ApolloCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApolloCollectionViewCell.swift; sourceTree = "<group>"; };
+		1D28AE8C252BF03E00825688 /* TopicCVSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCVSection.swift; sourceTree = "<group>"; };
 		1D46C21C2501DDB4007DEDAF /* UIView+LivePreviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+LivePreviews.swift"; sourceTree = "<group>"; };
 		1D46C22025055E81007DEDAF /* StandardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardButton.swift; sourceTree = "<group>"; };
 		1D4D9C0125068DEB00348246 /* CircularButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularButton.swift; sourceTree = "<group>"; };
@@ -281,6 +283,7 @@
 				1D0E1054250AB35E00A21C44 /* Model Controllers */,
 				1D0E1055250AB36300A21C44 /* View Controllers */,
 				1D0E1056250AB37600A21C44 /* View */,
+				1D28AE8B252BF00000825688 /* View Models */,
 			);
 			path = Surveys;
 			sourceTree = "<group>";
@@ -318,6 +321,14 @@
 				B917E2E22526DD14004B16BA /* SingleRowPickerView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		1D28AE8B252BF00000825688 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				1D28AE8C252BF03E00825688 /* TopicCVSection.swift */,
+			);
+			path = "View Models";
 			sourceTree = "<group>";
 		};
 		1D46C21F25055D7E007DEDAF /* Custom Objects */ = {
@@ -748,6 +759,7 @@
 				1D0E105C250AD69200A21C44 /* NotificationsViewController.swift in Sources */,
 				1D0E1064250B047400A21C44 /* TopicQuestionsViewController.swift in Sources */,
 				466C4274249A8748007D033E /* AppDelegate.swift in Sources */,
+				1D28AE8D252BF03E00825688 /* TopicCVSection.swift in Sources */,
 				1D0E1060250B043400A21C44 /* TopicViewController.swift in Sources */,
 				46C2BC9224D432F90077E49D /* ProfileTabBarViewController.swift in Sources */,
 				1D0545272515C3BC006E8665 /* Member+CoreDataProperties.swift in Sources */,

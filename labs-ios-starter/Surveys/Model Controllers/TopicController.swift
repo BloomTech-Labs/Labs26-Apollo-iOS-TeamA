@@ -122,7 +122,6 @@ class TopicController {
                     completion(.success(Void()))
                     return
                 }
-
                 self.deleteTopicsFromCoreData(topics: topicsNotOnServer, context: context)
                 completion(.success(Void()))
 
