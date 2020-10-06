@@ -95,7 +95,7 @@ class TopicController {
     /// Fetch all topics from server and save them to CoreData.
     /// - Parameters:
     ///   - completion: Completes with `[Topic]`. Topics are also stored in the controller...
-    func fetchTopicsFromServer(completion: @escaping CompleteWithNetworkError) {
+    func fetchTopicsFromServer(completion: @escaping CompleteWithTopics) {
         guard let request = createRequest(pathFromBaseURL: "topic") else {
             print("🛑! User isn't logged in!")
             completion(.failure(.unauthorized))
@@ -119,12 +119,11 @@ class TopicController {
                 let serverTopicIDs = topics.compactMap { $0.id }
                 guard let topicsNotOnServer = FetchController().fetchTopicsNotOnServer(serverTopicIDs, context: context) else {
                     print("no topics to delete")
-                    completion(.success(Void()))
+                    completion(.success(topics))
                     return
                 }
-
                 self.deleteTopicsFromCoreData(topics: topicsNotOnServer, context: context)
-                completion(.success(Void()))
+                completion(.success(topics))
 
             case let .failure(error):
                 completion(.failure(error)) // bubble error to caller
