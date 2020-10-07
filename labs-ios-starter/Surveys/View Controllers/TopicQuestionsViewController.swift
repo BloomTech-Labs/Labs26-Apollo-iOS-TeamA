@@ -247,20 +247,3 @@ extension TopicQuestionsViewController: SingleRowSpinnerDelegate {
         }
     }
 }
-
-// MARK: - Live Previews
-
-#if DEBUG
-
-    import SwiftUI
-
-    struct TopicQuestionsViewControllerPreview: PreviewProvider {
-        static var previews: some View {
-            let storyboard = UIStoryboard(name: "Surveys", bundle: .main)
-            let tabBarController = storyboard.instantiateInitialViewController() as? UITabBarController
-
-            return tabBarController?.view.livePreview.edgesIgnoringSafeArea(.all)
-        }
-    }
-
-#endif
