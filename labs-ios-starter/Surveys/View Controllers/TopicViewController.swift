@@ -1,8 +1,8 @@
 // Copyright © 2020 Shawn James. All rights reserved.
 // TopicViewController.swift
 
-import UIKit
 import CoreData
+import UIKit
 
 class TopicViewController: LoginViewController, NSFetchedResultsControllerDelegate {
     // MARK: - Outlets & Properties
@@ -15,7 +15,6 @@ class TopicViewController: LoginViewController, NSFetchedResultsControllerDelega
     let topicController = TopicController()
 
     lazy var fetchedResultsController: NSFetchedResultsController<Topic> = {
-
         let fetchRequest: NSFetchRequest<Topic> = Topic.fetchRequest()
 
         fetchRequest.sortDescriptors = [
@@ -24,7 +23,7 @@ class TopicViewController: LoginViewController, NSFetchedResultsControllerDelega
         ]
 
         if let member = profileController.authenticatedUserProfile,
-              let userId = member.id {
+            let userId = member.id {
             fetchRequest.predicate = NSPredicate(format: "leaderId == %@ OR %@ IN members", userId, member)
         }
 
@@ -63,16 +62,14 @@ class TopicViewController: LoginViewController, NSFetchedResultsControllerDelega
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == .getSegueID(.topicDetailSegue) {
-            guard let topicDetailViewController = segue.destination as? TopicDetailViewController else {
-                print("Invalid Segue for presenting Topic Detail")
-                return
+            guard
+                let topicDetailViewController = segue.destination
+                as? TopicDetailViewController >< "Invalid Segue for presenting Topic Detail",
+                let selectedIndex = topicsCollectionView.indexPathsForSelectedItems?.first >< "couldn't get selected index",
+                let topic = fetchedResultsController.fetchedObjects?[selectedIndex.row] >< "No topic"
+            else {
+                print("Exited early from prepare(for segue:)"); return
             }
-            guard let selectedIndex = topicsCollectionView.indexPathsForSelectedItems?.first else {
-                print("couldn't get selected index")
-                return
-            }
-
-            guard let topic = fetchedResultsController.fetchedObjects?[selectedIndex.row] else { return }
 
             // TESTING, REMOVE
             let member = Member(id: "1", email: "1@1.com", firstName: "firstOne", lastName: "lastOne", avatarURL: URL(string: "http://www.url.com"))
@@ -184,10 +181,10 @@ extension TopicViewController: UICollectionViewDataSource, UICollectionViewDeleg
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard
-            let section = TopicCVSection(rawValue: indexPath.section), // >< "Section broken or out of range",
-            let topic = fetchedResultsController.fetchedObjects?[indexPath.row], // >< "Missing topic",
+            let section = TopicCVSection(rawValue: indexPath.section) >< "Section broken or out of range",
+            let topic = fetchedResultsController.fetchedObjects?[indexPath.row] >< "Missing topic",
             let cell = topicsCollectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier,
-                                                                for: indexPath) as? TopicCollectionViewCell // >< "Bad cell"
+                                                                for: indexPath) as? TopicCollectionViewCell >< "Bad cell"
         else {
             fatalError("couldn't configure TopicCollectionViewCell 🚨CHANGE THIS BEFORE PRODUCTION🚨")
         }
