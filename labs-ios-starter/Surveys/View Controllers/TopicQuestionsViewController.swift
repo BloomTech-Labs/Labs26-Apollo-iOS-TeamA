@@ -236,9 +236,10 @@ extension TopicQuestionsViewController: UIPickerViewDelegate, UIPickerViewDataSo
 // Move the spinner to the next row when the row is tapped
 extension TopicQuestionsViewController: SingleRowSpinnerDelegate {
     func updateSpinner() {
-        let row = pickerView.selectedRow(inComponent: 0)
-        if row != pickerView.numberOfRows(inComponent: 0) - 1 { // -1 to account for non 0 based count
-            let nextRow = pickerView.selectedRow(inComponent: 0) + 1
+        let selectedRow = pickerView.selectedRow(inComponent: 0)
+        let numberOfRows = pickerView.numberOfRows(inComponent: 0) - 1
+        let isLastRow = selectedRow == numberOfRows
+        let nextRow = isLastRow ? 0 : selectedRow + 1
 
         DispatchQueue.main.async {
             self.pickerView.selectRow(nextRow, inComponent: 0, animated: true)
