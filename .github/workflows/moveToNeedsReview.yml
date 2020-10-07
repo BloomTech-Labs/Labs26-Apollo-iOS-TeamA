@@ -11,4 +11,5 @@ jobs:
       with:
         action-token: "${{ secrets.MY_TOKEN }}"
         project-url: "https://github.com/Lambda-School-Labs/Labs26-Apollo-iOS-TeamA/projects/1"
+        label-name: "*"
         column-name: "Needs review"
