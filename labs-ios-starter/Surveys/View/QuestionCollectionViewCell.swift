@@ -8,12 +8,18 @@
 
 import UIKit
 
-class QuestionCollectionViewCell: ApolloCollectionViewCell {
-    @IBOutlet var nameLabel: UILabel!
+class QuestionCollectionViewCell: UICollectionViewCell {
+    @IBOutlet var nameLabel: UITextField!
+
+    var question: Question? {
+        didSet {
+            updateViews(adjustingForWidthOf: self, question: question!.question)
+        }
+    }
 
     ///set nameLabel.text, initialize label parameters
-    func updateViews( adjustingForWidthOf view: UIView, withWidthDeltaOf widthDelta: CGFloat = 40, height: CGFloat = 40, question: String? = nil, font: UIFont = .systemFont(ofSize: 17) ) {
-        nameLabel.numberOfLines = 0
+    func updateViews( adjustingForWidthOf view: UIView, withWidthDeltaOf widthDelta: CGFloat = 40, height: CGFloat = 20, question: String? = nil, font: UIFont = .systemFont(ofSize: 17) ) {
+        //nameLabel.numberOfLines = 0
         nameLabel.font = font
 
         if let question = question {

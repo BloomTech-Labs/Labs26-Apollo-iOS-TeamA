@@ -26,9 +26,11 @@ extension UIColor {
         UIColor(named: named.rawValue)!
     }
 
-    static var background = getColor(.background)
     static var action = getColor(.action)
     static var shadow = getColor(.shadow)
+    static var accent = getColor(.accent)
+    static var background = getColor(.background)
+    static var cell = getColor(.cell)
 }
 
 class DefaultViewController: UIViewController {

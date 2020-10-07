@@ -14,14 +14,31 @@ class TopicDetailViewController: UIViewController {
     }
 
     // MARK: - Properties -
+    var id: Int64?
+    let fetchController = FetchController()
+    var topic: Topic? {
+        didSet {
+            questions = fetchController.fetchQuestionRequest()
+        }
+    }
 
-    var topic: Topic?
-    let reuseIdentifier = String.getCollectionViewCellID(.crudCollectionViewCell)
+    var questions: [Question]? {
+        didSet {
+            updateViews()
+        }
+    }
+    let reuseIdentifier = String.getCollectionViewCellID(.questionDetailCell)
 
     // MARK: - View Lifecycle -
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        guard let id = self.id else {return}
+        self.topic = fetchController.fetchTopic(with: id)
+    }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    private func updateViews() {
+        CRUDCollectionView.reloadData()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -41,11 +58,15 @@ class TopicDetailViewController: UIViewController {
 
 extension TopicDetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return self.questions?.count ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = CRUDCollectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        guard let cell = CRUDCollectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? QuestionCollectionViewCell else {
+            // TODO: Remove before prod
+            fatalError("invalid identifier: \(reuseIdentifier)") 
+      }
+        cell.question = self.questions?[indexPath.item]
         cell.setDimensions(width: view.frame.width - 40, height: 80)
         return cell
     }

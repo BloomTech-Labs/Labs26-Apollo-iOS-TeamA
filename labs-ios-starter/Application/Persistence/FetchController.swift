@@ -33,6 +33,16 @@ class FetchController {
         }
     }
 
+    /// Fetches the topic with the matching id
+    /// - Parameters:
+    ///   - id: Int64 - must match TopicID
+    ///   - context: The context used to execute the request
+    /// - Returns: The first topic found matching the passed in ID (it's constrained so there can only be 1, but the helper method is set up to fetch an array
+    func fetchTopic(with id: Int64, context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> Topic? {
+        let predicate = NSPredicate(format: "id == %d", id)
+        return fetchTopicRequest(with: predicate, context: context)?.first
+    }
+
     /// Fetches [Topic] from CoreData where the currently logged in user matches the Topic's leaderId
     /// - Parameters:
     ///   - identifiersToFetch: The identifiers of Topics to attempt to retrieve from CoreData
