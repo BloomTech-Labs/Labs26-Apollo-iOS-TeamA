@@ -1,0 +1,14 @@
+name: Auto Assign to Project(s)
+
+on:
+  pull_request:
+    types: [ready_for_review, review_requested]
+jobs:
+  Move_Milestoned_Issue_On_Project_Board:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: pauldruziak/move-labeled-or-milestoned-pull-request@v1.0.2
+      with:
+        action-token: "${{ secrets.MY_TOKEN }}"
+        project-url: "https://github.com/Lambda-School-Labs/Labs26-Apollo-iOS-TeamA/projects/1"
+        column-name: "Needs review"
