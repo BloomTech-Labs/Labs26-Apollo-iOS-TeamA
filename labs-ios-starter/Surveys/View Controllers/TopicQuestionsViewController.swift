@@ -9,15 +9,15 @@ class TopicQuestionsViewController: UIViewController {
     @IBOutlet var pickerView: SingleRowPickerView!
 
     @IBOutlet var questionsCollectionView: UICollectionView!
-    //@IBOutlet var contextSegmentControl: UISegmentedControl!
+    // @IBOutlet var contextSegmentControl: UISegmentedControl!
 
     @IBAction func postTopicButton(_ sender: UIButton) {
         // TODO: Context Title
-//        guard let contextID = contextID else {
-//            print("no context id")
-//            return
-//        }
-//        postTopic(contextID: contextID)
+        guard let contextID = contextID else {
+            print("no context id")
+            return
+        }
+        postTopic(contextID: contextID)
     }
 
     // MARK: - Properties -
@@ -26,7 +26,7 @@ class TopicQuestionsViewController: UIViewController {
     let topicController = TopicController()
     let questionsCellReuseId = String.getCollectionViewCellID(.questionsCollectionViewCell)
     let addNewQuestionCellReuseId = String.getCollectionViewCellID(.addNewQuestionCell)
-    var contextID: Int?
+    var contextID: Int? // from TopicNameViewController
     private var fetchController = FetchController()
 
     var questions: [Question]? {
@@ -41,7 +41,7 @@ class TopicQuestionsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupPickerView()
-
+        getAllContextQuestions()
     }
 
     private func setupPickerView() {
@@ -50,14 +50,30 @@ class TopicQuestionsViewController: UIViewController {
         pickerView.tapDelegate = self
     }
 
+    /// Get questions from server, save to CoreData, and fetch from CoreData
     private func getAllContextQuestions() {
-        // get questions from CoreData (fetched from API on prior screen)
-        guard let questions = self.fetchController.fetchQuestionRequest() else {
-            print("Couldn't fetch questions")
-            return
+        topicController.getQuestions { result in
+            switch result {
+            case .success:
+                // get questions from CoreData (fetched from API on prior screen)
+                guard let questions = self.fetchController.fetchQuestionRequest() else {
+                    print("Couldn't fetch questions")
+                    return
+                }
+                // reload qeustions picker
+                self.questions = questions
+            case let .failure(error):
+                self.presentNetworkError(error: error.rawValue) { tryAgain in
+                    switch tryAgain {
+                    case true:
+                        self.getAllContextQuestions()
+                    default:
+                        // exit app?
+                        print("user didn't want to try again")
+                    }
+                }
+            }
         }
-        // reload questions Picker
-        self.questions = questions
     }
 
     // MARK: - Update -
@@ -115,7 +131,7 @@ class TopicQuestionsViewController: UIViewController {
 }
 
 extension TopicQuestionsViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    //TODO: Convert section to added questions rather than all questions
+    // TODO: Convert section to added questions rather than all questions
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return questions?.count ?? 0
     }
@@ -127,7 +143,7 @@ extension TopicQuestionsViewController: UICollectionViewDataSource, UICollection
         }
 
         switch indexPath.row {
-        case 0 ..< questions.count :
+        case 0 ..< questions.count:
             let cell = questionsCollectionView.dequeueReusableCell(withReuseIdentifier: questionsCellReuseId, for: indexPath) as! QuestionCollectionViewCell
 
             cell.updateViews(adjustingForWidthOf: view,
@@ -166,91 +182,85 @@ extension TopicQuestionsViewController: UIPickerViewDelegate, UIPickerViewDataSo
             print("questions array empty")
             return UIView()
         }
-
-        let padding:CGFloat = 20
-        let pickerLabelHeight:CGFloat = 50
-        let pickerLabel = UILabel(frame: CGRect(
-                                    x: 0,
-                                    y: 0,
-                                    width: pickerView.frame.size.width - padding,
-                                    height: pickerLabelHeight)
+        // setup label
+        let padding: CGFloat = 20
+        let pickerLabelHeight: CGFloat = 50
+        let pickerLabel = UILabel(frame: CGRect(x: 0,
+                                                y: 0,
+                                                width: pickerView.frame.size.width - padding,
+                                                height: pickerLabelHeight)
         )
 
+        let font = UIFont(name: "Apple Symbols", size: 24)
         pickerLabel.numberOfLines = 0
+        pickerLabel.font = font
         pickerLabel.text = questions[row].question
         pickerLabel.sizeToFit()
         pickerLabel.lineBreakMode = .byWordWrapping
-        //down arrow
-        let width:CGFloat = 40
-        let height = width/2
-        let arrowView = UIButton(frame: CGRect(
-                                x: 0,
-                                y: 0,
-                                width: width,
-                                height: height)
+
+        let stackViewHeight: CGFloat = 70
+        let stackView = UIStackView(frame: CGRect(x: 0,
+                                                  y: 0,
+                                                  width: pickerView.frame.size.width - padding,
+                                                  height: stackViewHeight)
         )
 
+        stackView.spacing = 0
+        stackView.distribution = .fillProportionally
+        stackView.alignment = .center
+        stackView.axis = .vertical
+        stackView.addArrangedSubview(pickerLabel)
+
         if row != questions.count - 1 {
+            // down arrow
+            let width: CGFloat = 40
+            let height = width / 2
+            let arrowView = UIButton(frame: CGRect(x: 0,
+                                                   y: 0,
+                                                   width: width,
+                                                   height: height)
+            )
+
             let image = UIImage(systemName: "chevron.down")
             arrowView.setImage(image, for: .normal)
-
-            let stackViewHeight:CGFloat = 70
-            let stackView = UIStackView(frame: CGRect(
-                                            x: 0,
-                                            y: 0,
-                                            width: pickerView.frame.size.width - padding,
-                                            height: stackViewHeight)
-            )
-            stackView.spacing = 0
-            stackView.distribution = .fillProportionally
-            stackView.alignment = .center
-            stackView.axis = .vertical
-            stackView.addArrangedSubview(pickerLabel)
             stackView.addArrangedSubview(arrowView)
-            return stackView
-        } else {
-            return pickerLabel
         }
+        return stackView
     }
 
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
         100
     }
-
 }
 
 // Move the spinner to the next row when the row is tapped
 extension TopicQuestionsViewController: SingleRowSpinnerDelegate {
-
     func updateSpinner() {
         let row = pickerView.selectedRow(inComponent: 0)
         if row != pickerView.numberOfRows(inComponent: 0) - 1 { // -1 to account for non 0 based count
-
             let nextRow = pickerView.selectedRow(inComponent: 0) + 1
 
             #warning("Race condition!")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
                 self.pickerView.selectRow(nextRow, inComponent: 0, animated: true)
             }
-
         }
     }
-
 }
 
 // MARK: - Live Previews
 
 #if DEBUG
 
-import SwiftUI
+    import SwiftUI
 
-struct TopicQuestionsViewControllerPreview: PreviewProvider {
-    static var previews: some View {
-        let storyboard = UIStoryboard(name: "Surveys", bundle: .main)
-        let tabBarController = storyboard.instantiateInitialViewController() as? UITabBarController
+    struct TopicQuestionsViewControllerPreview: PreviewProvider {
+        static var previews: some View {
+            let storyboard = UIStoryboard(name: "Surveys", bundle: .main)
+            let tabBarController = storyboard.instantiateInitialViewController() as? UITabBarController
 
-        return tabBarController?.view.livePreview.edgesIgnoringSafeArea(.all)
+            return tabBarController?.view.livePreview.edgesIgnoringSafeArea(.all)
+        }
     }
-}
 
 #endif

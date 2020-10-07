@@ -99,6 +99,10 @@ class TopicNameViewController: UIViewController {
                 return
             }
             questionsVC.topicName = topicName
+            let index = contextPicker.selectedRow(inComponent: 0)
+            let contextId = Int(contexts?[index].id ?? 0)
+
+            questionsVC.contextID = contextId
         }
     }
 }
