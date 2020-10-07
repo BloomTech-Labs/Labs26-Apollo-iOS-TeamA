@@ -26,7 +26,6 @@
 		1D0E1062250B046300A21C44 /* TopicNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E1061250B046300A21C44 /* TopicNameViewController.swift */; };
 		1D0E1064250B047400A21C44 /* TopicQuestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E1063250B047400A21C44 /* TopicQuestionsViewController.swift */; };
 		1D28AD5D2523EC5600825688 /* ApolloCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D28AD5C2523EC5600825688 /* ApolloCollectionViewCell.swift */; };
-		1D28AE75252BC8AE00825688 /* GuardDebugOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D28AE74252BC8AE00825688 /* GuardDebugOperator.swift */; };
 		1D46C2142501D292007DEDAF /* OktaAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 1D46C2132501D292007DEDAF /* OktaAuth */; };
 		1D46C21D2501DDB4007DEDAF /* UIView+LivePreviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D46C21C2501DDB4007DEDAF /* UIView+LivePreviews.swift */; };
 		1D46C22125055E81007DEDAF /* StandardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D46C22025055E81007DEDAF /* StandardButton.swift */; };
@@ -116,7 +115,6 @@
 		1D0E1061250B046300A21C44 /* TopicNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicNameViewController.swift; sourceTree = "<group>"; };
 		1D0E1063250B047400A21C44 /* TopicQuestionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicQuestionsViewController.swift; sourceTree = "<group>"; };
 		1D28AD5C2523EC5600825688 /* ApolloCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApolloCollectionViewCell.swift; sourceTree = "<group>"; };
-		1D28AE74252BC8AE00825688 /* GuardDebugOperator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuardDebugOperator.swift; sourceTree = "<group>"; };
 		1D46C21C2501DDB4007DEDAF /* UIView+LivePreviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+LivePreviews.swift"; sourceTree = "<group>"; };
 		1D46C22025055E81007DEDAF /* StandardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardButton.swift; sourceTree = "<group>"; };
 		1D4D9C0125068DEB00348246 /* CircularButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularButton.swift; sourceTree = "<group>"; };
@@ -319,14 +317,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		1D28AE70252BC55700825688 /* Operators */ = {
-			isa = PBXGroup;
-			children = (
-				1D28AE74252BC8AE00825688 /* GuardDebugOperator.swift */,
-			);
-			path = Operators;
-			sourceTree = "<group>";
-		};
 		1D46C21F25055D7E007DEDAF /* Custom Objects */ = {
 			isa = PBXGroup;
 			children = (
@@ -496,7 +486,6 @@
 			isa = PBXGroup;
 			children = (
 				B9404222250203C30048BCED /* Documentation */,
-				1D28AE70252BC55700825688 /* Operators */,
 				46BEB4EA24C98EA300FE0CD1 /* Extensions */,
 				B94042182501D09C0048BCED /* View */,
 				B940420C2501D03A0048BCED /* Network */,
@@ -754,7 +743,6 @@
 				B94042272502E1390048BCED /* UIStackView + Convenience.swift in Sources */,
 				1D46C22125055E81007DEDAF /* StandardButton.swift in Sources */,
 				1D0E105C250AD69200A21C44 /* NotificationsViewController.swift in Sources */,
-				1D28AE75252BC8AE00825688 /* GuardDebugOperator.swift in Sources */,
 				1D0E1064250B047400A21C44 /* TopicQuestionsViewController.swift in Sources */,
 				466C4274249A8748007D033E /* AppDelegate.swift in Sources */,
 				1D0E1060250B043400A21C44 /* TopicViewController.swift in Sources */,
