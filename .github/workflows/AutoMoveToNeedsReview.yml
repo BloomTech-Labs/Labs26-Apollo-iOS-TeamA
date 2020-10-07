@@ -1,0 +1,19 @@
+name: Auto Move to Needs Review
+
+on:
+  pull_request:
+    types: [ready_for_review]
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  assign_one_project:
+    runs-on: ubuntu-latest
+    name: Assign to One Project
+    steps:
+    - name: Move to needs review
+      uses: srggrs/assign-one-project-github-action@1.2.0
+      if: github.event.action == 'ready_for_review'
+      with:
+        project: 'https://github.com/Lambda-School-Labs/Labs26-Apollo-iOS-TeamA/projects/1'
+        column_name: 'Needs review'
