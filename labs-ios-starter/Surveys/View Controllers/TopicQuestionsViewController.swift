@@ -211,20 +211,20 @@ extension TopicQuestionsViewController: UIPickerViewDelegate, UIPickerViewDataSo
         stackView.axis = .vertical
         stackView.addArrangedSubview(pickerLabel)
 
-        if row != questions.count - 1 {
-            // down arrow
-            let width: CGFloat = 40
-            let height = width / 2
-            let arrowView = UIButton(frame: CGRect(x: 0,
-                                                   y: 0,
-                                                   width: width,
-                                                   height: height)
-            )
+        // down arrow
+        let width: CGFloat = 40
+        let height = width / 2
+        let arrowView = UIButton(frame: CGRect(x: 0,
+                                               y: 0,
+                                               width: width,
+                                               height: height)
+        )
 
-            let image = UIImage(systemName: "chevron.down")
-            arrowView.setImage(image, for: .normal)
-            stackView.addArrangedSubview(arrowView)
-        }
+        let isLastRow = row == questions.count - 1
+        let image = isLastRow ? UIImage(systemName: "chevron.up") : UIImage(systemName: "chevron.down")
+        arrowView.setImage(image, for: .normal)
+        stackView.addArrangedSubview(arrowView)
+
         return stackView
     }
 
