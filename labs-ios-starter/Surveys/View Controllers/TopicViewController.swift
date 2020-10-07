@@ -19,7 +19,7 @@ class TopicViewController: LoginViewController, NSFetchedResultsControllerDelega
 
         fetchRequest.sortDescriptors = [
             NSSortDescriptor(key: "timeStamp",
-                             ascending: true)
+                             ascending: false)
         ]
 
         if let member = profileController.authenticatedUserProfile,
