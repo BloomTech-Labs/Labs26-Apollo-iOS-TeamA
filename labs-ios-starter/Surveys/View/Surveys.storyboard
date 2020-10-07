@@ -623,6 +623,7 @@
                     <navigationItem key="navigationItem" title="Questions" id="L5N-ZM-pFr"/>
                     <connections>
                         <outlet property="contextSegmentControl" destination="adO-9K-PCb" id="DSZ-Il-uJo"/>
+                        <outlet property="postTopicButton" destination="WfL-uy-8gj" id="yh2-jk-Edl"/>
                         <outlet property="questionsCollectionView" destination="XSM-yT-fWX" id="7WN-Ia-O5C"/>
                     </connections>
                 </viewController>

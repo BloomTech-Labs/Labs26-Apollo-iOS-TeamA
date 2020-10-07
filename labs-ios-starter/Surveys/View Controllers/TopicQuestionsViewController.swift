@@ -8,8 +8,10 @@ class TopicQuestionsViewController: UIViewController {
 
     @IBOutlet var questionsCollectionView: UICollectionView!
     @IBOutlet var contextSegmentControl: UISegmentedControl!
+    @IBOutlet var postTopicButton: StandardButton!
 
     @IBAction func postTopicButton(_ sender: UIButton) {
+        postTopicButton.loadAnimate(true)
         // TODO: Context Title
         postTopic()
     }
@@ -50,7 +52,7 @@ class TopicQuestionsViewController: UIViewController {
         super.viewDidLoad()
         setupSegmentedControl()
         getAllContextQuestions()
-        //baseurl = https://apollo-a-api.herokuapp.com/
+        // baseurl = https://apollo-a-api.herokuapp.com/
     }
 
     private func getAllContextQuestions() {
@@ -79,8 +81,8 @@ class TopicQuestionsViewController: UIViewController {
                     return
                 }
                 // reload questions tableViewController (can use FRC here)
-                self.questions = questions                
-            case .failure(let error):
+                self.questions = questions
+            case let .failure(error):
                 print("failure getting questions")
 
                 self.presentNetworkError(error: error.rawValue) { result in
@@ -99,15 +101,14 @@ class TopicQuestionsViewController: UIViewController {
 
     private func postTopic() {
         // TODO: Dynamic questions when made available
-        guard let topicName = topicName else {
-            print("TopicName was nil!")
-            return
-        }
-
         let selected = contextSegmentControl.selectedSegmentIndex + 1
-        guard let questions = fetchController.fetchQuestionRequest() else {
-            print("couldn't fetch questions from CoreData")
-            return
+
+        guard
+            let topicName = topicName >< "TopicName was nil!",
+            let questions = fetchController.fetchQuestionRequest() >< "couldn't fetch questions from CoreData"
+        else {
+            postTopicButton.loadAnimate(false)
+            print("Exited early from postTopic()"); return
         }
 
         topicController.postTopic(with: topicName, contextId: selected, questions: questions) { result in
@@ -118,19 +119,24 @@ class TopicQuestionsViewController: UIViewController {
                                             message: "A join code will be sent to your notifications.",
                                             preferredStyle: .alert,
                                             dismissText: "Ok") { _ in
-                                                
+
                         _ = NewNotificationsMessage("Created \(topicName) with join code: \(joinCode)")
+                        self.postTopicButton.loadAnimate(false)
                         self.dismiss(animated: true, completion: nil)
                     }
                 }
 
             case let .failure(error):
-                self.presentNetworkError(error: error.rawValue) { result in
-                    // unknown/internal error occured:
-                    if let result = result {
-                        // tryAgain was tapped
-                        if result {
-                            self.postTopic()
+                DispatchQueue.main.async {
+                    self.postTopicButton.loadAnimate(false)
+                    
+                    self.presentNetworkError(error: error.rawValue) { result in
+                        // unknown/internal error occured:
+                        if let result = result {
+                            // tryAgain was tapped
+                            if result {
+                                self.postTopic()
+                            }
                         }
                     }
                 }
@@ -176,20 +182,3 @@ extension TopicQuestionsViewController: UICollectionViewDataSource, UICollection
 }
 
 // MARK: - Segmented Control Delegate -
-
-// MARK: - Live Previews
-
-#if DEBUG
-
-    import SwiftUI
-
-    struct TopicQuestionsViewControllerPreview: PreviewProvider {
-        static var previews: some View {
-            let storyboard = UIStoryboard(name: "Surveys", bundle: .main)
-            let tabBarController = storyboard.instantiateInitialViewController() as? UITabBarController
-
-            return tabBarController?.view.livePreview.edgesIgnoringSafeArea(.all)
-        }
-    }
-
-#endif

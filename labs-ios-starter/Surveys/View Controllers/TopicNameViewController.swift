@@ -5,13 +5,11 @@ import UIKit
 
 class TopicNameViewController: UIViewController {
     // MARK: - Outlets -
-
     @IBOutlet var nameTextField: UITextField!
 
     // MARK: - Properties -
 
     // MARK: - View Lifecycle -
-
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -21,7 +19,6 @@ class TopicNameViewController: UIViewController {
     // MARK: - Reusable
 
     // MARK: - Navigation -
-
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == .getSegueID(.showQuestions) {
             // TODO: prevent segue instead of popping back if no name is entered
