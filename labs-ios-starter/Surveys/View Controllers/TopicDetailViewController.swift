@@ -63,8 +63,9 @@ extension TopicDetailViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = CRUDCollectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? QuestionCollectionViewCell else {
-            // TOOD: Remove before prod
-            fatalError("invalid identifier: \(reuseIdentifier)") }
+            // TODO: Remove before prod
+            fatalError("invalid identifier: \(reuseIdentifier)") 
+      }
         cell.question = self.questions?[indexPath.item]
         cell.setDimensions(width: view.frame.width - 40, height: 80)
         return cell
