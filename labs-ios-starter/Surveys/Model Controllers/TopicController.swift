@@ -83,6 +83,7 @@ class TopicController {
                         complete(.failure(error))
                     }
                 }
+                //TODO: POST Questions
 
             case let .failure(error):
                 NSLog("Error POSTing topic with statusCode: \(error.rawValue)")
@@ -181,8 +182,15 @@ class TopicController {
                     completion(.failure(.badDecode))
                     return
                 }
-                try? CoreDataManager.shared.saveContext()
-                completion(.success(Void()))
+
+                do {
+                    try CoreDataManager.shared.saveContext()
+                    completion(.success(Void()))
+                } catch let saveQuestionsError {
+                    print("error saving questions: \(saveQuestionsError)")
+                    completion(.failure(.resourceNotAcceptable)) // add error?
+                }
+
                 
             // bubble error to caller
             case let .failure(error):
