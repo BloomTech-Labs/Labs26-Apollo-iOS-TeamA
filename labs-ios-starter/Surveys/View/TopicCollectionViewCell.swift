@@ -20,6 +20,6 @@ class TopicCollectionViewCell: ApolloCollectionViewCell {
 
     // MARK: - View Lifecycle -
     private func updateViews() {
-        self.nameLabel.text = topic?.topicName
+        nameLabel.text = topic?.topicName
     }
 }
