@@ -240,10 +240,8 @@ extension TopicQuestionsViewController: SingleRowSpinnerDelegate {
         if row != pickerView.numberOfRows(inComponent: 0) - 1 { // -1 to account for non 0 based count
             let nextRow = pickerView.selectedRow(inComponent: 0) + 1
 
-            #warning("Race condition!")
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-                self.pickerView.selectRow(nextRow, inComponent: 0, animated: true)
-            }
+        DispatchQueue.main.async {
+            self.pickerView.selectRow(nextRow, inComponent: 0, animated: true)
         }
     }
 }
