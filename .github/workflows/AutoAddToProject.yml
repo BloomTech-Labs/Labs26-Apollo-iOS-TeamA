@@ -18,7 +18,6 @@ jobs:
       if: github.event.action == 'opened'
       with:
         project: 'https://github.com/Lambda-School-Labs/Labs26-Apollo-iOS-TeamA/projects/1'
-        column_name: 'To do'
         
     - name: Move to needs review
       uses: srggrs/assign-one-project-github-action@1.2.0
