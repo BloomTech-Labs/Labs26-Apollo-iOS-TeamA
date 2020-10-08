@@ -8,8 +8,11 @@
 
 import UIKit
 
-class QuestionCollectionViewCell: UICollectionViewCell {
-    @IBOutlet var nameLabel: UITextField!
+class QuestionCollectionViewCell: ApolloCollectionViewCell {
+    @IBOutlet var nameLabel: UILabel!
+
+    @IBOutlet var messageButton: UIImageView!
+    @IBOutlet var deleteButton: UIImageView!
 
     var question: Question? {
         didSet {
