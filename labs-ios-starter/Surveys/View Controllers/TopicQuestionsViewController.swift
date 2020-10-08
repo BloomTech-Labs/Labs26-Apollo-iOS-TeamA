@@ -211,20 +211,20 @@ extension TopicQuestionsViewController: UIPickerViewDelegate, UIPickerViewDataSo
         stackView.axis = .vertical
         stackView.addArrangedSubview(pickerLabel)
 
-        if row != questions.count - 1 {
-            // down arrow
-            let width: CGFloat = 40
-            let height = width / 2
-            let arrowView = UIButton(frame: CGRect(x: 0,
-                                                   y: 0,
-                                                   width: width,
-                                                   height: height)
-            )
+        // down arrow
+        let width: CGFloat = 40
+        let height = width / 2
+        let arrowView = UIButton(frame: CGRect(x: 0,
+                                               y: 0,
+                                               width: width,
+                                               height: height)
+        )
 
-            let image = UIImage(systemName: "chevron.down")
-            arrowView.setImage(image, for: .normal)
-            stackView.addArrangedSubview(arrowView)
-        }
+        let isLastRow = row == questions.count - 1
+        let image = isLastRow ? UIImage(systemName: "chevron.up") : UIImage(systemName: "chevron.down")
+        arrowView.setImage(image, for: .normal)
+        stackView.addArrangedSubview(arrowView)
+
         return stackView
     }
 
@@ -236,31 +236,13 @@ extension TopicQuestionsViewController: UIPickerViewDelegate, UIPickerViewDataSo
 // Move the spinner to the next row when the row is tapped
 extension TopicQuestionsViewController: SingleRowSpinnerDelegate {
     func updateSpinner() {
-        let row = pickerView.selectedRow(inComponent: 0)
-        if row != pickerView.numberOfRows(inComponent: 0) - 1 { // -1 to account for non 0 based count
-            let nextRow = pickerView.selectedRow(inComponent: 0) + 1
+        let selectedRow = pickerView.selectedRow(inComponent: 0)
+        let numberOfRows = pickerView.numberOfRows(inComponent: 0) - 1
+        let isLastRow = selectedRow == numberOfRows
+        let nextRow = isLastRow ? 0 : selectedRow + 1
 
-            #warning("Race condition!")
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-                self.pickerView.selectRow(nextRow, inComponent: 0, animated: true)
-            }
+        DispatchQueue.main.async {
+            self.pickerView.selectRow(nextRow, inComponent: 0, animated: true)
         }
     }
 }
-
-// MARK: - Live Previews
-
-#if DEBUG
-
-    import SwiftUI
-
-    struct TopicQuestionsViewControllerPreview: PreviewProvider {
-        static var previews: some View {
-            let storyboard = UIStoryboard(name: "Surveys", bundle: .main)
-            let tabBarController = storyboard.instantiateInitialViewController() as? UITabBarController
-
-            return tabBarController?.view.livePreview.edgesIgnoringSafeArea(.all)
-        }
-    }
-
-#endif
