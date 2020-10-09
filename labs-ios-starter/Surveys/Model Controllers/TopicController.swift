@@ -9,6 +9,7 @@ import Foundation
 import CoreData
 
 // MARK: - Codable Types -
+
 /// Used to get Topic Details and establish CoreData Relationships
 struct TopicDetails: Codable {
 
@@ -23,21 +24,21 @@ struct TopicDetails: Codable {
     var requestQuestionIds: [RequestQuestionObject]
 }
 
-
+/// Represent's a contextQuestion's id
 struct ContextQuestionObject: Codable {
     enum CodingKeys: String, CodingKey {
         case contextQuestionId = "contextquestionid"
     }
     let contextQuestionId: Int
 }
-
+/// Represent's a requestQuestion's id
 struct RequestQuestionObject: Codable {
     enum CodingKeys: String, CodingKey {
         case requestQuestionId = "requestquestionid"
     }
     let requestQuestionId: Int
 }
-
+/// Used to get related context and resquest questions
 struct TopicDetailObject: Codable {
 
     enum CodingKeys: String, CodingKey {
@@ -59,8 +60,6 @@ struct TopicDetailObject: Codable {
 struct TopicID: Codable {
     let topic: DecodeTopic
 }
-
-
 /// Member of TopicID
 struct DecodeTopic: Codable {
     let id: Int
@@ -78,53 +77,9 @@ struct TopicQuestion: Codable {
 
 /// Controller for Topic, ContextObject, and Question model
 class TopicController {
-    /// Download context and request questions for a Topic
-    // TODO: Split Questions into 2 types
-    func getLinkedQuestions(with contextIds: [Int64], requestIds: [Int64], for topic: Topic, context: NSManagedObjectContext = CoreDataManager.shared.backgroundContext, completion: @escaping CompleteWithNetworkError) {
-
-        var contextQuestions: [Question] = []
-        var contextIndex = 0
-        for contextId in contextIds {
-
-            guard let request = self.createRequest(pathFromBaseURL: "/contextquestion/\(contextId)")
-                    >< "Invalid Request for contextQuestions"
-            else { continue }
-            // get questions
-            self.networkService.loadData(using: request) { result in
-                contextIndex += 1
-
-                switch result {
-                case let .success(data):
-                    if let question = self.networkService.decode(to: Question.self, data: data, moc: context),
-                       contextIds.count > 0 {
-                        contextQuestions.append(question)
-                        // attach context questions to Topic
-                        if contextIndex >= contextQuestions.count {
-                            for contextQuestion in contextQuestions {
-                                topic.addToQuestions(contextQuestion)
-                            }
-                            completion(.success(Void()))
-                        }
-                    } else {
-                        print("couldn't decode context question for topic: \(topic.id) with \(topic.questions?.count) questions")
-                        completion(.failure(.badDecode))
-                    }
-                case let .failure(error):
-                    completion(.failure(error))
-                }
-            }
-
-        }
 
 
-        //        // Download request questions
-        //        var requestQuestions: [Question] = []
-        //        // attach request questions to Topic
-        //        for requestQuestion in requestQuestions {
-        //            topic.addToQuestions(requestQuestion)
-        //        }
-    }
-
+    // MARK: - Properties -
     let networkService = NetworkService.shared
     let profileController = ProfileController.shared
     lazy var baseURL = profileController.baseURL
@@ -277,6 +232,53 @@ class TopicController {
     }
 
     /// Get all contexts
+    /// Download context and request questions for a Topic
+    func getLinkedQuestions(with contextIds: [Int64], requestIds: [Int64], for topic: Topic, context: NSManagedObjectContext = CoreDataManager.shared.backgroundContext, completion: @escaping CompleteWithNetworkError) {
+
+        var contextIndex = 0
+        for contextId in contextIds {
+
+            guard let request = self.createRequest(pathFromBaseURL: "/contextquestion/\(contextId)")
+                    >< "Invalid Request for contextQuestions"
+            else { continue }
+            // get questions
+            self.networkService.loadData(using: request) { result in
+                // track which question we're working with so we know when to complete
+                contextIndex += 1
+
+                switch result {
+                case let .success(data):
+                    var contextQuestions: [Question] = []
+                    // decode question and ensure contextIds are greater than 0
+                    if let question = self.networkService.decode(to: Question.self, data: data, moc: context),
+                       contextIds.count > 0 {
+                        contextQuestions.append(question)
+                        // attach context questions to Topic when contextIndex reaches contextQuestions.count
+                        if contextIndex >= contextQuestions.count {
+                            for contextQuestion in contextQuestions {
+                                topic.addToQuestions(contextQuestion)
+                            }
+                            completion(.success(Void()))
+                        }
+                    } else {
+                        print("couldn't decode context question for topic: \(String(describing: topic.id)) with \(String(describing: topic.questions?.count)) questions")
+                        completion(.failure(.badDecode))
+                    }
+                case let .failure(error):
+                    completion(.failure(error))
+                }
+            }
+
+        }
+        // TODO:
+        //        // Download request questions
+        //        var requestQuestions: [Question] = []
+        //        // attach request questions to Topic
+        //        for requestQuestion in requestQuestions {
+        //            topic.addToQuestions(requestQuestion)
+        //        }
+    }
+
     func getAllContexts(complete: @escaping CompleteWithNetworkError) {
         guard let request = createRequest(pathFromBaseURL: "context") else {
             print("couldn't get context, invalid request")
