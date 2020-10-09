@@ -107,24 +107,63 @@ class TopicController {
             switch result {
             case let .success(data):
                 let context = CoreDataManager.shared.backgroundContext
-                guard let topics = self.networkService.decode(to: [Topic].self,
+                guard let topicShells = self.networkService.decode(to: [Topic].self,
                                                  data: data,
                                                  moc: context) else {
                     print("Error decoding topics")
                     completion(.failure(.badDecode))
                     return
                 }
-                //save any updates and clear the context
-                //try? CoreDataManager.shared.saveContext(context, async: true)
 
-                let serverTopicIDs = topics.compactMap { $0.id }
-                guard let topicsNotOnServer = FetchController().fetchTopicsNotOnServer(serverTopicIDs, context: context) else {
-                    print("no topics to delete")
-                    completion(.success(Void()))
-                    return
+                var topics: [Topic] = [] //Holds topics with relationships
+                // Make request to topicDetail endpoint for each topic]
+                var i = 0
+                for topic in topicShells {
+                    guard let topicId = topic.id
+                            >< "failure unwrapping topic.id"
+                    else { return }
+
+                    guard let request = self.createRequest(pathFromBaseURL: "topic/\(topicId)")
+                            >< "failed to create topic detail request \(topicId)"
+                    else { continue }
+
+                    self.networkService.loadData(using: request) { detailResult in
+                        switch detailResult {
+                        case let .success(data):
+                            if let topicDetails = self.networkService.decode(to: Topic.self, data: data, moc: context) {
+                                topics.append(topicDetails)
+                            } else {
+                                print("Failed to decode topic details")
+                                // not sure what we should do here.
+                                // If we don't get the topic details,
+                                // we probably shouldn't display the topic
+                                // should we alert the user?
+                                // we can't return because there may be more topics to decode
+                                // we can't continue because we're async (can only continue in loop error)
+                            }
+                            i+=1
+                            if i == topicShells.count - 1 {
+                                // sync topics
+                                let serverTopicIDs = topics.compactMap { $0.id }
+                                guard let topicsNotOnServer = FetchController().fetchTopicsNotOnServer(serverTopicIDs, context: context) else {
+                                    print("no topics to delete")
+                                    completion(.success(Void()))
+                                    return
+                                }
+                                self.deleteTopicsFromCoreData(topics: topicsNotOnServer, context: context)
+                                completion(.success(Void()))
+                            }
+
+                            
+
+                        case let .failure(error):
+                            print(error) // same as with decode failure above
+                        }
+                    }
+
                 }
-                self.deleteTopicsFromCoreData(topics: topicsNotOnServer, context: context)
-                completion(.success(Void()))
+                // Decode entire topic with relationships
+
 
             case let .failure(error):
                 completion(.failure(error)) // bubble error to caller
