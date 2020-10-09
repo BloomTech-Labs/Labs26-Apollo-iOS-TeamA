@@ -1,8 +1,8 @@
 // Copyright © 2020 Shawn James. All rights reserved.
 // TopicViewController.swift
 
-import UIKit
 import CoreData
+import UIKit
 
 class TopicViewController: LoginViewController, NSFetchedResultsControllerDelegate {
     // MARK: - Outlets & Properties
@@ -15,16 +15,15 @@ class TopicViewController: LoginViewController, NSFetchedResultsControllerDelega
     let topicController = TopicController()
 
     lazy var fetchedResultsController: NSFetchedResultsController<Topic> = {
-
         let fetchRequest: NSFetchRequest<Topic> = Topic.fetchRequest()
 
         fetchRequest.sortDescriptors = [
             NSSortDescriptor(key: "timeStamp",
-                             ascending: true)
+                             ascending: false)
         ]
 
         if let member = profileController.authenticatedUserProfile,
-              let userId = member.id {
+            let userId = member.id {
             fetchRequest.predicate = NSPredicate(format: "leaderId == %@ OR %@ IN members", userId, member)
         }
 
@@ -79,7 +78,6 @@ class TopicViewController: LoginViewController, NSFetchedResultsControllerDelega
             topic.addToMembers(member)
             topicDetailViewController.id = topic.id
             try? CoreDataManager.shared.saveContext()
-
         }
     }
 

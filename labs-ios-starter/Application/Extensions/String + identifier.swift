@@ -21,6 +21,7 @@ enum SegueIdentifier: String {
     case showQuestions
     case popoverMemberList
     case topicDetailSegue
+    case reviewDetailsSegue
 }
 
 enum TableViewIdentifier: String {
