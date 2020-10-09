@@ -9,6 +9,53 @@ import Foundation
 import CoreData
 
 // MARK: - Codable Types -
+
+/// Used to get Topic Details and establish CoreData Relationships
+struct TopicDetails: Codable {
+
+    enum CodingKeys: String, CodingKey {
+        case details = "0"
+        case contextQuestionIds = "contextquestions"
+        case requestQuestionIds = "requestquestions"
+    }
+
+    var details: TopicDetailObject
+    var contextQuestionIds: [ContextQuestionObject]
+    var requestQuestionIds: [RequestQuestionObject]
+}
+
+/// Represent's a contextQuestion's id
+struct ContextQuestionObject: Codable {
+    enum CodingKeys: String, CodingKey {
+        case contextQuestionId = "contextquestionid"
+    }
+    let contextQuestionId: Int
+}
+/// Represent's a requestQuestion's id
+struct RequestQuestionObject: Codable {
+    enum CodingKeys: String, CodingKey {
+        case requestQuestionId = "requestquestionid"
+    }
+    let requestQuestionId: Int
+}
+/// Used to get related context and resquest questions
+struct TopicDetailObject: Codable {
+
+    enum CodingKeys: String, CodingKey {
+        case joinCode = "joincode"
+        case id
+        case contextId = "contextid"
+        case leaderId = "leaderid"
+        case topicName = "topicname"
+
+    }
+    let joinCode: String
+    let id: Int
+    let contextId: Int
+    let leaderId: String
+    let topicName: String
+}
+
 /// Used to get topic ID after sending to backend
 struct TopicID: Codable {
     let topic: DecodeTopic
@@ -30,6 +77,9 @@ struct TopicQuestion: Codable {
 
 /// Controller for Topic, ContextObject, and Question model
 class TopicController {
+
+
+    // MARK: - Properties -
     let networkService = NetworkService.shared
     let profileController = ProfileController.shared
     lazy var baseURL = profileController.baseURL
@@ -46,7 +96,7 @@ class TopicController {
         // We know this request is good, but we can still guard unwrap it rather than
         // force unwrapping and assume if something fails it was the user not being logged in
         guard var request = createRequest(pathFromBaseURL: "topic", method: .post),
-            let token = try? profileController.oktaAuth.credentialsIfAvailable().userID else {
+              let token = try? profileController.oktaAuth.credentialsIfAvailable().userID else {
             print("user isn't logged in")
             return
         }
@@ -83,7 +133,7 @@ class TopicController {
                         complete(.failure(error))
                     }
                 }
-                // TODO: POST Questions
+            // TODO: POST Questions
 
             case let .failure(error):
                 NSLog("Error POSTing topic with statusCode: \(error.rawValue)")
@@ -108,8 +158,8 @@ class TopicController {
             case let .success(data):
                 let context = CoreDataManager.shared.backgroundContext
                 guard let topicShells = self.networkService.decode(to: [Topic].self,
-                                                 data: data,
-                                                 moc: context) else {
+                                                                   data: data,
+                                                                   moc: context) else {
                     print("Error decoding topics")
                     completion(.failure(.badDecode))
                     return
@@ -123,15 +173,41 @@ class TopicController {
                             >< "failure unwrapping topic.id"
                     else { return }
 
-                    guard let request = self.createRequest(pathFromBaseURL: "topic/\(topicId)")
+                    guard let request = self.createRequest(pathFromBaseURL: "topic/\(topicId)/details")
                             >< "failed to create topic detail request \(topicId)"
                     else { continue }
-
+                    print("sending request to topic/\(topicId)/details")
                     self.networkService.loadData(using: request) { detailResult in
                         switch detailResult {
                         case let .success(data):
-                            if let topicDetails = self.networkService.decode(to: Topic.self, data: data, moc: context) {
-                                topics.append(topicDetails)
+                            if let topicDetails = self.networkService.decode(to: TopicDetails.self, data: data, moc: context) {
+                                print("receiving response from topic/\(topicDetails)/details")
+                                let contextIds: [Int64] = topicDetails.contextQuestionIds.map { Int64($0.contextQuestionId) }
+                                let requestIds: [Int64] = topicDetails.requestQuestionIds.map { Int64($0.requestQuestionId) }
+                                let thisTopic = topicShells.filter { $0.id ?? 1 == topicDetails.details.id }[0]
+
+                                i+=1
+                                topics.append(thisTopic)
+
+                                if !contextIds.isEmpty {
+                                    // get contextQuestions and responseQuestions and save to topics in CoreData
+                                    self.getLinkedQuestions(with: contextIds, requestIds: requestIds, for: thisTopic, context: context) { result in
+                                        //TODO: switch result
+                                        if i >= topicShells.count {
+                                            // sync topics
+                                            let serverTopicIDs = topics.compactMap { $0.id }
+                                            guard let topicsNotOnServer = FetchController().fetchTopicsNotOnServer(serverTopicIDs, context: context) else {
+                                                print("no topics to delete")
+                                                completion(.success(Void()))
+                                                return
+                                            }
+                                            self.deleteTopicsFromCoreData(topics: topicsNotOnServer, context: context)
+                                            completion(.success(Void()))
+                                            return
+                                        }
+                                    }
+                                }
+
                             } else {
                                 print("Failed to decode topic details")
                                 // not sure what we should do here.
@@ -141,20 +217,6 @@ class TopicController {
                                 // we can't return because there may be more topics to decode
                                 // we can't continue because we're async (can only continue in loop error)
                             }
-                            i+=1
-                            if i == topicShells.count - 1 {
-                                // sync topics
-                                let serverTopicIDs = topics.compactMap { $0.id }
-                                guard let topicsNotOnServer = FetchController().fetchTopicsNotOnServer(serverTopicIDs, context: context) else {
-                                    print("no topics to delete")
-                                    completion(.success(Void()))
-                                    return
-                                }
-                                self.deleteTopicsFromCoreData(topics: topicsNotOnServer, context: context)
-                                completion(.success(Void()))
-                            }
-
-                            
 
                         case let .failure(error):
                             print(error) // same as with decode failure above
@@ -162,8 +224,6 @@ class TopicController {
                     }
 
                 }
-                // Decode entire topic with relationships
-
 
             case let .failure(error):
                 completion(.failure(error)) // bubble error to caller
@@ -172,6 +232,53 @@ class TopicController {
     }
 
     /// Get all contexts
+    /// Download context and request questions for a Topic
+    func getLinkedQuestions(with contextIds: [Int64], requestIds: [Int64], for topic: Topic, context: NSManagedObjectContext = CoreDataManager.shared.backgroundContext, completion: @escaping CompleteWithNetworkError) {
+
+        var contextIndex = 0
+        for contextId in contextIds {
+
+            guard let request = self.createRequest(pathFromBaseURL: "/contextquestion/\(contextId)")
+                    >< "Invalid Request for contextQuestions"
+            else { continue }
+            // get questions
+            self.networkService.loadData(using: request) { result in
+                // track which question we're working with so we know when to complete
+                contextIndex += 1
+
+                switch result {
+                case let .success(data):
+                    var contextQuestions: [Question] = []
+                    // decode question and ensure contextIds are greater than 0
+                    if let question = self.networkService.decode(to: Question.self, data: data, moc: context),
+                       contextIds.count > 0 {
+                        contextQuestions.append(question)
+                        // attach context questions to Topic when contextIndex reaches contextQuestions.count
+                        if contextIndex >= contextQuestions.count {
+                            for contextQuestion in contextQuestions {
+                                topic.addToQuestions(contextQuestion)
+                            }
+                            completion(.success(Void()))
+                        }
+                    } else {
+                        print("couldn't decode context question for topic: \(String(describing: topic.id)) with \(String(describing: topic.questions?.count)) questions")
+                        completion(.failure(.badDecode))
+                    }
+                case let .failure(error):
+                    completion(.failure(error))
+                }
+            }
+
+        }
+        // TODO:
+        //        // Download request questions
+        //        var requestQuestions: [Question] = []
+        //        // attach request questions to Topic
+        //        for requestQuestion in requestQuestions {
+        //            topic.addToQuestions(requestQuestion)
+        //        }
+    }
+
     func getAllContexts(complete: @escaping CompleteWithNetworkError) {
         guard let request = createRequest(pathFromBaseURL: "context") else {
             print("couldn't get context, invalid request")
@@ -309,7 +416,7 @@ class TopicController {
         }
     }
 
-    func deleteTopicsFromCoreData(topics: [Topic], context: NSManagedObjectContext = CoreDataManager.shared.mainContext) {
+    func deleteTopicsFromCoreData(topics: [Topic], context: NSManagedObjectContext = CoreDataManager.shared.backgroundContext) {
         for topic in topics {
             context.delete(topic)
         }

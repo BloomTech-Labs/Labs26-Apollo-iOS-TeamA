@@ -64,6 +64,6 @@ class CoreDataTests: XCTestCase {
 
         fetchedTopic?.questions = fetchedTopic?.questions?.addingObjects(from: fetchedQuestions) as NSSet?
         XCTAssertNotNil(fetchedTopic?.questions)
-        XCTAssertEqual(fetchedTopic?.questions?.count, 6)
+        XCTAssertEqual(fetchedTopic?.questions?.count, 3)
     }
 }
