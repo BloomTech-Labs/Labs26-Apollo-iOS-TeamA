@@ -235,6 +235,7 @@ class TopicController {
                                 topics.append(thisTopic)
 
                                 if !contextIds.isEmpty {
+                                    // get contextQuestions and responseQuestions and save to topics in CoreData
                                     self.getLinkedQuestions(with: contextIds, requestIds: requestIds, for: thisTopic, context: context) { result in
                                         //TODO: switch result
                                         if i >= topicShells.count {
@@ -262,16 +263,12 @@ class TopicController {
                                 // we can't continue because we're async (can only continue in loop error)
                             }
 
-                            
-
                         case let .failure(error):
                             print(error) // same as with decode failure above
                         }
                     }
 
                 }
-            // Decode entire topic with relationships
-
 
             case let .failure(error):
                 completion(.failure(error)) // bubble error to caller
