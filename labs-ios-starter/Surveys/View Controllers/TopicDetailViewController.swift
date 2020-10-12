@@ -18,7 +18,9 @@ class TopicDetailViewController: UIViewController {
     let fetchController = FetchController()
     var topic: Topic? {
         didSet {
-            questions = fetchController.fetchQuestionRequest()
+            if let topic = topic {
+                questions = topic.questions?.allObjects as? [Question]
+            }
         }
     }
 
