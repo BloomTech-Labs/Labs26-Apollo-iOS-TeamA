@@ -3,6 +3,7 @@
 // GuardDebugOperator.swift
 
 // MARK: - Guard Statement Debugging Operator
+/// GuardDebug operator
 infix operator ><
 
 /// Used in guard statements to print an error message before failing.

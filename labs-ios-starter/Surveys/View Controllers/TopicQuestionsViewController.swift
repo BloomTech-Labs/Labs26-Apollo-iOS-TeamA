@@ -26,6 +26,7 @@ class TopicQuestionsViewController: UIViewController {
     let topicController = TopicController()
     let questionsCellReuseId = String.getCollectionViewCellID(.questionsCollectionViewCell)
     let addNewQuestionCellReuseId = String.getCollectionViewCellID(.addNewQuestionCell)
+    let correctSegueId = String.getSegueID(.reviewDetailsSegue)
     var contextID: Int? // from TopicNameViewController
     private var fetchController = FetchController()
 
@@ -124,10 +125,6 @@ class TopicQuestionsViewController: UIViewController {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
-
-    // MARK: - Handlers
-
-    // MARK: - Reusable
 }
 
 extension TopicQuestionsViewController: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -165,6 +162,18 @@ extension TopicQuestionsViewController: UICollectionViewDataSource, UICollection
 
         // questions+=1
         collectionView.reloadData()
+    }
+
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard
+            segue.identifier == correctSegueId
+        // TODO: finish unwrapping dependancies
+        else {
+            fatalError("Early exit from prepare(for segue:) -> Missing dependancies"); return
+        }
+        let reviewDetailsViewController = ReviewDetailsViewController()
+        // TODO:
     }
 }
 

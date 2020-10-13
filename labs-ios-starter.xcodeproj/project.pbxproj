@@ -35,6 +35,7 @@
 		1D4D9C0A25092B5400348246 /* labs_ios_starterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D9C0925092B5400348246 /* labs_ios_starterUITests.swift */; };
 		1D4D9C1325092F4A00348246 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D9C1225092F4A00348246 /* CoreDataManager.swift */; };
 		1D4D9C17250930AB00348246 /* labs-ios-starter.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D9C15250930AB00348246 /* labs-ios-starter.xcdatamodeld */; };
+		1D6F66722530C3CB00406B7D /* ReviewDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6F66712530C3CB00406B7D /* ReviewDetailsViewController.swift */; };
 		1D8C41092522D0980041D3B6 /* Topic+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C41082522D0970041D3B6 /* Topic+CoreDataProperties.swift */; };
 		1D938DD9251AED4300D3013D /* NotificationsTabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D938DD8251AED4300D3013D /* NotificationsTabItem.swift */; };
 		1D938DDD251AF69700D3013D /* NotificationsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D938DDC251AF69700D3013D /* NotificationsCollectionViewCell.swift */; };
@@ -128,6 +129,7 @@
 		1D4D9C0B25092B5400348246 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D4D9C1225092F4A00348246 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		1D4D9C16250930AB00348246 /* labs-ios-starter.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "labs-ios-starter.xcdatamodel"; sourceTree = "<group>"; };
+		1D6F66712530C3CB00406B7D /* ReviewDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailsViewController.swift; sourceTree = "<group>"; };
 		1D8C41082522D0970041D3B6 /* Topic+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Topic+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		1D938DD8251AED4300D3013D /* NotificationsTabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsTabItem.swift; sourceTree = "<group>"; };
 		1D938DDC251AF69700D3013D /* NotificationsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 				1D0E105F250B043400A21C44 /* TopicViewController.swift */,
 				1D0E1061250B046300A21C44 /* TopicNameViewController.swift */,
 				1D0E1063250B047400A21C44 /* TopicQuestionsViewController.swift */,
+				1D6F66712530C3CB00406B7D /* ReviewDetailsViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -797,6 +800,7 @@
 				B91BF7F3250D0BB800D68EA6 /* String + identifier.swift in Sources */,
 				1D46C21D2501DDB4007DEDAF /* UIView+LivePreviews.swift in Sources */,
 				B94042162501D08D0048BCED /* UIView + Convenience.swift in Sources */,
+				1D6F66722530C3CB00406B7D /* ReviewDetailsViewController.swift in Sources */,
 				B91BF81B250DCCC800D68EA6 /* URLRequest + addAuthIfAvailable.swift in Sources */,
 				B9983C5925142B74001D91FE /* TopicController.swift in Sources */,
 				B9983C542513BEC0001D91FE /* QuestionCollectionViewCell.swift in Sources */,
