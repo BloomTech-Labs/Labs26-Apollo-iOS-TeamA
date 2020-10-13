@@ -110,6 +110,8 @@ class TopicViewController: LoginViewController, NSFetchedResultsControllerDelega
                         self.refreshControl.endRefreshing()
                     }
                     self.spinner.stopAnimating()
+                    try? self.fetchedResultsController.performFetch()
+                    topicsCollectionView.reloadData()
                 }
 
             case let .failure(error):
@@ -181,10 +183,11 @@ extension TopicViewController: UICollectionViewDataSource, UICollectionViewDeleg
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard
-            let section = TopicCVSection(rawValue: indexPath.section), // >< "Section broken or out of range",
-            let topic = fetchedResultsController.fetchedObjects?[indexPath.row], // >< "Missing topic",
+            let section = TopicCVSection(rawValue: indexPath.section) >< "Section broken or out of range",
+            let fetchedResults = fetchedResultsController.fetchedObjects >< "no fetched objects",
+            let topic = fetchedResults[indexPath.row] >< "Missing topic",
             let cell = topicsCollectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier,
-                                                                for: indexPath) as? TopicCollectionViewCell // >< "Bad cell"
+                                                                for: indexPath) as? TopicCollectionViewCell >< "Bad cell"
         else {
             fatalError("couldn't configure TopicCollectionViewCell 🚨CHANGE THIS BEFORE PRODUCTION🚨")
         }
