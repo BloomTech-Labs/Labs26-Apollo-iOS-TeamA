@@ -217,20 +217,23 @@ class TopicController {
                                         
                                         // get contextQuestions and responseQuestions and save to topics in CoreData
                                         if i >= topicShells.count {
+                                            i = 0
                                             self.getLinkedQuestions(questionType: .request, with: requestIds, for: thisTopic, context: context) { result in
+                                                i += 1
                                                 //TODO: switch result
 
                                                 // sync topics
-                                                let serverTopicIDs = topics.compactMap { $0.id }
-                                                guard let topicsNotOnServer = FetchController().fetchTopicsNotOnServer(serverTopicIDs, context: context) else {
-                                                    print("no topics to delete")
+                                                if i >= requestIds.count {
+                                                    let serverTopicIDs = topics.compactMap { $0.id }
+                                                    guard let topicsNotOnServer = FetchController().fetchTopicsNotOnServer(serverTopicIDs, context: context) else {
+                                                        print("no topics to delete")
+                                                        completion(.success(Void()))
+                                                        return
+                                                    }
+                                                    self.deleteTopicsFromCoreData(topics: topicsNotOnServer, context: context)
                                                     completion(.success(Void()))
                                                     return
                                                 }
-                                                self.deleteTopicsFromCoreData(topics: topicsNotOnServer, context: context)
-                                                completion(.success(Void()))
-                                                return
-
                                             }
                                         }
                                         

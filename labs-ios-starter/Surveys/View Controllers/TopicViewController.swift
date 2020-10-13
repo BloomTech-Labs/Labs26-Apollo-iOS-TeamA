@@ -91,12 +91,6 @@ class TopicViewController: LoginViewController, NSFetchedResultsControllerDelega
         topicController.fetchTopicsFromServer { result in
             switch result {
             case .success:
-                DispatchQueue.main.async { [self] in
-                    do {
-                        try fetchedResultsController.performFetch()
-                    } catch {
-                        print("Error fetching Topics from CoreData")
-                    }
 //                    let fetchController = FetchController()
 //                    // map IDs
 //                    let serverTopicIDs = topics.map { Int($0.id ?? 0) }
@@ -108,12 +102,17 @@ class TopicViewController: LoginViewController, NSFetchedResultsControllerDelega
 //                    self.topics?.append(contentsOf: memberTopics)
 //                    self.topics?.append(contentsOf: leaderTopics)
 
+                DispatchQueue.main.async { [self] in
                     if self.refreshControl.isRefreshing {
                         self.refreshControl.endRefreshing()
                     }
-                    self.spinner.stopAnimating()
-                    try? self.fetchedResultsController.performFetch()
-                    topicsCollectionView.reloadData()
+                    do {
+                        try fetchedResultsController.performFetch()
+                        self.spinner.stopAnimating()
+                        topicsCollectionView.reloadData()
+                    } catch {
+                        print("Error fetching Topics from CoreData")
+                    }
                 }
 
             case let .failure(error):
