@@ -66,7 +66,10 @@
 		B91BF7F1250D0B6500D68EA6 /* MemberList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B91BF7F0250D0B6500D68EA6 /* MemberList.storyboard */; };
 		B91BF7F3250D0BB800D68EA6 /* String + identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91BF7F2250D0BB800D68EA6 /* String + identifier.swift */; };
 		B91BF81B250DCCC800D68EA6 /* URLRequest + addAuthIfAvailable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91BF81A250DCCC800D68EA6 /* URLRequest + addAuthIfAvailable.swift */; };
+		B935BFC12538F3A500E43128 /* ConcurrentOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B935BFC02538F3A500E43128 /* ConcurrentOperation.swift */; };
+		B935BFD525390CC100E43128 /* QuestionConcurrentOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B935BFD425390CC100E43128 /* QuestionConcurrentOperation.swift */; };
 		B9390BE7250991D300131227 /* NetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9390BE6250991D300131227 /* NetworkServiceTests.swift */; };
+		B93EEDAC2538B83900E23EC5 /* NetworkService + BlockOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93EEDAB2538B83900E23EC5 /* NetworkService + BlockOperations.swift */; };
 		B94042102501D0740048BCED /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940420D2501D0740048BCED /* NetworkService.swift */; };
 		B94042112501D0740048BCED /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940420E2501D0740048BCED /* ErrorHandler.swift */; };
 		B94042152501D08D0048BCED /* StyleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94042132501D08C0048BCED /* StyleSheet.swift */; };
@@ -162,7 +165,10 @@
 		B91BF7F2250D0BB800D68EA6 /* String + identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + identifier.swift"; sourceTree = "<group>"; };
 		B91BF818250DC4CA00D68EA6 /* TopicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicController.swift; sourceTree = "<group>"; };
 		B91BF81A250DCCC800D68EA6 /* URLRequest + addAuthIfAvailable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest + addAuthIfAvailable.swift"; sourceTree = "<group>"; };
+		B935BFC02538F3A500E43128 /* ConcurrentOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcurrentOperation.swift; sourceTree = "<group>"; };
+		B935BFD425390CC100E43128 /* QuestionConcurrentOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionConcurrentOperation.swift; sourceTree = "<group>"; };
 		B9390BE6250991D300131227 /* NetworkServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceTests.swift; sourceTree = "<group>"; };
+		B93EEDAB2538B83900E23EC5 /* NetworkService + BlockOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetworkService + BlockOperations.swift"; sourceTree = "<group>"; };
 		B940420D2501D0740048BCED /* NetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		B940420E2501D0740048BCED /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		B940420F2501D0740048BCED /* URLRequest + JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URLRequest + JSON.swift"; sourceTree = "<group>"; };
@@ -475,6 +481,16 @@
 			path = "Okta Auth";
 			sourceTree = "<group>";
 		};
+		B935BFD025390C7600E43128 /* Concurrency */ = {
+			isa = PBXGroup;
+			children = (
+				B93EEDAB2538B83900E23EC5 /* NetworkService + BlockOperations.swift */,
+				B935BFC02538F3A500E43128 /* ConcurrentOperation.swift */,
+				B935BFD425390CC100E43128 /* QuestionConcurrentOperation.swift */,
+			);
+			path = Concurrency;
+			sourceTree = "<group>";
+		};
 		B94042072501CE670048BCED /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -530,6 +546,7 @@
 				B940420D2501D0740048BCED /* NetworkService.swift */,
 				1D0E1047250A9C7200A21C44 /* Data+PrettyJSON.swift */,
 				B940420F2501D0740048BCED /* URLRequest + JSON.swift */,
+				B935BFD025390C7600E43128 /* Concurrency */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -773,9 +790,11 @@
 				1D0E105C250AD69200A21C44 /* NotificationsViewController.swift in Sources */,
 				1D3FA110252E40F200BC371E /* GuardDebugOperator.swift in Sources */,
 				1D0E1064250B047400A21C44 /* TopicQuestionsViewController.swift in Sources */,
+				B935BFD525390CC100E43128 /* QuestionConcurrentOperation.swift in Sources */,
 				466C4274249A8748007D033E /* AppDelegate.swift in Sources */,
 				1D28AE8D252BF03E00825688 /* TopicCVSection.swift in Sources */,
 				1D0E1060250B043400A21C44 /* TopicViewController.swift in Sources */,
+				B935BFC12538F3A500E43128 /* ConcurrentOperation.swift in Sources */,
 				46C2BC9224D432F90077E49D /* ProfileTabBarViewController.swift in Sources */,
 				1D0545272515C3BC006E8665 /* Member+CoreDataProperties.swift in Sources */,
 				463AD24324CF275900447BB8 /* ProfileDetailViewController.swift in Sources */,
@@ -799,6 +818,7 @@
 				1D0545202515C3BC006E8665 /* Response+CoreDataClass.swift in Sources */,
 				B91BF7F3250D0BB800D68EA6 /* String + identifier.swift in Sources */,
 				1D46C21D2501DDB4007DEDAF /* UIView+LivePreviews.swift in Sources */,
+				B93EEDAC2538B83900E23EC5 /* NetworkService + BlockOperations.swift in Sources */,
 				B94042162501D08D0048BCED /* UIView + Convenience.swift in Sources */,
 				1D6F66722530C3CB00406B7D /* ReviewDetailsViewController.swift in Sources */,
 				B91BF81B250DCCC800D68EA6 /* URLRequest + addAuthIfAvailable.swift in Sources */,
