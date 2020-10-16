@@ -66,6 +66,7 @@
 		B91BF7F1250D0B6500D68EA6 /* MemberList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B91BF7F0250D0B6500D68EA6 /* MemberList.storyboard */; };
 		B91BF7F3250D0BB800D68EA6 /* String + identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91BF7F2250D0BB800D68EA6 /* String + identifier.swift */; };
 		B91BF81B250DCCC800D68EA6 /* URLRequest + addAuthIfAvailable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91BF81A250DCCC800D68EA6 /* URLRequest + addAuthIfAvailable.swift */; };
+		B935BFEF253A292A00E43128 /* TempTopicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B935BFEE253A292A00E43128 /* TempTopicController.swift */; };
 		B9390BE7250991D300131227 /* NetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9390BE6250991D300131227 /* NetworkServiceTests.swift */; };
 		B94042102501D0740048BCED /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940420D2501D0740048BCED /* NetworkService.swift */; };
 		B94042112501D0740048BCED /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940420E2501D0740048BCED /* ErrorHandler.swift */; };
@@ -162,6 +163,7 @@
 		B91BF7F2250D0BB800D68EA6 /* String + identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + identifier.swift"; sourceTree = "<group>"; };
 		B91BF818250DC4CA00D68EA6 /* TopicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicController.swift; sourceTree = "<group>"; };
 		B91BF81A250DCCC800D68EA6 /* URLRequest + addAuthIfAvailable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest + addAuthIfAvailable.swift"; sourceTree = "<group>"; };
+		B935BFEE253A292A00E43128 /* TempTopicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempTopicController.swift; sourceTree = "<group>"; };
 		B9390BE6250991D300131227 /* NetworkServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceTests.swift; sourceTree = "<group>"; };
 		B940420D2501D0740048BCED /* NetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		B940420E2501D0740048BCED /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
@@ -296,6 +298,7 @@
 			isa = PBXGroup;
 			children = (
 				B91BF818250DC4CA00D68EA6 /* TopicController.swift */,
+				B935BFEE253A292A00E43128 /* TempTopicController.swift */,
 			);
 			path = "Model Controllers";
 			sourceTree = "<group>";
@@ -762,6 +765,7 @@
 				1D0545262515C3BC006E8665 /* Member+CoreDataClass.swift in Sources */,
 				B94042192501D1BD0048BCED /* URLRequest + JSON.swift in Sources */,
 				1D0545252515C3BC006E8665 /* Question+CoreDataProperties.swift in Sources */,
+				B935BFEF253A292A00E43128 /* TempTopicController.swift in Sources */,
 				B940421A2501D1CE0048BCED /* UIViewController+Alerts.swift in Sources */,
 				1DB3E114251A526D00A2F88F /* (null) in Sources */,
 				B9091EEF25183F2E009BA6A7 /* TopicCollectionViewCell.swift in Sources */,
