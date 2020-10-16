@@ -30,7 +30,7 @@ class TopicQuestionsViewController: UIViewController {
     var contextID: Int? // from TopicNameViewController
     private var fetchController = FetchController()
 
-    var questions: [Question]? {
+    var questions: [RequestQuestion]? {
         didSet {
             DispatchQueue.main.async {
                 self.pickerView.reloadAllComponents()

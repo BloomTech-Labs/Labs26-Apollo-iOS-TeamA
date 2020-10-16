@@ -81,7 +81,7 @@ struct TopicQuestion: Codable {
     var questionId: Int
 }
 
-/// Controller for Topic, ContextObject, and Question model
+/// Controller for Topic, ContextQuestion, and RequestQuestion model
 class TopicController {
     
     
@@ -98,7 +98,7 @@ class TopicController {
     ///   - contextId: the context question's ID
     ///   - questions: the questions chosen
     ///   - complete: completes with the topic's join code
-    func postTopic(with name: String, contextId: Int, questions: [Question], complete: @escaping CompleteWithString) {
+    func postTopic(with name: String, contextId: Int, questions: [RequestQuestion], complete: @escaping CompleteWithString) {
         // We know this request is good, but we can still guard unwrap it rather than
         // force unwrapping and assume if something fails it was the user not being logged in
         guard var request = createRequest(pathFromBaseURL: "topic", method: .post),
@@ -286,9 +286,9 @@ class TopicController {
                 
                 switch result {
                 case let .success(data):
-                    var questions: [Question] = []
+                    var questions: [RequestQuestion] = []
                     // decode question and ensure contextIds are greater than 0
-                    if let question = self.networkService.decode(to: Question.self, data: data, moc: context),
+                    if let question = self.networkService.decode(to: RequestQuestion.self, data: data, moc: context),
                        ids.count > 0 {
                         questions.append(question)
                         // attach context questions to Topic when contextIndex reaches contextQuestions.count
@@ -330,7 +330,7 @@ class TopicController {
             switch result {
             case let .success(data):
                 // fetch contexts and save to CoreData
-                guard self.networkService.decode(to: [ContextObject].self,
+                guard self.networkService.decode(to: [ContextQuestion].self,
                                                  data: data,
                                                  moc: CoreDataManager.shared.mainContext) != nil else {
                     print("error decoding contexts from valid data. see surrounding lines for more information from NetworkService")
@@ -364,7 +364,7 @@ class TopicController {
             switch result {
             // decode questions
             case let .success(data):
-                guard let _ = self.networkService.decode(to: [Question].self,
+                guard let _ = self.networkService.decode(to: [RequestQuestion].self,
                                                          data: data,
                                                          moc: CoreDataManager.shared.mainContext) else {
                     completion(.failure(.badDecode))
@@ -402,7 +402,7 @@ class TopicController {
     
     // MARK: - Update -
     /// Assign an array of questions to a Topic (creates relationship in CoreData and on Server)
-    func addQuestions(_ questions: [Question], to topic: Topic, completion: @escaping CompleteWithNetworkError) {
+    func addQuestions(_ questions: [RequestQuestion], to topic: Topic, completion: @escaping CompleteWithNetworkError) {
         
         for question in questions {
             let topicQuestion = TopicQuestion(topicId: Int(topic.id ?? 0), questionId: Int(question.id))

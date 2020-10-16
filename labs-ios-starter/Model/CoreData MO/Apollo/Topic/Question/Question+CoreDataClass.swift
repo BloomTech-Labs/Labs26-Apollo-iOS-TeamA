@@ -1,11 +1,11 @@
 // Copyright © 2020 Shawn James. All rights reserved.
-// Question+CoreDataClass.swift
+// RequestQuestion+CoreDataClass.swift
 //
 
 import CoreData
 
 /// Leaders and users can ask questions
-public final class Question: NSManagedObject, Codable {
+public final class RequestQuestion: NSManagedObject, Codable {
     // MARK: - Coding Keys
 
     enum QuestionCodingKeys: String, CodingKey {

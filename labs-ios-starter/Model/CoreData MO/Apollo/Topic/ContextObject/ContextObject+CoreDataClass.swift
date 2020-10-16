@@ -1,11 +1,11 @@
 // Copyright © 2020 Shawn James. All rights reserved.
-// ContextObject+CoreDataClass.swift
+// ContextQuestion+CoreDataClass.swift
 //
 
 import CoreData
 
 /// Used to determine a Question's context. so named to avoid collision with Swift.Context
-public final class ContextObject: NSManagedObject, Codable {
+public final class ContextQuestion: NSManagedObject, Codable {
     // MARK: - Coding Keys
 
     enum ContextObjectCodingKeys: String, CodingKey {

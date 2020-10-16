@@ -1,13 +1,13 @@
 // Copyright © 2020 Shawn James. All rights reserved.
-// Question+CoreDataProperties.swift
+// RequestQuestion+CoreDataProperties.swift
 //
 
 import CoreData
 import Foundation
 
-extension Question {
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Question> {
-        return NSFetchRequest<Question>(entityName: "Question")
+extension RequestQuestion {
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<RequestQuestion> {
+        return NSFetchRequest<RequestQuestion>(entityName: "RequestQuestion")
     }
 
     @NSManaged public var id: Int64

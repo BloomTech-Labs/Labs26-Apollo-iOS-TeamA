@@ -13,7 +13,7 @@ class TopicNameViewController: UIViewController {
     let fetchController = FetchController()
     let spinner = UIActivityIndicatorView()
 
-    var contexts: [ContextObject]? {
+    var contexts: [ContextQuestion]? {
         didSet {
             setupContextPicker()
         }

@@ -94,10 +94,10 @@ extension Topic {
 
 extension Topic {
     @objc(addQuestionsObject:)
-    @NSManaged public func addToQuestions(_ value: Question)
+    @NSManaged public func addToQuestions(_ value: RequestQuestion)
 
     @objc(removeQuestionsObject:)
-    @NSManaged public func removeFromQuestions(_ value: Question)
+    @NSManaged public func removeFromQuestions(_ value: RequestQuestion)
 
     @objc(addQuestions:)
     @NSManaged public func addToQuestions(_ values: NSSet)

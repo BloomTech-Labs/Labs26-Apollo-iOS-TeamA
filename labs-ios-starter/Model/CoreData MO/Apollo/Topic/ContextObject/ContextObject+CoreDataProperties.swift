@@ -1,13 +1,13 @@
 // Copyright © 2020 Shawn James. All rights reserved.
-// ContextObject+CoreDataProperties.swift
+// ContextQuestion+CoreDataProperties.swift
 //
 
 import CoreData
 import Foundation
 
-extension ContextObject {
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<ContextObject> {
-        return NSFetchRequest<ContextObject>(entityName: "ContextObject")
+extension ContextQuestion {
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<ContextQuestion> {
+        return NSFetchRequest<ContextQuestion>(entityName: "ContextQuestion")
     }
 
     @NSManaged public var id: Int64
