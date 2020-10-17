@@ -66,8 +66,7 @@
 		B91BF7F1250D0B6500D68EA6 /* MemberList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B91BF7F0250D0B6500D68EA6 /* MemberList.storyboard */; };
 		B91BF7F3250D0BB800D68EA6 /* String + identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91BF7F2250D0BB800D68EA6 /* String + identifier.swift */; };
 		B91BF81B250DCCC800D68EA6 /* URLRequest + addAuthIfAvailable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91BF81A250DCCC800D68EA6 /* URLRequest + addAuthIfAvailable.swift */; };
-		B935BFC12538F3A500E43128 /* ConcurrentOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B935BFC02538F3A500E43128 /* ConcurrentOperation.swift */; };
-		B935BFD525390CC100E43128 /* QuestionConcurrentOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B935BFD425390CC100E43128 /* QuestionConcurrentOperation.swift */; };
+		B935BFF7253A478700E43128 /* TempTopicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B935BFF6253A478700E43128 /* TempTopicController.swift */; };
 		B9390BE7250991D300131227 /* NetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9390BE6250991D300131227 /* NetworkServiceTests.swift */; };
 		B93EEDAC2538B83900E23EC5 /* NetworkService + BlockOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93EEDAB2538B83900E23EC5 /* NetworkService + BlockOperations.swift */; };
 		B94042102501D0740048BCED /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940420D2501D0740048BCED /* NetworkService.swift */; };
@@ -165,8 +164,7 @@
 		B91BF7F2250D0BB800D68EA6 /* String + identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + identifier.swift"; sourceTree = "<group>"; };
 		B91BF818250DC4CA00D68EA6 /* TopicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicController.swift; sourceTree = "<group>"; };
 		B91BF81A250DCCC800D68EA6 /* URLRequest + addAuthIfAvailable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest + addAuthIfAvailable.swift"; sourceTree = "<group>"; };
-		B935BFC02538F3A500E43128 /* ConcurrentOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcurrentOperation.swift; sourceTree = "<group>"; };
-		B935BFD425390CC100E43128 /* QuestionConcurrentOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionConcurrentOperation.swift; sourceTree = "<group>"; };
+		B935BFF6253A478700E43128 /* TempTopicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempTopicController.swift; sourceTree = "<group>"; };
 		B9390BE6250991D300131227 /* NetworkServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceTests.swift; sourceTree = "<group>"; };
 		B93EEDAB2538B83900E23EC5 /* NetworkService + BlockOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetworkService + BlockOperations.swift"; sourceTree = "<group>"; };
 		B940420D2501D0740048BCED /* NetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
@@ -302,6 +300,7 @@
 			isa = PBXGroup;
 			children = (
 				B91BF818250DC4CA00D68EA6 /* TopicController.swift */,
+				B935BFF6253A478700E43128 /* TempTopicController.swift */,
 			);
 			path = "Model Controllers";
 			sourceTree = "<group>";
@@ -485,8 +484,6 @@
 			isa = PBXGroup;
 			children = (
 				B93EEDAB2538B83900E23EC5 /* NetworkService + BlockOperations.swift */,
-				B935BFC02538F3A500E43128 /* ConcurrentOperation.swift */,
-				B935BFD425390CC100E43128 /* QuestionConcurrentOperation.swift */,
 			);
 			path = Concurrency;
 			sourceTree = "<group>";
@@ -790,11 +787,9 @@
 				1D0E105C250AD69200A21C44 /* NotificationsViewController.swift in Sources */,
 				1D3FA110252E40F200BC371E /* GuardDebugOperator.swift in Sources */,
 				1D0E1064250B047400A21C44 /* TopicQuestionsViewController.swift in Sources */,
-				B935BFD525390CC100E43128 /* QuestionConcurrentOperation.swift in Sources */,
 				466C4274249A8748007D033E /* AppDelegate.swift in Sources */,
 				1D28AE8D252BF03E00825688 /* TopicCVSection.swift in Sources */,
 				1D0E1060250B043400A21C44 /* TopicViewController.swift in Sources */,
-				B935BFC12538F3A500E43128 /* ConcurrentOperation.swift in Sources */,
 				46C2BC9224D432F90077E49D /* ProfileTabBarViewController.swift in Sources */,
 				1D0545272515C3BC006E8665 /* Member+CoreDataProperties.swift in Sources */,
 				463AD24324CF275900447BB8 /* ProfileDetailViewController.swift in Sources */,
@@ -824,6 +819,7 @@
 				B91BF81B250DCCC800D68EA6 /* URLRequest + addAuthIfAvailable.swift in Sources */,
 				B9983C5925142B74001D91FE /* TopicController.swift in Sources */,
 				B9983C542513BEC0001D91FE /* QuestionCollectionViewCell.swift in Sources */,
+				B935BFF7253A478700E43128 /* TempTopicController.swift in Sources */,
 				B94042102501D0740048BCED /* NetworkService.swift in Sources */,
 				466C4276249A8748007D033E /* SceneDelegate.swift in Sources */,
 				B917E2E32526DD14004B16BA /* SingleRowPickerView.swift in Sources */,

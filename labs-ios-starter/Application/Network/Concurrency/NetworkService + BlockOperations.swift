@@ -29,32 +29,3 @@ extension NetworkService {
     }
 
 }
-
-
-
-//var queue = OperationQueue()
-//
-//let op1 = BlockOperation() {
-//    for i in 0...1_000_000 {
-//        print(i)
-//    }
-//    var op2 = BlockOperation() {
-//        for i in 0...100_000 {
-//
-//        }
-//        print("op2 finished")
-//    }
-//    var op3 = BlockOperation() {
-//        for i in 0...100_500 {
-//
-//        }
-//        print("op3 finished")
-//    }
-//    queue.addOperation(op2)
-//    queue.addOperation(op3)
-//}
-//func foo() {
-//    queue = NetworkService().operationQueue(with: [op1], wait: true, queue: queue)
-//}
-//
-//foo()
