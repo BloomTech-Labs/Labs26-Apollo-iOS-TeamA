@@ -78,11 +78,11 @@ struct TopicQuestion: Codable {
 /// Controller for Topic, ContextObject, and Question model
 class TopicController {
 
-
     // MARK: - Properties -
     let networkService = NetworkService.shared
     let profileController = ProfileController.shared
     lazy var baseURL = profileController.baseURL
+    let group = DispatchGroup()
 
     // MARK: - Create -
     // TODO: Responses
@@ -146,216 +146,167 @@ class TopicController {
     /// Fetch all topics from server and save them to CoreData.
     /// - Parameters:
     ///   - completion: Completes with `[Topic]`. Topics are also stored in the controller...
-    func fetchTopicsFromServer(completion: @escaping CompleteWithNetworkError) {
+    ///   - context: new backgroundContext by default. this will propagate to all child methods
+    func getTopics(context: NSManagedObjectContext = CoreDataManager.shared.backgroundContext, complete: @escaping CompleteWithNetworkError) {
+        getAllTopicDetails(context: context) { topics, topicDetails in
+            guard let topics = topics,
+                  let topicDetails = topicDetails else {
+                print("Didn't have required Topic information to fetch Questions")
+                return
+            }
+            for (topicIndex, topicDetail) in topicDetails.enumerated() {
+                let topic = topics[topicIndex]
+                // create arrays of question IDs
+                let contextIds = topicDetail.contextQuestionIds.map { Int64($0.contextQuestionId) }
+                let requestIds = topicDetail.requestQuestionIds.map { Int64($0.requestQuestionId) }
+
+                debugPrint("Context Ids: \(contextIds.count)")
+                for contextId in contextIds {
+                    self.group.enter()
+                    self.getContextQuestion(context: context, contextId: contextId) { contextQuestion in
+                        if let contextQuestion = contextQuestion {
+                            topic.addToQuestions(contextQuestion)
+                        } else {
+                            print("didn't receive context question")
+                        }
+                        self.group.leave()
+                    }
+                }
+
+                debugPrint("Request Ids: \(requestIds.count)")
+                for requestId in requestIds {
+                    self.group.enter()
+                    debugPrint("entered")
+                    self.getRequestQuestion(context: context, requestId: requestId) { requestQuestion in
+                        if let requestQuestion = requestQuestion {
+                            topic.addToQuestions(requestQuestion)
+                        }
+                        self.group.leave()
+                        debugPrint("left")
+                    }
+                }
+
+                self.group.notify(queue: .main) {
+                    do {
+                        try CoreDataManager.shared.saveContext(context, async: true)
+                    } catch {
+                        print("Error saving context: \(error)")
+                        complete(.failure(.resourceNotAcceptable))
+                    }
+                    complete(.success(Void()))
+                }
+            }
+        }
+    }
+
+    func getAllTopicDetails(context: NSManagedObjectContext, complete: @escaping ([Topic]?, [TopicDetails]?) -> Void) {
         guard let request = createRequest(pathFromBaseURL: "topic") else {
             print("🛑! User isn't logged in!")
-            completion(.failure(.unauthorized))
+            complete(nil, nil)
             return
         }
-
         networkService.loadData(using: request) { result in
             switch result {
             case let .success(data):
-                let context = CoreDataManager.shared.backgroundContext
                 guard let topicShells = self.networkService.decode(to: [Topic].self,
-                                                                   data: data,
+                                                                   data:data,
                                                                    moc: context) else {
                     print("Error decoding topics")
-                    completion(.failure(.badDecode))
+                    complete(nil, nil)
                     return
                 }
+                let topicIds = topicShells.map { Int64($0.id ?? 999_999_999) }
 
-                var topics: [Topic] = [] //Holds topics with relationships
-                // Make request to topicDetail endpoint for each topic]
-                var i = 0
-                for topic in topicShells {
-                    guard let topicId = topic.id
-                            >< "failure unwrapping topic.id"
-                    else { return }
-
-                    guard let request = self.createRequest(pathFromBaseURL: "topic/\(topicId)/details")
-                            >< "failed to create topic detail request \(topicId)"
-                    else { continue }
-                    print("sending request to topic/\(topicId)/details")
-                    self.networkService.loadData(using: request) { detailResult in
-                        switch detailResult {
-                        case let .success(data):
-                            if let topicDetails = self.networkService.decode(to: TopicDetails.self, data: data, moc: context) {
-                                print("receiving response from topic/\(topicDetails)/details")
-                                let contextIds: [Int64] = topicDetails.contextQuestionIds.map { Int64($0.contextQuestionId) }
-                                let requestIds: [Int64] = topicDetails.requestQuestionIds.map { Int64($0.requestQuestionId) }
-                                let thisTopic = topicShells.filter { $0.id ?? 1 == topicDetails.details.id }[0]
-
-                                i+=1
-                                topics.append(thisTopic)
-
-                                if !contextIds.isEmpty {
-                                    // get contextQuestions and responseQuestions and save to topics in CoreData
-                                    self.getLinkedQuestions(with: contextIds, requestIds: requestIds, for: thisTopic, context: context) { result in
-                                        //TODO: switch result
-                                        if i >= topicShells.count {
-                                            // sync topics
-                                            let serverTopicIDs = topics.compactMap { $0.id }
-                                            guard let topicsNotOnServer = FetchController().fetchTopicsNotOnServer(serverTopicIDs, context: context) else {
-                                                print("no topics to delete")
-                                                completion(.success(Void()))
-                                                return
-                                            }
-                                            self.deleteTopicsFromCoreData(topics: topicsNotOnServer, context: context)
-                                            completion(.success(Void()))
-                                            return
-                                        }
-                                    }
-                                }
-
-                            } else {
-                                print("Failed to decode topic details")
-                                // not sure what we should do here.
-                                // If we don't get the topic details,
-                                // we probably shouldn't display the topic
-                                // should we alert the user?
-                                // we can't return because there may be more topics to decode
-                                // we can't continue because we're async (can only continue in loop error)
-                            }
-
-                        case let .failure(error):
-                            print(error) // same as with decode failure above
-                        }
-                    }
-
+                self.getTopicDetails(context: context, topicIds: topicIds) { (topicDetails) in
+                    complete(topicShells, topicDetails)
                 }
 
             case let .failure(error):
-                completion(.failure(error)) // bubble error to caller
+                print(error)
+                complete(nil, nil)
             }
         }
     }
+    /// get details for all topics, uses DispatchGroup
+    func getTopicDetails(context: NSManagedObjectContext, topicIds: [Int64], complete: @escaping ([TopicDetails]) -> ()) {
+        var topicDetails: [TopicDetails] = []
 
-    /// Get all contexts
-    /// Download context and request questions for a Topic
-    func getLinkedQuestions(with contextIds: [Int64], requestIds: [Int64], for topic: Topic, context: NSManagedObjectContext = CoreDataManager.shared.backgroundContext, completion: @escaping CompleteWithNetworkError) {
-
-        var contextIndex = 0
-        for contextId in contextIds {
-
-            guard let request = self.createRequest(pathFromBaseURL: "/contextquestion/\(contextId)")
-                    >< "Invalid Request for contextQuestions"
-            else { continue }
-            // get questions
-            self.networkService.loadData(using: request) { result in
-                // track which question we're working with so we know when to complete
-                contextIndex += 1
-
+        for topicId in topicIds {
+            self.group.enter()
+            //make request to topicId endpoint
+            guard let topicDetailRequest = self.createRequest(pathFromBaseURL: "topic/\(topicId)/details")
+                    >< "failed to create topic detail request \(topicId)"
+            else {
+                self.group.leave()
+                continue
+            }
+            networkService.loadData(using: topicDetailRequest) { (result) in
                 switch result {
                 case let .success(data):
-                    var contextQuestions: [Question] = []
-                    // decode question and ensure contextIds are greater than 0
-                    if let question = self.networkService.decode(to: Question.self, data: data, moc: context),
-                       contextIds.count > 0 {
-                        contextQuestions.append(question)
-                        // attach context questions to Topic when contextIndex reaches contextQuestions.count
-                        if contextIndex >= contextQuestions.count {
-                            for contextQuestion in contextQuestions {
-                                topic.addToQuestions(contextQuestion)
-                            }
-                            completion(.success(Void()))
-                        }
+                    if let topicDetail = self.networkService.decode(to: TopicDetails.self, data: data) {
+                        topicDetails.append(topicDetail)
                     } else {
-                        print("couldn't decode context question for topic: \(String(describing: topic.id)) with \(String(describing: topic.questions?.count)) questions")
-                        completion(.failure(.badDecode))
+                        print("⚠️couldn't decode topic details!⚠️")
                     }
+                    self.group.leave()
                 case let .failure(error):
-                    completion(.failure(error))
+                    print(error)
+                    self.group.leave()
                 }
             }
-
         }
-        // TODO:
-        //        // Download request questions
-        //        var requestQuestions: [Question] = []
-        //        // attach request questions to Topic
-        //        for requestQuestion in requestQuestions {
-        //            topic.addToQuestions(requestQuestion)
-        //        }
+        // group is done with all blocks
+        self.group.notify(queue: .main) {
+            complete(topicDetails)
+        }
     }
-
-    func getAllContexts(complete: @escaping CompleteWithNetworkError) {
-        guard let request = createRequest(pathFromBaseURL: "context") else {
-            print("couldn't get context, invalid request")
-            return
-        }
-        networkService.loadData(using: request) { result in
+    /// GET a single context question
+    func getContextQuestion(context: NSManagedObjectContext, contextId: Int64, complete: @escaping ((Question?) -> Void)) {
+        guard let request = self.createRequest(pathFromBaseURL: "/contextquestion/\(contextId)")
+                >< "Invalid Request for contextQuestions"
+        else { return }
+        self.networkService.loadData(using: request) { result in
             switch result {
             case let .success(data):
-                // fetch contexts and save to CoreData
-                guard self.networkService.decode(to: [ContextObject].self,
-                                                 data: data,
-                                                 moc: CoreDataManager.shared.mainContext) != nil else {
-                    print("error decoding contexts from valid data. see surrounding lines for more information from NetworkService")
-                    complete(.failure(.notFound))
-                    return
-                }
-                do {
-                    try CoreDataManager.shared.saveContext()
-                } catch let saveContextError {
-                    print("Error saving context: \(saveContextError)")
-                }
-
-                complete(.success(Void()))
-            // bubble error to caller
+                let question = self.networkService.decode(to: Question.self, data: data, moc: context)
+                complete(question)
             case let .failure(error):
-                complete(.failure(error))
+                print(error)
             }
         }
     }
 
-    func getQuestions(completion: @escaping CompleteWithNetworkError) {
-        // create request to /question
-        guard let request = createRequest(pathFromBaseURL: "contextquestion") else {
-            completion(.failure(.badRequest))
-            return
-        }
-
-        // get questions from endpoint
-        networkService.loadData(using: request) { result in
-            // self is nil here???
+    func getRequestQuestion(context: NSManagedObjectContext, requestId: Int64, complete: @escaping ((Question?) -> Void)) {
+        guard let request = self.createRequest(pathFromBaseURL: "/requestQuestion/\(requestId)")
+                >< "Invalid Request for requestQuestions"
+        else { return }
+        self.networkService.loadData(using: request) { result in
             switch result {
-            // decode questions
             case let .success(data):
-                guard let _ = self.networkService.decode(to: [Question].self,
-                                                         data: data,
-                                                         moc: CoreDataManager.shared.mainContext) else {
-                    completion(.failure(.badDecode))
-                    return
-                }
-
-                do {
-                    try CoreDataManager.shared.saveContext()
-                    completion(.success(Void()))
-                } catch let saveQuestionsError {
-                    print("error saving questions: \(saveQuestionsError)")
-                    completion(.failure(.resourceNotAcceptable)) // add error?
-                }
-
-                
-            // bubble error to caller
+                let question = self.networkService.decode(to: Question.self, data: data, moc: context)
+                complete(question)
             case let .failure(error):
-                completion(.failure(error))
+                print(error)
             }
         }
     }
+    // MARK: - Helper Methods -
+    private func createRequest(auth: Bool = true,
+                               pathFromBaseURL: String,
+                               method: NetworkService.HttpMethod = .get) -> URLRequest? {
+        let targetURL = baseURL.appendingPathComponent(pathFromBaseURL)
 
-    func getAllQuestionsAndContexts(completion: @escaping CompleteWithNetworkError) {
-        getAllContexts { contextResult in
-            switch contextResult {
-            case .success:
-                self.getQuestions { result in
-                    completion(result)
-                }
-            case .failure:
-                completion(contextResult)
-            }
+        guard var request = networkService.createRequest(url: targetURL, method: method, headerType: .contentType, headerValue: .json) else {
+            print("unable to create request for \(targetURL)")
+            return nil
         }
+
+        if auth {
+            // add bearer to request
+            request.addAuthIfAvailable()
+        }
+
+        return request
     }
 
     // MARK: - Update -
@@ -426,23 +377,6 @@ class TopicController {
     }
 
     // MARK: - Helper Methods -
-    private func createRequest(auth: Bool = true,
-                               pathFromBaseURL: String,
-                               method: NetworkService.HttpMethod = .get) -> URLRequest? {
-        let targetURL = baseURL.appendingPathComponent(pathFromBaseURL)
-
-        guard var request = networkService.createRequest(url: targetURL, method: method, headerType: .contentType, headerValue: .json) else {
-            print("unable to create request for \(targetURL)")
-            return nil
-        }
-
-        if auth {
-            // add bearer to request
-            request.addAuthIfAvailable()
-        }
-
-        return request
-    }
 
     private func getTopicID(from data: Data) -> Int64? {
         guard let topicID = self.networkService.decode(to: TopicID.self, data: data)?.topic.id else {
