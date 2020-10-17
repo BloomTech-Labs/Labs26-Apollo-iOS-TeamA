@@ -53,7 +53,6 @@ class CoreDataManager {
         case true:
             context.perform {
                 do {
-                    // TODO: Default this to background context and remove context option from signature?
                     try context.save()
                 } catch let saveError {
                     error = saveError

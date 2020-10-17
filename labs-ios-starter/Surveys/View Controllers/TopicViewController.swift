@@ -12,7 +12,7 @@ class TopicViewController: LoginViewController, NSFetchedResultsControllerDelega
     let spinner = UIActivityIndicatorView(style: .large)
     let cellReuseIdentifier = String.getCollectionViewCellID(.topicsCollectionViewCell)
     let headerReuseIdentifier = String.getCollectionViewHeaderId(.topicSectionHeader)
-    let topicController = TopicController()
+    let topicController = TempTopicController()
 
     lazy var fetchedResultsController: NSFetchedResultsController<Topic> = {
         let fetchRequest: NSFetchRequest<Topic> = Topic.fetchRequest()
@@ -86,7 +86,7 @@ class TopicViewController: LoginViewController, NSFetchedResultsControllerDelega
         if !refreshControl.isRefreshing { refreshControl.beginRefreshing() }
         if !spinner.isAnimating { spinner.startAnimating() }
 
-        topicController.fetchTopicsFromServer { result in
+        topicController.getTopics { result in
             switch result {
             case .success:
                 DispatchQueue.main.async { [self] in
