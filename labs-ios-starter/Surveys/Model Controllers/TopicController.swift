@@ -271,7 +271,7 @@ class TopicController {
             completion(.failure(.badRequest)); return
         }
 
-        networkService.loadData(using: getRequest) { result in
+        networkService.loadData(using: getRequest) { result in // TODO: Add self to [Member] for the returned object
             switch result {
             case let .success(data):
                 data.debugPrintJSON() // Show response for debug
