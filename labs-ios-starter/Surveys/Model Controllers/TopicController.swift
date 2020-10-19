@@ -176,13 +176,11 @@ class TopicController {
                 debugPrint("Request Ids: \(requestIds.count)")
                 for requestId in requestIds {
                     self.group.enter()
-                    debugPrint("entered")
                     self.getRequestQuestion(context: context, requestId: requestId) { requestQuestion in
                         if let requestQuestion = requestQuestion {
                             topic.addToQuestions(requestQuestion)
                         }
                         self.group.leave()
-                        debugPrint("left")
                     }
                 }
 
@@ -310,6 +308,11 @@ class TopicController {
     }
 
     // MARK: - Update -
+
+    // this method currently doesn't check to see if all questions
+    // were posted before moving on, so this could cause a discrepancy
+    // on the next run when CoreData syncs with the API as questions
+    // that weren't received by the API will be deleted on sync
     #warning("Update this to meet backend specs")
     // TODO: This method needs to be updated
     /// Assign an array of questions to a Topic (creates relationship in CoreData and on Server)
@@ -318,7 +321,7 @@ class TopicController {
         for question in questions {
             let topicQuestion = TopicQuestion(topicId: Int(topic.id ?? 0), questionId: Int(question.id))
 
-            topic.questions = topic.questions!.adding(question) as NSSet
+            topic.addToQuestions(question)
 
             guard var request = createRequest(pathFromBaseURL: "topicquestion", method: .post) else {
                 print("Couldn't create request")
@@ -344,7 +347,7 @@ class TopicController {
     }
 
     func updateTopic(topic: Topic, completion: @escaping CompleteWithNetworkError) {
-        // send topic to server. save in CoreData
+        // send topic to server using PUT request. save in CoreData
     }
 
     // MARK: - Delete
