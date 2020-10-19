@@ -66,7 +66,8 @@ extension Topic {
 
     // relationships (app use)
 
-    @NSManaged public var questions: NSSet? // doesn't get sent
+    @NSManaged public var contextQuestions: NSSet? // doesn't get sent
+    @NSManaged public var requestQuestions: NSSet? // doesn't get sent
     @NSManaged public var responses: NSSet? // doesn't get sent
 
     // Sections (Used for CollectionView Headers)

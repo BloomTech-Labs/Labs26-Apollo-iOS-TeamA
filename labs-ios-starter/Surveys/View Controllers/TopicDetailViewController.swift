@@ -19,7 +19,7 @@ class TopicDetailViewController: UIViewController {
     var topic: Topic? {
         didSet {
             if let topic = topic {
-                questions = topic.questions?.allObjects as? [ContextQuestion]
+                questions = topic.contextQuestions?.allObjects as? [ContextQuestion]
             }
         }
     }
