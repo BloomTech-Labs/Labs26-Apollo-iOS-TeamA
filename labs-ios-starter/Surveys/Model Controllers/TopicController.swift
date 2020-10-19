@@ -196,10 +196,38 @@ class TopicController {
             }
         }
     }
+    /// get default (template == true) ContextQuestions
+    func getDefaultContextQuestions(context: NSManagedObjectContext = CoreDataManager.shared.backgroundContext, complete: @escaping ([ContextQuestion]?) -> Void) {
+        guard let request = createRequest(pathFromBaseURL: "contextQuestion") else {
+            print("couldn't create request")
+            complete(nil)
+            return
+        }
+        networkService.loadData(using: request) { result in
+            switch result {
+            case let .success(data):
+                guard let contextQuestions = self.networkService.decode(
+                        to: [ContextQuestion].self,
+                        data: data,
+                        moc: context) else {
+                    complete(nil)
+                    return
+                }
+                // complete only default questions
+                complete(contextQuestions.filter { $0.template })
+                
+            case let .failure(error):
+                print("Error getting Default Contexts: \(error)")
+                complete(nil)
+            }
+        }
+
+
+    }
 
     func getAllTopicDetails(context: NSManagedObjectContext, complete: @escaping ([Topic]?, [TopicDetails]?) -> Void) {
         guard let request = createRequest(pathFromBaseURL: "topic") else {
-            print("🛑! User isn't logged in!")
+            print("couldn't create request")
             complete(nil, nil)
             return
         }
@@ -381,9 +409,6 @@ class TopicController {
                 completion(.failure(.unknown))
             }
         }
-
-
-
     }
 
     func updateTopic(topic: Topic, completion: @escaping CompleteWithNetworkError) {

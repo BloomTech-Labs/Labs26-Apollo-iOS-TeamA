@@ -13,6 +13,7 @@
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="question" attributeType="String"/>
         <attribute name="ratingStyle" attributeType="String"/>
+        <attribute name="template" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <relationship name="topic" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Topic" inverseName="contextQuestions" inverseEntity="Topic"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
@@ -44,6 +45,7 @@
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="question" attributeType="String"/>
         <attribute name="ratingStyle" attributeType="String"/>
+        <attribute name="template" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <relationship name="topic" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Topic" inverseName="requestQuestions" inverseEntity="Topic"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
@@ -85,10 +87,10 @@
     </entity>
     <elements>
         <element name="ContextObject" positionX="0" positionY="99" width="128" height="73"/>
-        <element name="ContextQuestion" positionX="160" positionY="192" width="128" height="103"/>
+        <element name="ContextQuestion" positionX="160" positionY="192" width="128" height="118"/>
         <element name="Member" positionX="-54" positionY="18" width="128" height="163"/>
         <element name="NewNotificationsMessage" positionX="-36" positionY="81" width="128" height="88"/>
-        <element name="RequestQuestion" positionX="72" positionY="153" width="128" height="103"/>
+        <element name="RequestQuestion" positionX="72" positionY="153" width="128" height="118"/>
         <element name="Response" positionX="-18" positionY="81" width="128" height="118"/>
         <element name="Topic" positionX="-63" positionY="-18" width="128" height="238"/>
     </elements>

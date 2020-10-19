@@ -15,5 +15,6 @@ extension ContextQuestion {
     @NSManaged public var question: String
     @NSManaged public var ratingStyle: String
     @NSManaged public var reviewType: String
+    @NSManaged public var template: Bool
     @NSManaged public var topic: Topic
 }

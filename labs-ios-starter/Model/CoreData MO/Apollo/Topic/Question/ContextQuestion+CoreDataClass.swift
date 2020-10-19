@@ -14,6 +14,7 @@ public final class ContextQuestion: NSManagedObject, Codable {
         //case reviewType = "type"
         case ratingStyle = "style"
         // case contextId = "contextid"
+        case template = "default"
     }
 
     // MARK: - Initializer
@@ -23,12 +24,14 @@ public final class ContextQuestion: NSManagedObject, Codable {
                                         question: String,
                                         reviewType: String,
                                         ratingStyle: String,
+                                        template: Bool,
                                         context: NSManagedObjectContext = CoreDataManager.shared.mainContext) {
         self.init(context: context)
         self.id = id
         self.question = question
         self.reviewType = reviewType
         self.ratingStyle = ratingStyle
+        self.template = template
     }
 
     /// Used to create managed objects by way of decoding
@@ -49,6 +52,7 @@ public final class ContextQuestion: NSManagedObject, Codable {
         question = try container.decode(String.self, forKey: .question)
         //reviewType = try container.decode(String.self, forKey: .reviewType)
         ratingStyle = try container.decode(String.self, forKey: .ratingStyle)
+        template = try container.decode(Bool.self, forKey: .template)
     }
 
     /// Used for encoding
@@ -62,6 +66,7 @@ public final class ContextQuestion: NSManagedObject, Codable {
 
         try container.encode(id, forKey: .id)
         try container.encode(question, forKey: .question)
+        try container.encode(template, forKey: .template)
         //try container.encode(reviewType, forKey: .reviewType)
         try container.encode(ratingStyle, forKey: .ratingStyle)
     }

@@ -13,7 +13,7 @@ class TopicNameViewController: UIViewController {
     let fetchController = FetchController()
     let spinner = UIActivityIndicatorView()
 
-    var contexts: [ContextObject]? {
+    var contexts: [ContextQuestion]? {
         didSet {
             setupContextPicker()
         }
@@ -24,7 +24,7 @@ class TopicNameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSpinner()
-        // getAllContextQuestions()
+        getAllContextQuestions()
         self.contextPicker.delegate = self
         self.contextPicker.dataSource = self
     }
@@ -47,36 +47,16 @@ class TopicNameViewController: UIViewController {
 
     // MARK: - Handlers
 
-//    private func getAllContextQuestions() {
-//        topicController.getAllContexts { [weak self] result in
-//            guard let self = self else {
-//                print("Topic Controller is nil")
-//                return
-//            }
-//
-//            switch result {
-//            case .success:
-//                // get contexts from CoreData
-//                guard let contexts = self.fetchController.fetchContextRequest() else {
-//                    print("couldn't fetch contexts")
-//                    return
-//                }
-//                self.contexts = contexts
-//
-//            case .failure(let error):
-//                print("failure getting questions")
-//
-//                self.presentNetworkError(error: error.rawValue) { result in
-//                    if let result = result {
-//                        if result {
-//                            // user wants to try again
-//                            self.getAllContextQuestions()
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
+    private func getAllContextQuestions() {
+        topicController.getDefaultContextQuestions { [weak self] questions in
+            guard let self = self else {
+                print("Topic Controller is nil")
+                return
+            }
+            try? CoreDataManager.shared.saveContext()
+            self.contexts = self.fetchController.fetchDefaultContextQuestionsRequest()
+        }
+    }
 
     // MARK: - Reusable
 
@@ -120,7 +100,7 @@ extension TopicNameViewController: UIPickerViewDelegate, UIPickerViewDataSource 
         guard let questions = contexts,
               row < questions.count - 1 else
         { return nil }
-        return questions[row].title
+        return questions[row].question
     }
 
 }

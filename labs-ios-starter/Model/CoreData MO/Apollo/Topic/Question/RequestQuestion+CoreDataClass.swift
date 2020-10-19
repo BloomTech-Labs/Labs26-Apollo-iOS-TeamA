@@ -18,6 +18,7 @@ public final class RequestQuestion: NSManagedObject, Codable {
         //case reviewType = "type"
         case ratingStyle = "style"
         // case contextId = "contextid"
+        case template = "default"
     }
 
     // MARK: - Initializer
@@ -27,12 +28,14 @@ public final class RequestQuestion: NSManagedObject, Codable {
                                         question: String,
                                         reviewType: String,
                                         ratingStyle: String,
+                                        template: Bool,
                                         context: NSManagedObjectContext = CoreDataManager.shared.mainContext) {
         self.init(context: context)
         self.id = id
         self.question = question
         self.reviewType = reviewType
         self.ratingStyle = ratingStyle
+        self.template = template
     }
 
     /// Used to create managed objects by way of decoding

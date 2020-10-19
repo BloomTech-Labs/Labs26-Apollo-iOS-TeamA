@@ -120,6 +120,20 @@ class FetchController {
         }
     }
 
+    func fetchDefaultContextQuestionsRequest(context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [ContextQuestion]? {
+        let fetchRequest: NSFetchRequest<ContextQuestion> = ContextQuestion.fetchRequest()
+        let predicate = NSPredicate(format: "template == true")
+        fetchRequest.predicate = predicate
+
+        do {
+            let questions = try context.fetch(fetchRequest)
+            return questions
+        } catch let fetchError {
+            print("Error Fetching Questions: \(fetchError)")
+            return nil
+        }
+    }
+
     /// fetch all request questions for a Topic
     func fetchRequestQuestionsRequest(topicId: Int64, context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [RequestQuestion]? {
         let fetchRequest: NSFetchRequest<RequestQuestion> = RequestQuestion.fetchRequest()
