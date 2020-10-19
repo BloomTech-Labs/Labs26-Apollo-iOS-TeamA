@@ -42,7 +42,7 @@ class TopicQuestionsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupPickerView()
-        // getAllContextQuestions()
+        getAllContextQuestions()
     }
 
     private func setupPickerView() {
@@ -50,32 +50,27 @@ class TopicQuestionsViewController: UIViewController {
         pickerView.dataSource = self
         pickerView.tapDelegate = self
     }
-// TODO: refactor to get `default` context and request questions
-    /// Get questions from server, save to CoreData, and fetch from CoreData
-//    private func getAllContextQuestions() {
-//        topicController.getQuestions { result in
-//            switch result {
-//            case .success:
-//                // get questions from CoreData (fetched from API on prior screen)
-//                guard let questions = self.fetchController.fetchQuestionRequest() else {
-//                    print("Couldn't fetch questions")
-//                    return
-//                }
-//                // reload qeustions picker
-//                self.questions = questions
-//            case let .failure(error):
-//                self.presentNetworkError(error: error.rawValue) { tryAgain in
-//                    switch tryAgain {
-//                    case true:
-//                        self.getAllContextQuestions()
-//                    default:
-//                        // exit app?
-//                        print("user didn't want to try again")
-//                    }
-//                }
-//            }
-//        }
-//    }
+    // TODO: refactor to get `default` context and request questions
+    // Get questions from server, save to CoreData, and fetch from CoreData
+    private func getAllContextQuestions() {
+        topicController.getDefaultContextQuestions { result in
+            switch result {
+            case .success():
+                self.questions = self.fetchController.fetchDefaultContextQuestionsRequest()
+
+            case let .failure(error):
+                self.presentNetworkError(error: error.rawValue) { tryAgain in
+                    if tryAgain != nil {
+                        // user wants to try again
+                        if tryAgain! {
+                            self.getAllContextQuestions()
+                        }
+                    }
+                    // user didn't want to try again
+                }
+            }
+        }
+    }
 
     // MARK: - Update -
 

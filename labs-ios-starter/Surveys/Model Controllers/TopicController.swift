@@ -225,28 +225,28 @@ class TopicController {
     }
 
     /// get default (template == true) ContextQuestions
-    func getDefaultContextQuestions(context: NSManagedObjectContext = CoreDataManager.shared.backgroundContext, complete: @escaping ([ContextQuestion]?) -> Void) {
+    func getDefaultContextQuestions(context: NSManagedObjectContext = CoreDataManager.shared.backgroundContext, complete: @escaping CompleteWithNetworkError) {
         guard let request = createRequest(pathFromBaseURL: "contextQuestion") else {
             print("couldn't create request")
-            complete(nil)
+            complete(.failure(.badRequest))
             return
         }
         networkService.loadData(using: request) { result in
             switch result {
             case let .success(data):
-                guard let contextQuestions = self.networkService.decode(
+                guard let _ = self.networkService.decode(
                         to: [ContextQuestion].self,
                         data: data,
                         moc: context) else {
-                    complete(nil)
+                    complete(.failure(.badDecode))
                     return
                 }
-                // complete only default questions
-                complete(contextQuestions.filter { $0.template })
+                try? CoreDataManager.shared.saveContext(context)
+                complete(.success(Void()))
                 
             case let .failure(error):
                 print("Error getting Default Contexts: \(error)")
-                complete(nil)
+                complete(.failure(.unknown))
             }
         }
 
@@ -369,8 +369,6 @@ class TopicController {
     // were posted before moving on, so this could cause a discrepancy
     // on the next run when CoreData syncs with the API as questions
     // that weren't received by the API will be deleted on sync
-    #warning("Update this to meet backend specs")
-    // TODO: This method needs to be updated
     /// Assign an array of questions to a Topic (creates relationship in CoreData and on Server)
     func addQuestions(contextQuestions: [ContextQuestion], requestQuestions: [RequestQuestion], to topic: Topic, completion: @escaping CompleteWithNetworkError) {
         let contextQuestionSet = NSSet(array: contextQuestions)
