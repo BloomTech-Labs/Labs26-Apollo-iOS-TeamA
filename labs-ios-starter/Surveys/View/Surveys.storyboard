@@ -404,7 +404,11 @@
                     </view>
                     <navigationItem key="navigationItem" title="Topics" id="Nbf-zG-w68">
                         <barButtonItem key="leftBarButtonItem" title="Edit" id="tSt-4P-Fcy"/>
-                        <barButtonItem key="rightBarButtonItem" title="Enter Join Code" id="Ojh-ir-s5z"/>
+                        <barButtonItem key="rightBarButtonItem" title="Enter Join Code" id="Ojh-ir-s5z">
+                            <connections>
+                                <segue destination="v1I-mh-aRk" kind="show" id="cvo-Mk-d5R"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="topicsCollectionView" destination="15c-Ri-lBV" id="FuR-Hy-QB5"/>
@@ -413,6 +417,57 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y5w-8A-bVp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="124.6376811594203" y="69.642857142857139"/>
+        </scene>
+        <!--Join Survey-->
+        <scene sceneID="a25-98-c0L">
+            <objects>
+                <viewController id="v1I-mh-aRk" customClass="JoinCodeViewController" customModule="labs_ios_starter" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="F0J-eP-YzU">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="sEv-E5-UtU">
+                                <rect key="frame" x="20" y="282" width="374" height="92"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter join code here..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Dct-nF-cPF">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <action selector="editingDidBegin:" destination="v1I-mh-aRk" eventType="editingDidBegin" id="PSA-Qc-O18"/>
+                                        </connections>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Q3-Dd-ywl" customClass="StandardButton" customModule="labs_ios_starter" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="42" width="374" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="gJ5-NB-0bu"/>
+                                        </constraints>
+                                        <state key="normal" title="Join This Survey"/>
+                                        <connections>
+                                            <action selector="joinButtonPressed:" destination="v1I-mh-aRk" eventType="touchUpInside" id="cjb-y7-ORv"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="X2E-7f-PY1"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="sEv-E5-UtU" firstAttribute="leading" secondItem="X2E-7f-PY1" secondAttribute="leading" constant="20" id="6Id-iN-df9"/>
+                            <constraint firstItem="sEv-E5-UtU" firstAttribute="centerY" secondItem="F0J-eP-YzU" secondAttribute="centerY" constant="-120" id="a2W-x0-eWy"/>
+                            <constraint firstItem="sEv-E5-UtU" firstAttribute="centerX" secondItem="F0J-eP-YzU" secondAttribute="centerX" id="x2o-NF-sZW"/>
+                            <constraint firstItem="X2E-7f-PY1" firstAttribute="trailing" secondItem="sEv-E5-UtU" secondAttribute="trailing" constant="20" id="y0h-Yg-R2l"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Join Survey" id="SV3-lf-oMN"/>
+                    <connections>
+                        <outlet property="joinButton" destination="4Q3-Dd-ywl" id="qFP-me-PpI"/>
+                        <outlet property="joinCodeTextField" destination="Dct-nF-cPF" id="2G9-PG-rby"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ClV-3W-IqU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="989.85507246376824" y="69.642857142857139"/>
         </scene>
         <!--New Topic Name-->
         <scene sceneID="Vnb-KF-a0F">
