@@ -107,9 +107,9 @@ class FetchController {
     }
 
     // MARK: - Question Fetch Requests -
-    // TODO: When BE is configured to have different questions, pass in necessary data to only get questions you're looking for
-    func fetchQuestionRequest(context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [Question]? {
-        let fetchRequest: NSFetchRequest<Question> = Question.fetchRequest()
+    /// fetch all context questions for a Topic
+    func fetchContextQuestionsRequest(context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [ContextQuestion]? {
+        let fetchRequest: NSFetchRequest<ContextQuestion> = ContextQuestion.fetchRequest()
 
         do {
             let questions = try context.fetch(fetchRequest)
@@ -120,13 +120,11 @@ class FetchController {
         }
     }
 
-    func fetchQuestions(withTopicId topicId: Int64, on context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [Question]? {
-
-        let fetchRequest: NSFetchRequest<Question> = Question.fetchRequest()
-
+    /// fetch all request questions for a Topic
+    func fetchRequestQuestionsRequest(topicId: Int64, context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [RequestQuestion]? {
+        let fetchRequest: NSFetchRequest<RequestQuestion> = RequestQuestion.fetchRequest()
         let predicate = NSPredicate(format: "topic.id == %@", topicId)
         fetchRequest.predicate = predicate
-
         do {
             let questions = try context.fetch(fetchRequest)
             return questions

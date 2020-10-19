@@ -30,7 +30,7 @@ class TopicQuestionsViewController: UIViewController {
     var contextID: Int? // from TopicNameViewController
     private var fetchController = FetchController()
 
-    var questions: [Question]? {
+    var questions: [ContextQuestion]? {
         didSet {
             DispatchQueue.main.async {
                 self.pickerView.reloadAllComponents()
@@ -86,12 +86,12 @@ class TopicQuestionsViewController: UIViewController {
             return
         }
 
-        guard let questions = fetchController.fetchQuestionRequest() else {
+        guard let questions = questions else {
             print("couldn't fetch questions from CoreData")
             return
         }
 
-        topicController.postTopic(with: topicName, contextId: contextID, questions: questions) { result in
+        topicController.postTopic(with: topicName, contextId: contextID, contextQuestions: questions, requestQuestions: []) { result in
             switch result {
             case let .success(joinCode):
                 // alert user of success and add notification

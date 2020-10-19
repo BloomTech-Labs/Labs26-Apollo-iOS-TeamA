@@ -92,7 +92,7 @@ class TopicController {
     ///   - contextId: the context question's ID
     ///   - questions: the questions chosen
     ///   - complete: completes with the topic's join code
-    func postTopic(with name: String, contextId: Int, questions: [Question], complete: @escaping CompleteWithString) {
+    func postTopic(with name: String, contextId: Int, contextQuestions: [ContextQuestion], requestQuestions: [RequestQuestion], complete: @escaping CompleteWithString) {
         // We know this request is good, but we can still guard unwrap it rather than
         // force unwrapping and assume if something fails it was the user not being logged in
         guard var request = createRequest(pathFromBaseURL: "topic", method: .post),
@@ -125,7 +125,7 @@ class TopicController {
                 topic.id = id
                 try? CoreDataManager.shared.saveContext(CoreDataManager.shared.backgroundContext, async: true)
                 //link questions to topic and send to server
-                self.addQuestions(questions, to: topic) { (result) in
+                self.addQuestions(contextQuestions: contextQuestions, requestQuestions: requestQuestions, to: topic) { (result) in
                     switch result {
                     case .success:
                         complete(.success(joinCode))
@@ -165,7 +165,7 @@ class TopicController {
                     self.group.enter()
                     self.getContextQuestion(context: context, contextId: contextId) { contextQuestion in
                         if let contextQuestion = contextQuestion {
-                            topic.addToQuestions(contextQuestion)
+                            topic.addToContextQuestions(contextQuestion)
                         } else {
                             print("didn't receive context question")
                         }
@@ -178,7 +178,7 @@ class TopicController {
                     self.group.enter()
                     self.getRequestQuestion(context: context, requestId: requestId) { requestQuestion in
                         if let requestQuestion = requestQuestion {
-                            topic.addToQuestions(requestQuestion)
+                            topic.addToRequestQuestions(requestQuestion)
                         }
                         self.group.leave()
                     }
@@ -259,29 +259,29 @@ class TopicController {
         }
     }
     /// GET a single context question
-    func getContextQuestion(context: NSManagedObjectContext, contextId: Int64, complete: @escaping ((Question?) -> Void)) {
+    func getContextQuestion(context: NSManagedObjectContext, contextId: Int64, complete: @escaping ((ContextQuestion?) -> Void)) {
         guard let request = self.createRequest(pathFromBaseURL: "/contextquestion/\(contextId)")
                 >< "Invalid Request for contextQuestions"
         else { return }
         self.networkService.loadData(using: request) { result in
             switch result {
             case let .success(data):
-                let question = self.networkService.decode(to: Question.self, data: data, moc: context)
+                let question = self.networkService.decode(to: ContextQuestion.self, data: data, moc: context)
                 complete(question)
             case let .failure(error):
                 print(error)
             }
         }
     }
-
-    func getRequestQuestion(context: NSManagedObjectContext, requestId: Int64, complete: @escaping ((Question?) -> Void)) {
+    /// get a single request question
+    func getRequestQuestion(context: NSManagedObjectContext, requestId: Int64, complete: @escaping ((RequestQuestion?) -> Void)) {
         guard let request = self.createRequest(pathFromBaseURL: "/requestQuestion/\(requestId)")
                 >< "Invalid Request for requestQuestions"
         else { return }
         self.networkService.loadData(using: request) { result in
             switch result {
             case let .success(data):
-                let question = self.networkService.decode(to: Question.self, data: data, moc: context)
+                let question = self.networkService.decode(to: RequestQuestion.self, data: data, moc: context)
                 complete(question)
             case let .failure(error):
                 print(error)
@@ -316,12 +316,16 @@ class TopicController {
     #warning("Update this to meet backend specs")
     // TODO: This method needs to be updated
     /// Assign an array of questions to a Topic (creates relationship in CoreData and on Server)
-    func addQuestions(_ questions: [Question], to topic: Topic, completion: @escaping CompleteWithNetworkError) {
+    func addQuestions(contextQuestions: [ContextQuestion], requestQuestions: [RequestQuestion], to topic: Topic, completion: @escaping CompleteWithNetworkError) {
+        let contextQuestionSet = NSSet(array: contextQuestions)
+        let requestQuestionSet = NSSet(array: requestQuestions)
 
-        for question in questions {
-            let topicQuestion = TopicQuestion(topicId: Int(topic.id ?? 0), questionId: Int(question.id))
+        topic.addToContextQuestions(contextQuestionSet)
+        topic.addToRequestQuestions(requestQuestionSet)
 
-            topic.addToQuestions(question)
+        for contextQuestion in contextQuestions {
+            self.group.enter()
+            let topicQuestion = TopicQuestion(topicId: Int(topic.id ?? 0), questionId: Int(contextQuestion.id))
 
             guard var request = createRequest(pathFromBaseURL: "topicquestion", method: .post) else {
                 print("Couldn't create request")
@@ -332,17 +336,53 @@ class TopicController {
             request.encode(from: topicQuestion)
 
             networkService.loadData(using: request) { result in
+                self.group.leave()
+
                 switch result {
                 case .success(let data):
                     print(data)
-                    completion(.success(Void()))
                 case .failure(let error):
-                    completion(.failure(error))
                     print(error)
+                    // should we complete here or post what we can?
                 }
             }
         }
-        try? CoreDataManager.shared.saveContext()
+
+        for requestQuestion in requestQuestions {
+            self.group.enter()
+            let topicQuestion = TopicQuestion(topicId: Int(topic.id ?? 0), questionId: Int(requestQuestion.id))
+
+            guard var request = createRequest(pathFromBaseURL: "topicquestion", method: .post) else {
+                print("Couldn't create request")
+                completion(.failure(.badRequest))
+                return
+            }
+
+            request.encode(from: topicQuestion)
+
+            networkService.loadData(using: request) { result in
+                self.group.leave()
+                switch result {
+                case .success(let data):
+                    print(data)
+                case .failure(let error):
+                    print(error)
+                    // should we complete here or post what we can?
+                }
+            }
+        }
+
+        self.group.notify(queue: .main) {
+            do {
+                try CoreDataManager.shared.saveContext()
+                completion(.success(Void()))
+            } catch let saveError {
+                print("Error saving to coredata: \(saveError)")
+                completion(.failure(.unknown))
+            }
+        }
+
+
 
     }
 

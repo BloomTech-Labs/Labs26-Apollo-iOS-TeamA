@@ -5,9 +5,9 @@
 import CoreData
 import Foundation
 
-extension Question {
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Question> {
-        return NSFetchRequest<Question>(entityName: "Question")
+extension ContextQuestion {
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<ContextQuestion> {
+        return NSFetchRequest<ContextQuestion>(entityName: "ContextQuestion")
     }
 
     @NSManaged public var id: Int64

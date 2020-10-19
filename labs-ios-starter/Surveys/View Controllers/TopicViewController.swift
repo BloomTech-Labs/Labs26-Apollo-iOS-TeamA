@@ -12,7 +12,7 @@ class TopicViewController: LoginViewController, NSFetchedResultsControllerDelega
     let spinner = UIActivityIndicatorView(style: .large)
     let cellReuseIdentifier = String.getCollectionViewCellID(.topicsCollectionViewCell)
     let headerReuseIdentifier = String.getCollectionViewHeaderId(.topicSectionHeader)
-    let topicController = TempTopicController()
+    let topicController = TopicController()
 
     lazy var fetchedResultsController: NSFetchedResultsController<Topic> = {
         let fetchRequest: NSFetchRequest<Topic> = Topic.fetchRequest()
