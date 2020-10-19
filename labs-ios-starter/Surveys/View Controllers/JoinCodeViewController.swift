@@ -30,6 +30,7 @@ final class JoinCodeViewController: UIViewController {
                 DispatchQueue.main.async {
                     sender.loadAnimate(false)
                     sender.springAnimate()
+                    _ = NewNotificationsMessage("Successfully joined topic w/ JoinCode: \(userInput)")
                 }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { // Allow time for spring animation to complete
                     self.navigationController?.popViewController(animated: true)
@@ -38,7 +39,7 @@ final class JoinCodeViewController: UIViewController {
                 DispatchQueue.main.async {
                     sender.loadAnimate(false)
                     sender.shakeAnimate()
-                    self.presentSimpleAlert(with: nil, message: "No Matches Found", preferredStyle: .alert, dismissText: "Ok")
+                    self.presentSimpleAlert(with: nil, message: "No Matches Found For '\(userInput)'", preferredStyle: .alert, dismissText: "Ok")
                 }
             }
         }
