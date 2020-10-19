@@ -89,12 +89,6 @@ class TopicViewController: LoginViewController, NSFetchedResultsControllerDelega
         topicController.getTopics { result in
             switch result {
             case .success:
-                DispatchQueue.main.async { [self] in
-                    do {
-                        try fetchedResultsController.performFetch()
-                    } catch {
-                        print("Error fetching Topics from CoreData")
-                    }
 //                    let fetchController = FetchController()
 //                    // map IDs
 //                    let serverTopicIDs = topics.map { Int($0.id ?? 0) }
@@ -106,10 +100,17 @@ class TopicViewController: LoginViewController, NSFetchedResultsControllerDelega
 //                    self.topics?.append(contentsOf: memberTopics)
 //                    self.topics?.append(contentsOf: leaderTopics)
 
+                DispatchQueue.main.async { [self] in
                     if self.refreshControl.isRefreshing {
                         self.refreshControl.endRefreshing()
                     }
-                    self.spinner.stopAnimating()
+                    do {
+                        try fetchedResultsController.performFetch()
+                        self.spinner.stopAnimating()
+                        topicsCollectionView.reloadData()
+                    } catch {
+                        print("Error fetching Topics from CoreData")
+                    }
                 }
 
             case let .failure(error):
@@ -181,10 +182,11 @@ extension TopicViewController: UICollectionViewDataSource, UICollectionViewDeleg
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard
-            let section = TopicCVSection(rawValue: indexPath.section), // >< "Section broken or out of range",
-            let topic = fetchedResultsController.fetchedObjects?[indexPath.row], // >< "Missing topic",
+            let section = TopicCVSection(rawValue: indexPath.section) >< "Section broken or out of range",
+            let fetchedResults = fetchedResultsController.fetchedObjects >< "no fetched objects",
+            let topic = fetchedResults[indexPath.row] >< "Missing topic",
             let cell = topicsCollectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier,
-                                                                for: indexPath) as? TopicCollectionViewCell // >< "Bad cell"
+                                                                for: indexPath) as? TopicCollectionViewCell >< "Bad cell"
         else {
             fatalError("couldn't configure TopicCollectionViewCell 🚨CHANGE THIS BEFORE PRODUCTION🚨")
         }

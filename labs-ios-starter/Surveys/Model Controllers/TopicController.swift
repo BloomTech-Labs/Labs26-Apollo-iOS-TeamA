@@ -12,13 +12,13 @@ import CoreData
 
 /// Used to get Topic Details and establish CoreData Relationships
 struct TopicDetails: Codable {
-
+    
     enum CodingKeys: String, CodingKey {
         case details = "0"
         case contextQuestionIds = "contextquestions"
         case requestQuestionIds = "requestquestions"
     }
-
+    
     var details: TopicDetailObject
     var contextQuestionIds: [ContextQuestionObject]
     var requestQuestionIds: [RequestQuestionObject]
@@ -38,16 +38,22 @@ struct RequestQuestionObject: Codable {
     }
     let requestQuestionId: Int
 }
+
+enum QuestionType {
+    case context
+    case request
+}
+
 /// Used to get related context and resquest questions
 struct TopicDetailObject: Codable {
-
+    
     enum CodingKeys: String, CodingKey {
         case joinCode = "joincode"
         case id
         case contextId = "contextid"
         case leaderId = "leaderid"
         case topicName = "topicname"
-
+        
     }
     let joinCode: String
     let id: Int
@@ -113,7 +119,7 @@ class TopicController {
             NSLog("Error saving Topic: \(name) to CoreData: \(saveError)")
         }
         request.encode(from: topic)
-
+        
         networkService.loadData(using: request) { result in
             switch result {
             case let .success(data):
@@ -134,14 +140,14 @@ class TopicController {
                     }
                 }
             // TODO: POST Questions
-
+            
             case let .failure(error):
                 NSLog("Error POSTing topic with statusCode: \(error.rawValue)")
                 complete(.failure(error))
             }
         }
     }
-
+    
     // MARK: - Read -
     /// Fetch all topics from server and save them to CoreData.
     /// - Parameters:
@@ -259,6 +265,7 @@ class TopicController {
             complete(nil, nil)
             return
         }
+        
         networkService.loadData(using: request) { result in
             switch result {
             case let .success(data):
@@ -362,7 +369,7 @@ class TopicController {
 
         return request
     }
-
+    
     // MARK: - Update -
 
     // this method currently doesn't check to see if all questions
@@ -436,11 +443,11 @@ class TopicController {
             }
         }
     }
-
+    
     func updateTopic(topic: Topic, completion: @escaping CompleteWithNetworkError) {
         // send topic to server using PUT request. save in CoreData
     }
-
+    
     // MARK: - Delete
     /// Deletes a topic from the server
     /// - Warning: This method should `ONLY` be called by the leader of a topic for their own survey
@@ -452,7 +459,7 @@ class TopicController {
             completion(.failure(.badRequest))
             return
         }
-
+        
         networkService.loadData(using: deleteRequest) { result in
             switch result {
             case .success:
@@ -462,14 +469,18 @@ class TopicController {
             }
         }
     }
-
+    
     func deleteTopicsFromCoreData(topics: [Topic], context: NSManagedObjectContext = CoreDataManager.shared.backgroundContext) {
         for topic in topics {
             context.delete(topic)
         }
-        try? CoreDataManager.shared.saveContext(context, async: true)
+        do {
+            try CoreDataManager.shared.saveContext(context, async: true)
+        } catch {
+            print("delete topics save error: \(error)")
+        }
     }
-
+    
     // MARK: - Helper Methods -
 
     private func getTopicID(from data: Data) -> Int64? {
