@@ -13,7 +13,7 @@ class TopicNameViewController: UIViewController {
     let fetchController = FetchController()
     let spinner = UIActivityIndicatorView()
 
-    var contexts: [ContextQuestion]? {
+    var contexts: [ContextObject]? {
         didSet {
             setupContextPicker()
         }
@@ -24,7 +24,7 @@ class TopicNameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSpinner()
-        getAllContextQuestions()
+        getAllContexts()
         self.contextPicker.delegate = self
         self.contextPicker.dataSource = self
     }
@@ -47,14 +47,14 @@ class TopicNameViewController: UIViewController {
 
     // MARK: - Handlers
 
-    private func getAllContextQuestions() {
-        topicController.getDefaultContextQuestions { [weak self] questions in
+    private func getAllContexts() {
+        topicController.getDefaultContexts { [weak self] result in
             guard let self = self else {
                 print("Topic Controller is nil")
                 return
             }
             try? CoreDataManager.shared.saveContext()
-            self.contexts = self.fetchController.fetchDefaultContextQuestionsRequest()
+            self.contexts = self.fetchController.fetchDefaultContextsRequest()
         }
     }
 
@@ -100,7 +100,7 @@ extension TopicNameViewController: UIPickerViewDelegate, UIPickerViewDataSource 
         guard let questions = contexts,
               row < questions.count - 1 else
         { return nil }
-        return questions[row].question
+        return questions[row].title
     }
 
 }

@@ -196,6 +196,34 @@ class TopicController {
             }
         }
     }
+
+    func getDefaultContexts(context: NSManagedObjectContext = CoreDataManager.shared.backgroundContext, complete: @escaping CompleteWithNetworkError) {
+        guard let request = createRequest(pathFromBaseURL: "context") else {
+            print("couldn't create context request")
+            return
+        }
+
+        self.networkService.loadData(using: request) { result in
+            switch result {
+            case let .success(data):
+                guard let _ = self.networkService.decode(
+                        to: [ContextObject].self,
+                        data: data,
+                        moc: context) else {
+                    print("couldn't decode contexts")
+                    complete(.failure(.badDecode))
+                    return
+                }
+
+                try? CoreDataManager.shared.saveContext(context)
+
+                complete(.success(Void()))
+            case let .failure(error):
+                complete(.failure(error))
+            }
+        }
+    }
+
     /// get default (template == true) ContextQuestions
     func getDefaultContextQuestions(context: NSManagedObjectContext = CoreDataManager.shared.backgroundContext, complete: @escaping ([ContextQuestion]?) -> Void) {
         guard let request = createRequest(pathFromBaseURL: "contextQuestion") else {

@@ -120,6 +120,17 @@ class FetchController {
         }
     }
 
+    func fetchDefaultContextsRequest(context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [ContextObject]? {
+        let fetchRequest: NSFetchRequest<ContextObject> = ContextObject.fetchRequest()
+        do {
+            let contexts = try context.fetch(fetchRequest)
+            return contexts
+        } catch let fetchError {
+            print("Error fetching contexts: \(fetchError)")
+            return nil
+        }
+    }
+
     func fetchDefaultContextQuestionsRequest(context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [ContextQuestion]? {
         let fetchRequest: NSFetchRequest<ContextQuestion> = ContextQuestion.fetchRequest()
         let predicate = NSPredicate(format: "template == true")
