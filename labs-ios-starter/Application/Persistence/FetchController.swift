@@ -121,7 +121,6 @@ class FetchController {
     }
 
     func fetchQuestions(withTopicId topicId: Int64, on context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [Question]? {
-
         let fetchRequest: NSFetchRequest<Question> = Question.fetchRequest()
 
         let predicate = NSPredicate(format: "topic.id == %@", topicId)
@@ -135,5 +134,4 @@ class FetchController {
             return nil
         }
     }
-
 }
