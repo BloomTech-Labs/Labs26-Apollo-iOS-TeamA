@@ -107,7 +107,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="6b0-Ru-Eek">
-                                <rect key="frame" x="275" y="20" width="119" height="30"/>
+                                <rect key="frame" x="275" y="160" width="119" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RYY-ub-M0S">
                                         <rect key="frame" x="0.0" y="0.0" width="45" height="30"/>
@@ -120,11 +120,11 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="968-NL-voA">
-                                <rect key="frame" x="20" y="20" width="47" height="30"/>
+                                <rect key="frame" x="20" y="160" width="47" height="30"/>
                                 <state key="normal" title="&lt; Back"/>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TopicName" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vsb-lY-OoI">
-                                <rect key="frame" x="20" y="70" width="165" height="72"/>
+                                <rect key="frame" x="20" y="210" width="165" height="72"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="72" id="XSY-0f-xaV"/>
                                 </constraints>
@@ -133,7 +133,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="55I-Py-9aA">
-                                <rect key="frame" x="0.0" y="162" width="414" height="680"/>
+                                <rect key="frame" x="0.0" y="302" width="414" height="594"/>
                                 <color key="backgroundColor" name="background"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="wNJ-Oi-GoB">
                                     <size key="itemSize" width="374" height="128"/>
@@ -216,7 +216,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ntp-fg-Bhh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="124.6376811594203" y="-632.14285714285711"/>
+            <point key="canvasLocation" x="1078" y="70"/>
         </scene>
         <!--Member List View Controller-->
         <scene sceneID="SHL-7I-5rN">
@@ -260,7 +260,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CZt-yf-BjT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="901" y="-921"/>
+            <point key="canvasLocation" x="2096" y="70"/>
         </scene>
         <!--Topics-->
         <scene sceneID="JzI-wf-fgA">
@@ -316,7 +316,10 @@
                                                                     <constraint firstAttribute="width" secondItem="kK4-nN-Q5D" secondAttribute="height" multiplier="1:1" id="CZD-wW-6st"/>
                                                                 </constraints>
                                                                 <color key="tintColor" systemColor="systemRedColor"/>
-                                                                <state key="normal" image="trash" catalog="system"/>
+                                                                <state key="normal" image="xmark" catalog="system"/>
+                                                                <connections>
+                                                                    <action selector="deleteButtonPressed:" destination="wkv-Kr-u2R" eventType="touchUpInside" id="LYL-RQ-poW"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                         <constraints>
@@ -330,7 +333,7 @@
                                                         <constraint firstAttribute="height" constant="22" id="PSl-BH-I3Z"/>
                                                         <constraint firstAttribute="width" secondItem="WE3-Mn-Yue" secondAttribute="height" multiplier="1:1" id="qth-Xc-8WD"/>
                                                     </constraints>
-                                                    <blurEffect style="extraLight"/>
+                                                    <blurEffect style="light"/>
                                                 </visualEffectView>
                                             </subviews>
                                             <constraints>
@@ -347,8 +350,10 @@
                                         </collectionViewCellContentView>
                                         <color key="backgroundColor" name="cell"/>
                                         <connections>
+                                            <outlet property="blurView" destination="WE3-Mn-Yue" id="NJE-as-AKk"/>
+                                            <outlet property="deleteButton" destination="kK4-nN-Q5D" id="RcA-5m-QcD"/>
                                             <outlet property="nameLabel" destination="IkA-BA-5Dw" id="jsv-4B-V9J"/>
-                                            <segue destination="aZv-jt-onU" kind="presentation" identifier="TopicDetailSegue" id="Opz-La-5xH"/>
+                                            <segue destination="aZv-jt-onU" kind="show" identifier="TopicDetailSegue" id="Opz-La-5xH"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -467,7 +472,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ClV-3W-IqU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="989.85507246376824" y="69.642857142857139"/>
+            <point key="canvasLocation" x="125" y="-676"/>
         </scene>
         <!--New Topic Name-->
         <scene sceneID="Vnb-KF-a0F">
@@ -774,7 +779,7 @@
         <image name="chevron.right" catalog="system" width="96" height="128"/>
         <image name="person.circle.fill" catalog="system" width="128" height="121"/>
         <image name="plus" catalog="system" width="128" height="113"/>
-        <image name="trash" catalog="system" width="121" height="128"/>
+        <image name="xmark" catalog="system" width="128" height="113"/>
         <namedColor name="accent">
             <color red="0.58799999952316284" green="0.3880000114440918" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
