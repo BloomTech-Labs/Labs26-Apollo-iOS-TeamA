@@ -10,7 +10,6 @@ import CoreData
 import Foundation
 
 // MARK: - Codable Types -
-
 /// Used to get Topic Details and establish CoreData Relationships
 struct TopicDetails: Codable {
     enum CodingKeys: String, CodingKey {
@@ -87,7 +86,6 @@ struct TopicQuestion: Codable {
 
 /// Controller for Topic, ContextObject, and Question model
 class TopicController {
-
     // MARK: - Properties -
     let networkService = NetworkService.shared
     let profileController = ProfileController.shared
@@ -134,8 +132,8 @@ class TopicController {
                 }
                 topic.id = id
                 try? CoreDataManager.shared.saveContext(CoreDataManager.shared.backgroundContext, async: true)
-                //link questions to topic and send to server
-                self.addQuestions(contextQuestions: contextQuestions, requestQuestions: requestQuestions, to: topic) { (result) in
+                // link questions to topic and send to server
+                self.addQuestions(contextQuestions: contextQuestions, requestQuestions: requestQuestions, to: topic) { result in
                     switch result {
                     case .success:
                         complete(.success(joinCode))
@@ -160,7 +158,7 @@ class TopicController {
     func getTopics(context: NSManagedObjectContext = CoreDataManager.shared.backgroundContext, complete: @escaping CompleteWithNetworkError) {
         getAllTopicDetails(context: context) { topics, topicDetails in
             guard let topics = topics,
-                  let topicDetails = topicDetails else {
+                let topicDetails = topicDetails else {
                 print("Didn't have required Topic information to fetch Questions")
                 return
             }
@@ -213,13 +211,12 @@ class TopicController {
             return
         }
 
-        self.networkService.loadData(using: request) { result in
+        networkService.loadData(using: request) { result in
             switch result {
             case let .success(data):
-                guard let _ = self.networkService.decode(
-                        to: [ContextObject].self,
-                        data: data,
-                        moc: context) else {
+                guard let _ = self.networkService.decode(to: [ContextObject].self,
+                                                         data: data,
+                                                         moc: context) else {
                     print("couldn't decode contexts")
                     complete(.failure(.badDecode))
                     return
@@ -244,23 +241,61 @@ class TopicController {
         networkService.loadData(using: request) { result in
             switch result {
             case let .success(data):
-                guard let _ = self.networkService.decode(
-                        to: [ContextQuestion].self,
-                        data: data,
-                        moc: context) else {
+                guard let _ = self.networkService.decode(to: [ContextQuestion].self,
+                                                         data: data,
+                                                         moc: context) else {
                     complete(.failure(.badDecode))
                     return
                 }
                 try? CoreDataManager.shared.saveContext(context)
                 complete(.success(Void()))
-                
+
             case let .failure(error):
                 print("Error getting Default Contexts: \(error)")
                 complete(.failure(.unknown))
             }
         }
+    }
 
+    /// Fetches and saves to CoreData the topic with the matching Join Code
+    func getTopic(withJoinCode joinCode: String, completion: @escaping CompleteWithNetworkError) {
+        guard
+            let getRequest = createRequest(pathFromBaseURL: "topic")
+        else {
+            completion(.failure(.badRequest)); return
+        }
 
+        networkService.loadData(using: getRequest) { result in // TODO: Add self to [Member] for the returned object
+            switch result {
+            case let .success(data):
+                data.debugPrintJSON() // Show response for debug
+                // Decode
+                let mainContext = CoreDataManager.shared.mainContext
+                guard
+                    let topicShells = self.networkService.decode(to: [Topic].self,
+                                                                 data: data,
+                                                                 moc: mainContext)
+                else {
+                    completion(.failure(.badDecode)); return
+                }
+                // Delete all topics that don't use this joinCode
+                let deleteTopics = topicShells.filter { $0.joinCode != joinCode }
+                if topicShells == deleteTopics { // No discrepancy means all topics didn't have join code
+                    print("Join Code Not Found On Server")
+                    completion(.failure(.notFound)); return
+                }
+                deleteTopics.forEach { topic in
+                    CoreDataManager.shared.deleteObject(topic)
+                }
+                // Save
+                try? CoreDataManager.shared.saveContext()
+
+                completion(.success(Void()))
+            case let .failure(error):
+                print(error)
+                completion(.failure(error))
+            }
+        }
     }
 
     func getAllTopicDetails(context: NSManagedObjectContext, complete: @escaping ([Topic]?, [TopicDetails]?) -> Void) {
@@ -269,12 +304,12 @@ class TopicController {
             complete(nil, nil)
             return
         }
-        
+
         networkService.loadData(using: request) { result in
             switch result {
             case let .success(data):
                 guard let topicShells = self.networkService.decode(to: [Topic].self,
-                                                                   data:data,
+                                                                   data: data,
                                                                    moc: context) else {
                     print("Error decoding topics")
                     complete(nil, nil)
@@ -282,7 +317,7 @@ class TopicController {
                 }
                 let topicIds = topicShells.map { Int64($0.id ?? 999_999_999) }
 
-                self.getTopicDetails(context: context, topicIds: topicIds) { (topicDetails) in
+                self.getTopicDetails(context: context, topicIds: topicIds) { topicDetails in
                     complete(topicShells, topicDetails)
                 }
 
@@ -292,20 +327,21 @@ class TopicController {
             }
         }
     }
+
     /// get details for all topics, uses DispatchGroup
-    func getTopicDetails(context: NSManagedObjectContext, topicIds: [Int64], complete: @escaping ([TopicDetails]) -> ()) {
+    func getTopicDetails(context: NSManagedObjectContext, topicIds: [Int64], complete: @escaping ([TopicDetails]) -> Void) {
         var topicDetails: [TopicDetails] = []
 
         for topicId in topicIds {
-            self.group.enter()
-            //make request to topicId endpoint
-            guard let topicDetailRequest = self.createRequest(pathFromBaseURL: "topic/\(topicId)/details")
-                    >< "failed to create topic detail request \(topicId)"
+            group.enter()
+            // make request to topicId endpoint
+            guard let topicDetailRequest = createRequest(pathFromBaseURL: "topic/\(topicId)/details")
+                >< "failed to create topic detail request \(topicId)"
             else {
-                self.group.leave()
+                group.leave()
                 continue
             }
-            networkService.loadData(using: topicDetailRequest) { (result) in
+            networkService.loadData(using: topicDetailRequest) { result in
                 switch result {
                 case let .success(data):
                     if let topicDetail = self.networkService.decode(to: TopicDetails.self, data: data) {
@@ -321,16 +357,17 @@ class TopicController {
             }
         }
         // group is done with all blocks
-        self.group.notify(queue: .main) {
+        group.notify(queue: .main) {
             complete(topicDetails)
         }
     }
+
     /// GET a single context question
     func getContextQuestion(context: NSManagedObjectContext, contextId: Int64, complete: @escaping ((ContextQuestion?) -> Void)) {
-        guard let request = self.createRequest(pathFromBaseURL: "/contextquestion/\(contextId)")
-                >< "Invalid Request for contextQuestions"
+        guard let request = createRequest(pathFromBaseURL: "/contextquestion/\(contextId)")
+            >< "Invalid Request for contextQuestions"
         else { return }
-        self.networkService.loadData(using: request) { result in
+        networkService.loadData(using: request) { result in
             switch result {
             case let .success(data):
                 let question = self.networkService.decode(to: ContextQuestion.self, data: data, moc: context)
@@ -340,12 +377,13 @@ class TopicController {
             }
         }
     }
+
     /// get a single request question
     func getRequestQuestion(context: NSManagedObjectContext, requestId: Int64, complete: @escaping ((RequestQuestion?) -> Void)) {
-        guard let request = self.createRequest(pathFromBaseURL: "/requestQuestion/\(requestId)")
-                >< "Invalid Request for requestQuestions"
+        guard let request = createRequest(pathFromBaseURL: "/requestQuestion/\(requestId)")
+            >< "Invalid Request for requestQuestions"
         else { return }
-        self.networkService.loadData(using: request) { result in
+        networkService.loadData(using: request) { result in
             switch result {
             case let .success(data):
                 let question = self.networkService.decode(to: RequestQuestion.self, data: data, moc: context)
@@ -355,6 +393,7 @@ class TopicController {
             }
         }
     }
+
     // MARK: - Helper Methods -
     private func createRequest(auth: Bool = true,
                                pathFromBaseURL: String,
@@ -373,7 +412,7 @@ class TopicController {
 
         return request
     }
-    
+
     // MARK: - Update -
 
     // this method currently doesn't check to see if all questions
@@ -389,7 +428,7 @@ class TopicController {
         topic.addToRequestQuestions(requestQuestionSet)
 
         for contextQuestion in contextQuestions {
-            self.group.enter()
+            group.enter()
             let topicQuestion = TopicQuestion(topicId: Int(topic.id ?? 0), questionId: Int(contextQuestion.id))
 
             guard var request = createRequest(pathFromBaseURL: "topicquestion", method: .post) else {
@@ -406,7 +445,7 @@ class TopicController {
                 switch result {
                 case let .success(data):
                     print(data)
-                case .failure(let error):
+                case let .failure(error):
                     print(error)
                     // should we complete here or post what we can?
                 }
@@ -414,7 +453,7 @@ class TopicController {
         }
 
         for requestQuestion in requestQuestions {
-            self.group.enter()
+            group.enter()
             let topicQuestion = TopicQuestion(topicId: Int(topic.id ?? 0), questionId: Int(requestQuestion.id))
 
             guard var request = createRequest(pathFromBaseURL: "topicquestion", method: .post) else {
@@ -428,16 +467,16 @@ class TopicController {
             networkService.loadData(using: request) { result in
                 self.group.leave()
                 switch result {
-                case .success(let data):
+                case let .success(data):
                     print(data)
-                case .failure(let error):
+                case let .failure(error):
                     print(error)
                     // should we complete here or post what we can?
                 }
             }
         }
 
-        self.group.notify(queue: .main) {
+        group.notify(queue: .main) {
             do {
                 try CoreDataManager.shared.saveContext()
                 completion(.success(Void()))
@@ -486,7 +525,6 @@ class TopicController {
     }
 
     // MARK: - Helper Methods -
-
     private func getTopicID(from data: Data) -> Int64? {
         guard let topicID = networkService.decode(to: TopicID.self, data: data)?.topic.id else {
             print("Couldn't get ID from newly created topic")
