@@ -34,6 +34,8 @@
 		1D4D9C0225068DEB00348246 /* CircularButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D9C0125068DEB00348246 /* CircularButton.swift */; };
 		1D4D9C0A25092B5400348246 /* labs_ios_starterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D9C0925092B5400348246 /* labs_ios_starterUITests.swift */; };
 		1D4D9C1325092F4A00348246 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D9C1225092F4A00348246 /* CoreDataManager.swift */; };
+		1D4D9C17250930AB00348246 /* labs-ios-starter.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D9C15250930AB00348246 /* labs-ios-starter.xcdatamodeld */; };
+		1D574E38253A234A002E5699 /* JoinCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D574E37253A234A002E5699 /* JoinCodeViewController.swift */; };
 		1D6F66722530C3CB00406B7D /* ReviewDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6F66712530C3CB00406B7D /* ReviewDetailsViewController.swift */; };
 		1D8C41092522D0980041D3B6 /* Topic+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C41082522D0970041D3B6 /* Topic+CoreDataProperties.swift */; };
 		1D938DD9251AED4300D3013D /* NotificationsTabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D938DD8251AED4300D3013D /* NotificationsTabItem.swift */; };
@@ -132,6 +134,7 @@
 		1D4D9C0B25092B5400348246 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D4D9C1225092F4A00348246 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		1D4D9C16250930AB00348246 /* labs-ios-starter.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "labs-ios-starter.xcdatamodel"; sourceTree = "<group>"; };
+		1D574E37253A234A002E5699 /* JoinCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinCodeViewController.swift; sourceTree = "<group>"; };
 		1D6F66712530C3CB00406B7D /* ReviewDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailsViewController.swift; sourceTree = "<group>"; };
 		1D8C41082522D0970041D3B6 /* Topic+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Topic+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		1D938DD8251AED4300D3013D /* NotificationsTabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsTabItem.swift; sourceTree = "<group>"; };
@@ -318,6 +321,7 @@
 				1D0E1061250B046300A21C44 /* TopicNameViewController.swift */,
 				1D0E1063250B047400A21C44 /* TopicQuestionsViewController.swift */,
 				1D6F66712530C3CB00406B7D /* ReviewDetailsViewController.swift */,
+				1D574E37253A234A002E5699 /* JoinCodeViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -779,6 +783,7 @@
 				1D0545262515C3BC006E8665 /* Member+CoreDataClass.swift in Sources */,
 				B94042192501D1BD0048BCED /* URLRequest + JSON.swift in Sources */,
 				1D0545252515C3BC006E8665 /* ContextQuestion+CoreDataProperties.swift in Sources */,
+				1D574E38253A234A002E5699 /* JoinCodeViewController.swift in Sources */,
 				B940421A2501D1CE0048BCED /* UIViewController+Alerts.swift in Sources */,
 				1DB3E114251A526D00A2F88F /* (null) in Sources */,
 				B9091EEF25183F2E009BA6A7 /* TopicCollectionViewCell.swift in Sources */,

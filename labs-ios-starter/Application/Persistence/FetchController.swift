@@ -158,5 +158,4 @@ class FetchController {
             return nil
         }
     }
-
 }
