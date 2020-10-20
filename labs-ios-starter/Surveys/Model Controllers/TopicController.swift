@@ -93,7 +93,6 @@ class TopicController {
     let group = DispatchGroup()
 
     // MARK: - Create -
-    // TODO: Responses
     /// Post a topic to the web back end with the currently signed in user as the leader
     /// - Parameters:
     ///   - name: The name of the topic

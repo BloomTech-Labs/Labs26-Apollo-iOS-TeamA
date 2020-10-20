@@ -5,10 +5,10 @@
 import CoreData
 
 /// AKA Threads - users can respond to Questions
-public final class Response: NSManagedObject, Codable {
+public final class ContextResponse: NSManagedObject, Codable {
     // MARK: - Coding Keys
 
-    enum ResponseCodingKeys: CodingKey {
+    enum ContextResponseCodingKeys: CodingKey {
         case id, questionId, response, respondedBy, topic
     }
 
@@ -19,14 +19,14 @@ public final class Response: NSManagedObject, Codable {
                                         questionId: UUID,
                                         response: String,
                                         respondedBy: Member,
-                                        topic: Topic,
+                                        contextQuestion: ContextQuestion,
                                         context: NSManagedObjectContext = CoreDataManager.shared.mainContext) {
         self.init(context: context)
         self.id = id
         self.questionId = questionId
         self.response = response
         self.respondedBy = respondedBy
-        self.topic = topic
+        self.contextQuestion = contextQuestion
     }
 
     /// Used to create managed objects by way of decoding
@@ -41,13 +41,12 @@ public final class Response: NSManagedObject, Codable {
         }
         self.init(context: moc)
 
-        let container = try decoder.container(keyedBy: ResponseCodingKeys.self)
+        let container = try decoder.container(keyedBy: ContextResponseCodingKeys.self)
 
         id = try container.decode(UUID.self, forKey: .id)
         questionId = try container.decode(UUID.self, forKey: .questionId)
         response = try container.decode(String.self, forKey: .response)
         respondedBy = try container.decode(Member.self, forKey: .respondedBy)
-        topic = try container.decode(Topic.self, forKey: .topic)
     }
 
     /// Used for encoding
@@ -57,12 +56,12 @@ public final class Response: NSManagedObject, Codable {
     ///  let jsonData = try jsonEncoder.encode(topic)
     /// ```
     public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: ResponseCodingKeys.self)
+        var container = encoder.container(keyedBy: ContextResponseCodingKeys.self)
 
         try container.encode(id, forKey: .id)
         try container.encode(questionId, forKey: .questionId)
         try container.encode(response, forKey: .response)
         try container.encode(respondedBy, forKey: .respondedBy)
-        try container.encode(topic, forKey: .topic)
+        // encode contextQuestion?
     }
 }

@@ -57,13 +57,13 @@ class CoreDataTests: XCTestCase {
     func testCanEstablishQuestionToTopicRelationship() {
         let fetchedTopic = fetchController.fetchLeaderTopics(with: [1])?[0]
 
-        guard let fetchedQuestions = fetchController.fetchQuestionRequest() else {
+        guard let fetchedQuestions = fetchController.fetchDefaultContextQuestionsRequest() else {
             XCTFail("Couldn't unwrap fetched questions")
             return
         }
 
-        fetchedTopic?.questions = fetchedTopic?.questions?.addingObjects(from: fetchedQuestions) as NSSet?
-        XCTAssertNotNil(fetchedTopic?.questions)
-        XCTAssertEqual(fetchedTopic?.questions?.count, 3)
+        fetchedTopic?.addToContextQuestions(NSSet(array: fetchedQuestions))
+        XCTAssertNotNil(fetchedTopic?.contextQuestions)
+        XCTAssertEqual(fetchedTopic?.contextQuestions?.count, 3)
     }
 }
