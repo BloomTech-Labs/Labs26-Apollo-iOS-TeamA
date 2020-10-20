@@ -24,10 +24,10 @@ extension ContextQuestion {
 
 extension ContextQuestion {
     @objc(addResponsesObject:)
-    @NSManaged public func addToResponses(_ value: Response)
+    @NSManaged public func addToResponses(_ value: ContextResponse)
 
     @objc(removeResponsesObject:)
-    @NSManaged public func removeFromResponses(_ value: Response)
+    @NSManaged public func removeFromResponses(_ value: ContextResponse)
 
     @objc(addResponses:)
     @NSManaged public func addToResponses(_ values: NSSet)

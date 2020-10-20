@@ -5,10 +5,10 @@
 import CoreData
 
 /// AKA Threads - users can respond to Questions
-public final class Response: NSManagedObject, Codable {
+public final class ContextResponse: NSManagedObject, Codable {
     // MARK: - Coding Keys
 
-    enum ResponseCodingKeys: CodingKey {
+    enum ContextResponseCodingKeys: CodingKey {
         case id, questionId, response, respondedBy, topic
     }
 
@@ -41,7 +41,7 @@ public final class Response: NSManagedObject, Codable {
         }
         self.init(context: moc)
 
-        let container = try decoder.container(keyedBy: ResponseCodingKeys.self)
+        let container = try decoder.container(keyedBy: ContextResponseCodingKeys.self)
 
         id = try container.decode(UUID.self, forKey: .id)
         questionId = try container.decode(UUID.self, forKey: .questionId)
@@ -56,7 +56,7 @@ public final class Response: NSManagedObject, Codable {
     ///  let jsonData = try jsonEncoder.encode(topic)
     /// ```
     public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: ResponseCodingKeys.self)
+        var container = encoder.container(keyedBy: ContextResponseCodingKeys.self)
 
         try container.encode(id, forKey: .id)
         try container.encode(questionId, forKey: .questionId)

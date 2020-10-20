@@ -39,6 +39,6 @@ extension Member {
 
     // MARK: - Inverse relationships
 
-    @NSManaged public var response: Response?
+    @NSManaged public var response: ContextResponse?
     @NSManaged public var topic: Topic?
 }

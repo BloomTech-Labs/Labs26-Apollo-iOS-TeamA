@@ -14,8 +14,20 @@
         <attribute name="question" attributeType="String"/>
         <attribute name="ratingStyle" attributeType="String"/>
         <attribute name="template" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <relationship name="responses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Response" inverseName="contextQuestion" inverseEntity="Response"/>
+        <relationship name="responses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ContextResponse" inverseName="contextQuestion" inverseEntity="ContextResponse"/>
         <relationship name="topic" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Topic" inverseName="contextQuestions" inverseEntity="Topic"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="ContextResponse" representedClassName=".Response" syncable="YES">
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="questionId" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="response" attributeType="String"/>
+        <relationship name="contextQuestion" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContextQuestion" inverseName="responses" inverseEntity="ContextQuestion"/>
+        <relationship name="respondedBy" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Member" inverseName="response" inverseEntity="Member"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -29,7 +41,7 @@
         <attribute name="id" optional="YES" attributeType="String" customClassName="Int64"/>
         <attribute name="image" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="UIImage"/>
         <attribute name="lastName" optional="YES" attributeType="String"/>
-        <relationship name="response" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Response" inverseName="respondedBy" inverseEntity="Response"/>
+        <relationship name="response" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContextResponse" inverseName="respondedBy" inverseEntity="ContextResponse"/>
         <relationship name="topic" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Topic" inverseName="members" inverseEntity="Topic"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
@@ -48,18 +60,6 @@
         <attribute name="ratingStyle" attributeType="String"/>
         <attribute name="template" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <relationship name="topic" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Topic" inverseName="requestQuestions" inverseEntity="Topic"/>
-        <uniquenessConstraints>
-            <uniquenessConstraint>
-                <constraint value="id"/>
-            </uniquenessConstraint>
-        </uniquenessConstraints>
-    </entity>
-    <entity name="Response" representedClassName=".Response" syncable="YES">
-        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="questionId" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="response" attributeType="String"/>
-        <relationship name="contextQuestion" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContextQuestion" inverseName="responses" inverseEntity="ContextQuestion"/>
-        <relationship name="respondedBy" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Member" inverseName="response" inverseEntity="Member"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -91,7 +91,7 @@
         <element name="Member" positionX="-54" positionY="18" width="128" height="163"/>
         <element name="NewNotificationsMessage" positionX="-36" positionY="81" width="128" height="88"/>
         <element name="RequestQuestion" positionX="72" positionY="153" width="128" height="118"/>
-        <element name="Response" positionX="-18" positionY="81" width="128" height="118"/>
+        <element name="ContextResponse" positionX="-18" positionY="81" width="128" height="118"/>
         <element name="Topic" positionX="-63" positionY="-18" width="128" height="223"/>
     </elements>
 </model>
