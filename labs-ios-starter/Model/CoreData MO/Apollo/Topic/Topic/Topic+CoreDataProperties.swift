@@ -68,7 +68,6 @@ extension Topic {
 
     @NSManaged public var contextQuestions: NSSet? // doesn't get sent
     @NSManaged public var requestQuestions: NSSet? // doesn't get sent
-    @NSManaged public var responses: NSSet? // doesn't get sent
 
     // Sections (Used for CollectionView Headers)
 
@@ -119,18 +118,4 @@ extension Topic {
     @NSManaged public func removeFromRequestQuestions(_ values: NSSet)
 }
 
-// MARK: Generated accessors for responses
 
-extension Topic {
-    @objc(addResponsesObject:)
-    @NSManaged public func addToResponses(_ value: Response)
-
-    @objc(removeResponsesObject:)
-    @NSManaged public func removeFromResponses(_ value: Response)
-
-    @objc(addResponses:)
-    @NSManaged public func addToResponses(_ values: NSSet)
-
-    @objc(removeResponses:)
-    @NSManaged public func removeFromResponses(_ values: NSSet)
-}

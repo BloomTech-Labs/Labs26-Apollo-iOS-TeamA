@@ -15,6 +15,7 @@ public final class ContextQuestion: NSManagedObject, Codable {
         case ratingStyle = "style"
         // case contextId = "contextid"
         case template = "default"
+        
     }
 
     // MARK: - Initializer

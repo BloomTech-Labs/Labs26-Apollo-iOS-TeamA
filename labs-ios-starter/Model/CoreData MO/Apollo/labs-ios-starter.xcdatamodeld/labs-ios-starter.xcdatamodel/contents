@@ -14,6 +14,7 @@
         <attribute name="question" attributeType="String"/>
         <attribute name="ratingStyle" attributeType="String"/>
         <attribute name="template" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="responses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Response" inverseName="contextQuestion" inverseEntity="Response"/>
         <relationship name="topic" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Topic" inverseName="contextQuestions" inverseEntity="Topic"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
@@ -57,8 +58,8 @@
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="questionId" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="response" attributeType="String"/>
+        <relationship name="contextQuestion" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContextQuestion" inverseName="responses" inverseEntity="ContextQuestion"/>
         <relationship name="respondedBy" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Member" inverseName="response" inverseEntity="Member"/>
-        <relationship name="topic" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Topic" inverseName="responses" inverseEntity="Topic"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -78,7 +79,6 @@
         <relationship name="contextQuestions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ContextQuestion" inverseName="topic" inverseEntity="ContextQuestion"/>
         <relationship name="members" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Member" inverseName="topic" inverseEntity="Member"/>
         <relationship name="requestQuestions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RequestQuestion" inverseName="topic" inverseEntity="RequestQuestion"/>
-        <relationship name="responses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Response" inverseName="topic" inverseEntity="Response"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -87,11 +87,11 @@
     </entity>
     <elements>
         <element name="ContextObject" positionX="0" positionY="99" width="128" height="73"/>
-        <element name="ContextQuestion" positionX="160" positionY="192" width="128" height="118"/>
+        <element name="ContextQuestion" positionX="160" positionY="192" width="128" height="133"/>
         <element name="Member" positionX="-54" positionY="18" width="128" height="163"/>
         <element name="NewNotificationsMessage" positionX="-36" positionY="81" width="128" height="88"/>
         <element name="RequestQuestion" positionX="72" positionY="153" width="128" height="118"/>
         <element name="Response" positionX="-18" positionY="81" width="128" height="118"/>
-        <element name="Topic" positionX="-63" positionY="-18" width="128" height="238"/>
+        <element name="Topic" positionX="-63" positionY="-18" width="128" height="223"/>
     </elements>
 </model>

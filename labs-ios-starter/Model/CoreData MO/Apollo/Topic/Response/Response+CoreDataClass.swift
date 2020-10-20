@@ -19,14 +19,14 @@ public final class Response: NSManagedObject, Codable {
                                         questionId: UUID,
                                         response: String,
                                         respondedBy: Member,
-                                        topic: Topic,
+                                        contextQuestion: ContextQuestion,
                                         context: NSManagedObjectContext = CoreDataManager.shared.mainContext) {
         self.init(context: context)
         self.id = id
         self.questionId = questionId
         self.response = response
         self.respondedBy = respondedBy
-        self.topic = topic
+        self.contextQuestion = contextQuestion
     }
 
     /// Used to create managed objects by way of decoding
@@ -47,7 +47,6 @@ public final class Response: NSManagedObject, Codable {
         questionId = try container.decode(UUID.self, forKey: .questionId)
         response = try container.decode(String.self, forKey: .response)
         respondedBy = try container.decode(Member.self, forKey: .respondedBy)
-        topic = try container.decode(Topic.self, forKey: .topic)
     }
 
     /// Used for encoding
@@ -63,6 +62,6 @@ public final class Response: NSManagedObject, Codable {
         try container.encode(questionId, forKey: .questionId)
         try container.encode(response, forKey: .response)
         try container.encode(respondedBy, forKey: .respondedBy)
-        try container.encode(topic, forKey: .topic)
+        // encode contextQuestion?
     }
 }

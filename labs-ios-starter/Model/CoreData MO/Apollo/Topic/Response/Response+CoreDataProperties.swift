@@ -14,5 +14,5 @@ extension Response {
     @NSManaged public var questionId: UUID
     @NSManaged public var response: String
     @NSManaged public var respondedBy: Member
-    @NSManaged public var topic: Topic
+    @NSManaged public var contextQuestion: ContextQuestion
 }
