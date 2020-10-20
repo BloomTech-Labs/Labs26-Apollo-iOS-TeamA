@@ -12,7 +12,7 @@ class NotificationsCollectionViewCell: ApolloCollectionViewCell {
     }
 
     @IBOutlet var dismissButton: UIButton!
-    
+
     // MARK: - Properties
     var managedObject: NewNotificationsMessage?
 
@@ -21,6 +21,15 @@ class NotificationsCollectionViewCell: ApolloCollectionViewCell {
         guard let object = managedObject else { return }
         CoreDataManager.shared.deleteObject(object)
     }
+
+    // TODO: Future -> stretch goal
+//    @IBAction func addJoinCodeToClipboard(_ sender: UIButton) {
+//        guard let object = managedObject else { return }
+//        let copyText = UIPasteboard.general
+//        let joinCode = object.message // Strip to only JoinCode
+//        copyText.string = joinCode
+//        // presentAlert() -> "Copied!"
+//    }
 
     private func configureDismissButton() {
         dismissButton.clipsToBounds = true
