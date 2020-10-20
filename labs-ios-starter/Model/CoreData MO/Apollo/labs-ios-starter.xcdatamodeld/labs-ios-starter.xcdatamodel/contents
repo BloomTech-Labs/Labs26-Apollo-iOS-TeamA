@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="19H2" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ContextObject" representedClassName=".ContextObject" syncable="YES">
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="title" attributeType="String"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="ContextQuestion" representedClassName=".ContextQuestion" syncable="YES">
+        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="question" attributeType="String"/>
+        <attribute name="ratingStyle" attributeType="String"/>
+        <attribute name="template" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="topic" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Topic" inverseName="contextQuestions" inverseEntity="Topic"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -29,11 +41,12 @@
         <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="unread" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
     </entity>
-    <entity name="Question" representedClassName=".Question" syncable="YES">
+    <entity name="RequestQuestion" representedClassName=".RequestQuestion" syncable="YES">
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="question" attributeType="String"/>
         <attribute name="ratingStyle" attributeType="String"/>
-        <relationship name="topic" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Topic" inverseName="questions" inverseEntity="Topic"/>
+        <attribute name="template" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="topic" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Topic" inverseName="requestQuestions" inverseEntity="Topic"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -62,8 +75,9 @@
         <attribute name="section" attributeType="String" defaultValueString="Leader"/>
         <attribute name="timeStamp" optional="YES" attributeType="String"/>
         <attribute name="topicName" optional="YES" attributeType="String" defaultValueString="Member"/>
+        <relationship name="contextQuestions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ContextQuestion" inverseName="topic" inverseEntity="ContextQuestion"/>
         <relationship name="members" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Member" inverseName="topic" inverseEntity="Member"/>
-        <relationship name="questions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Question" inverseName="topic" inverseEntity="Question"/>
+        <relationship name="requestQuestions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RequestQuestion" inverseName="topic" inverseEntity="RequestQuestion"/>
         <relationship name="responses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Response" inverseName="topic" inverseEntity="Response"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
@@ -73,10 +87,11 @@
     </entity>
     <elements>
         <element name="ContextObject" positionX="0" positionY="99" width="128" height="73"/>
+        <element name="ContextQuestion" positionX="160" positionY="192" width="128" height="118"/>
         <element name="Member" positionX="-54" positionY="18" width="128" height="163"/>
         <element name="NewNotificationsMessage" positionX="-36" positionY="81" width="128" height="88"/>
-        <element name="Question" positionX="-36" positionY="54" width="128" height="103"/>
+        <element name="RequestQuestion" positionX="72" positionY="153" width="128" height="118"/>
         <element name="Response" positionX="-18" positionY="81" width="128" height="118"/>
-        <element name="Topic" positionX="-63" positionY="-18" width="128" height="223"/>
+        <element name="Topic" positionX="-63" positionY="-18" width="128" height="238"/>
     </elements>
 </model>

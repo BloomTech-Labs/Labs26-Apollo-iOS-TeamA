@@ -86,7 +86,7 @@ class TopicViewController: LoginViewController, NSFetchedResultsControllerDelega
         if !refreshControl.isRefreshing { refreshControl.beginRefreshing() }
         if !spinner.isAnimating { spinner.startAnimating() }
 
-        topicController.fetchTopicsFromServer { result in
+        topicController.getTopics { result in
             switch result {
             case .success:
 //                    let fetchController = FetchController()

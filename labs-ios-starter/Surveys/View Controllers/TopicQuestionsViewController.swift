@@ -30,7 +30,7 @@ class TopicQuestionsViewController: UIViewController {
     var contextID: Int? // from TopicNameViewController
     private var fetchController = FetchController()
 
-    var questions: [Question]? {
+    var questions: [ContextQuestion]? {
         didSet {
             DispatchQueue.main.async {
                 self.pickerView.reloadAllComponents()
@@ -50,28 +50,23 @@ class TopicQuestionsViewController: UIViewController {
         pickerView.dataSource = self
         pickerView.tapDelegate = self
     }
-
-    /// Get questions from server, save to CoreData, and fetch from CoreData
+    // TODO: refactor to get `default` context and request questions
+    // Get questions from server, save to CoreData, and fetch from CoreData
     private func getAllContextQuestions() {
-        topicController.getQuestions { result in
+        topicController.getDefaultContextQuestions { result in
             switch result {
-            case .success:
-                // get questions from CoreData (fetched from API on prior screen)
-                guard let questions = self.fetchController.fetchQuestionRequest() else {
-                    print("Couldn't fetch questions")
-                    return
-                }
-                // reload qeustions picker
-                self.questions = questions
+            case .success():
+                self.questions = self.fetchController.fetchDefaultContextQuestionsRequest()
+
             case let .failure(error):
                 self.presentNetworkError(error: error.rawValue) { tryAgain in
-                    switch tryAgain {
-                    case true:
-                        self.getAllContextQuestions()
-                    default:
-                        // exit app?
-                        print("user didn't want to try again")
+                    if tryAgain != nil {
+                        // user wants to try again
+                        if tryAgain! {
+                            self.getAllContextQuestions()
+                        }
                     }
+                    // user didn't want to try again
                 }
             }
         }
@@ -86,12 +81,12 @@ class TopicQuestionsViewController: UIViewController {
             return
         }
 
-        guard let questions = fetchController.fetchQuestionRequest() else {
+        guard let questions = questions else {
             print("couldn't fetch questions from CoreData")
             return
         }
 
-        topicController.postTopic(with: topicName, contextId: contextID, questions: questions) { result in
+        topicController.postTopic(with: topicName, contextId: contextID, contextQuestions: questions, requestQuestions: []) { result in
             switch result {
             case let .success(joinCode):
                 // alert user of success and add notification

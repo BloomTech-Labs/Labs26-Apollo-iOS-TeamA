@@ -66,7 +66,8 @@ extension Topic {
 
     // relationships (app use)
 
-    @NSManaged public var questions: NSSet? // doesn't get sent
+    @NSManaged public var contextQuestions: NSSet? // doesn't get sent
+    @NSManaged public var requestQuestions: NSSet? // doesn't get sent
     @NSManaged public var responses: NSSet? // doesn't get sent
 
     // Sections (Used for CollectionView Headers)
@@ -93,17 +94,29 @@ extension Topic {
 // MARK: Generated accessors for questions
 
 extension Topic {
-    @objc(addQuestionsObject:)
-    @NSManaged public func addToQuestions(_ value: Question)
+    @objc(addContextQuestionsObject:)
+    @NSManaged public func addToContextQuestions(_ value: ContextQuestion)
 
-    @objc(removeQuestionsObject:)
-    @NSManaged public func removeFromQuestions(_ value: Question)
+    @objc(removeContextQuestionsObject:)
+    @NSManaged public func removeFromContextQuestions(_ value: ContextQuestion)
 
-    @objc(addQuestions:)
-    @NSManaged public func addToQuestions(_ values: NSSet)
+    @objc(addRequestQuestionsObject:)
+    @NSManaged public func addToRequestQuestions(_ value: RequestQuestion)
 
-    @objc(removeQuestions:)
-    @NSManaged public func removeFromQuestions(_ values: NSSet)
+    @objc(removeRequestQuestionsObject:)
+    @NSManaged public func removeFromRequestQuestions(_ value: RequestQuestion)
+
+    @objc(addContextQuestions:)
+    @NSManaged public func addToContextQuestions(_ values: NSSet)
+
+    @objc(addRequestQuestions:)
+    @NSManaged public func addToRequestQuestions(_ values: NSSet)
+
+    @objc(removeContextQuestions:)
+    @NSManaged public func removeFromContextQuestions(_ values: NSSet)
+
+    @objc(removeRequestQuestions:)
+    @NSManaged public func removeFromRequestQuestions(_ values: NSSet)
 }
 
 // MARK: Generated accessors for responses

@@ -107,9 +107,9 @@ class FetchController {
     }
 
     // MARK: - Question Fetch Requests -
-    // TODO: When BE is configured to have different questions, pass in necessary data to only get questions you're looking for
-    func fetchQuestionRequest(context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [Question]? {
-        let fetchRequest: NSFetchRequest<Question> = Question.fetchRequest()
+    /// fetch all context questions for a Topic
+    func fetchContextQuestionsRequest(context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [ContextQuestion]? {
+        let fetchRequest: NSFetchRequest<ContextQuestion> = ContextQuestion.fetchRequest()
 
         do {
             let questions = try context.fetch(fetchRequest)
@@ -120,13 +120,36 @@ class FetchController {
         }
     }
 
-    func fetchQuestions(withTopicId topicId: Int64, on context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [Question]? {
+    func fetchDefaultContextsRequest(context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [ContextObject]? {
+        let fetchRequest: NSFetchRequest<ContextObject> = ContextObject.fetchRequest()
+        do {
+            let contexts = try context.fetch(fetchRequest)
+            return contexts
+        } catch let fetchError {
+            print("Error fetching contexts: \(fetchError)")
+            return nil
+        }
+    }
 
-        let fetchRequest: NSFetchRequest<Question> = Question.fetchRequest()
-
-        let predicate = NSPredicate(format: "topic.id == %@", topicId)
+    func fetchDefaultContextQuestionsRequest(context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [ContextQuestion]? {
+        let fetchRequest: NSFetchRequest<ContextQuestion> = ContextQuestion.fetchRequest()
+        let predicate = NSPredicate(format: "template == true")
         fetchRequest.predicate = predicate
 
+        do {
+            let questions = try context.fetch(fetchRequest)
+            return questions
+        } catch let fetchError {
+            print("Error Fetching Questions: \(fetchError)")
+            return nil
+        }
+    }
+
+    /// fetch all request questions for a Topic
+    func fetchRequestQuestionsRequest(topicId: Int64, context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [RequestQuestion]? {
+        let fetchRequest: NSFetchRequest<RequestQuestion> = RequestQuestion.fetchRequest()
+        let predicate = NSPredicate(format: "topic.id == %@", topicId)
+        fetchRequest.predicate = predicate
         do {
             let questions = try context.fetch(fetchRequest)
             return questions
