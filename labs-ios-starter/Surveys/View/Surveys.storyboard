@@ -223,7 +223,7 @@
             <objects>
                 <viewController id="a9t-U2-oeJ" customClass="MemberListViewController" customModule="labs_ios_starter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4vn-Ub-yLy">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ZDw-oa-tGf">
@@ -316,7 +316,10 @@
                                                                     <constraint firstAttribute="width" secondItem="kK4-nN-Q5D" secondAttribute="height" multiplier="1:1" id="CZD-wW-6st"/>
                                                                 </constraints>
                                                                 <color key="tintColor" systemColor="systemRedColor"/>
-                                                                <state key="normal" image="trash" catalog="system"/>
+                                                                <state key="normal" image="xmark" catalog="system"/>
+                                                                <connections>
+                                                                    <action selector="deleteButtonPressed:" destination="wkv-Kr-u2R" eventType="touchUpInside" id="LYL-RQ-poW"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                         <constraints>
@@ -330,7 +333,7 @@
                                                         <constraint firstAttribute="height" constant="22" id="PSl-BH-I3Z"/>
                                                         <constraint firstAttribute="width" secondItem="WE3-Mn-Yue" secondAttribute="height" multiplier="1:1" id="qth-Xc-8WD"/>
                                                     </constraints>
-                                                    <blurEffect style="extraLight"/>
+                                                    <blurEffect style="light"/>
                                                 </visualEffectView>
                                             </subviews>
                                             <constraints>
@@ -347,6 +350,8 @@
                                         </collectionViewCellContentView>
                                         <color key="backgroundColor" name="cell"/>
                                         <connections>
+                                            <outlet property="blurView" destination="WE3-Mn-Yue" id="NJE-as-AKk"/>
+                                            <outlet property="deleteButton" destination="kK4-nN-Q5D" id="RcA-5m-QcD"/>
                                             <outlet property="nameLabel" destination="IkA-BA-5Dw" id="jsv-4B-V9J"/>
                                             <segue destination="aZv-jt-onU" kind="show" identifier="TopicDetailSegue" id="Opz-La-5xH"/>
                                         </connections>
@@ -474,7 +479,7 @@
             <objects>
                 <viewController id="Qtl-Jb-c92" customClass="TopicNameViewController" customModule="labs_ios_starter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gbi-qB-SWx">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Placeholder..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GWP-JC-dNk">
@@ -547,7 +552,7 @@
             <objects>
                 <viewController id="VRw-Ph-qHy" customClass="TopicQuestionsViewController" customModule="labs_ios_starter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NYf-KN-tmm">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WfL-uy-8gj" userLabel="Send Button" customClass="StandardButton" customModule="labs_ios_starter" customModuleProvider="target">
@@ -627,7 +632,7 @@
             <objects>
                 <viewController id="7ru-NO-Hje" customClass="ReviewDetailsViewController" customModule="labs_ios_starter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DCQ-Zc-X0O">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="07P-S0-oD7" userLabel="Send Button" customClass="StandardButton" customModule="labs_ios_starter" customModuleProvider="target">
@@ -774,7 +779,7 @@
         <image name="chevron.right" catalog="system" width="96" height="128"/>
         <image name="person.circle.fill" catalog="system" width="128" height="121"/>
         <image name="plus" catalog="system" width="128" height="113"/>
-        <image name="trash" catalog="system" width="121" height="128"/>
+        <image name="xmark" catalog="system" width="128" height="113"/>
         <namedColor name="accent">
             <color red="0.58799999952316284" green="0.3880000114440918" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
