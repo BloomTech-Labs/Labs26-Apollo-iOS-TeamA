@@ -14,7 +14,7 @@ class QuestionCollectionViewCell: ApolloCollectionViewCell {
     @IBOutlet var messageButton: UIImageView!
     @IBOutlet var deleteButton: UIImageView!
 
-    var question: Question? {
+    var question: ContextQuestion? {
         didSet {
             updateViews(adjustingForWidthOf: self, question: question!.question)
         }

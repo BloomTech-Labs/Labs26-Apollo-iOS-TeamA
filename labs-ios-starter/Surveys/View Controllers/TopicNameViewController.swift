@@ -24,7 +24,7 @@ class TopicNameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSpinner()
-        getAllContextQuestions()
+        getAllContexts()
         self.contextPicker.delegate = self
         self.contextPicker.dataSource = self
     }
@@ -47,34 +47,14 @@ class TopicNameViewController: UIViewController {
 
     // MARK: - Handlers
 
-    private func getAllContextQuestions() {
-        topicController.getAllContexts { [weak self] result in
+    private func getAllContexts() {
+        topicController.getDefaultContexts { [weak self] result in
             guard let self = self else {
                 print("Topic Controller is nil")
                 return
             }
-
-            switch result {
-            case .success:
-                // get contexts from CoreData
-                guard let contexts = self.fetchController.fetchContextRequest() else {
-                    print("couldn't fetch contexts")
-                    return
-                }
-                self.contexts = contexts
-
-            case .failure(let error):
-                print("failure getting questions")
-
-                self.presentNetworkError(error: error.rawValue) { result in
-                    if let result = result {
-                        if result {
-                            // user wants to try again
-                            self.getAllContextQuestions()
-                        }
-                    }
-                }
-            }
+            try? CoreDataManager.shared.saveContext()
+            self.contexts = self.fetchController.fetchDefaultContextsRequest()
         }
     }
 

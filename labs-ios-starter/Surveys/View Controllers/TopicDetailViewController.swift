@@ -19,12 +19,12 @@ class TopicDetailViewController: UIViewController {
     var topic: Topic? {
         didSet {
             if let topic = topic {
-                questions = topic.questions?.allObjects as? [Question]
+                questions = topic.contextQuestions?.allObjects as? [ContextQuestion]
             }
         }
     }
 
-    var questions: [Question]? {
+    var questions: [ContextQuestion]? {
         didSet {
             updateViews()
         }

@@ -11,8 +11,8 @@
 		1D0545212515C3BC006E8665 /* Response+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0545172515C3BC006E8665 /* Response+CoreDataProperties.swift */; };
 		1D0545222515C3BC006E8665 /* ContextObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0545182515C3BC006E8665 /* ContextObject+CoreDataClass.swift */; };
 		1D0545232515C3BC006E8665 /* ContextObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0545192515C3BC006E8665 /* ContextObject+CoreDataProperties.swift */; };
-		1D0545242515C3BC006E8665 /* Question+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D05451A2515C3BC006E8665 /* Question+CoreDataClass.swift */; };
-		1D0545252515C3BC006E8665 /* Question+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D05451B2515C3BC006E8665 /* Question+CoreDataProperties.swift */; };
+		1D0545242515C3BC006E8665 /* ContextQuestion+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D05451A2515C3BC006E8665 /* ContextQuestion+CoreDataClass.swift */; };
+		1D0545252515C3BC006E8665 /* ContextQuestion+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D05451B2515C3BC006E8665 /* ContextQuestion+CoreDataProperties.swift */; };
 		1D0545262515C3BC006E8665 /* Member+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D05451C2515C3BC006E8665 /* Member+CoreDataClass.swift */; };
 		1D0545272515C3BC006E8665 /* Member+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D05451D2515C3BC006E8665 /* Member+CoreDataProperties.swift */; };
 		1D0545282515C3BC006E8665 /* Topic+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D05451E2515C3BC006E8665 /* Topic+CoreDataClass.swift */; };
@@ -68,6 +68,7 @@
 		B91BF7F3250D0BB800D68EA6 /* String + identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91BF7F2250D0BB800D68EA6 /* String + identifier.swift */; };
 		B91BF81B250DCCC800D68EA6 /* URLRequest + addAuthIfAvailable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91BF81A250DCCC800D68EA6 /* URLRequest + addAuthIfAvailable.swift */; };
 		B9390BE7250991D300131227 /* NetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9390BE6250991D300131227 /* NetworkServiceTests.swift */; };
+		B93EEDAC2538B83900E23EC5 /* NetworkService + BlockOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93EEDAB2538B83900E23EC5 /* NetworkService + BlockOperations.swift */; };
 		B94042102501D0740048BCED /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940420D2501D0740048BCED /* NetworkService.swift */; };
 		B94042112501D0740048BCED /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B940420E2501D0740048BCED /* ErrorHandler.swift */; };
 		B94042152501D08D0048BCED /* StyleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94042132501D08C0048BCED /* StyleSheet.swift */; };
@@ -78,6 +79,9 @@
 		B94042272502E1390048BCED /* UIStackView + Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94042262502E1390048BCED /* UIStackView + Convenience.swift */; };
 		B940422A2502E5070048BCED /* UIButton + Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94042292502E5070048BCED /* UIButton + Convenience.swift */; };
 		B9404232250321230048BCED /* labs_ios_starterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9404231250321230048BCED /* labs_ios_starterTests.swift */; };
+		B9556C94253E3BD700F67E71 /* labs-ios-starter.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D9C15250930AB00348246 /* labs-ios-starter.xcdatamodeld */; };
+		B97492CA253E31F2004BB50B /* RequestQuestion+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97492C9253E31F2004BB50B /* RequestQuestion+CoreDataClass.swift */; };
+		B97492CF253E3236004BB50B /* RequestQuestion+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97492CE253E3236004BB50B /* RequestQuestion+CoreDataProperties.swift */; };
 		B98BBCC325153EEB00FE8A12 /* unused.md in Resources */ = {isa = PBXBuildFile; fileRef = B98BBCC225153EEB00FE8A12 /* unused.md */; };
 		B9983C542513BEC0001D91FE /* QuestionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9983C532513BEC0001D91FE /* QuestionCollectionViewCell.swift */; };
 		B9983C5925142B74001D91FE /* TopicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91BF818250DC4CA00D68EA6 /* TopicController.swift */; };
@@ -105,8 +109,8 @@
 		1D0545172515C3BC006E8665 /* Response+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Response+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		1D0545182515C3BC006E8665 /* ContextObject+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContextObject+CoreDataClass.swift"; sourceTree = "<group>"; };
 		1D0545192515C3BC006E8665 /* ContextObject+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContextObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		1D05451A2515C3BC006E8665 /* Question+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Question+CoreDataClass.swift"; sourceTree = "<group>"; };
-		1D05451B2515C3BC006E8665 /* Question+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Question+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		1D05451A2515C3BC006E8665 /* ContextQuestion+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContextQuestion+CoreDataClass.swift"; sourceTree = "<group>"; };
+		1D05451B2515C3BC006E8665 /* ContextQuestion+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContextQuestion+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		1D05451C2515C3BC006E8665 /* Member+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Member+CoreDataClass.swift"; sourceTree = "<group>"; };
 		1D05451D2515C3BC006E8665 /* Member+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Member+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		1D05451E2515C3BC006E8665 /* Topic+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Topic+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -165,6 +169,7 @@
 		B91BF818250DC4CA00D68EA6 /* TopicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicController.swift; sourceTree = "<group>"; };
 		B91BF81A250DCCC800D68EA6 /* URLRequest + addAuthIfAvailable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest + addAuthIfAvailable.swift"; sourceTree = "<group>"; };
 		B9390BE6250991D300131227 /* NetworkServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceTests.swift; sourceTree = "<group>"; };
+		B93EEDAB2538B83900E23EC5 /* NetworkService + BlockOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetworkService + BlockOperations.swift"; sourceTree = "<group>"; };
 		B940420D2501D0740048BCED /* NetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		B940420E2501D0740048BCED /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		B940420F2501D0740048BCED /* URLRequest + JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URLRequest + JSON.swift"; sourceTree = "<group>"; };
@@ -176,6 +181,8 @@
 		B940422F250321230048BCED /* labs-ios-starterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "labs-ios-starterTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9404231250321230048BCED /* labs_ios_starterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = labs_ios_starterTests.swift; sourceTree = "<group>"; };
 		B9404233250321230048BCED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B97492C9253E31F2004BB50B /* RequestQuestion+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RequestQuestion+CoreDataClass.swift"; sourceTree = "<group>"; };
+		B97492CE253E3236004BB50B /* RequestQuestion+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RequestQuestion+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B98BBCC225153EEB00FE8A12 /* unused.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = unused.md; sourceTree = "<group>"; };
 		B9983C532513BEC0001D91FE /* QuestionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -227,8 +234,10 @@
 		1D05452C2515C3FA006E8665 /* Question */ = {
 			isa = PBXGroup;
 			children = (
-				1D05451A2515C3BC006E8665 /* Question+CoreDataClass.swift */,
-				1D05451B2515C3BC006E8665 /* Question+CoreDataProperties.swift */,
+				1D05451A2515C3BC006E8665 /* ContextQuestion+CoreDataClass.swift */,
+				1D05451B2515C3BC006E8665 /* ContextQuestion+CoreDataProperties.swift */,
+				B97492C9253E31F2004BB50B /* RequestQuestion+CoreDataClass.swift */,
+				B97492CE253E3236004BB50B /* RequestQuestion+CoreDataProperties.swift */,
 			);
 			path = Question;
 			sourceTree = "<group>";
@@ -478,6 +487,14 @@
 			path = "Okta Auth";
 			sourceTree = "<group>";
 		};
+		B935BFD025390C7600E43128 /* Concurrency */ = {
+			isa = PBXGroup;
+			children = (
+				B93EEDAB2538B83900E23EC5 /* NetworkService + BlockOperations.swift */,
+			);
+			path = Concurrency;
+			sourceTree = "<group>";
+		};
 		B94042072501CE670048BCED /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -533,6 +550,7 @@
 				B940420D2501D0740048BCED /* NetworkService.swift */,
 				1D0E1047250A9C7200A21C44 /* Data+PrettyJSON.swift */,
 				B940420F2501D0740048BCED /* URLRequest + JSON.swift */,
+				B935BFD025390C7600E43128 /* Concurrency */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -764,7 +782,7 @@
 				1D938DE1251AFB5A00D3013D /* NewNotificationsMessage+init.swift in Sources */,
 				1D0545262515C3BC006E8665 /* Member+CoreDataClass.swift in Sources */,
 				B94042192501D1BD0048BCED /* URLRequest + JSON.swift in Sources */,
-				1D0545252515C3BC006E8665 /* Question+CoreDataProperties.swift in Sources */,
+				1D0545252515C3BC006E8665 /* ContextQuestion+CoreDataProperties.swift in Sources */,
 				1D574E38253A234A002E5699 /* JoinCodeViewController.swift in Sources */,
 				B940421A2501D1CE0048BCED /* UIViewController+Alerts.swift in Sources */,
 				1DB3E114251A526D00A2F88F /* (null) in Sources */,
@@ -778,16 +796,17 @@
 				1D3FA110252E40F200BC371E /* GuardDebugOperator.swift in Sources */,
 				1D0E1064250B047400A21C44 /* TopicQuestionsViewController.swift in Sources */,
 				466C4274249A8748007D033E /* AppDelegate.swift in Sources */,
+				B9556C94253E3BD700F67E71 /* labs-ios-starter.xcdatamodeld in Sources */,
 				1D28AE8D252BF03E00825688 /* TopicCVSection.swift in Sources */,
 				1D0E1060250B043400A21C44 /* TopicViewController.swift in Sources */,
 				46C2BC9224D432F90077E49D /* ProfileTabBarViewController.swift in Sources */,
 				1D0545272515C3BC006E8665 /* Member+CoreDataProperties.swift in Sources */,
 				463AD24324CF275900447BB8 /* ProfileDetailViewController.swift in Sources */,
-				1D4D9C17250930AB00348246 /* labs-ios-starter.xcdatamodeld in Sources */,
 				1DA1163C251CF89F00FA94B1 /* TopicSectionHeader.swift in Sources */,
 				B91BF7E3250BC4C200D68EA6 /* (null) in Sources */,
 				B91BF7EF250C47F600D68EA6 /* Profile.swift in Sources */,
 				B9163737250850B400B49A75 /* UserImage.swift in Sources */,
+				B97492CF253E3236004BB50B /* RequestQuestion+CoreDataProperties.swift in Sources */,
 				1D0545222515C3BC006E8665 /* ContextObject+CoreDataClass.swift in Sources */,
 				B94042152501D08D0048BCED /* StyleSheet.swift in Sources */,
 				B940422A2502E5070048BCED /* UIButton + Convenience.swift in Sources */,
@@ -795,7 +814,7 @@
 				1D0545212515C3BC006E8665 /* Response+CoreDataProperties.swift in Sources */,
 				46BEB4E524C98CDC00FE0CD1 /* LoginViewController.swift in Sources */,
 				1D938DD9251AED4300D3013D /* NotificationsTabItem.swift in Sources */,
-				1D0545242515C3BC006E8665 /* Question+CoreDataClass.swift in Sources */,
+				1D0545242515C3BC006E8665 /* ContextQuestion+CoreDataClass.swift in Sources */,
 				1D8C41092522D0980041D3B6 /* Topic+CoreDataProperties.swift in Sources */,
 				B90989C9251AA46C0084A1D7 /* FetchController.swift in Sources */,
 				1D4D9C1325092F4A00348246 /* CoreDataManager.swift in Sources */,
@@ -803,6 +822,7 @@
 				1D0545202515C3BC006E8665 /* Response+CoreDataClass.swift in Sources */,
 				B91BF7F3250D0BB800D68EA6 /* String + identifier.swift in Sources */,
 				1D46C21D2501DDB4007DEDAF /* UIView+LivePreviews.swift in Sources */,
+				B93EEDAC2538B83900E23EC5 /* NetworkService + BlockOperations.swift in Sources */,
 				B94042162501D08D0048BCED /* UIView + Convenience.swift in Sources */,
 				1D6F66722530C3CB00406B7D /* ReviewDetailsViewController.swift in Sources */,
 				B91BF81B250DCCC800D68EA6 /* URLRequest + addAuthIfAvailable.swift in Sources */,
@@ -811,6 +831,7 @@
 				B94042102501D0740048BCED /* NetworkService.swift in Sources */,
 				466C4276249A8748007D033E /* SceneDelegate.swift in Sources */,
 				B917E2E32526DD14004B16BA /* SingleRowPickerView.swift in Sources */,
+				B97492CA253E31F2004BB50B /* RequestQuestion+CoreDataClass.swift in Sources */,
 				1D28AD5D2523EC5600825688 /* ApolloCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
