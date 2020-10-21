@@ -82,6 +82,8 @@
 		B97492CA253E31F2004BB50B /* RequestQuestion+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97492C9253E31F2004BB50B /* RequestQuestion+CoreDataClass.swift */; };
 		B97492CF253E3236004BB50B /* RequestQuestion+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97492CE253E3236004BB50B /* RequestQuestion+CoreDataProperties.swift */; };
 		B98BBCC325153EEB00FE8A12 /* unused.md in Resources */ = {isa = PBXBuildFile; fileRef = B98BBCC225153EEB00FE8A12 /* unused.md */; };
+		B9964483253FA1B40065B44F /* Thread+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9964482253FA1B40065B44F /* Thread+CoreDataClass.swift */; };
+		B9964488253FA1BE0065B44F /* Thread+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9964487253FA1BE0065B44F /* Thread+CoreDataProperties.swift */; };
 		B9983C542513BEC0001D91FE /* QuestionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9983C532513BEC0001D91FE /* QuestionCollectionViewCell.swift */; };
 		B9983C5925142B74001D91FE /* TopicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91BF818250DC4CA00D68EA6 /* TopicController.swift */; };
 /* End PBXBuildFile section */
@@ -183,6 +185,8 @@
 		B97492C9253E31F2004BB50B /* RequestQuestion+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RequestQuestion+CoreDataClass.swift"; sourceTree = "<group>"; };
 		B97492CE253E3236004BB50B /* RequestQuestion+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RequestQuestion+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B98BBCC225153EEB00FE8A12 /* unused.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = unused.md; sourceTree = "<group>"; };
+		B9964482253FA1B40065B44F /* Thread+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Thread+CoreDataClass.swift"; sourceTree = "<group>"; };
+		B9964487253FA1BE0065B44F /* Thread+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Thread+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B9983C532513BEC0001D91FE /* QuestionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -275,6 +279,8 @@
 				1D05452B2515C3F3006E8665 /* ContextObject */,
 				1D05452C2515C3FA006E8665 /* Question */,
 				1D05452A2515C3EE006E8665 /* Response */,
+				B9964481253FA1370065B44F /* Thread */,
+				1D938DE0251AFB5A00D3013D /* NewNotificationsMessage+init.swift */,
 			);
 			path = Topic;
 			sourceTree = "<group>";
@@ -284,7 +290,6 @@
 			children = (
 				1D05452F2515C441006E8665 /* Web Auth */,
 				1D0545312515C45C006E8665 /* Topic */,
-				1D938DE0251AFB5A00D3013D /* NewNotificationsMessage+init.swift */,
 				1D4D9C15250930AB00348246 /* labs-ios-starter.xcdatamodeld */,
 			);
 			name = Apollo;
@@ -619,6 +624,15 @@
 			path = "labs-ios-starterTests";
 			sourceTree = "<group>";
 		};
+		B9964481253FA1370065B44F /* Thread */ = {
+			isa = PBXGroup;
+			children = (
+				B9964482253FA1B40065B44F /* Thread+CoreDataClass.swift */,
+				B9964487253FA1BE0065B44F /* Thread+CoreDataProperties.swift */,
+			);
+			path = Thread;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -798,6 +812,7 @@
 				B9556C94253E3BD700F67E71 /* labs-ios-starter.xcdatamodeld in Sources */,
 				1D28AE8D252BF03E00825688 /* TopicCVSection.swift in Sources */,
 				1D0E1060250B043400A21C44 /* TopicViewController.swift in Sources */,
+				B9964488253FA1BE0065B44F /* Thread+CoreDataProperties.swift in Sources */,
 				46C2BC9224D432F90077E49D /* ProfileTabBarViewController.swift in Sources */,
 				1D0545272515C3BC006E8665 /* Member+CoreDataProperties.swift in Sources */,
 				463AD24324CF275900447BB8 /* ProfileDetailViewController.swift in Sources */,
@@ -818,6 +833,7 @@
 				B90989C9251AA46C0084A1D7 /* FetchController.swift in Sources */,
 				1D4D9C1325092F4A00348246 /* CoreDataManager.swift in Sources */,
 				1D4D9C0225068DEB00348246 /* CircularButton.swift in Sources */,
+				B9964483253FA1B40065B44F /* Thread+CoreDataClass.swift in Sources */,
 				1D0545202515C3BC006E8665 /* ContextResponse+CoreDataClass.swift in Sources */,
 				B91BF7F3250D0BB800D68EA6 /* String + identifier.swift in Sources */,
 				1D46C21D2501DDB4007DEDAF /* UIView+LivePreviews.swift in Sources */,
