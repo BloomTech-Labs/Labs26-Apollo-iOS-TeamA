@@ -262,7 +262,7 @@
             <objects>
                 <viewController id="CSs-VY-RUq" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vMc-Dr-SiD">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="rvl-xr-cGL">
@@ -315,7 +315,7 @@
             <objects>
                 <viewController id="2tA-5b-oX5" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="U9V-ya-xHY">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="0Rs-ll-Vug">
@@ -400,7 +400,7 @@
             <objects>
                 <viewController id="a9t-U2-oeJ" customClass="MemberListViewController" customModule="labs_ios_starter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4vn-Ub-yLy">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ZDw-oa-tGf">
@@ -656,7 +656,7 @@
             <objects>
                 <viewController id="Qtl-Jb-c92" customClass="TopicNameViewController" customModule="labs_ios_starter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gbi-qB-SWx">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Placeholder..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GWP-JC-dNk">
@@ -729,7 +729,7 @@
             <objects>
                 <viewController id="VRw-Ph-qHy" customClass="TopicQuestionsViewController" customModule="labs_ios_starter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NYf-KN-tmm">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WfL-uy-8gj" userLabel="Send Button" customClass="StandardButton" customModule="labs_ios_starter" customModuleProvider="target">
@@ -739,8 +739,7 @@
                                 </constraints>
                                 <state key="normal" title="5. Review"/>
                                 <connections>
-                                    <action selector="postTopicButton:" destination="VRw-Ph-qHy" eventType="touchUpInside" id="vk9-b3-M4E"/>
-                                    <segue destination="7ru-NO-Hje" kind="show" id="8Sh-Qg-XwG"/>
+                                    <segue destination="7ru-NO-Hje" kind="show" identifier="ReviewDetailsSegue" id="8Sh-Qg-XwG"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3. Choose One of Our Questions" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e7y-96-Wng">
@@ -809,7 +808,7 @@
             <objects>
                 <viewController id="7ru-NO-Hje" customClass="ReviewDetailsViewController" customModule="labs_ios_starter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DCQ-Zc-X0O">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="07P-S0-oD7" userLabel="Send Button" customClass="StandardButton" customModule="labs_ios_starter" customModuleProvider="target">
@@ -819,14 +818,12 @@
                                 </constraints>
                                 <state key="normal" title="Send!"/>
                                 <connections>
-                                    <action selector="postTopicButton:" destination="VRw-Ph-qHy" eventType="touchUpInside" id="gjq-74-Xyn"/>
                                     <action selector="sendButtonPressed:" destination="7ru-NO-Hje" eventType="touchUpInside" id="2bQ-jE-t83"/>
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="5ZO-MV-7qt">
                                 <rect key="frame" x="20" y="108" width="374" height="642"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>

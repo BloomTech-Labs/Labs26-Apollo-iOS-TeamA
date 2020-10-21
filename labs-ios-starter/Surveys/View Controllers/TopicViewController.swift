@@ -18,6 +18,8 @@ class TopicViewController: LoginViewController, NSFetchedResultsControllerDelega
         let fetchRequest: NSFetchRequest<Topic> = Topic.fetchRequest()
 
         fetchRequest.sortDescriptors = [
+            NSSortDescriptor(key: "section",
+                             ascending: false),
             NSSortDescriptor(key: "timeStamp",
                              ascending: false)
         ]
