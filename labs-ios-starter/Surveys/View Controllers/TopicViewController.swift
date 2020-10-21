@@ -18,8 +18,11 @@ class TopicViewController: LoginViewController, NSFetchedResultsControllerDelega
         let fetchRequest: NSFetchRequest<Topic> = Topic.fetchRequest()
 
         fetchRequest.sortDescriptors = [
+            NSSortDescriptor(key: "section",
+                             ascending: false),
             NSSortDescriptor(key: "timeStamp",
                              ascending: false)
+
         ]
 
         if let member = profileController.authenticatedUserProfile,
@@ -109,6 +112,8 @@ class TopicViewController: LoginViewController, NSFetchedResultsControllerDelega
                         self.spinner.stopAnimating()
                         topicsCollectionView.reloadData()
                     } catch {
+                        self.spinner.stopAnimating()
+                        topicsCollectionView.reloadData()
                         print("Error fetching Topics from CoreData")
                     }
                 }

@@ -8,15 +8,19 @@ import CoreData
 public final class ContextResponse: NSManagedObject, Codable {
     // MARK: - Coding Keys
 
-    enum ContextResponseCodingKeys: CodingKey {
-        case id, questionId, response, respondedBy, topic
+    enum ContextResponseCodingKeys: String, CodingKey {
+        case id,
+             response,
+             respondedBy,
+             topic
+        case questionId = "questionid"
     }
 
     // MARK: - Initializers
 
     /// Used to create managed object
-    @discardableResult convenience init(id: UUID,
-                                        questionId: UUID,
+    @discardableResult convenience init(id: Int64,
+                                        questionId: Int64,
                                         response: String,
                                         respondedBy: Member,
                                         contextQuestion: ContextQuestion,
@@ -43,8 +47,8 @@ public final class ContextResponse: NSManagedObject, Codable {
 
         let container = try decoder.container(keyedBy: ContextResponseCodingKeys.self)
 
-        id = try container.decode(UUID.self, forKey: .id)
-        questionId = try container.decode(UUID.self, forKey: .questionId)
+        id = try container.decode(Int64.self, forKey: .id)
+        questionId = try container.decode(Int64.self, forKey: .questionId)
         response = try container.decode(String.self, forKey: .response)
         respondedBy = try container.decode(Member.self, forKey: .respondedBy)
     }
