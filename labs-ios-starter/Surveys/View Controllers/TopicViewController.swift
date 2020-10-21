@@ -54,6 +54,7 @@ class TopicViewController: LoginViewController, NSFetchedResultsControllerDelega
         spinner.startAnimating()
         view.addSubview(spinner)
         spinner.center = view.center
+        navigationItem.leftBarButtonItem = editButtonItem // Adds edit button
     }
 
     /// from LoginViewController.swift
@@ -131,6 +132,20 @@ class TopicViewController: LoginViewController, NSFetchedResultsControllerDelega
         }
     }
 
+    // MARK: - Edit Mode
+    /// Tells cells to enter edit mode
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        guard let indexPaths = topicsCollectionView?.indexPathsForVisibleItems else { print("No visible cells found"); return }
+
+        super.setEditing(editing, animated: animated)
+
+        indexPaths.forEach { indexPath in
+            if let cell = topicsCollectionView.cellForItem(at: indexPath) as? TopicCollectionViewCell {
+                cell.isEditing = editing
+            }
+        }
+    }
+
     // MARK: - Pull to Refresh
     /// Configures the collectionView's refreshControl
     private func configureRefreshControl() {
@@ -199,11 +214,40 @@ extension TopicViewController: UICollectionViewDataSource, UICollectionViewDeleg
         case .leader:
             cell.topic = topic
             cell.setDimensions(width: view.frame.width - 40, height: 80) // size in delegate methods to remove warnings?
+            cell.delegate = self
             return cell
         case .member:
             cell.topic = topic
             cell.setDimensions(width: view.frame.width - 40, height: 80) // size in delegate methods to remove warnings?
+            cell.delegate = self
             return cell
+        }
+    }
+}
+
+extension TopicViewController: TopicCollectionViewCellDelegate {
+    func deleteTopic(_ topic: Topic) {
+        topicController.deleteTopic(topic: topic) { result in
+            switch result {
+            case .success:
+                DispatchQueue.main.async {
+                    CoreDataManager.shared.deleteObject(topic)
+
+                    self.presentSimpleAlert(with: nil,
+                                            message: "Successfully Deleted \(topic.topicName ?? "Topic")!",
+                                            preferredStyle: .alert,
+                                            dismissText: "Ok")
+                    
+                    self.fetchTopics() // Works; not optimal. Should implement FRC delegate methods to improve.
+                }
+            case let .failure(error):
+                DispatchQueue.main.async {
+                    self.presentSimpleAlert(with: "Delete Failed",
+                                            message: "Error: \(error)",
+                                            preferredStyle: .alert,
+                                            dismissText: "Ok")
+                }
+            }
         }
     }
 }
