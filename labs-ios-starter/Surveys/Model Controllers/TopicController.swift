@@ -10,6 +10,19 @@ import CoreData
 import Foundation
 
 // MARK: - Codable Types -
+
+struct ContextResponseObject: Codable {
+    enum CodingKeys: String, CodingKey {
+        case surveyId = "surveyrequestid"
+        case contextQuestionId = "contextquestionid"
+        case response
+    }
+
+    let surveyId: Int64
+    let contextQuestionId: Int64
+    let response: String
+}
+
 /// Used to get Topic Details and establish CoreData Relationships
 struct TopicDetails: Codable {
     enum CodingKeys: String, CodingKey {
@@ -92,6 +105,8 @@ class TopicController {
     lazy var baseURL = profileController.baseURL
     let group = DispatchGroup()
 
+    var dummyResponses: [ContextResponseObject] = []
+
     // MARK: - Create -
     /// Post a topic to the web back end with the currently signed in user as the leader
     /// - Parameters:
@@ -155,6 +170,26 @@ class TopicController {
     ///   - completion: Completes with `[Topic]`. Topics are also stored in the controller...
     ///   - context: new backgroundContext by default. this will propagate to all child methods
     func getTopics(context: NSManagedObjectContext = CoreDataManager.shared.backgroundContext, complete: @escaping CompleteWithNetworkError) {
+        // get all contextResponses so we can link to their questions later
+        if let request = createRequest(pathFromBaseURL: "contextResponse") {
+            self.networkService.loadData(using: request) { result in
+                switch result {
+                case let .success(data):
+                    if let contextResponses = self.networkService.decode(to: [ContextResponseObject].self, data: data) {
+                        self.dummyResponses = contextResponses
+                        // ADDING DUMMY RESPONSE
+                        let response1 = ContextResponseObject(surveyId: 1, contextQuestionId: 19, response: "Hello Test")
+                        let response2 = ContextResponseObject(surveyId: 1, contextQuestionId: 1, response: "Hello Test2")
+                        self.dummyResponses.append(response1)
+                        self.dummyResponses.append(response2)
+                    }
+                case let .failure(error):
+                    print("error getting context responses: \(error)")
+                }
+            }
+        }
+
+
         getAllTopicDetails(context: context) { topics, topicDetails in
             guard let topics = topics,
                 let topicDetails = topicDetails else {
@@ -393,6 +428,132 @@ class TopicController {
         }
     }
 
+    /// Get all Responses to a ContextQuestion and link the relationship in CoreData
+    /// - Parameters:
+    ///   - contextQuestion: The question to get responses for
+    ///   - ids: the ids of the responses to fetch
+    ///   - context: the managed object context used to link the relationship
+    ///   - complete: completes with error on failure, void on success
+    func getContextResponses(for contextQuestion: ContextQuestion, with ids: [Int64], context: NSManagedObjectContext, complete: @escaping CompleteWithNetworkError) {
+        for id in ids {
+            self.group.enter()
+            self.getContextResponse(with: id,
+                                    context: context) { result in
+
+                self.group.leave()
+
+                switch result {
+                case let .some(contextResponse):
+                    contextQuestion.addToResponse(contextResponse)
+                case .none:
+                    print("failed to retrieve ContextResponse with id: \(id) for question with id: \(contextQuestion.id)")
+                }
+            }
+        }
+        // all objects are back, save context and complete
+        self.group.notify(queue: .main) {
+            do {
+                try CoreDataManager.shared.saveContext(context)
+                complete(.success(Void()))
+            } catch let saveError {
+                print("Error saving contextResponse: \(saveError)")
+                complete(.failure(.unknown))
+            }
+        }
+    }
+
+    /// Get a single ContextResponse given an ID
+    /// - Parameters:
+    ///   - id: The ContextResponse's ID
+    ///   - context: The Managed Object Context used to link the objects
+    ///   (should be the same as the ContextQuestion's context)
+    ///   - complete: Completes with a ContextResponse if successful and nil if not
+    func getContextResponse(with id: Int64, context: NSManagedObjectContext, complete: @escaping ((ContextResponse?) -> Void)) {
+        getComponent(from: "/contextresponse/\(id)") { result in
+            switch result {
+            case let .success(data):
+                complete(self.networkService.decode(to: ContextResponse.self, data: data, moc: context))
+            case let .failure(error):
+                print(error)
+                complete(nil)
+            }
+        }
+    }
+
+    /// Get all Threads to a Response and link the relationship in CoreData
+    /// - Parameters:
+    ///   - contextResponse: The response the thread is for
+    ///   - ids: the ids of the threads to fetch
+    ///   - context: the managed object context used to link the relationship
+    ///   - complete: completes with error on failure, void on success
+    func getThreads(for contextResponse: ContextResponse, with ids: [Int64], context: NSManagedObjectContext, complete: @escaping CompleteWithNetworkError) {
+        for id in ids {
+            self.group.enter()
+            self.getThread(with: id,
+                           context: context) { result in
+
+                self.group.leave()
+
+                switch result {
+                case let .some(thread):
+                    contextResponse.addToThreads(thread)
+                case .none:
+                    print("failed to retrieve Thread with id: \(id) for question with id: \(contextResponse.id)")
+                }
+            }
+        }
+        // all objects are back, save context and complete
+        self.group.notify(queue: .main) {
+            do {
+                try CoreDataManager.shared.saveContext(context)
+                complete(.success(Void()))
+            } catch let saveError {
+                print("Error saving contextResponse: \(saveError)")
+                complete(.failure(.unknown))
+            }
+        }
+    }
+
+    /// Get a thread given an ID
+    /// - Parameters:
+    ///   - id: the thread's ID
+    ///   - context: the context used to link the thread to the ContextResponse (should be the same context)
+    ///   - complete: nil if error, or thread if successful
+    func getThread(with id: Int64, context: NSManagedObjectContext, complete: @escaping ((Thread?) -> Void)) {
+        getComponent(from: "/thread/\(id)") { result in
+            switch result {
+            case let .success(data):
+                complete(self.networkService.decode(to: Thread.self, data: data, moc: context))
+            case let .failure(error):
+                print(error)
+                complete(nil)
+            }
+        }
+    }
+
+    /// get a component (or components) from the backend given a String for the path
+    /// - Parameters:
+    ///   - path: "The path to get the component(s) from"
+    ///   - complete: completes with data or an error
+    private func getComponent(from path: String, complete: @escaping CompleteWithDataOrNetworkError) {
+
+        guard let request = createRequest(pathFromBaseURL: path) else {
+            print("unable to create path for component")
+            complete(.failure(.badRequest))
+            return
+        }
+        networkService.loadData(using: request) { result in
+            switch result {
+            case let .success(data):
+                complete(.success(data))
+            case let .failure(error):
+                complete(.failure(error))
+            }
+        }
+
+    }
+
+
     // MARK: - Helper Methods -
     private func createRequest(auth: Bool = true,
                                pathFromBaseURL: String,
@@ -471,7 +632,7 @@ class TopicController {
                 case let .failure(error):
                     print(error)
                     // should we complete here or post what we can?
-                }
+                    }
             }
         }
 
@@ -485,6 +646,7 @@ class TopicController {
             }
         }
     }
+
 
     func updateTopic(topic: Topic, completion: @escaping CompleteWithNetworkError) {
         // send topic to server using PUT request. save in CoreData

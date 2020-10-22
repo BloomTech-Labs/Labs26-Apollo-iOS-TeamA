@@ -80,9 +80,9 @@ class TopicViewController: LoginViewController, NSFetchedResultsControllerDelega
             // TESTING, REMOVE
             let member = Member(id: "1", email: "1@1.com", firstName: "firstOne", lastName: "lastOne", avatarURL: URL(string: "http://www.url.com"))
             topic.addToMembers(member)
+            topicDetailViewController.topicController = topicController
             topicDetailViewController.id = topic.id
             topicDetailViewController.topic = topic
-            topicDetailViewController.topicController = topicController
             try? CoreDataManager.shared.saveContext()
         }
     }

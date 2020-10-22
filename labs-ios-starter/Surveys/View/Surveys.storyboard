@@ -250,7 +250,7 @@
                     <connections>
                         <outlet property="contextLabel" destination="mZh-wh-a7e" id="W4b-oq-A2e"/>
                         <outlet property="joinCodeLabel" destination="ruW-fE-C56" id="fMW-eX-RYp"/>
-                        <outlet property="responseCollectionView" destination="55I-Py-9aA" id="Vi9-gQ-not"/>
+                        <outlet property="responseCollectionView" destination="55I-Py-9aA" id="ymR-GD-bFR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ntp-fg-Bhh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

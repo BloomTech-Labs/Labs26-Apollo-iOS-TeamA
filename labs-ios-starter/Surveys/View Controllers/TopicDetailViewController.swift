@@ -36,7 +36,14 @@ class TopicDetailViewController: UIViewController {
 
     var questions: [ContextQuestion]? {
         didSet {
-//             updateViews()
+            let ids = questions!.map { $0.id }
+            responses = topicController?.dummyResponses.filter { ids.contains($0.contextQuestionId) }
+        }
+    }
+
+    var responses: [ContextResponseObject]? {
+        didSet {
+            //self.responseCollectionView.reloadData()
         }
     }
 
@@ -106,7 +113,7 @@ extension TopicDetailViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return questions?.count ?? 0 // cell should be populated by responses instead
+        return responses?.count ?? 0 // cell should be populated by responses instead
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -114,6 +121,7 @@ extension TopicDetailViewController: UICollectionViewDataSource {
             // TODO: Remove before prod
             fatalError("invalid identifier: \(reuseIdentifier)")
         }
+        // TODO: Set with response instead of question
         cell.question = questions?[indexPath.item]
         cell.setDimensions(width: view.frame.width - 40, height: 80)
         return cell
