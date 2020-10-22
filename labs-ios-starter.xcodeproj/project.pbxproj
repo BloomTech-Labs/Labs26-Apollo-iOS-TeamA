@@ -87,6 +87,7 @@
 		B9964488253FA1BE0065B44F /* Thread+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9964487253FA1BE0065B44F /* Thread+CoreDataProperties.swift */; };
 		B9983C542513BEC0001D91FE /* QuestionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9983C532513BEC0001D91FE /* QuestionCollectionViewCell.swift */; };
 		B9983C5925142B74001D91FE /* TopicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91BF818250DC4CA00D68EA6 /* TopicController.swift */; };
+		B9DFD2E2254238540073051F /* TemporaryObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DFD2E1254238540073051F /* TemporaryObjects.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -190,6 +191,7 @@
 		B9964482253FA1B40065B44F /* Thread+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Thread+CoreDataClass.swift"; sourceTree = "<group>"; };
 		B9964487253FA1BE0065B44F /* Thread+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Thread+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B9983C532513BEC0001D91FE /* QuestionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionCollectionViewCell.swift; sourceTree = "<group>"; };
+		B9DFD2E1254238540073051F /* TemporaryObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryObjects.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -313,6 +315,7 @@
 			isa = PBXGroup;
 			children = (
 				B91BF818250DC4CA00D68EA6 /* TopicController.swift */,
+				B9DFD2E1254238540073051F /* TemporaryObjects.swift */,
 			);
 			path = "Model Controllers";
 			sourceTree = "<group>";
@@ -843,6 +846,7 @@
 				1D46C21D2501DDB4007DEDAF /* UIView+LivePreviews.swift in Sources */,
 				B93EEDAC2538B83900E23EC5 /* NetworkService + BlockOperations.swift in Sources */,
 				B94042162501D08D0048BCED /* UIView + Convenience.swift in Sources */,
+				B9DFD2E2254238540073051F /* TemporaryObjects.swift in Sources */,
 				1D6F66722530C3CB00406B7D /* ReviewDetailsViewController.swift in Sources */,
 				B91BF81B250DCCC800D68EA6 /* URLRequest + addAuthIfAvailable.swift in Sources */,
 				B9983C5925142B74001D91FE /* TopicController.swift in Sources */,

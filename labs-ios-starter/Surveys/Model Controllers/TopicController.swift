@@ -9,93 +9,7 @@
 import CoreData
 import Foundation
 
-// MARK: - Codable Types -
 
-struct ContextResponseObject: Codable {
-    enum CodingKeys: String, CodingKey {
-        case surveyId = "surveyrequestid"
-        case contextQuestionId = "contextquestionid"
-        case response
-    }
-
-    let surveyId: Int64
-    let contextQuestionId: Int64
-    let response: String
-}
-
-/// Used to get Topic Details and establish CoreData Relationships
-struct TopicDetails: Codable {
-    enum CodingKeys: String, CodingKey {
-        case details = "0"
-        case contextQuestionIds = "contextquestions"
-        case requestQuestionIds = "requestquestions"
-    }
-
-    var details: TopicDetailObject
-    var contextQuestionIds: [ContextQuestionObject]
-    var requestQuestionIds: [RequestQuestionObject]
-}
-
-/// Represent's a contextQuestion's id
-struct ContextQuestionObject: Codable {
-    enum CodingKeys: String, CodingKey {
-        case contextQuestionId = "contextquestionid"
-    }
-
-    let contextQuestionId: Int
-}
-
-/// Represent's a requestQuestion's id
-struct RequestQuestionObject: Codable {
-    enum CodingKeys: String, CodingKey {
-        case requestQuestionId = "requestquestionid"
-    }
-
-    let requestQuestionId: Int
-}
-
-enum QuestionType {
-    case context
-    case request
-}
-
-/// Used to get related context and resquest questions
-struct TopicDetailObject: Codable {
-    enum CodingKeys: String, CodingKey {
-        case joinCode = "joincode"
-        case id
-        case contextId = "contextid"
-        case leaderId = "leaderid"
-        case topicName = "topicname"
-    }
-
-    let joinCode: String
-    let id: Int
-    let contextId: Int
-    let leaderId: String
-    let topicName: String
-}
-
-/// Used to get topic ID after sending to backend
-struct TopicID: Codable {
-    let topic: DecodeTopic
-}
-
-/// Member of TopicID
-struct DecodeTopic: Codable {
-    let id: Int
-}
-
-/// Used to encode topic and question id in order to establish their relationship in the backend
-struct TopicQuestion: Codable {
-    enum CodingKeys: String, CodingKey {
-        case topicId = "topicid"
-        case questionId = "questionid"
-    }
-
-    var topicId: Int
-    var questionId: Int
-}
 
 /// Controller for Topic, ContextObject, and Question model
 class TopicController {
@@ -104,7 +18,7 @@ class TopicController {
     let profileController = ProfileController.shared
     lazy var baseURL = profileController.baseURL
     let group = DispatchGroup()
-
+    /// Holds ContextResponses (these are *not* linked in CoreData)
     var dummyResponses: [ContextResponseObject] = []
 
     // MARK: - Create -
@@ -188,8 +102,7 @@ class TopicController {
                 }
             }
         }
-
-
+        // get all related context and request questions and link to topics
         getAllTopicDetails(context: context) { topics, topicDetails in
             guard let topics = topics,
                 let topicDetails = topicDetails else {
@@ -225,7 +138,7 @@ class TopicController {
                         self.group.leave()
                     }
                 }
-
+                // all requests have come back, save data and complete
                 self.group.notify(queue: .main) {
                     do {
                         try CoreDataManager.shared.saveContext(context, async: true)
@@ -238,7 +151,8 @@ class TopicController {
             }
         }
     }
-
+    /// Get the available contexts used to identify
+    /// what a topic's discussion is related to
     func getDefaultContexts(context: NSManagedObjectContext = CoreDataManager.shared.backgroundContext, complete: @escaping CompleteWithNetworkError) {
         guard let request = createRequest(pathFromBaseURL: "context") else {
             print("couldn't create context request")
@@ -291,7 +205,7 @@ class TopicController {
         }
     }
 
-    /// Fetches and saves to CoreData the topic with the matching Join Code
+    /// Fetch a topic with the given join code
     func getTopic(withJoinCode joinCode: String, completion: @escaping CompleteWithNetworkError) {
         guard
             let getRequest = createRequest(pathFromBaseURL: "topic")
@@ -331,7 +245,7 @@ class TopicController {
             }
         }
     }
-
+    /// Get all top level objects related to a Topic
     func getAllTopicDetails(context: NSManagedObjectContext, complete: @escaping ([Topic]?, [TopicDetails]?) -> Void) {
         guard let request = createRequest(pathFromBaseURL: "topic") else {
             print("couldn't create request")
@@ -553,26 +467,6 @@ class TopicController {
 
     }
 
-
-    // MARK: - Helper Methods -
-    private func createRequest(auth: Bool = true,
-                               pathFromBaseURL: String,
-                               method: NetworkService.HttpMethod = .get) -> URLRequest? {
-        let targetURL = baseURL.appendingPathComponent(pathFromBaseURL)
-
-        guard var request = networkService.createRequest(url: targetURL, method: method, headerType: .contentType, headerValue: .json) else {
-            print("unable to create request for \(targetURL)")
-            return nil
-        }
-
-        if auth {
-            // add bearer to request
-            request.addAuthIfAvailable()
-        }
-
-        return request
-    }
-
     // MARK: - Update -
 
     // this method currently doesn't check to see if all questions
@@ -674,6 +568,8 @@ class TopicController {
         }
     }
 
+    // MARK: - Delete -
+    /// delete the given array of Topics
     func deleteTopicsFromCoreData(topics: [Topic], context: NSManagedObjectContext = CoreDataManager.shared.backgroundContext) {
         for topic in topics {
             context.delete(topic)
@@ -686,11 +582,30 @@ class TopicController {
     }
 
     // MARK: - Helper Methods -
+    /// Get a topic ID from Data
     private func getTopicID(from data: Data) -> Int64? {
         guard let topicID = networkService.decode(to: TopicID.self, data: data)?.topic.id else {
             print("Couldn't get ID from newly created topic")
             return nil
         }
         return Int64(topicID)
+    }
+
+    private func createRequest(auth: Bool = true,
+                               pathFromBaseURL: String,
+                               method: NetworkService.HttpMethod = .get) -> URLRequest? {
+        let targetURL = baseURL.appendingPathComponent(pathFromBaseURL)
+
+        guard var request = networkService.createRequest(url: targetURL, method: method, headerType: .contentType, headerValue: .json) else {
+            print("unable to create request for \(targetURL)")
+            return nil
+        }
+
+        if auth {
+            // add bearer to request
+            request.addAuthIfAvailable()
+        }
+
+        return request
     }
 }
