@@ -1,36 +1,39 @@
-// Copyright © 2020 Shawn James. All rights reserved.
-// Response+CoreDataClass.swift
+//
+//  Thread+CoreDataClass.swift
+//  labs-ios-starter
+//
+//  Created by Kenny on 10/20/20.
+//  Copyright © 2020 Lambda, Inc. All rights reserved.
 //
 
 import CoreData
 
 /// AKA Threads - users can respond to Questions
-public final class ContextResponse: NSManagedObject, Codable {
+public final class Thread: NSManagedObject, Codable {
     // MARK: - Coding Keys
 
-    enum ContextResponseCodingKeys: String, CodingKey {
-        case id,
-             response,
-             respondedBy,
-             topic
-        case questionId = "questionid"
+    enum ThreadCodingKeys: String, CodingKey {
+        case id, reply
+        case responseId = "responseid"
+        case response
+        case repliedBy = "repliedby"
+        case contextResponse = "contextResponse"
     }
 
     // MARK: - Initializers
 
     /// Used to create managed object
     @discardableResult convenience init(id: Int64,
-                                        questionId: Int64,
-                                        response: String,
-                                        respondedBy: Member,
-                                        contextQuestion: ContextQuestion,
+                                        responseId: Int64,
+                                        reply: String,
+                                        repliedBy: Member,
+                                        contextResponse: ContextResponse,
                                         context: NSManagedObjectContext = CoreDataManager.shared.mainContext) {
         self.init(context: context)
         self.id = id
-        self.questionId = questionId
-        self.response = response
-        self.respondedBy = respondedBy
-        self.contextQuestion = contextQuestion
+        self.responseId = responseId
+        self.repliedBy = repliedBy.id
+        self.contextResponse = contextResponse
     }
 
     /// Used to create managed objects by way of decoding
@@ -45,12 +48,12 @@ public final class ContextResponse: NSManagedObject, Codable {
         }
         self.init(context: moc)
 
-        let container = try decoder.container(keyedBy: ContextResponseCodingKeys.self)
+        let container = try decoder.container(keyedBy: ThreadCodingKeys.self)
 
         id = try container.decode(Int64.self, forKey: .id)
-        questionId = try container.decode(Int64.self, forKey: .questionId)
-        response = try container.decode(String.self, forKey: .response)
-        respondedBy = try container.decode(Member.self, forKey: .respondedBy)
+        responseId = try container.decode(Int64.self, forKey: .responseId)
+        contextResponse = try container.decode(ContextResponse.self, forKey: .response)
+        repliedBy = try container.decode(String.self, forKey: .repliedBy)
     }
 
     /// Used for encoding
@@ -60,12 +63,12 @@ public final class ContextResponse: NSManagedObject, Codable {
     ///  let jsonData = try jsonEncoder.encode(topic)
     /// ```
     public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: ContextResponseCodingKeys.self)
+        var container = encoder.container(keyedBy: ThreadCodingKeys.self)
 
         try container.encode(id, forKey: .id)
-        try container.encode(questionId, forKey: .questionId)
-        try container.encode(response, forKey: .response)
-        try container.encode(respondedBy, forKey: .respondedBy)
-        // encode contextQuestion?
+        try container.encode(responseId, forKey: .responseId)
+        try container.encode(repliedBy, forKey: .repliedBy)
+        try container.encode(contextResponse, forKey: .contextResponse)
     }
 }
+

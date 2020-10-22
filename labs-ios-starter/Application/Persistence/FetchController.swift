@@ -108,9 +108,10 @@ class FetchController {
 
     // MARK: - Question Fetch Requests -
     /// fetch all context questions for a Topic
-    func fetchContextQuestionsRequest(context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [ContextQuestion]? {
+    func fetchContextQuestionsRequest(topicId: Int64, context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [ContextQuestion]? {
         let fetchRequest: NSFetchRequest<ContextQuestion> = ContextQuestion.fetchRequest()
-
+        let predicate = NSPredicate(format: "topic.id == %d", topicId)
+        fetchRequest.predicate = predicate
         do {
             let questions = try context.fetch(fetchRequest)
             return questions
@@ -148,13 +149,27 @@ class FetchController {
     /// fetch all request questions for a Topic
     func fetchRequestQuestionsRequest(topicId: Int64, context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [RequestQuestion]? {
         let fetchRequest: NSFetchRequest<RequestQuestion> = RequestQuestion.fetchRequest()
-        let predicate = NSPredicate(format: "topic.id == %@", topicId)
+        let predicate = NSPredicate(format: "topic.id == %d", topicId)
         fetchRequest.predicate = predicate
         do {
             let questions = try context.fetch(fetchRequest)
             return questions
         } catch let fetchError {
             print("Error Fetching Questions: \(fetchError)")
+            return nil
+        }
+    }
+
+    func fetchContextResponseRequest(contextQuestionId: Int64, context: NSManagedObjectContext = CoreDataManager.shared.mainContext) -> [ContextResponse]? {
+        let fetchRequest: NSFetchRequest<ContextResponse> = ContextResponse.fetchRequest()
+        let predicate = NSPredicate(format: "questionId == %d", contextQuestionId)
+        fetchRequest.predicate = predicate
+
+        do {
+            let responses = try context.fetch(fetchRequest)
+            return responses
+        } catch let fetchError {
+            print("Error fetching responses: \(fetchError)")
             return nil
         }
     }
