@@ -500,13 +500,12 @@ class TopicController {
                     } else {
                         print("Unable to decode context response")
                     }
-                    completion(.success(Void()))
                 case let .failure(error):
                     print(error)
                 }
             }
         }
-
+        // complete when all requests complete
         group.notify(queue: .main) {
             do {
                 try CoreDataManager.shared.saveContext(context)
@@ -518,8 +517,35 @@ class TopicController {
         }
     }
 
-    func getThreads(contextResponseIds: [Int64], completion: @escaping CompleteWithNetworkError) {
-
+    func getThreads(contextResponses: [ContextResponse], context: NSManagedObjectContext, completion: @escaping CompleteWithNetworkError) {
+        for contextResponse in contextResponses {
+            self.group.enter()
+            let path = "/thread/\(contextResponse.id)"
+            getComponent(from: path) { result in
+                switch result {
+                // get thread and link to response
+                case let .success(data):
+                    if let thread = self.networkService.decode(to: Thread.self, data: data, moc: context) {
+                        contextResponse.addToThreads(thread)
+                        self.group.leave()
+                    } else {
+                        print("Unable to decode context response")
+                    }
+                case let .failure(error):
+                    print(error)
+                }
+            }
+        }
+        // complete when all requests complete
+        group.notify(queue: .main) {
+            do {
+                try CoreDataManager.shared.saveContext(context)
+                completion(.success(Void()))
+            } catch let saveError {
+                print("Error saving data to CoreData: \(saveError)")
+                completion(.failure(.unknown))
+            }
+        }
     }
 
     func getComponent(from path: String, complete: @escaping CompleteWithDataOrNetworkError) {
