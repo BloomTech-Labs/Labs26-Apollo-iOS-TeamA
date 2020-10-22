@@ -486,68 +486,62 @@ class TopicController {
         }
     }
 
-    func getResponses(contextQuestions: [ContextQuestion], context: NSManagedObjectContext, completion: @escaping CompleteWithNetworkError) {
-        for contextQuestion in contextQuestions {
+    /// Get all Responses to a ContextQuestion and link the relationship in CoreData
+    /// - Parameters:
+    ///   - contextQuestion: The question to get responses for
+    ///   - ids: the ids of the responses to fetch
+    ///   - context: the managed object context used to link the relationship
+    ///   - complete: completes with error on failure, void on success
+    func getContextResponses(for contextQuestion: ContextQuestion, with ids: [Int64], context: NSManagedObjectContext, complete: @escaping CompleteWithNetworkError) {
+        for id in ids {
             self.group.enter()
-            let path = "/contextResponse/\(contextQuestion.id)"
-            getComponent(from: path) { result in
+            self.getContextResponse(with: id,
+                                    context: context) { result in
+
+                self.group.leave()
+
                 switch result {
-                // get response and link to question
-                case let .success(data):
-                    if let contextResponse = self.networkService.decode(to: ContextResponse.self, data: data, moc: context) {
-                        contextQuestion.addToResponse(contextResponse)
-                        self.group.leave()
-                    } else {
-                        print("Unable to decode context response")
-                    }
-                case let .failure(error):
-                    print(error)
+                case let .some(contextResponse):
+                    contextQuestion.addToResponse(contextResponse)
+                case .none:
+                    print("failed to retrieve ContextResponse with id: \(id) for question with id: \(contextQuestion.id)")
                 }
             }
         }
-        // complete when all requests complete
-        group.notify(queue: .main) {
+        // all objects are back, save context and complete
+        self.group.notify(queue: .main) {
             do {
                 try CoreDataManager.shared.saveContext(context)
-                completion(.success(Void()))
+                complete(.success(Void()))
             } catch let saveError {
-                print("Error saving data to CoreData: \(saveError)")
-                completion(.failure(.unknown))
+                print("Error saving contextResponse: \(saveError)")
+                complete(.failure(.unknown))
             }
         }
     }
 
-    func getThreads(contextResponses: [ContextResponse], context: NSManagedObjectContext, completion: @escaping CompleteWithNetworkError) {
-        for contextResponse in contextResponses {
-            self.group.enter()
-            let path = "/thread/\(contextResponse.id)"
-            getComponent(from: path) { result in
-                switch result {
-                // get thread and link to response
-                case let .success(data):
-                    if let thread = self.networkService.decode(to: Thread.self, data: data, moc: context) {
-                        contextResponse.addToThreads(thread)
-                        self.group.leave()
-                    } else {
-                        print("Unable to decode context response")
-                    }
-                case let .failure(error):
-                    print(error)
-                }
-            }
-        }
-        // complete when all requests complete
-        group.notify(queue: .main) {
-            do {
-                try CoreDataManager.shared.saveContext(context)
-                completion(.success(Void()))
-            } catch let saveError {
-                print("Error saving data to CoreData: \(saveError)")
-                completion(.failure(.unknown))
+    /// Get a single ContextResponse given an ID
+    /// - Parameters:
+    ///   - id: The ContextResponse's ID
+    ///   - context: The Managed Object Context used to link the objects
+    ///   (should be the same as the ContextQuestion's context)
+    ///   - complete: Completes with a ContextResponse if successful and nil if not
+    func getContextResponse(with id: Int64, context: NSManagedObjectContext, complete: @escaping ((ContextResponse?) -> Void)) {
+        getComponent(from: "/contextresponse/\(id)") { result in
+            switch result {
+            case let .success(data):
+                complete(self.networkService.decode(to: ContextResponse.self, data: data, moc: context))
+            case let .failure(error):
+                print(error)
+                complete(nil)
             }
         }
     }
 
+    /// get a component (or components) from the backend given a String for the path
+    /// - Parameters:
+    ///   - path: "The path to get the component(s) from"
+    ///   - complete: completes with data or an error
     func getComponent(from path: String, complete: @escaping CompleteWithDataOrNetworkError) {
 
         guard let request = createRequest(pathFromBaseURL: path) else {
