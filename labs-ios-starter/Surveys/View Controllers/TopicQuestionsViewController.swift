@@ -11,15 +11,6 @@ class TopicQuestionsViewController: UIViewController {
     @IBOutlet var questionsCollectionView: UICollectionView!
     // @IBOutlet var contextSegmentControl: UISegmentedControl!
 
-    @IBAction func postTopicButton(_ sender: UIButton) {
-        // TODO: Context Title
-        guard let contextID = contextID else {
-            print("no context id")
-            return
-        }
-        postTopic(contextID: contextID)
-    }
-
     // MARK: - Properties -
     let spinner = UIActivityIndicatorView()
     var topicName: String?
@@ -50,6 +41,7 @@ class TopicQuestionsViewController: UIViewController {
         pickerView.dataSource = self
         pickerView.tapDelegate = self
     }
+
     // TODO: refactor to get `default` context and request questions
     // Get questions from server, save to CoreData, and fetch from CoreData
     private func getAllContextQuestions() {
@@ -162,12 +154,24 @@ extension TopicQuestionsViewController: UICollectionViewDataSource, UICollection
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard
-            segue.identifier == correctSegueId
+            segue.identifier == correctSegueId,
+            let destinationVC = segue.destination as? ReviewDetailsViewController
         // TODO: finish unwrapping dependancies
         else {
             fatalError("Early exit from prepare(for segue:) -> Missing dependancies"); return
         }
-        let reviewDetailsViewController = ReviewDetailsViewController()
+        if let topicName = topicName {
+            destinationVC.topicName = topicName
+        }
+        if let questions = questions {
+            var string = ""
+            questions.forEach { question in
+                string += "\n\n" // Double-spacing
+                string.append(question.question)
+            }
+            destinationVC.questions = string
+            destinationVC.delegate = self
+        }
         // TODO:
     }
 }
@@ -248,5 +252,15 @@ extension TopicQuestionsViewController: SingleRowSpinnerDelegate {
         DispatchQueue.main.async {
             self.pickerView.selectRow(nextRow, inComponent: 0, animated: true)
         }
+    }
+}
+
+extension TopicQuestionsViewController: ReviewDetailsViewControllerDelegate {
+    func sendTopic() {
+        guard let contextID = contextID else {
+            print("no context id")
+            return
+        }
+        postTopic(contextID: contextID)
     }
 }

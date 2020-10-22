@@ -16,7 +16,7 @@ class QuestionCollectionViewCell: ApolloCollectionViewCell {
 
     var question: ContextQuestion? {
         didSet {
-            updateViews(adjustingForWidthOf: self, question: question!.question)
+//            updateViews(adjustingForWidthOf: self, question: question!.question)
         }
     }
 
