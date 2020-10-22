@@ -10,6 +10,19 @@ import CoreData
 import Foundation
 
 // MARK: - Codable Types -
+
+struct ContextResponseObject: Codable {
+    enum CodingKeys: String, CodingKey {
+        case surveyId = "surveyrequestid"
+        case contextQuestionId = "contextquestionid"
+        case response
+    }
+
+    let surveyId: Int64
+    let contextQuestionId: Int64
+    let response: String
+}
+
 /// Used to get Topic Details and establish CoreData Relationships
 struct TopicDetails: Codable {
     enum CodingKeys: String, CodingKey {
@@ -92,6 +105,8 @@ class TopicController {
     lazy var baseURL = profileController.baseURL
     let group = DispatchGroup()
 
+    var dummyResponses: [ContextResponseObject] = []
+
     // MARK: - Create -
     /// Post a topic to the web back end with the currently signed in user as the leader
     /// - Parameters:
@@ -155,6 +170,26 @@ class TopicController {
     ///   - completion: Completes with `[Topic]`. Topics are also stored in the controller...
     ///   - context: new backgroundContext by default. this will propagate to all child methods
     func getTopics(context: NSManagedObjectContext = CoreDataManager.shared.backgroundContext, complete: @escaping CompleteWithNetworkError) {
+        // get all contextResponses so we can link to their questions later
+        if let request = createRequest(pathFromBaseURL: "contextResponse") {
+            self.networkService.loadData(using: request) { result in
+                switch result {
+                case let .success(data):
+                    if let contextResponses = self.networkService.decode(to: [ContextResponseObject].self, data: data) {
+                        self.dummyResponses = contextResponses
+                        // ADDING DUMMY RESPONSE
+                        let response1 = ContextResponseObject(surveyId: 1, contextQuestionId: 19, response: "Hello Test")
+                        let response2 = ContextResponseObject(surveyId: 1, contextQuestionId: 1, response: "Hello Test2")
+                        self.dummyResponses.append(response1)
+                        self.dummyResponses.append(response2)
+                    }
+                case let .failure(error):
+                    print("error getting context responses: \(error)")
+                }
+            }
+        }
+
+
         getAllTopicDetails(context: context) { topics, topicDetails in
             guard let topics = topics,
                 let topicDetails = topicDetails else {
