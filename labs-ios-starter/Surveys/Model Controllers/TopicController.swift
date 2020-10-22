@@ -486,6 +486,60 @@ class TopicController {
         }
     }
 
+    func getResponses(contextQuestions: [ContextQuestion], context: NSManagedObjectContext, completion: @escaping CompleteWithNetworkError) {
+        for contextQuestion in contextQuestions {
+            self.group.enter()
+            let path = "/contextResponse/\(contextQuestion.id)"
+            getComponent(from: path) { result in
+                switch result {
+                // get response and link to question
+                case let .success(data):
+                    if let contextResponse = self.networkService.decode(to: ContextResponse.self, data: data, moc: context) {
+                        contextQuestion.addToResponse(contextResponse)
+                        self.group.leave()
+                    } else {
+                        print("Unable to decode context response")
+                    }
+                    completion(.success(Void()))
+                case let .failure(error):
+                    print(error)
+                }
+            }
+        }
+
+        group.notify(queue: .main) {
+            do {
+                try CoreDataManager.shared.saveContext(context)
+                completion(.success(Void()))
+            } catch let saveError {
+                print("Error saving data to CoreData: \(saveError)")
+                completion(.failure(.unknown))
+            }
+        }
+    }
+
+    func getThreads(contextResponseIds: [Int64], completion: @escaping CompleteWithNetworkError) {
+
+    }
+
+    func getComponent(from path: String, complete: @escaping CompleteWithDataOrNetworkError) {
+
+        guard let request = createRequest(pathFromBaseURL: path) else {
+            print("unable to create path for component")
+            complete(.failure(.badRequest))
+            return
+        }
+        networkService.loadData(using: request) { result in
+            switch result {
+            case let .success(data):
+                complete(.success(data))
+            case let .failure(error):
+                complete(.failure(error))
+            }
+        }
+
+    }
+
     func updateTopic(topic: Topic, completion: @escaping CompleteWithNetworkError) {
         // send topic to server using PUT request. save in CoreData
     }

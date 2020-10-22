@@ -19,6 +19,7 @@ typealias CompleteWithString = (Result<String, ErrorHandler.NetworkError>) -> Vo
 typealias CompleteWithTopics = (Result<[Topic], ErrorHandler.NetworkError>) -> Void
 /// Completion Handler with Void .success and NetworkError .failure
 typealias CompleteWithNetworkError = (Result<Void, ErrorHandler.NetworkError>) -> Void
+typealias CompleteWithDataOrNetworkError = (Result<Data, ErrorHandler.NetworkError>) -> Void
 
 protocol NetworkLoader {
     func loadData(using request: URLRequest, with completion: @escaping URLCompletion)
