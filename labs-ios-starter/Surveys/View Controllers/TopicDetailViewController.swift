@@ -122,7 +122,7 @@ extension TopicDetailViewController: UICollectionViewDataSource {
             fatalError("invalid identifier: \(reuseIdentifier)")
         }
         // TODO: Set with response instead of question
-        cell.question = questions?[indexPath.item]
+        //cell.question = questions?[indexPath.item]
         cell.setDimensions(width: view.frame.width - 40, height: 80)
         return cell
     }
