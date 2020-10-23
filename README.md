@@ -20,4 +20,8 @@ This repository is neither maintained nor open source.
 
 ## Watch The Trailer
 
-[![Watch the demo](https://img.youtube.com/vi/KE0dS-N2ol8/maxresdefault.jpg)](https://www.youtube.com/watch?v=KE0dS-N2ol8)
+[![Watch the trailer](https://img.youtube.com/vi/KE0dS-N2ol8/maxresdefault.jpg)](https://www.youtube.com/watch?v=KE0dS-N2ol8)
+
+## Watch The Demo
+
+[![Watch the Demo](https://img.youtube.com/vi/1Q2o8xLKLTg/maxresdefault.jpg)](https://youtu.be/1Q2o8xLKLTg)
